@@ -15,13 +15,14 @@ public class Jugador {
 		this.nombre = nombre;
 		this.apuesta = 0;
 		this.fondo = 1000;// Fondo inicial por el momento
-		this.hapasado = false;
+		this.setHapasado(false);
 	}
 	
 	public Jugador(String nombre, int fondo) {
 		this.nombre = nombre;
 		this.fondo = fondo;
 		this.apuesta = 0;
+		this.setHapasado(false);
 	}
 	
 	public void resetearCartas() {
@@ -44,18 +45,19 @@ public class Jugador {
 		return nombre;
 	}
 	
-	public void realizarApuesta(int cantidad) {
+	public Informe realizarApuesta(int cantidad) {
 		if (cantidad <= this.fondo) {
 			this.apuesta += cantidad;
 			this.fondo -= cantidad;
-			this.hapasado = false;
+			this.setHapasado(false);
+			return Informe.APUESTA_REALIZADA;
 		} else {
-			//System.out.println("Fondos insuficientes para realizar la apuesta");
+			return Informe.FONDO_INSUFICIENTE;
 		}
 	}
 	
 	public void pasar() {
-		this.hapasado = true;
+		this.setHapasado(true);
 	}
 
 	public void recibirCarta(Carta carta) {
@@ -75,6 +77,18 @@ public class Jugador {
 
 	public Resultado getResultadoValoresCartas() {
 		return resultadoValoresCartas;
+	}
+
+	public boolean isHapasado() {
+		return hapasado;
+	}
+
+	public void setHapasado(boolean hapasado) {
+		this.hapasado = hapasado;
+	}
+	
+	public int getFondo() {
+		return this.fondo;
 	}
 
 }

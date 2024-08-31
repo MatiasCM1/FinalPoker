@@ -147,7 +147,50 @@ public class VistaConsola {
 		}
 	}
 
-
+	public void solicitarApuestas(List<Jugador> jugadoresMesa) {
+		int apuestaMayor = 0;
+		boolean apuestasIgualadas = false;
+		while (!apuestasIgualadas) {
+			apuestasIgualadas = true;
+			for (Jugador jugador : jugadoresMesa){
+				if (jugador.isHapasado() || jugador.getApuesta() == apuestaMayor) {
+					continue; //N  se le solicita la apuesta si el jugador ha pasado
+				}
+				System.out.println("La apuesta más alta es: " + apuestaMayor);
+				System.out.println("Jugador " + jugador.getNombre() + ", su apuesta actual es: " + jugador.getApuesta() + " y su fondo disponible es: " + jugador.getFondo() );
+				System.out.println("1- Apostar");
+				System.out.println("2- Pasar");
+				Scanner sc = new Scanner(System.in);
+				int opcion = sc.nextInt();
+				switch(opcion) {
+					case 1:	
+						System.out.println("Ingrese su apuesta, debe ser igual o mayor a " + apuestaMayor);
+						int apuesta = sc.nextInt();
+						while (apuesta > jugador.getFondo() || apuesta < apuestaMayor) {
+							System.out.println("Ingrese una apuesta que sea menor o igual al fondo disponible o mayor o igual a la apuesta mayor " + apuestaMayor);
+							apuesta = sc.nextInt();
+						}
+						jugador.realizarApuesta(apuesta);
+						if (apuesta > apuestaMayor) {
+								apuestaMayor = apuesta;
+						}
+					break;
+					case 2:
+						jugador.pasar();
+					break;
+				}
+				//Verificar que las apuestas esten igualadas
+				for (Jugador j : jugadoresMesa) {
+					if (!j.isHapasado() && j.getApuesta() != apuestaMayor) {
+						apuestasIgualadas = false;
+						break;
+					}
+				}
+			}
+		}
+	}
+	
+	
 		
 }
 	

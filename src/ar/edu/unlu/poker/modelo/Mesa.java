@@ -60,9 +60,10 @@ public class Mesa implements Observado{
 			dealer.setearCartasRonda();
 			this.posJugadorMano = this.seleccionarJugadorRandom();
 			this.notificarObservers(Informe.JUGADOR_MANO);
-			//this.setearFondoApuestas();
 			dealer.repartirCartasRonda(this.jugadoresMesa, this.posJugadorMano);
 			this.notificarObservers(Informe.CARTAS_REPARTIDAS);
+			this.notificarObservers(Informe.REALIZAR_APUESTAS);
+			
 			this.notificarObservers(Informe.DEVOLVER_GANADOR);
 			this.jugadoresMesa.forEach(Jugador::resetearCartas);
 		} else {
@@ -140,6 +141,8 @@ public class Mesa implements Observado{
 		return null;
 	}
 	
-	
+	public void gestionarApuestas() {
+		
+	}
 
 }

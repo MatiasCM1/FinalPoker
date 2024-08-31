@@ -35,6 +35,9 @@ public class Controlador implements Observer{
 			case CANT_JUGADORES_EXCEDIDOS:
 				vista.informarCantJugadoresExcedidos();
 			break;
+			case REALIZAR_APUESTAS:
+				vista.solicitarApuestas(((Mesa)observado).getJugadoresMesa());
+			break;
 			case DEVOLVER_GANADOR:
 				vista.mostrarGanador(((Mesa)observado).devolverGanador());
 			break;
