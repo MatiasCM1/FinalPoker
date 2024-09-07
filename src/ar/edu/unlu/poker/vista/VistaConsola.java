@@ -146,51 +146,55 @@ public class VistaConsola {
 			System.out.println("");
 		}
 	}
+	
+	/*public int pedirApuesta(Jugador jugador) {
+        System.out.println("Turno de " + jugador.getNombre() + ":");
+        System.out.println("1. Fichar");
+        System.out.println("2. Envidar");
+        System.out.println("3. Pasar");
 
-	public void solicitarApuestas(List<Jugador> jugadoresMesa) {
-		int apuestaMayor = 0;
-		boolean apuestasIgualadas = false;
-		while (!apuestasIgualadas) {
-			apuestasIgualadas = true;
-			for (Jugador jugador : jugadoresMesa){
-				if (jugador.isHapasado() || jugador.getApuesta() == apuestaMayor) {
-					continue; //N  se le solicita la apuesta si el jugador ha pasado
-				}
-				System.out.println("La apuesta más alta es: " + apuestaMayor);
-				System.out.println("Jugador " + jugador.getNombre() + ", su apuesta actual es: " + jugador.getApuesta() + " y su fondo disponible es: " + jugador.getFondo() );
-				System.out.println("1- Apostar");
-				System.out.println("2- Pasar");
-				Scanner sc = new Scanner(System.in);
-				int opcion = sc.nextInt();
-				switch(opcion) {
-					case 1:	
-						System.out.println("Ingrese su apuesta, debe ser igual o mayor a " + apuestaMayor);
-						int apuesta = sc.nextInt();
-						while (apuesta > jugador.getFondo() || apuesta < apuestaMayor) {
-							System.out.println("Ingrese una apuesta que sea menor o igual al fondo disponible o mayor o igual a la apuesta mayor " + apuestaMayor);
-							apuesta = sc.nextInt();
-						}
-						jugador.realizarApuesta(apuesta);
-						if (apuesta > apuestaMayor) {
-								apuestaMayor = apuesta;
-						}
-					break;
-					case 2:
-						jugador.pasar();
-					break;
-				}
-				//Verificar que las apuestas esten igualadas
-				for (Jugador j : jugadoresMesa) {
-					if (!j.isHapasado() && j.getApuesta() != apuestaMayor) {
-						apuestasIgualadas = false;
-						break;
-					}
-				}
-			}
-		}
+        Scanner sc = new Scanner(System.in);
+        int opcion = sc.nextInt();
+        int cantidad = 0;
+
+        switch (opcion) {
+            case 1:
+                cantidad = controlador.apuestaMinima();
+                break;
+            case 2:
+                System.out.println("Ingrese la cantidad para envidar:");
+                cantidad = sc.nextInt();
+                break;
+            case 3:
+                cantidad = 0;
+                break;
+        }
+
+        return cantidad;
+    }*/
+
+	/*public void solicitarApuestas() {
+		System.out.println("1- Apostar");
+		System.out.println("2- Pasar");
+		Scanner sc = new Scanner(System.in);
+		int opcion = sc.nextInt();
+		controlador.consultarApuestas(opcion);	
 	}
 	
+	public void solicitarApuestaJugador(Jugador jugador) {
+		System.out.println(jugador.getNombre() + ", ingrese su apuesta, esta debera ser mayor o igual a la apuesta mayor");
+		Scanner sc = new Scanner(System.in);
+		int apuesta = sc.nextInt();
+		controlador.setearApuestaJugador(apuesta, jugador);
+	}
 	
+	public void informarApuestaInsuficiente() {
+		System.out.println("La apuesta ingresada debe ser mayor o igual a la apuesta mayor");
+	}
+	
+	public void informarFondosInsuficientes() {
+		System.out.println("La apuesta ingresada es maoyr a los fondos que dispone");
+	}*/
 		
 }
 	

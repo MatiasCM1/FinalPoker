@@ -10,19 +10,22 @@ public class Jugador {
 	private int apuesta;
 	private int fondo;//Fondo disponible para apuestas
 	private boolean hapasado;
+	private boolean enJuego;//Indica si el jugador sigue en juego o ha pasado
 	
 	public Jugador(String nombre) {
 		this.nombre = nombre;
-		this.apuesta = 0;
+		this.apuesta = -1;
 		this.fondo = 1000;// Fondo inicial por el momento
 		this.setHapasado(false);
+		this.setEnJuego(true);
 	}
 	
 	public Jugador(String nombre, int fondo) {
 		this.nombre = nombre;
 		this.fondo = fondo;
-		this.apuesta = 0;
+		this.apuesta = -1;
 		this.setHapasado(false);
+		this.setEnJuego(true);
 	}
 	
 	public void resetearCartas() {
@@ -40,6 +43,10 @@ public class Jugador {
 	public int getApuesta() {
 		return apuesta;
 	}
+	
+	public void setApuesta(int apuesta) {
+		this.apuesta = apuesta;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -56,9 +63,9 @@ public class Jugador {
 		}
 	}
 	
-	public void pasar() {
+	/*public void pasar() {
 		this.setHapasado(true);
-	}
+	}*/
 
 	public void recibirCarta(Carta carta) {
 		this.cartas.add(carta);
@@ -89,6 +96,34 @@ public class Jugador {
 	
 	public int getFondo() {
 		return this.fondo;
+	}
+	
+	public void fichar(int cantidad) {
+		if (cantidad <= this.fondo) {
+			this.apuesta += cantidad;
+			this.fondo -= cantidad;
+			this.setEnJuego(true);
+		}
+	}
+	
+	public void envidar(int cantidad) {
+		if (cantidad > this.apuesta && cantidad <= this.fondo) {
+			this.apuesta = cantidad;
+			this.fondo -= cantidad;
+			this.setEnJuego(true);
+		}
+	}
+	
+	public void pasar() {
+		this.setEnJuego(false);
+	}
+
+	public boolean isEnJuego() {
+		return enJuego;
+	}
+
+	public void setEnJuego(boolean enJuego) {
+		this.enJuego = enJuego;
 	}
 
 }
