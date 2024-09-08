@@ -1,5 +1,6 @@
 package ar.edu.unlu.poker.modelo;
 
+import java.rmi.RemoteException;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -9,11 +10,12 @@ import java.util.Scanner;
 
 import ar.edu.unlu.poker.comunes.Observado;
 import ar.edu.unlu.poker.comunes.Observer;
+import ar.edu.unlu.rmimvc.observer.ObservableRemoto;
 
-public class Mesa implements Observado{
+public class Mesa extends ObservableRemoto implements IMesa{
 	
 	private List<Jugador> jugadoresMesa = new LinkedList<Jugador>();
-	private List<Observer> listaObservadores = new LinkedList<Observer>();
+	//private List<Observer> listaObservadores = new LinkedList<Observer>();
 	private static final HashMap<String, Integer> valorCarta = new HashMap<String, Integer>();
 	private int posJugadorMano;
 	private int apuestaMayor;
@@ -21,10 +23,12 @@ public class Mesa implements Observado{
 	private int apuestaMaxima;
 	private List<Jugador> jugadoresEnJuego;
 	
-	public int getApuestaMayor() {
+	@Override
+	public int getApuestaMayor() throws RemoteException{
 		return apuestaMayor;
 	}
-	public void setApuestaMayor(int apuestaMayor) {
+	@Override
+	public void setApuestaMayor(int apuestaMayor) throws RemoteException{
 		this.apuestaMayor = apuestaMayor;
 	}
 
@@ -44,48 +48,51 @@ public class Mesa implements Observado{
 		valorCarta.put("AS", 14);
 	}
 	
-	@Override
+	/*@Override
 	public void agregarObservador(Observer o) {
 		this.listaObservadores.add(o);
 	}
 	@Override
 	public void notificarObservers(Informe informe) {
 		this.listaObservadores.forEach(t -> t.update(this, informe));
-	}
+	}*/
 	
 	/*@Override
 	public void notificarObservers(Informe informe, Jugador jugador) {
 		this.listaObservadores.forEach(t -> t.update(this, informe, jugador));
 	}*/
 	
-	public void agregarJugador(Jugador jugador) {
+	@Override
+	public void agregarJugador(Jugador jugador) throws RemoteException {
 		if (this.jugadoresMesa.size() < 8) {
 			this.jugadoresMesa.add(jugador);
 		} else {
-			this.notificarObservers(Informe.CANT_JUGADORES_EXCEDIDOS);
+			this.notificarObservadores(Informe.CANT_JUGADORES_EXCEDIDOS);
 		}
 	}
 	
-	public Jugador obtenerJugadorMano() {
+	@Override
+	public Jugador obtenerJugadorMano() throws RemoteException{
 		return this.jugadoresMesa.get(this.posJugadorMano);
 	}
 	
-	public void iniciarJuego() {
+	@Override
+	public void iniciarJuego() throws RemoteException {
 		if (this.jugadoresMesa.size() > 1) {
 
 			Dealer dealer = new Dealer();
 			dealer.setearCartasRonda();
 			this.posJugadorMano = this.seleccionarJugadorRandom();
-			this.notificarObservers(Informe.JUGADOR_MANO);
+			this.notificarObservadores(Informe.JUGADOR_MANO);
 			dealer.repartirCartasRonda(this.jugadoresMesa, this.posJugadorMano);
-			this.notificarObservers(Informe.CARTAS_REPARTIDAS);
+			this.notificarObservadores(Informe.CARTAS_REPARTIDAS);
 			
 			//this.comenzarAGestionarApuestas();
 			
-			this.notificarObservers(Informe.DEVOLVER_GANADOR);
+			this.notificarObservadores(Informe.DEVOLVER_GANADOR);
 			this.jugadoresMesa.forEach(Jugador::resetearCartas);
 		} else {
-			this.notificarObservers(Informe.CANT_JUGADORES_INSUFICIENTES);
+			this.notificarObservadores(Informe.CANT_JUGADORES_INSUFICIENTES);
 		}
 	}
 	
@@ -183,21 +190,24 @@ public class Mesa implements Observado{
 		}
 	}*/
 	
-	public List<Jugador> getJugadoresMesa() {
+	@Override
+	public List<Jugador> getJugadoresMesa() throws RemoteException{
 		return jugadoresMesa;
 	}
 	
-	private int seleccionarJugadorRandom() {
+	private int seleccionarJugadorRandom() throws RemoteException{
 		Random random = new Random();
 		return random.nextInt(this.jugadoresMesa.size());
 	}
 	
 	
-	public int getPosJugadorMano() {
+	@Override
+	public int getPosJugadorMano() throws RemoteException{
 		return posJugadorMano;
 	}
 	
-	public List<Jugador> devolverJugadorEntregaCarta() {
+	@Override
+	public List<Jugador> devolverJugadorEntregaCarta() throws RemoteException{
 		
 		List<Jugador> listaOrdenada = new LinkedList<Jugador>();
 		int jugManoAux = this.posJugadorMano;
@@ -209,10 +219,18 @@ public class Mesa implements Observado{
 	}
 	
 	private void calcularResultadoJugadores() {
-		this.jugadoresMesa.forEach(Jugador::calcularValorCartas);
+		this.jugadoresMesa.forEach(t -> {
+			try {
+				t.calcularValorCartas();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 	
-	public List<Jugador> devolverGanador(){
+	@Override
+	public List<Jugador> devolverGanador() throws RemoteException{
 		calcularResultadoJugadores();
 		List<Jugador> ganador = new LinkedList<Jugador>();
 		ganador.add(this.jugadoresMesa.get(0));
@@ -236,7 +254,7 @@ public class Mesa implements Observado{
 		return ganador;
 	}
 	
-	private Jugador buscarCartaMayor(Jugador jugador1, Jugador jugador2) {
+	private Jugador buscarCartaMayor(Jugador jugador1, Jugador jugador2) throws RemoteException {
 		Carta carta1 = jugador1.getCartasOrdenadas().getLast();
 		Carta carta2 = jugador2.getCartasOrdenadas().getLast();
 		LinkedList <Carta> cartasAlta = new LinkedList<Carta>();

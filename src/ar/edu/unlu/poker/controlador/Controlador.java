@@ -1,34 +1,36 @@
 package ar.edu.unlu.poker.controlador;
 
+import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
 
 import ar.edu.unlu.poker.comunes.Observado;
 import ar.edu.unlu.poker.comunes.Observer;
+import ar.edu.unlu.poker.modelo.IMesa;
 import ar.edu.unlu.poker.modelo.Informe;
 import ar.edu.unlu.poker.modelo.Jugador;
-import ar.edu.unlu.poker.modelo.Mesa;
-import ar.edu.unlu.poker.vista.VistaConsola;
-import ar.edu.unlu.poker.vista.VistaConsolaSwing;
+import ar.edu.unlu.poker.vista.IVista;
+import ar.edu.unlu.rmimvc.cliente.IControladorRemoto;
+import ar.edu.unlu.rmimvc.observer.IObservableRemoto;
 
-public class Controlador implements Observer{
+public class Controlador implements IControladorRemoto{
 	
-	private VistaConsolaSwing vista;
-	private Mesa mesa;
+	private IVista vista;
+	private IMesa mesa;
 	
-	public Controlador(VistaConsolaSwing vista, Mesa mesa) {
+	public Controlador(IVista vista/*, IMesa mesa*/) {
 		this.vista = vista;
-		this.mesa = mesa;
+		//this.mesa = mesa;
 	}
 
-	@Override
+	/*@Override
 	public void update(Observado observado, Informe informe) {
 		switch(informe) {
 			case JUGADOR_MANO:
-				vista.mostrarJugadorMano(((Mesa)observado).obtenerJugadorMano());
+				vista.mostrarJugadorMano(((IMesa)observado).obtenerJugadorMano());
 			break;
 			case CARTAS_REPARTIDAS:
-				vista.mostrarCartasJugador(((Mesa)observado).getJugadoresMesa());
+				vista.mostrarCartasJugador(((IMesa)observado).getJugadoresMesa());
 			break;
 			case CANT_JUGADORES_INSUFICIENTES:
 				vista.informarJugadoresInsuficientes();
@@ -36,98 +38,83 @@ public class Controlador implements Observer{
 			case CANT_JUGADORES_EXCEDIDOS:
 				vista.informarCantJugadoresExcedidos();
 			break;
-			/*case REALIZAR_APUESTAS:
-				vista.solicitarApuestas();
-			break;
-			case JUGADOR_DECIDE_APOSTAR:
-				//vista.solicitarApuestaJugador();
-			break;
-			case FONDO_INSUFICIENTE:
-				vista.informarFondosInsuficientes();
-			break;
-			case APUESTA_INSUFICIENTE:
-				vista.informarApuestaInsuficiente();
-			break;*/
 			case DEVOLVER_GANADOR:
-				vista.mostrarGanador(((Mesa)observado).devolverGanador());
-			break;
-		}
-	}
-	
-	/*@Override
-	public void update(Observado observado, Informe informe, Jugador jugador) {
-		switch(informe) {
-			case JUGADOR_MANO:
-				vista.mostrarJugadorMano(((Mesa)observado).obtenerJugadorMano());
-			break;
-			case CARTAS_REPARTIDAS:
-				vista.mostrarCartasJugador(((Mesa)observado).getJugadoresMesa());
-			break;
-			case CANT_JUGADORES_INSUFICIENTES:
-				vista.informarJugadoresInsuficientes();
-			break;
-			case CANT_JUGADORES_EXCEDIDOS:
-				vista.informarCantJugadoresExcedidos();
-			break;
-			case REALIZAR_APUESTAS:
-				vista.solicitarApuestas();
-			break;
-			case JUGADOR_DECIDE_APOSTAR:
-				vista.solicitarApuestaJugador(jugador);
-			break;
-			case FONDO_INSUFICIENTE:
-				vista.informarFondosInsuficientes();
-			break;
-			case APUESTA_INSUFICIENTE:
-				vista.informarApuestaInsuficiente();
-			break;
-			case DEVOLVER_GANADOR:
-				vista.mostrarGanador(((Mesa)observado).devolverGanador());
+				vista.mostrarGanador(((IMesa)observado).devolverGanador());
 			break;
 		}
 	}*/
 
 	public void agregarJugador(Jugador j) {
-		mesa.agregarJugador(j);
+		try {
+			mesa.agregarJugador(j);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public List<Jugador> getJugadoresMesa(){
-		return mesa.getJugadoresMesa();
+		try {
+			return mesa.getJugadoresMesa();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public List<Jugador> getListaOrdenadaJugadorMano() {
-		return mesa.devolverJugadorEntregaCarta();
+		try {
+			return mesa.devolverJugadorEntregaCarta();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public List<Jugador> obtenerJugadores(){
-		return mesa.getJugadoresMesa();
+		try {
+			return mesa.getJugadoresMesa();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public void iniciarGame() {
-		mesa.iniciarJuego();
-	}
-	
-	/*public void consultarApuestas(int opcion) {
-		mesa.igualarApuestas(opcion);
-	}
-	
-	public void setearApuestaJugador(int apuesta, Jugador jugador) {
-		mesa.jugadorDecideApostar(apuesta, jugador);
-	}*/
-	
-	/*public void iniciarApuestas(){
-		mesa.iniciarRondaApuestas();
-		while (!mesa.rondaApuestasTerminada()) {
-			for (Jugador jugador : mesa.getJugadoresMesa()) {
-				if (jugador.isEnJuego()) {
-					int cantidad = vista.pedirApuesta(jugador);
-					mesa.procesarApuesta(jugador, cantidad);
-				}
-			}
+		try {
+			mesa.iniciarJuego();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		mesa.finalizarRonda();
 	}
-	public int apuestaMinima() {
-		return mesa.getApuestaMayor();
-	}*/
+
+	@Override
+	public void actualizar(IObservableRemoto modelo, Object cambio) throws RemoteException {
+		switch((Informe) cambio) {
+		case JUGADOR_MANO:
+			vista.mostrarJugadorMano(((IMesa)modelo).obtenerJugadorMano());
+		break;
+		case CARTAS_REPARTIDAS:
+			vista.mostrarCartasJugador(((IMesa)modelo).getJugadoresMesa());
+		break;
+		case CANT_JUGADORES_INSUFICIENTES:
+			vista.informarJugadoresInsuficientes();
+		break;
+		case CANT_JUGADORES_EXCEDIDOS:
+			vista.informarCantJugadoresExcedidos();
+		break;
+		case DEVOLVER_GANADOR:
+			vista.mostrarGanador(((IMesa)modelo).devolverGanador());
+		break;
+	}
+	}
+
+	@Override
+	public <T extends IObservableRemoto> void setModeloRemoto(T modeloRemoto) throws RemoteException {
+		this.mesa = (IMesa) modeloRemoto;
+	}
 }

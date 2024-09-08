@@ -1,6 +1,9 @@
 package ar.edu.unlu.poker.modelo;
 
-public class Carta {
+import java.io.Serializable;
+import java.rmi.RemoteException;
+
+public class Carta implements Serializable{
 
 	private String valor;
 	private String palo;
@@ -12,7 +15,7 @@ public class Carta {
 		this.setValor(valor); 
 	}
 
-	public String getValor() {
+	public String getValor() throws RemoteException{
 		return valor;
 	}
 	
@@ -21,7 +24,7 @@ public class Carta {
 		this.valor = valor;
 	}
 
-	public String getPalo() {
+	public String getPalo() throws RemoteException{
 		return palo;
 	}
 
@@ -33,7 +36,7 @@ public class Carta {
 		}
 	}
 
-	public String [] getOrdenCartas() {
+	public String [] getOrdenCartas() throws RemoteException{
 		return ordenCartas;
 	}
 	

@@ -1,5 +1,6 @@
 package ar.edu.unlu.poker.modelo;
 
+import java.rmi.RemoteException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +12,7 @@ public class Dealer {
 	private LinkedList<Carta> cartas;
 	private Random aleatorio = new Random();
 	
-	public Dealer() {
+	public Dealer() throws RemoteException {
 		this.setearCartasTotales();
 		this.setearCartasRonda();
 	}
@@ -21,7 +22,7 @@ public class Dealer {
 		return this.cartas.remove(indice);
 	}
 	
-	public void repartirCartasRonda(List<Jugador> jugadoresMesa, int posJugadorMano) {
+	public void repartirCartasRonda(List<Jugador> jugadoresMesa, int posJugadorMano) throws RemoteException{
 		for (int j = 0; j < 5; j++) {
 			for (int i = 0; i < jugadoresMesa.size(); i++) {
 				Jugador jugadorActual = jugadoresMesa.get(posJugadorMano);
@@ -33,13 +34,13 @@ public class Dealer {
 		}
 	}
 	
-	public LinkedList<Jugador> primerJugadorRepartir(LinkedList<Jugador> jugadoresAux) {
+	public LinkedList<Jugador> primerJugadorRepartir(LinkedList<Jugador> jugadoresAux) throws RemoteException{
 		int indice = aleatorio.nextInt(jugadoresAux.size());
 		Collections.rotate(jugadoresAux, jugadoresAux.size() - indice);
 		return jugadoresAux;
 	}
 	
-	public void setearCartasRonda() {
+	public void setearCartasRonda() throws RemoteException{
 		this.cartas = new LinkedList<Carta>(this.cartasTotales);
 	}
 	
@@ -53,7 +54,7 @@ public class Dealer {
 		}
 	}
 	
-	public LinkedList<Carta> getCartas() {
+	public LinkedList<Carta> getCartas() throws RemoteException{
 		return cartas;
 	}
 	

@@ -1,8 +1,10 @@
 package ar.edu.unlu.poker.modelo;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.LinkedList;
 
-public class Jugador {
+public class Jugador implements Serializable{
 
 	private LinkedList<Carta> cartas = new LinkedList<Carta>();
 	private String nombre;
@@ -36,9 +38,9 @@ public class Jugador {
 		return cartas;
 	}
 	
-	public boolean descartarCarta(Carta c) {
+	/*public boolean descartarCarta(Carta c) {
 		return this.cartas.removeIf(carta -> carta.getValor().equals(c.getValor()) && carta.getPalo().equals(c.getPalo()));
-	}
+	}*/
 
 	public int getApuesta() {
 		return apuesta;
@@ -71,12 +73,12 @@ public class Jugador {
 		this.cartas.add(carta);
 	}
 	
-	public void calcularValorCartas() {
+	public void calcularValorCartas() throws RemoteException {
 		ResultadoJugadaJugador jugada = new ResultadoJugadaJugador();
         this.resultadoValoresCartas = jugada.devolverValor(new LinkedList<Carta>(this.cartas));
 	}
 	
-	public LinkedList<Carta> getCartasOrdenadas(){
+	public LinkedList<Carta> getCartasOrdenadas() throws RemoteException{
 		ResultadoJugadaJugador r = new ResultadoJugadaJugador();
 		return r.ordenarCartas(new LinkedList<Carta>(this.cartas));
 	}
