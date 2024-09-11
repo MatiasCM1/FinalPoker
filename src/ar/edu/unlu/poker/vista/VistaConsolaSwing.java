@@ -13,7 +13,8 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     private JTextArea areaSalida;
     private JTextField campoEntrada;
     private Controlador controlador;
-    private boolean esperandoNombreJugador = false;
+    private boolean esperandoNombreJugador = true;
+    private String nombreJugadorActual;
 
     public VistaConsolaSwing() {
         setTitle("Simulador de Consola - Póker");
@@ -28,7 +29,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
         // Crear campo de texto para la entrada del usuario
         campoEntrada = new JTextField();
-        campoEntrada.setPreferredSize(new Dimension(800, 30)); // Establecer tamaño preferido
+        campoEntrada.setPreferredSize(new Dimension(800, 30));
         campoEntrada.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -42,36 +43,37 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         add(scrollPane, BorderLayout.CENTER);
         add(campoEntrada, BorderLayout.SOUTH);
 
-        // Mostrar mensaje inicial para verificar que la consola funciona
-        areaSalida.append("Bienvenido al Simulador de Consola - Póker\n");
-        areaSalida.append("Ingrese un comando para comenzar...\n");
-        areaSalida.append("1 - Agregar jugador\n");
-        areaSalida.append("2 - Mostrar Lista Jugador\n");
-        areaSalida.append("3 - Comenzar Partida\n");
-        areaSalida.append("0 - Salir\n");
-
-        // Asegurarse de que el campo de entrada tenga el foco
+        // Mostrar mensaje inicial para pedir el nombre del jugador
+        areaSalida.append("Ingrese su nombre para comenzar:\n");
         campoEntrada.requestFocusInWindow();
 
-        setVisible(true); // Hacer visible el JFrame al final de la configuración
+        setVisible(true);
     }
 
     @Override
-	public void setControlador(Controlador controlador) {
+    public void setControlador(Controlador controlador) {
         this.controlador = controlador;
     }
 
     private void procesarEntrada(String input) {
         areaSalida.append("> " + input + "\n");
 
-        // Si estamos esperando el nombre del jugador
+        // Solicitar el nombre del jugador al inicio
         if (esperandoNombreJugador) {
-            agregarJugador(input);
-            esperandoNombreJugador = false;
+            nombreJugadorActual = input.trim();
+            if (!nombreJugadorActual.isEmpty()) {
+                Jugador nuevoJugador = new Jugador(nombreJugadorActual);
+                controlador.agregarJugador(nuevoJugador);  // Agregar jugador al controlador
+                setTitle("Simulador de Consola - Póker: " + nombreJugadorActual);
+                areaSalida.append("Bienvenido, " + nombreJugadorActual + "!\n");
+                mostrarOpciones();
+                esperandoNombreJugador = false;
+            } else {
+                areaSalida.append("Nombre no válido. Por favor, ingrese un nombre para comenzar:\n");
+            }
             return;
         }
 
-        // Procesar comandos de entrada del usuario
         if (controlador == null) {
             areaSalida.append("Error: Controlador no configurado.\n");
             return;
@@ -79,12 +81,9 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
         switch (input.toLowerCase()) {
             case "1":
-                solicitarNombreJugador();
-                break;
-            case "2":
                 mostrarJugadores();
                 break;
-            case "3":
+            case "2":
                 controlador.iniciarGame();
                 break;
             case "0":
@@ -97,20 +96,11 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         }
     }
 
-    private void solicitarNombreJugador() {
-        esperandoNombreJugador = true;
-        areaSalida.append("Ingrese el nombre del nuevo jugador:\n");
-    }
-
-    private void agregarJugador(String nombre) {
-        if (nombre != null && !nombre.trim().isEmpty()) {
-            Jugador jugador = new Jugador(nombre.trim());
-            controlador.agregarJugador(jugador);
-            areaSalida.append("Jugador " + nombre.trim() + " agregado.\n");
-        } else {
-            areaSalida.append("Nombre inválido. Intente nuevamente.\n");
-            solicitarNombreJugador();
-        }
+    private void mostrarOpciones() {
+        areaSalida.append("Seleccione una opción:\n");
+        areaSalida.append("1 - Ver Lista de Jugadores\n");
+        areaSalida.append("2 - Comenzar Juego\n");
+        areaSalida.append("0 - Salir\n");
     }
 
     private void mostrarJugadores() {
@@ -121,54 +111,48 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         }
     }
 
-
-
-
-
-
-
     @Override
-	public void mostrarJugadorMano(Jugador jugador) {
+    public void mostrarJugadorMano(Jugador jugador) {
         areaSalida.append("Jugador en mano: " + jugador.getNombre() + "\n");
     }
 
     @Override
-	public void mostrarCartasJugador(List<Jugador> jugadores) {
+    public void mostrarCartasJugador(List<Jugador> jugadores) {
         for (Jugador jugador : jugadores) {
-            areaSalida.append("Cartas de " + jugador.getNombre() + ":\n");
-            jugador.getCartas().forEach(carta -> 
-                {
-					try {
-						areaSalida.append(carta.getValor() + " de " + carta.getPalo() + "\n");
-					} catch (RemoteException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-            );
+            if (jugador.getNombre().equals(nombreJugadorActual)) { // Mostrar solo cartas del jugador actual
+                areaSalida.append("Tus cartas:\n");
+                jugador.getCartas().forEach(carta -> {
+                    try {
+                        areaSalida.append(carta.getValor() + " de " + carta.getPalo() + "\n");
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
         }
     }
 
     @Override
-	public void informarJugadoresInsuficientes() {
+    public void informarJugadoresInsuficientes() {
         areaSalida.append("La cantidad de jugadores es insuficiente para iniciar el juego.\n");
     }
 
     @Override
-	public void informarCantJugadoresExcedidos() {
+    public void informarCantJugadoresExcedidos() {
         areaSalida.append("La cantidad de jugadores excede el límite permitido.\n");
     }
 
     @Override
-	public void mostrarGanador(List<Jugador> ganadores) {
+    public void mostrarGanador(List<Jugador> ganadores) {
         areaSalida.append("Ganador:\n");
         for (Jugador ganador : ganadores) {
             areaSalida.append(" - " + ganador.getNombre() + " con " + ganador.getResultadoValoresCartas() + "\n");
         }
     }
 
-	@Override
-	public void iniciar() {
-		this.setVisible(true);
-	}
+    @Override
+    public void iniciar() {
+        this.setVisible(true);
+    }
 }
+
