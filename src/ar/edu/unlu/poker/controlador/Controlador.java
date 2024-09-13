@@ -18,37 +18,14 @@ public class Controlador implements IControladorRemoto{
 	private IVista vista;
 	private IMesa mesa;
 	
-	public Controlador(IVista vista/*, IMesa mesa*/) {
+	public Controlador(IVista vista) {
 		this.vista = vista;
-		//this.mesa = mesa;
 	}
-
-	/*@Override
-	public void update(Observado observado, Informe informe) {
-		switch(informe) {
-			case JUGADOR_MANO:
-				vista.mostrarJugadorMano(((IMesa)observado).obtenerJugadorMano());
-			break;
-			case CARTAS_REPARTIDAS:
-				vista.mostrarCartasJugador(((IMesa)observado).getJugadoresMesa());
-			break;
-			case CANT_JUGADORES_INSUFICIENTES:
-				vista.informarJugadoresInsuficientes();
-			break;
-			case CANT_JUGADORES_EXCEDIDOS:
-				vista.informarCantJugadoresExcedidos();
-			break;
-			case DEVOLVER_GANADOR:
-				vista.mostrarGanador(((IMesa)observado).devolverGanador());
-			break;
-		}
-	}*/
 
 	public void agregarJugador(Jugador j) {
 		try {
 			mesa.agregarJugador(j);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -61,7 +38,6 @@ public class Controlador implements IControladorRemoto{
 		try {
 			return mesa.getJugadoresMesa();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -71,7 +47,6 @@ public class Controlador implements IControladorRemoto{
 		try {
 			return mesa.devolverJugadorEntregaCarta();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -136,7 +111,8 @@ public class Controlador implements IControladorRemoto{
 			vista.notificarApuestaRealizada();
 		break;
 		case REALIZAR_APUESTAS:
-			vista.mostrarApuestas();
+			//vista.mostrarApuestas();
+			vista.mostrarOpcionesApuestas();
 		break;
 		
 	}

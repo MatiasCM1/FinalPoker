@@ -21,12 +21,14 @@ public interface IVista {
 
 	void iniciar();
 	
-	void mostrarApuestas();
+	void mostrarApuestas(String input);
 
 	void notificarFondosInsuficientes();
 
 	void notificarApuestaInsuficiente();
 
 	void notificarApuestaRealizada();
+
+	void mostrarOpcionesApuestas();
 
 }
