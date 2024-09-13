@@ -69,7 +69,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		}
 	
 		
-		while (this.jugadoresMesa.size() >= 2 && this.jugadoresMesa.size() <= 7) {
+		//while (this.jugadoresMesa.size() >= 2 && this.jugadoresMesa.size() <= 7) {
 
 			this.jugadoresMesa.forEach(jugador -> jugador.setHapasado(false));
 			this.jugadoresMesa.forEach(jugador -> jugador.setApuesta(0));
@@ -93,7 +93,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			//pasar al siguiente jguador mano
 			
 			//deea seguir jugando]?
-		}
+		//}
 	}
 	
 	public void gestionarApuestas(Jugador jugador, int apuesta) throws RemoteException {

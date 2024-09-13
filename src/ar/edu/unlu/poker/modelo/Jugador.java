@@ -3,6 +3,7 @@ package ar.edu.unlu.poker.modelo;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class Jugador implements Serializable{
 
@@ -30,6 +31,19 @@ public class Jugador implements Serializable{
 		this.setEnJuego(true);
 	}
 	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Jugador other = (Jugador) obj;
+		return Objects.equals(nombre, other.nombre);
+	}
+
 	public void resetearCartas() {
 		this.cartas.clear();
 	}

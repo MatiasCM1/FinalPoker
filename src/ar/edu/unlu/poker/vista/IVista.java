@@ -20,6 +20,8 @@ public interface IVista {
 	void mostrarGanador(List<Jugador> ganadores);
 
 	void iniciar();
+	
+	void mostrarApuestas();
 
 	void notificarFondosInsuficientes();
 

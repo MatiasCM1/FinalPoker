@@ -36,7 +36,12 @@ public class VistaConsolaSwing extends JFrame implements IVista {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String input = campoEntrada.getText();
-                procesarEntrada(input);
+                try {
+					procesarEntrada(input);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
                 campoEntrada.setText("");
             }
         });
@@ -57,7 +62,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         this.controlador = controlador;
     }
 
-    private void procesarEntrada(String input) {
+    private void procesarEntrada(String input) throws RemoteException {
         areaSalida.append("> " + input + "\n");
 
         // Solicitar el nombre del jugador al inicio
@@ -168,12 +173,12 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     public void mostrarApuestas() {
     	mostrarOpcionesApuestas();
     	
-    	campoEntrada = new JTextField();
+    	/*campoEntrada = new JTextField();
         campoEntrada.setPreferredSize(new Dimension(800, 30));
         campoEntrada.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String input = campoEntrada.getText();
+                String input = campoEntrada.getText();*/
                 switch (input) {
                 case "1":
                     try {
@@ -204,7 +209,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
                 }
                 campoEntrada.setText("");
                 
-        }});
+       /* }});*/
        
     }
     

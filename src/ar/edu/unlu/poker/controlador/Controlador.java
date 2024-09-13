@@ -87,7 +87,7 @@ public class Controlador implements IControladorRemoto{
 		return null;
 	}
 	
-	public void jugadorSeRetiraDelJuego(Jugador jugador) {
+	public void jugadorSeRetiraDelJuego(Jugador jugador) throws RemoteException {
 		mesa.sacarJugador(jugador);
 	}
 	
@@ -135,6 +135,10 @@ public class Controlador implements IControladorRemoto{
 		case APUESTA_REALIZADA:
 			vista.notificarApuestaRealizada();
 		break;
+		case REALIZAR_APUESTAS:
+			vista.mostrarApuestas();
+		break;
+		
 	}
 	}
 
