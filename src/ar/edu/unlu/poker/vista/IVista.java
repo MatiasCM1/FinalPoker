@@ -21,4 +21,10 @@ public interface IVista {
 
 	void iniciar();
 
+	void notificarFondosInsuficientes();
+
+	void notificarApuestaInsuficiente();
+
+	void notificarApuestaRealizada();
+
 }

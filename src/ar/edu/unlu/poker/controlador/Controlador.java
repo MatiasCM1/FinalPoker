@@ -53,6 +53,10 @@ public class Controlador implements IControladorRemoto{
 		}
 	}
 	
+	public int getApuestaMayor() throws RemoteException {
+		return mesa.getApuestaMayor();
+	}
+	
 	public List<Jugador> getJugadoresMesa(){
 		try {
 			return mesa.getJugadoresMesa();
@@ -83,6 +87,18 @@ public class Controlador implements IControladorRemoto{
 		return null;
 	}
 	
+	public void jugadorSeRetiraDelJuego(Jugador jugador) {
+		mesa.sacarJugador(jugador);
+	}
+	
+	public void realizarApuesta(Jugador jugador, int apuesta) throws RemoteException {
+		mesa.gestionarApuestas(jugador, apuesta);
+	}
+	
+	public void igualarApuesta(Jugador jugador) throws RemoteException {
+		mesa.jugadorIgualaApuesta(jugador);
+	}
+	
 	public void iniciarGame() {
 		try {
 			mesa.iniciarJuego();
@@ -110,6 +126,15 @@ public class Controlador implements IControladorRemoto{
 		case DEVOLVER_GANADOR:
 			vista.mostrarGanador(((IMesa)modelo).devolverGanador());
 		break;
+		case FONDO_INSUFICIENTE:
+			vista.notificarFondosInsuficientes();
+		break;
+		case APUESTA_INSUFICIENTE:
+			vista.notificarApuestaInsuficiente();
+		break;
+		case APUESTA_REALIZADA:
+			vista.notificarApuestaRealizada();
+		break;
 	}
 	}
 
@@ -117,4 +142,6 @@ public class Controlador implements IControladorRemoto{
 	public <T extends IObservableRemoto> void setModeloRemoto(T modeloRemoto) throws RemoteException {
 		this.mesa = (IMesa) modeloRemoto;
 	}
+
+	
 }

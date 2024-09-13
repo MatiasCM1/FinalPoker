@@ -15,6 +15,8 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     private Controlador controlador;
     private boolean esperandoNombreJugador = true;
     private String nombreJugadorActual;
+    private Jugador jugadorActual;
+    
 
     public VistaConsolaSwing() {
         setTitle("Simulador de Consola - Póker");
@@ -62,8 +64,8 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         if (esperandoNombreJugador) {
             nombreJugadorActual = input.trim();
             if (!nombreJugadorActual.isEmpty()) {
-                Jugador nuevoJugador = new Jugador(nombreJugadorActual);
-                controlador.agregarJugador(nuevoJugador);  // Agregar jugador al controlador
+                jugadorActual = new Jugador(nombreJugadorActual);
+                controlador.agregarJugador(jugadorActual);  // Agregar jugador al controlador
                 setTitle("Simulador de Consola - Póker: " + nombreJugadorActual);
                 areaSalida.append("Bienvenido, " + nombreJugadorActual + "!\n");
                 mostrarOpciones();
@@ -88,6 +90,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
                 break;
             case "0":
                 areaSalida.append("Se salió del juego exitosamente. ¡Saludos!\n");
+                controlador.jugadorSeRetiraDelJuego(jugadorActual);
                 System.exit(0);
                 break;
             default:
@@ -119,7 +122,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     @Override
     public void mostrarCartasJugador(List<Jugador> jugadores) {
         for (Jugador jugador : jugadores) {
-            if (jugador.getNombre().equals(nombreJugadorActual)) { // Mostrar solo cartas del jugador actual
+            if (jugador.equals(jugadorActual)) { // Mostrar solo cartas del jugador actual
                 areaSalida.append("Tus cartas:\n");
                 jugador.getCartas().forEach(carta -> {
                     try {
@@ -154,5 +157,71 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     public void iniciar() {
         this.setVisible(true);
     }
+    
+    private void mostrarOpcionesApuestas() {
+        areaSalida.append("Seleccione una opción:\n");
+        areaSalida.append("1 - Fichar\n");
+        areaSalida.append("2 - Envitar\n");
+        areaSalida.append("3 - Pasar\n");
+    }
+    
+    public void mostrarApuestas() {
+    	mostrarOpcionesApuestas();
+    	
+    	campoEntrada = new JTextField();
+        campoEntrada.setPreferredSize(new Dimension(800, 30));
+        campoEntrada.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String input = campoEntrada.getText();
+                switch (input) {
+                case "1":
+                    try {
+						controlador.igualarApuesta(jugadorActual);
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					};
+                    break;
+                case "2":
+                		areaSalida.append("Ingrese una suma igual o mayor como apuesta\n");
+					try {
+						controlador.realizarApuesta(jugadorActual, Integer.parseInt(campoEntrada.getText()));
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+                    break;
+                case "3":
+                    
+                	//JUGADOR PASA
+                	
+                	
+                    break;
+                default:
+                    areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
+                    break;
+                }
+                campoEntrada.setText("");
+                
+        }});
+       
+    }
+    
+    public void notificarFondosInsuficientes() {
+    	areaSalida.append("Fondos insuficientes para realizar dicha apuesta\n");
+    }
+
+	@Override
+	public void notificarApuestaInsuficiente() {
+		areaSalida.append("Apuesta insuficiente\n");
+	}
+
+	@Override
+	public void notificarApuestaRealizada() {
+		areaSalida.append("Apuesta de " + jugadorActual.getNombre() + ": " + jugadorActual.getApuesta() + "\n");
+	}
+    
+    
 }
 

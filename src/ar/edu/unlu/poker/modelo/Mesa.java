@@ -15,12 +15,10 @@ import ar.edu.unlu.rmimvc.observer.ObservableRemoto;
 public class Mesa extends ObservableRemoto implements IMesa{
 	
 	private List<Jugador> jugadoresMesa = new LinkedList<Jugador>();
-	//private List<Observer> listaObservadores = new LinkedList<Observer>();
 	private static final HashMap<String, Integer> valorCarta = new HashMap<String, Integer>();
 	private int posJugadorMano;
 	private int apuestaMayor;
 	
-	private int apuestaMaxima;
 	private List<Jugador> jugadoresEnJuego;
 	
 	@Override
@@ -48,20 +46,6 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		valorCarta.put("AS", 14);
 	}
 	
-	/*@Override
-	public void agregarObservador(Observer o) {
-		this.listaObservadores.add(o);
-	}
-	@Override
-	public void notificarObservers(Informe informe) {
-		this.listaObservadores.forEach(t -> t.update(this, informe));
-	}*/
-	
-	/*@Override
-	public void notificarObservers(Informe informe, Jugador jugador) {
-		this.listaObservadores.forEach(t -> t.update(this, informe, jugador));
-	}*/
-	
 	@Override
 	public void agregarJugador(Jugador jugador) throws RemoteException {
 		if (this.jugadoresMesa.size() < 8) {
@@ -78,21 +62,59 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	
 	@Override
 	public void iniciarJuego() throws RemoteException {
-		if (this.jugadoresMesa.size() > 1) {
+		
+		if (this.jugadoresMesa.size() < 2) {
+			this.notificarObservadores(Informe.CANT_JUGADORES_INSUFICIENTES);
+			return;
+		}
+	
+		
+		while (this.jugadoresMesa.size() >= 2 && this.jugadoresMesa.size() <= 7) {
 
+			this.jugadoresMesa.forEach(jugador -> jugador.setHapasado(false));
+			this.jugadoresMesa.forEach(jugador -> jugador.setApuesta(0));
+			this.apuestaMayor = 0;
 			Dealer dealer = new Dealer();
 			dealer.setearCartasRonda();
 			this.posJugadorMano = this.seleccionarJugadorRandom();
 			this.notificarObservadores(Informe.JUGADOR_MANO);
 			dealer.repartirCartasRonda(this.jugadoresMesa, this.posJugadorMano);
 			this.notificarObservadores(Informe.CARTAS_REPARTIDAS);
+		
+			this.notificarObservadores(Informe.REALIZAR_APUESTAS);
 			
-			//this.comenzarAGestionarApuestas();
+			//igualar apuestas
 			
+			//descartes
+			//apuestas
+		
 			this.notificarObservadores(Informe.DEVOLVER_GANADOR);
 			this.jugadoresMesa.forEach(Jugador::resetearCartas);
+			//pasar al siguiente jguador mano
+			
+			//deea seguir jugando]?
+		}
+	}
+	
+	public void gestionarApuestas(Jugador jugador, int apuesta) throws RemoteException {
+		if (!jugador.comprobarFondosSuficientes(apuesta)) {
+			this.notificarObservadores(Informe.FONDO_INSUFICIENTE);
+		}
+		if (apuesta >= this.apuestaMayor) {
+			jugador.realizarApuesta(apuesta);
+			this.notificarObservadores(Informe.APUESTA_REALIZADA);
 		} else {
-			this.notificarObservadores(Informe.CANT_JUGADORES_INSUFICIENTES);
+			this.notificarObservadores(Informe.APUESTA_INSUFICIENTE);
+		}
+	}
+	
+	@Override
+	public void jugadorIgualaApuesta(Jugador jugador) throws RemoteException {
+		if (!jugador.comprobarFondosSuficientes(this.apuestaMayor)) {
+			this.notificarObservadores(Informe.FONDO_INSUFICIENTE);
+		} else {
+			jugador.realizarApuesta(apuestaMayor);
+			this.notificarObservadores(Informe.APUESTA_REALIZADA);
 		}
 	}
 	
@@ -268,6 +290,10 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			return jugador2;
 		} 
 		return null;
+	}
+	
+	public void sacarJugador(Jugador jugador) {
+		this.jugadoresMesa.remove(jugador);
 	}
 
 }
