@@ -11,15 +11,13 @@ public class Jugador implements Serializable{
 	private String nombre;
 	private Resultado resultadoValoresCartas;
 	private int apuesta;
-	private int fondo;//Fondo disponible para apuestas
-	private boolean hapasado;
+	private int fondo;
 	private boolean enJuego;//Indica si el jugador sigue en juego o ha pasado
 	
 	public Jugador(String nombre) {
 		this.nombre = nombre;
 		this.apuesta = 0;
 		this.fondo = 1000;// Fondo inicial por el momento
-		this.setHapasado(false);
 		this.setEnJuego(true);
 	}
 	
@@ -27,7 +25,6 @@ public class Jugador implements Serializable{
 		this.nombre = nombre;
 		this.fondo = fondo;
 		this.apuesta = 0;
-		this.setHapasado(false);
 		this.setEnJuego(true);
 	}
 	
@@ -94,14 +91,6 @@ public class Jugador implements Serializable{
 
 	public Resultado getResultadoValoresCartas() {
 		return resultadoValoresCartas;
-	}
-
-	public boolean isHapasado() {
-		return hapasado;
-	}
-
-	public void setHapasado(boolean hapasado) {
-		this.hapasado = hapasado;
 	}
 	
 	public int getFondo() {

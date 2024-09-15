@@ -1,0 +1,5 @@
+package ar.edu.unlu.poker.vista.vistaConsola;
+
+public enum Estados {
+	MENU_PRINCIPAL, SOLICITAR_NOMBRE_JUGADOR, SOLICITAR_APUESTAS, SOLICITAR_DESCARTES, ESPERANDO_INGRESO_APUESTA
+}

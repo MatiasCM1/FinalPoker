@@ -1,4 +1,5 @@
-package ar.edu.unlu.poker.vista;
+package ar.edu.unlu.poker.vista.vistaConsola;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,28 +9,26 @@ import java.rmi.RemoteException;
 import java.util.List;
 import ar.edu.unlu.poker.controlador.Controlador;
 import ar.edu.unlu.poker.modelo.Jugador;
+import ar.edu.unlu.poker.vista.IVista;
 
 public class VistaConsolaSwing extends JFrame implements IVista {
     private JTextArea areaSalida;
     private JTextField campoEntrada;
     private Controlador controlador;
-    private boolean esperandoNombreJugador = true;
+    private boolean esperandoEntrada;
     private String nombreJugadorActual;
     private Jugador jugadorActual;
-    
+    private Estados estadoFlujo;
 
     public VistaConsolaSwing() {
-        setTitle("Simulador de Consola - Póker");
+    	this.estadoFlujo = Estados.SOLICITAR_NOMBRE_JUGADOR;
+        setTitle("Poker");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-
-        // Crear área de texto para mostrar la salida
         areaSalida = new JTextArea();
         areaSalida.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(areaSalida);
-
-        // Crear campo de texto para la entrada del usuario
         campoEntrada = new JTextField();
         campoEntrada.setPreferredSize(new Dimension(800, 30));
         campoEntrada.addActionListener(new ActionListener() {
@@ -37,24 +36,20 @@ public class VistaConsolaSwing extends JFrame implements IVista {
             public void actionPerformed(ActionEvent e) {
                 String input = campoEntrada.getText();
                 try {
-					procesarEntrada(input);
+                	if (!input.trim().contentEquals("")) {
+                		procesarEntrada(input);
+                	}
 				} catch (RemoteException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
                 campoEntrada.setText("");
             }
         });
-
-        // Añadir componentes al JFrame
         add(scrollPane, BorderLayout.CENTER);
         add(campoEntrada, BorderLayout.SOUTH);
-
-        // Mostrar mensaje inicial para pedir el nombre del jugador
-        areaSalida.append("Ingrese su nombre para comenzar:\n");
-        campoEntrada.requestFocusInWindow();
-
         setVisible(true);
+
+		areaSalida.append("Ingrese su nombre\n");
     }
 
     @Override
@@ -63,52 +58,139 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     }
 
     private void procesarEntrada(String input) throws RemoteException {
-        areaSalida.append("> " + input + "\n");
+        
+    	if (controlador == null) {
+            areaSalida.append("Error: Controlador no configurado.\n");
+            return;
+        }
 
-        // Solicitar el nombre del jugador al inicio
-        if (esperandoNombreJugador) {
+        switch (estadoFlujo) {
+        	case SOLICITAR_NOMBRE_JUGADOR:
+        		esperandoEntrada = true;
+        		solicitarNombre(input);
+        	break;
+        	case MENU_PRINCIPAL:
+        		esperandoEntrada = true;
+        		menu(input);
+        	break;
+        	case SOLICITAR_APUESTAS:
+        		esperandoEntrada = true;
+        		solicitarApuestas(input);
+        	break;
+        }
+    }
+    
+    public void solicitarNombre(String input) {
+    	if (esperandoEntrada) {
             nombreJugadorActual = input.trim();
             if (!nombreJugadorActual.isEmpty()) {
                 jugadorActual = new Jugador(nombreJugadorActual);
-                controlador.agregarJugador(jugadorActual);  // Agregar jugador al controlador
-                setTitle("Simulador de Consola - Póker: " + nombreJugadorActual);
+                controlador.agregarJugador(jugadorActual);
+                setTitle("Poker - Jugador: " + nombreJugadorActual);
                 areaSalida.append("Bienvenido, " + nombreJugadorActual + "!\n");
-                mostrarOpciones();
-                esperandoNombreJugador = false;
+                esperandoEntrada = false;
+                mostrarOpcionesMenu(); 
             } else {
                 areaSalida.append("Nombre no válido. Por favor, ingrese un nombre para comenzar:\n");
             }
             return;
         }
-
-        if (controlador == null) {
-            areaSalida.append("Error: Controlador no configurado.\n");
-            return;
-        }
-
-        switch (input.toLowerCase()) {
-            case "1":
-                mostrarJugadores();
-                break;
-            case "2":
-                controlador.iniciarGame();
-                break;
-            case "0":
-                areaSalida.append("Se salió del juego exitosamente. ¡Saludos!\n");
-                controlador.jugadorSeRetiraDelJuego(jugadorActual);
-                System.exit(0);
-                break;
-            default:
-                areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
-                break;
+    }
+    
+    public void menu(String input) {
+    	
+    	if (esperandoEntrada) {
+    		switch (input.toLowerCase()) {
+    			case "1":
+    				mostrarJugadores();
+    				this.esperandoEntrada = false;
+    				break;
+    			case "2":
+    				this.esperandoEntrada = false;
+    				this.estadoFlujo = Estados.SOLICITAR_APUESTAS;
+    				controlador.iniciarGame();
+    				break;
+    			case "0":
+    				areaSalida.append("Se salió del juego exitosamente. ¡Saludos!\n");
+    				try {
+    					controlador.jugadorSeRetiraDelJuego(jugadorActual);
+    				} catch (RemoteException e) {
+    					e.printStackTrace();
+    				}
+    				System.exit(0);
+    				break;
+    			default:
+    				areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
+    				break;
+    		}
+    	}
+    }
+    
+    public void solicitarApuestas(String input) {
+        if (esperandoEntrada) {
+        	switch (input.toLowerCase()) {
+        		case "1":
+        			try {
+        				//this.estadoFlujo = Informes.ESPERAR_DESCARTES
+        				controlador.igualarApuesta(jugadorActual);
+        				areaSalida.append(this.jugadorActual.getNombre() + " ha igualado la apuesta mayor\n");
+        				this.esperandoEntrada = false;
+        			} catch (RemoteException e1) {
+        				e1.printStackTrace();
+        			};
+        			break;
+        		case "2":
+        				//this.estadoFlujo = Informes.ESPERAR_DESCARTES
+        				this.esperandoEntrada = false;
+        				this.estadoFlujo = Estados.ESPERANDO_INGRESO_APUESTA;
+        				solicitarMontoApuesta();
+        			break;
+        		case "3":
+        			jugadorActual.pasar();
+        			areaSalida.append(this.jugadorActual.getNombre() + " ha pasado la ronda\n");
+        			break;
+        		default:
+        			areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
+        			break;
+        	}
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+ private void solicitarMontoApuesta() {
+	 areaSalida.append("Ingrese una suma igual o mayor como apuesta\n");
+	 String apuestaInput = campoEntrada.getText();
+	 try {
+		controlador.realizarApuesta(jugadorActual, Integer.parseInt(apuestaInput));
+	} catch (NumberFormatException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (RemoteException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+ }
+    
+    
+    
+    
+    
+    
+    
+    
 
-    private void mostrarOpciones() {
+    private void mostrarOpcionesMenu() {
         areaSalida.append("Seleccione una opción:\n");
         areaSalida.append("1 - Ver Lista de Jugadores\n");
         areaSalida.append("2 - Comenzar Juego\n");
         areaSalida.append("0 - Salir\n");
+        this.estadoFlujo = Estados.MENU_PRINCIPAL;
     }
 
     private void mostrarJugadores() {
@@ -117,6 +199,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         for (Jugador jugador : jugadores) {
             areaSalida.append(" - " + jugador.getNombre() + "\n");
         }
+        mostrarOpcionesMenu();
     }
 
     @Override
@@ -156,6 +239,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         for (Jugador ganador : ganadores) {
             areaSalida.append(" - " + ganador.getNombre() + " con " + ganador.getResultadoValoresCartas() + "\n");
         }
+        mostrarOpcionesMenu();
     }
 
     @Override
@@ -163,54 +247,12 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         this.setVisible(true);
     }
     
-    private void mostrarOpcionesApuestas() {
+    public void mostrarOpcionesApuestas() {
         areaSalida.append("Seleccione una opción:\n");
         areaSalida.append("1 - Fichar\n");
         areaSalida.append("2 - Envitar\n");
         areaSalida.append("3 - Pasar\n");
-    }
-    
-    public void mostrarApuestas() {
-    	mostrarOpcionesApuestas();
-    	
-    	/*campoEntrada = new JTextField();
-        campoEntrada.setPreferredSize(new Dimension(800, 30));
-        campoEntrada.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String input = campoEntrada.getText();*/
-                switch (input) {
-                case "1":
-                    try {
-						controlador.igualarApuesta(jugadorActual);
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					};
-                    break;
-                case "2":
-                		areaSalida.append("Ingrese una suma igual o mayor como apuesta\n");
-					try {
-						controlador.realizarApuesta(jugadorActual, Integer.parseInt(campoEntrada.getText()));
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-                    break;
-                case "3":
-                    
-                	//JUGADOR PASA
-                	
-                	
-                    break;
-                default:
-                    areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
-                    break;
-                }
-                campoEntrada.setText("");
-                
-       /* }});*/
-       
+        this.estadoFlujo = Estados.SOLICITAR_APUESTAS;
     }
     
     public void notificarFondosInsuficientes() {
@@ -227,6 +269,4 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		areaSalida.append("Apuesta de " + jugadorActual.getNombre() + ": " + jugadorActual.getApuesta() + "\n");
 	}
     
-    
 }
-

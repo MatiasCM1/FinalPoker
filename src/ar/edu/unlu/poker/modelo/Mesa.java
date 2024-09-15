@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import ar.edu.unlu.poker.comunes.Observado;
-import ar.edu.unlu.poker.comunes.Observer;
 import ar.edu.unlu.rmimvc.observer.ObservableRemoto;
 
 public class Mesa extends ObservableRemoto implements IMesa{
@@ -71,7 +69,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		
 		//while (this.jugadoresMesa.size() >= 2 && this.jugadoresMesa.size() <= 7) {
 
-			this.jugadoresMesa.forEach(jugador -> jugador.setHapasado(false));
+			this.jugadoresMesa.forEach(jugador -> jugador.setEnJuego(true));
 			this.jugadoresMesa.forEach(jugador -> jugador.setApuesta(0));
 			this.apuestaMayor = 0;
 			Dealer dealer = new Dealer();

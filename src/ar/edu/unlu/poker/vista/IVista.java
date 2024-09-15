@@ -21,7 +21,9 @@ public interface IVista {
 
 	void iniciar();
 	
-	void mostrarApuestas();
+	void solicitarApuestas(String input);
+	
+	void mostrarOpcionesApuestas();
 
 	void notificarFondosInsuficientes();
 

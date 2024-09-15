@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 import ar.edu.unlu.poker.controlador.Controlador;
 import ar.edu.unlu.poker.vista.IVista;
-import ar.edu.unlu.poker.vista.VistaConsolaSwing;
+import ar.edu.unlu.poker.vista.vistaConsola.VistaConsolaSwing;
 import ar.edu.unlu.rmimvc.RMIMVCException;
 import ar.edu.unlu.rmimvc.Util;
 import ar.edu.unlu.rmimvc.cliente.Cliente;
