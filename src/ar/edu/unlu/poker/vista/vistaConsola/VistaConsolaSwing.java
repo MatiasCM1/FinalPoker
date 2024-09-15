@@ -18,6 +18,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     private boolean esperandoEntrada;
     private String nombreJugadorActual;
     private Jugador jugadorActual;
+<<<<<<< HEAD:src/ar/edu/unlu/poker/vista/vistaConsola/VistaConsolaSwing.java
     private Estados estadoFlujo;
 
     public VistaConsolaSwing() {
@@ -26,6 +27,20 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+=======
+    private EstadoFlujo estadoFlujo;
+    
+
+    public VistaConsolaSwing() {
+        setTitle("Simulador de Consola - Pï¿½ker");
+        setSize(800, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        this.estadoFlujo = EstadoFlujo.INGRESAR_NOMBRE;
+        
+        // Crear ï¿½rea de texto para mostrar la salida
+>>>>>>> ca55cfb84d248f710db8c2c9e2aa9fd1e1b7f5d9:src/ar/edu/unlu/poker/vista/VistaConsolaSwing.java
         areaSalida = new JTextArea();
         areaSalida.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(areaSalida);
@@ -35,6 +50,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String input = campoEntrada.getText();
+<<<<<<< HEAD:src/ar/edu/unlu/poker/vista/vistaConsola/VistaConsolaSwing.java
                 try {
                 	if (!input.trim().contentEquals("")) {
                 		procesarEntrada(input);
@@ -45,6 +61,30 @@ public class VistaConsolaSwing extends JFrame implements IVista {
                 campoEntrada.setText("");
             }
         });
+=======
+                
+                switch(estadoFlujo) {
+                	case INGRESAR_NOMBRE:
+                		solicitarNombre(input);
+                	break;
+                	case MENU_INICIO:
+                		manejarMenuInicio(input);
+                	break;
+                	case MENU_APUESTAS:
+                		mostrarApuestas(input);
+                	break;
+                	case SOLICITAR_APUESTA:
+                		solicitarApuesta(input);
+                	break;
+                }
+					
+				
+                campoEntrada.setText("");
+            }
+        });
+
+        // Aï¿½adir componentes al JFrame
+>>>>>>> ca55cfb84d248f710db8c2c9e2aa9fd1e1b7f5d9:src/ar/edu/unlu/poker/vista/VistaConsolaSwing.java
         add(scrollPane, BorderLayout.CENTER);
         add(campoEntrada, BorderLayout.SOUTH);
         setVisible(true);
@@ -57,12 +97,17 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         this.controlador = controlador;
     }
 
+<<<<<<< HEAD:src/ar/edu/unlu/poker/vista/vistaConsola/VistaConsolaSwing.java
     private void procesarEntrada(String input) throws RemoteException {
         
     	if (controlador == null) {
             areaSalida.append("Error: Controlador no configurado.\n");
             return;
         }
+=======
+    private void solicitarNombre(String input){
+        areaSalida.append("> " + input + "\n");
+>>>>>>> ca55cfb84d248f710db8c2c9e2aa9fd1e1b7f5d9:src/ar/edu/unlu/poker/vista/VistaConsolaSwing.java
 
         switch (estadoFlujo) {
         	case SOLICITAR_NOMBRE_JUGADOR:
@@ -85,16 +130,27 @@ public class VistaConsolaSwing extends JFrame implements IVista {
             nombreJugadorActual = input.trim();
             if (!nombreJugadorActual.isEmpty()) {
                 jugadorActual = new Jugador(nombreJugadorActual);
+<<<<<<< HEAD:src/ar/edu/unlu/poker/vista/vistaConsola/VistaConsolaSwing.java
                 controlador.agregarJugador(jugadorActual);
                 setTitle("Poker - Jugador: " + nombreJugadorActual);
                 areaSalida.append("Bienvenido, " + nombreJugadorActual + "!\n");
                 esperandoEntrada = false;
                 mostrarOpcionesMenu(); 
+=======
+                controlador.agregarJugador(jugadorActual);  // Agregar jugador al controlador
+                setTitle("Simulador de Consola - Poker: " + nombreJugadorActual);
+                areaSalida.append("Bienvenido, " + nombreJugadorActual + "!\n");
+                //mostrarOpciones();
+                this.estadoFlujo = EstadoFlujo.MENU_INICIO;
+                mostrarOpciones();
+                esperandoNombreJugador = false;
+>>>>>>> ca55cfb84d248f710db8c2c9e2aa9fd1e1b7f5d9:src/ar/edu/unlu/poker/vista/VistaConsolaSwing.java
             } else {
-                areaSalida.append("Nombre no válido. Por favor, ingrese un nombre para comenzar:\n");
+                areaSalida.append("Nombre no valido. Por favor, ingrese un nombre para comenzar:\n");
             }
             return;
         }
+<<<<<<< HEAD:src/ar/edu/unlu/poker/vista/vistaConsola/VistaConsolaSwing.java
     }
     
     public void menu(String input) {
@@ -187,6 +243,46 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
     private void mostrarOpcionesMenu() {
         areaSalida.append("Seleccione una opción:\n");
+=======
+
+        if (controlador == null) {
+            areaSalida.append("Error: Controlador no configurado.\n");
+            return;
+        }
+        
+        campoEntrada.setText("");
+    }
+    
+    private void manejarMenuInicio(String input) {
+    	
+    	switch (input.toLowerCase()) {
+        case "1":
+            mostrarJugadores();
+            break;
+        case "2":
+            controlador.iniciarGame();
+            break;
+        case "0":
+            areaSalida.append("Se saliï¿½ del juego exitosamente. ï¿½Saludos!\n");
+		try {
+			controlador.jugadorSeRetiraDelJuego(jugadorActual);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+            System.exit(0);
+            break;
+        default:
+            areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
+            break;
+    	}
+    	campoEntrada.setText("");
+    }
+    
+
+    private void mostrarOpciones() {
+        areaSalida.append("Seleccione una opciï¿½n:\n");
+>>>>>>> ca55cfb84d248f710db8c2c9e2aa9fd1e1b7f5d9:src/ar/edu/unlu/poker/vista/VistaConsolaSwing.java
         areaSalida.append("1 - Ver Lista de Jugadores\n");
         areaSalida.append("2 - Comenzar Juego\n");
         areaSalida.append("0 - Salir\n");
@@ -230,7 +326,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
     @Override
     public void informarCantJugadoresExcedidos() {
-        areaSalida.append("La cantidad de jugadores excede el límite permitido.\n");
+        areaSalida.append("La cantidad de jugadores excede el lï¿½mite permitido.\n");
     }
 
     @Override
@@ -248,11 +344,60 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     }
     
     public void mostrarOpcionesApuestas() {
+<<<<<<< HEAD:src/ar/edu/unlu/poker/vista/vistaConsola/VistaConsolaSwing.java
         areaSalida.append("Seleccione una opción:\n");
         areaSalida.append("1 - Fichar\n");
         areaSalida.append("2 - Envitar\n");
         areaSalida.append("3 - Pasar\n");
         this.estadoFlujo = Estados.SOLICITAR_APUESTAS;
+=======
+        areaSalida.append("Seleccione una opciï¿½n:\n");
+        areaSalida.append("1 - Fichar\n");
+        areaSalida.append("2 - Envitar\n");
+        areaSalida.append("3 - Pasar\n");
+    }
+    
+    public void mostrarApuestas(String input) {
+    	
+    	switch (input.toLowerCase()) {
+        	case "1":
+        		try {
+					controlador.igualarApuesta(jugadorActual);
+				} catch (RemoteException e1) {
+					e1.printStackTrace();
+				};
+			break;
+            case "2":
+            	
+            	this.estadoFlujo = EstadoFlujo.SOLICITAR_APUESTA;
+            	
+			break;
+            case "3":
+                    
+            	//JUGADOR PASA
+                	
+                	
+            break;
+            default:
+            	areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
+            break;
+           }
+           campoEntrada.setText("");
+    }
+    
+    private void solicitarApuesta(String input) {
+    	areaSalida.append("Ingrese una suma igual o mayor como apuesta");
+    	try {
+			controlador.realizarApuesta(jugadorActual, Integer.parseInt(input));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	campoEntrada.setText("");
+>>>>>>> ca55cfb84d248f710db8c2c9e2aa9fd1e1b7f5d9:src/ar/edu/unlu/poker/vista/VistaConsolaSwing.java
     }
     
     public void notificarFondosInsuficientes() {
@@ -268,5 +413,6 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	public void notificarApuestaRealizada() {
 		areaSalida.append("Apuesta de " + jugadorActual.getNombre() + ": " + jugadorActual.getApuesta() + "\n");
 	}
+
     
 }
