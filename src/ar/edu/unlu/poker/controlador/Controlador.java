@@ -107,10 +107,6 @@ public class Controlador implements IControladorRemoto{
 			vista.notificarApuestaRealizada();
 		break;
 		case REALIZAR_APUESTAS:
-<<<<<<< HEAD
-=======
-			//vista.mostrarApuestas();
->>>>>>> ca55cfb84d248f710db8c2c9e2aa9fd1e1b7f5d9
 			vista.mostrarOpcionesApuestas();
 		break;
 		
