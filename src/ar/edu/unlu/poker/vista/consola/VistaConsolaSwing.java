@@ -1,4 +1,4 @@
-package ar.edu.unlu.poker.vista.vistaConsola;
+package ar.edu.unlu.poker.vista.consola;
 
 
 import javax.swing.*;
@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
 import java.util.List;
 import ar.edu.unlu.poker.controlador.Controlador;
 import ar.edu.unlu.poker.modelo.Jugador;
@@ -86,6 +87,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
             if (!nombreJugadorActual.isEmpty()) {
                 jugadorActual = new Jugador(nombreJugadorActual);
                 controlador.agregarJugador(jugadorActual);
+                controlador.setJugadorActual(jugadorActual);
                 setTitle("Poker - Jugador: " + nombreJugadorActual);
                 areaSalida.append("Bienvenido, " + nombreJugadorActual + "!\n");
                 esperandoEntrada = false;
@@ -157,12 +159,6 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     }
     
     
-    
-    
-    
-    
-    
-    
  private void solicitarMontoApuesta() {
 	 areaSalida.append("Ingrese una suma igual o mayor como apuesta\n");
 	 String apuestaInput = campoEntrada.getText();
@@ -175,14 +171,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
- }
-    
-    
-    
-    
-    
-    
-    
+ }   
     
 
     private void mostrarOpcionesMenu() {
@@ -194,13 +183,37 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     }
 
     private void mostrarJugadores() {
-        List<Jugador> jugadores = controlador.obtenerJugadores();
+        var jugadores = controlador.obtenerJugadores();
         areaSalida.append("Lista de Jugadores:\n");
         for (Jugador jugador : jugadores) {
             areaSalida.append(" - " + jugador.getNombre() + "\n");
         }
         mostrarOpcionesMenu();
     }
+    
+    public void mostrarOpcionesApuestas() {
+    		areaSalida.append("Seleccione una opción:\n");
+    		areaSalida.append("1 - Fichar\n");
+    		areaSalida.append("2 - Envitar\n");
+    		areaSalida.append("3 - Pasar\n");
+    		this.estadoFlujo = Estados.SOLICITAR_APUESTAS;
+    	
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     @Override
     public void mostrarJugadorMano(Jugador jugador) {
@@ -245,14 +258,6 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     @Override
     public void iniciar() {
         this.setVisible(true);
-    }
-    
-    public void mostrarOpcionesApuestas() {
-        areaSalida.append("Seleccione una opción:\n");
-        areaSalida.append("1 - Fichar\n");
-        areaSalida.append("2 - Envitar\n");
-        areaSalida.append("3 - Pasar\n");
-        this.estadoFlujo = Estados.SOLICITAR_APUESTAS;
     }
     
     public void notificarFondosInsuficientes() {

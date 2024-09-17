@@ -1,10 +1,12 @@
 package ar.edu.unlu.poker.modelo;
 
 import java.rmi.RemoteException;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -12,21 +14,10 @@ import ar.edu.unlu.rmimvc.observer.ObservableRemoto;
 
 public class Mesa extends ObservableRemoto implements IMesa{
 	
-	private List<Jugador> jugadoresMesa = new LinkedList<Jugador>();
+	private Queue<Jugador> jugadoresMesa = new LinkedList<Jugador>();
 	private static final HashMap<String, Integer> valorCarta = new HashMap<String, Integer>();
-	private int posJugadorMano;
 	private int apuestaMayor;
-	
-	private List<Jugador> jugadoresEnJuego;
-	
-	@Override
-	public int getApuestaMayor() throws RemoteException{
-		return apuestaMayor;
-	}
-	@Override
-	public void setApuestaMayor(int apuestaMayor) throws RemoteException{
-		this.apuestaMayor = apuestaMayor;
-	}
+	private Jugador jugadorMano;
 
 	static {
 		valorCarta.put("2", 2);
@@ -55,7 +46,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	
 	@Override
 	public Jugador obtenerJugadorMano() throws RemoteException{
-		return this.jugadoresMesa.get(this.posJugadorMano);
+		return this.jugadorMano;
 	}
 	
 	@Override
@@ -65,18 +56,22 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			this.notificarObservadores(Informe.CANT_JUGADORES_INSUFICIENTES);
 			return;
 		}
-	
+		
+		this.seleccionarJugadorRandom();
+		this.jugadorMano = this.jugadoresMesa.peek();
 		
 		//while (this.jugadoresMesa.size() >= 2 && this.jugadoresMesa.size() <= 7) {
 
 			this.jugadoresMesa.forEach(jugador -> jugador.setEnJuego(true));
 			this.jugadoresMesa.forEach(jugador -> jugador.setApuesta(0));
+			this.jugadorMano = this.jugadoresMesa.peek(); //Guardo el jugador mano de la ronda
+			//this.jugadoresMesa.add(jugadorMano);//pongo el jugador mano en ultimo lugar
 			this.apuestaMayor = 0;
 			Dealer dealer = new Dealer();
 			dealer.setearCartasRonda();
-			this.posJugadorMano = this.seleccionarJugadorRandom();
+			//this.posJugadorMano = this.seleccionarJugadorRandom();
 			this.notificarObservadores(Informe.JUGADOR_MANO);
-			dealer.repartirCartasRonda(this.jugadoresMesa, this.posJugadorMano);
+			dealer.repartirCartasRonda(this.jugadoresMesa);
 			this.notificarObservadores(Informe.CARTAS_REPARTIDAS);
 		
 			this.notificarObservadores(Informe.REALIZAR_APUESTAS);
@@ -116,126 +111,28 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		}
 	}
 	
-	/*public void iniciarRondaApuestas() {
-		this.apuestaMaxima = 0;
-		this.jugadoresEnJuego = new LinkedList<Jugador>(this.jugadoresMesa);
-	}
-	
-	public void procesarApuesta(Jugador jugador, int cantidad) {
-		if (cantidad > 0) {
-			jugador.envidar(cantidad);
-			this.apuestaMaxima = Math.max(this.apuestaMaxima, cantidad);
-		} else {
-			jugador.pasar();
-			this.jugadoresEnJuego.remove(jugador);
-		}
-		notificarObservers(Informe.APUESTA_REALIZADA);
-	}
-	
-	public boolean rondaApuestasTerminada() {
-		for (Jugador jugador : jugadoresEnJuego) {
-			if (jugador.isEnJuego() && jugador.getApuesta() < this.apuestaMaxima) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	public void finalizarRonda() {
-		if (this.jugadoresEnJuego.size() == 1) {
-			notificarObservers(Informe.DEVOLVER_GANADOR);
-		}
-	}*/
-	
-	/*public void comenzarAGestionarApuestas() {
-		this.setApuestaMayor(0);
-		this.notificarObservers(Informe.REALIZAR_APUESTAS);
-	}
-	
-	public void igualarApuestas(int opcion) {
-		boolean apuestasIgualadas;
-		do{
-			apuestasIgualadas = true;
-			for (Jugador jugador : jugadoresMesa){
-				if (jugador.isHapasado() || jugador.getApuesta() == apuestaMayor) {
-					continue; //No se le solicita la apuesta si el jugador ha pasado
-				}
-				switch(opcion) {
-					case 1:	
-						
-						this.notificarObservers(Informe.JUGADOR_DECIDE_APOSTAR, jugador);
-						
-					break;
-					case 2:
-						
-						jugador.pasar();
-						
-					break;
-				}
-				//Verificar que las apuestas esten igualadas
-				for (Jugador j : jugadoresMesa) {
-					if (!j.isHapasado() && j.getApuesta() != apuestaMayor) {
-						apuestasIgualadas = false;
-						break;
-					}
-				}
-			}
-		} while (!apuestasIgualadas);
-	}
-	
-	
-	public void jugadorDecideApostar(int apuesta, Jugador jugador) {
-		if (apuesta > jugador.getFondo() || apuesta < this.getApuestaMayor()) { //Como se a que jugador le tengo que asignar
-			this.notificarObservers(Informe.APUESTA_INSUFICIENTE);
-		}
-	}
-	
-	
-	public void obtenerApuesta(int apuesta, Jugador jugador) {
-		if (apuesta > jugador.getFondo() || apuesta < this.getApuestaMayor()) {
-			
-			this.notificarObservers(Informe.FONDO_INSUFICIENTE);
-			
-		} else if (apuesta < this.getApuestaMayor()) {
-			
-			this.notificarObservers(Informe.APUESTA_INSUFICIENTE);
-			
-			} else {
-				
-				jugador.setApuesta(apuesta);
-				if (apuesta > this.getApuestaMayor()) {
-					this.setApuestaMayor(apuesta);
-				}
-				
-		}
-	}*/
 	
 	@Override
 	public List<Jugador> getJugadoresMesa() throws RemoteException{
-		return jugadoresMesa;
+		return List.copyOf(this.jugadoresMesa);
 	}
 	
-	private int seleccionarJugadorRandom() throws RemoteException{
-		Random random = new Random();
-		return random.nextInt(this.jugadoresMesa.size());
-	}
-	
-	
-	@Override
-	public int getPosJugadorMano() throws RemoteException{
-		return posJugadorMano;
-	}
-	
-	@Override
-	public List<Jugador> devolverJugadorEntregaCarta() throws RemoteException{
+	private void seleccionarJugadorRandom() throws RemoteException{
+		List<Jugador> jugadoresMezclados = new LinkedList<Jugador>(this.jugadoresMesa);
+		Collections.shuffle(jugadoresMezclados);
+		this.jugadoresMesa.clear();
+		this.jugadoresMesa.addAll(jugadoresMezclados);
 		
-		List<Jugador> listaOrdenada = new LinkedList<Jugador>();
-		int jugManoAux = this.posJugadorMano;
-		for (int i = 0; i < this.jugadoresMesa.size(); i++) {
-			listaOrdenada.add(this.jugadoresMesa.get(jugManoAux));
-			jugManoAux = (jugManoAux + 1) % this.jugadoresMesa.size();
-		}
-		return listaOrdenada;		
+	}
+	
+	
+	@Override
+	public int getApuestaMayor() throws RemoteException{
+		return apuestaMayor;
+	}
+	@Override
+	public void setApuestaMayor(int apuestaMayor) throws RemoteException{
+		this.apuestaMayor = apuestaMayor;
 	}
 	
 	private void calcularResultadoJugadores() {
@@ -250,29 +147,47 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	}
 	
 	@Override
-	public List<Jugador> devolverGanador() throws RemoteException{
-		calcularResultadoJugadores();
-		List<Jugador> ganador = new LinkedList<Jugador>();
-		ganador.add(this.jugadoresMesa.get(0));
-		for (int i = 1; i < this.jugadoresMesa.size(); i++) {
-			Jugador jugadorActual = this.jugadoresMesa.get(i);
-			Jugador jugadorGanador = ganador.get(0);
-			if (jugadorActual.getResultadoValoresCartas().ordinal() > jugadorGanador.getResultadoValoresCartas().ordinal()) {
-				ganador.clear();
-				ganador.add(jugadorActual);
-			} else if (jugadorActual.getResultadoValoresCartas().ordinal() == jugadorGanador.getResultadoValoresCartas().ordinal()) {
-				Jugador jugadorConCartaMayor = buscarCartaMayor(jugadorGanador, jugadorActual);
-				if (jugadorConCartaMayor.equals(jugadorActual)) {
-					ganador.clear();
-					ganador.add(jugadorActual);
-				} else if (jugadorConCartaMayor.equals(jugadorGanador)) {
-					ganador.clear();
-					ganador.add(jugadorGanador);
-				}
-			}
-		}
-		return ganador;
+	public List<Jugador> devolverGanador() throws RemoteException {
+	    // Calcular el resultado de cada jugador antes de determinar al ganador
+	    calcularResultadoJugadores();
+
+	    // Usar una cola en lugar de una lista para almacenar al ganador o ganadores
+	    Queue<Jugador> ganadores = new LinkedList<>();
+	    
+	    // Iniciar con el primer jugador en la cola de jugadoresMesa
+	    Jugador jugadorGanador = this.jugadoresMesa.peek();
+	    ganadores.add(jugadorGanador);  // Añadir el primer jugador como ganador temporal
+
+	    // Iterar sobre el resto de los jugadores en la cola
+	    for (Jugador jugadorActual : this.jugadoresMesa) {
+	        // Comparar el resultado del jugador actual con el jugador ganador
+	        if (jugadorActualMayorJugadorGanador(jugadorGanador, jugadorActual)) {
+	            ganadores.clear();  // Si hay un nuevo ganador, vaciar la cola de ganadores anteriores
+	            ganadores.add(jugadorActual);  // Agregar el nuevo ganador
+	            jugadorGanador = jugadorActual;  // Actualizar el jugador ganador
+	        } else if (jugadorActualIgualJugadorGanador(jugadorGanador, jugadorActual)) {
+	            // Si tienen el mismo resultado, comparar la carta mayor
+	            Jugador jugadorConCartaMayor = buscarCartaMayor(jugadorGanador, jugadorActual);
+	            if (jugadorConCartaMayor.equals(jugadorActual)) {
+	                ganadores.clear();  // Limpiar si el nuevo jugador tiene la carta mayor
+	                ganadores.add(jugadorActual);  // Agregar el nuevo ganador con la carta mayor
+	                jugadorGanador = jugadorActual;  // Actualizar el jugador ganador
+	            }
+	        }
+	    }
+	    
+	    return List.copyOf(ganadores); // Retornar la cola de ganadores
 	}
+
+	private boolean jugadorActualIgualJugadorGanador(Jugador jugadorGanador, Jugador jugadorActual) {
+		return jugadorActual.getResultadoValoresCartas().ordinal() == jugadorGanador.getResultadoValoresCartas().ordinal();
+	}
+
+	private boolean jugadorActualMayorJugadorGanador(Jugador jugadorGanador, Jugador jugadorActual) {
+		return jugadorActual.getResultadoValoresCartas().ordinal() > jugadorGanador.getResultadoValoresCartas().ordinal();
+	}
+
+
 	
 	private Jugador buscarCartaMayor(Jugador jugador1, Jugador jugador2) throws RemoteException {
 		Carta carta1 = jugador1.getCartasOrdenadas().getLast();
@@ -292,6 +207,19 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	
 	public void sacarJugador(Jugador jugador) {
 		this.jugadoresMesa.remove(jugador);
+	}
+	
+	private void gestionarTurnosApuestas() throws RemoteException {
+		 int totalJugadores = this.jugadoresMesa.size();
+		 for (int i = 0; i < totalJugadores; i++) {
+			 int indiceJugador = (this.getPosJugadorMano() + i) % totalJugadores;
+			 Jugador jugador = this.jugadoresMesa.get(indiceJugador);	 
+			 this.notificarObservadores(Informe.REALIZAR_APUESTAS);
+		 }
+	}
+	
+	public Jugador getJugadorMano() {
+		return this.jugadorMano;
 	}
 
 }

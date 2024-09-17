@@ -3,6 +3,7 @@ package ar.edu.unlu.poker.controlador;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import ar.edu.unlu.poker.modelo.IMesa;
 import ar.edu.unlu.poker.modelo.Informe;
@@ -15,6 +16,7 @@ public class Controlador implements IControladorRemoto{
 	
 	private IVista vista;
 	private IMesa mesa;
+	private Jugador jugadorActual;
 	
 	public Controlador(IVista vista) {
 		this.vista = vista;
@@ -43,7 +45,7 @@ public class Controlador implements IControladorRemoto{
 	
 	public List<Jugador> getListaOrdenadaJugadorMano() {
 		try {
-			return mesa.devolverJugadorEntregaCarta();
+			return mesa.getJugadoresMesa();
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -107,10 +109,24 @@ public class Controlador implements IControladorRemoto{
 			vista.notificarApuestaRealizada();
 		break;
 		case REALIZAR_APUESTAS:
-			vista.mostrarOpcionesApuestas();
+			this.gestionarApuestas();
 		break;
 		
 	}
+	}
+	
+	private void gestionarApuestas() throws RemoteException {
+		if (this.jugadorActual.isEnJuego()) {
+			if (esTurnoJugador()) {
+				vista.mostrarOpcionesApuestas();
+			}
+		} else {
+			//informar que espere su turno
+		}
+	}
+	
+	private boolean esTurnoJugador() throws RemoteException {
+		return this.mesa.getJugadoresMesa().get(0).getNombre().equals(jugadorActual.getNombre());
 	}
 
 	@Override
@@ -118,5 +134,13 @@ public class Controlador implements IControladorRemoto{
 		this.mesa = (IMesa) modeloRemoto;
 	}
 
+
+	public Jugador getJugadorActual() {
+		return jugadorActual;
+	}
+
+	public void setJugadorActual(Jugador jugadorActual) {
+		this.jugadorActual = jugadorActual;
+	}
 	
 }
