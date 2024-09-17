@@ -74,7 +74,9 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			dealer.repartirCartasRonda(this.jugadoresMesa);
 			this.notificarObservadores(Informe.CARTAS_REPARTIDAS);
 		
-			this.notificarObservadores(Informe.REALIZAR_APUESTAS);
+			this.gestionarTurnosApuestas();
+			
+			esperarQueTodosApuesten();
 			
 			//igualar apuestas
 			
@@ -87,6 +89,18 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			
 			//deea seguir jugando]?
 		//}
+	}
+	
+	public void esperarQueTodosApuesten(){
+	    boolean todosHanApostadoOPasado = false;
+	    while (!todosHanApostadoOPasado) {
+	        todosHanApostadoOPasado = true;
+	        for (Jugador jugador : jugadoresMesa) {
+	            if (!jugador.getHaApostado() || jugador.isEnJuego()) {
+	                todosHanApostadoOPasado = false;
+	            }
+	        }
+	    }
 	}
 	
 	public void gestionarApuestas(Jugador jugador, int apuesta) throws RemoteException {
@@ -156,7 +170,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	    
 	    // Iniciar con el primer jugador en la cola de jugadoresMesa
 	    Jugador jugadorGanador = this.jugadoresMesa.peek();
-	    ganadores.add(jugadorGanador);  // Añadir el primer jugador como ganador temporal
+	    ganadores.add(jugadorGanador);  // Aï¿½adir el primer jugador como ganador temporal
 
 	    // Iterar sobre el resto de los jugadores en la cola
 	    for (Jugador jugadorActual : this.jugadoresMesa) {

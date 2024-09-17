@@ -13,6 +13,7 @@ public class Jugador implements Serializable{
 	private int apuesta;
 	private int fondo;
 	private boolean enJuego;//Indica si el jugador sigue en juego o ha pasado
+	private boolean haApostado;
 	
 	public Jugador(String nombre) {
 		this.nombre = nombre;
@@ -64,7 +65,21 @@ public class Jugador implements Serializable{
 	public void realizarApuesta(int cantidad) {
 		this.apuesta += cantidad;
 		this.fondo -= cantidad;
+		this.haApostado = true;
 	}
+	
+	public boolean getHaApostado() {
+		return this.haApostado;
+	}
+	
+	public void setHaApostado(boolean aposto) {
+		this.haApostado = aposto;
+	}
+	
+	public void resetearTurno() {
+        this.haApostado = false;
+        this.enJuego = true;
+    }
 	
 	public boolean comprobarFondosSuficientes(int cantidad) {
 		if (cantidad > this.fondo) {
