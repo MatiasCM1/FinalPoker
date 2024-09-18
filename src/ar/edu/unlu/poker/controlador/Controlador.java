@@ -85,7 +85,7 @@ public class Controlador implements IControladorRemoto{
 	public void actualizar(IObservableRemoto modelo, Object cambio) throws RemoteException {
 		switch((Informe) cambio) {
 		case JUGADOR_MANO:
-			vista.mostrarJugadorMano(((IMesa)modelo).obtenerJugadorMano());
+			vista.mostrarJugadorMano(((IMesa)modelo).getJugadorMano());
 		break;
 		case CARTAS_REPARTIDAS:
 			vista.mostrarCartasJugador(((IMesa)modelo).getJugadoresMesa());
@@ -121,7 +121,7 @@ public class Controlador implements IControladorRemoto{
 				vista.mostrarOpcionesApuestas();
 			}
 		} else {
-			//informar que espere su turno
+			vista.mostrarQueNoEsSuTurno(this.mesa.getJugadoresMesa().get(0).getNombre());
 		}
 	}
 	

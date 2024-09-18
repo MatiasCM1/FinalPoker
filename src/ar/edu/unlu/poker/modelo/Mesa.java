@@ -45,17 +45,14 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	}
 	
 	@Override
-	public Jugador obtenerJugadorMano() throws RemoteException{
-		return this.jugadorMano;
-	}
-	
-	@Override
 	public void iniciarJuego() throws RemoteException {
 		
 		if (this.jugadoresMesa.size() < 2) {
 			this.notificarObservadores(Informe.CANT_JUGADORES_INSUFICIENTES);
 			return;
 		}
+		
+		Jugador jugadorAux;
 		
 		this.seleccionarJugadorRandom();
 		this.jugadorMano = this.jugadoresMesa.peek();
@@ -86,6 +83,8 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			this.notificarObservadores(Informe.DEVOLVER_GANADOR);
 			this.jugadoresMesa.forEach(Jugador::resetearCartas);
 			//pasar al siguiente jguador mano
+			jugadorAux = this.jugadoresMesa.poll();
+			this.jugadoresMesa.add(jugadorAux); //Agrego al anterior jugador mano al final de la cola
 			
 			//deea seguir jugando]?
 		//}
@@ -224,13 +223,30 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	}
 	
 	private void gestionarTurnosApuestas() throws RemoteException {
-		 int totalJugadores = this.jugadoresMesa.size();
-		 for (int i = 0; i < totalJugadores; i++) {
-			 int indiceJugador = (this.getPosJugadorMano() + i) % totalJugadores;
-			 Jugador jugador = this.jugadoresMesa.get(indiceJugador);	 
+		 LinkedList<Jugador> colaAux = new LinkedList<Jugador>();
+		 Jugador jugador;
+		 while (!this.jugadoresMesa.isEmpty()) {
+			 jugador = this.jugadoresMesa.poll();
 			 this.notificarObservadores(Informe.REALIZAR_APUESTAS);
+			 esperarQueJugadorApueste(jugador);
+			 colaAux.add(jugador);
+		 }
+		 
+		 for (Jugador j : colaAux) {
+			 this.jugadoresMesa.add(j);
 		 }
 	}
+	
+	
+	public void esperarQueJugadorApueste(Jugador jugador){
+	    boolean jugadorHaApostadoOPasado = false;
+	    while (!jugadorHaApostadoOPasado) {
+	        if (jugador.getHaApostado() || !jugador.isEnJuego()) {
+	        	jugadorHaApostadoOPasado = true;
+	        }
+	    }
+	}
+	
 	
 	public Jugador getJugadorMano() {
 		return this.jugadorMano;

@@ -273,5 +273,10 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	public void notificarApuestaRealizada() {
 		areaSalida.append("Apuesta de " + jugadorActual.getNombre() + ": " + jugadorActual.getApuesta() + "\n");
 	}
+
+	@Override
+	public void mostrarQueNoEsSuTurno(String nombreJugadorApuesta) {
+		areaSalida.append("Espere su turno, " + nombreJugadorApuesta + " esta decidiendo en este momento");
+	}
     
 }
