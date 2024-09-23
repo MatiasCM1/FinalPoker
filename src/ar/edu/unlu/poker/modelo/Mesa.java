@@ -61,7 +61,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 
 			this.jugadoresMesa.forEach(jugador -> jugador.setEnJuego(true));
 			this.jugadoresMesa.forEach(jugador -> jugador.setApuesta(0));
-			this.jugadorMano = this.jugadoresMesa.peek(); //Guardo el jugador mano de la ronda
+			//this.jugadorMano = this.jugadoresMesa.peek(); //Guardo el jugador mano de la ronda
 			//this.jugadoresMesa.add(jugadorMano);//pongo el jugador mano en ultimo lugar
 			this.apuestaMayor = 0;
 			Dealer dealer = new Dealer();
@@ -73,7 +73,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		
 			this.gestionarTurnosApuestas();
 			
-			esperarQueTodosApuesten();
+			//esperarQueTodosApuesten();
 			
 			//igualar apuestas
 			
@@ -228,7 +228,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		 while (!this.jugadoresMesa.isEmpty()) {
 			 jugador = this.jugadoresMesa.poll();
 			 this.notificarObservadores(Informe.REALIZAR_APUESTAS);
-			 esperarQueJugadorApueste(jugador);
+			 //esperarQueJugadorApueste(jugador);
 			 colaAux.add(jugador);
 		 }
 		 

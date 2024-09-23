@@ -85,7 +85,7 @@ public class Controlador implements IControladorRemoto{
 	public void actualizar(IObservableRemoto modelo, Object cambio) throws RemoteException {
 		switch((Informe) cambio) {
 		case JUGADOR_MANO:
-			vista.mostrarJugadorMano(((IMesa)modelo).getJugadorMano());
+			vista.mostrarJugadorMano((getJugadorMano()));
 		break;
 		case CARTAS_REPARTIDAS:
 			vista.mostrarCartasJugador(((IMesa)modelo).getJugadoresMesa());
@@ -141,6 +141,10 @@ public class Controlador implements IControladorRemoto{
 
 	public void setJugadorActual(Jugador jugadorActual) {
 		this.jugadorActual = jugadorActual;
+	}
+	
+	public Jugador getJugadorMano() throws RemoteException {
+		return mesa.getJugadoresMesa().get(0);
 	}
 	
 }

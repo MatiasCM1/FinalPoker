@@ -2,7 +2,6 @@ package ar.edu.unlu.poker.modelo;
 
 import java.rmi.RemoteException;
 import java.util.List;
-import java.util.Queue;
 
 import ar.edu.unlu.rmimvc.observer.IObservableRemoto;
 
@@ -26,6 +25,6 @@ public interface IMesa extends IObservableRemoto {
 
 	void jugadorIgualaApuesta(Jugador jugador) throws RemoteException;
 	
-	Jugador getJugadorMano();
+	//Jugador getJugadorMano();
 
 }
