@@ -14,7 +14,11 @@ import ar.edu.unlu.rmimvc.observer.ObservableRemoto;
 
 public class Mesa extends ObservableRemoto implements IMesa{
 	
+<<<<<<< Updated upstream
 	private Queue<Jugador> jugadoresMesa = new LinkedList<Jugador>();
+=======
+	private List<Jugador> jugadoresMesa = new LinkedList<Jugador>();
+>>>>>>> Stashed changes
 	private static final HashMap<String, Integer> valorCarta = new HashMap<String, Integer>();
 	private int apuestaMayor;
 	private Jugador jugadorMano;
