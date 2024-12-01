@@ -14,11 +14,7 @@ import ar.edu.unlu.rmimvc.observer.ObservableRemoto;
 
 public class Mesa extends ObservableRemoto implements IMesa{
 	
-<<<<<<< Updated upstream
 	private Queue<Jugador> jugadoresMesa = new LinkedList<Jugador>();
-=======
-	private List<Jugador> jugadoresMesa = new LinkedList<Jugador>();
->>>>>>> Stashed changes
 	private static final HashMap<String, Integer> valorCarta = new HashMap<String, Integer>();
 	private int apuestaMayor;
 	private Jugador jugadorMano;
@@ -58,21 +54,23 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		
 		Jugador jugadorAux;
 		
-		this.seleccionarJugadorRandom();
-		this.jugadorMano = this.jugadoresMesa.peek();
 		
 		//while (this.jugadoresMesa.size() >= 2 && this.jugadoresMesa.size() <= 7) {
 
 			this.jugadoresMesa.forEach(jugador -> jugador.setEnJuego(true));
 			this.jugadoresMesa.forEach(jugador -> jugador.setApuesta(0));
-			//this.jugadorMano = this.jugadoresMesa.peek(); //Guardo el jugador mano de la ronda
-			//this.jugadoresMesa.add(jugadorMano);//pongo el jugador mano en ultimo lugar
+			
+			this.seleccionarJugadorRandom();
+			this.jugadorMano = this.jugadoresMesa.peek();
+			
 			this.apuestaMayor = 0;
 			Dealer dealer = new Dealer();
 			dealer.setearCartasRonda();
-			//this.posJugadorMano = this.seleccionarJugadorRandom();
+			
 			this.notificarObservadores(Informe.JUGADOR_MANO);
+			
 			dealer.repartirCartasRonda(this.jugadoresMesa);
+			
 			this.notificarObservadores(Informe.CARTAS_REPARTIDAS);
 		
 			this.gestionarTurnosApuestas();
@@ -119,7 +117,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	}
 	
 	@Override
-	public void jugadorIgualaApuesta(Jugador jugador) throws RemoteException {
+	public void jugadorFicha(Jugador jugador) throws RemoteException {
 		if (!jugador.comprobarFondosSuficientes(this.apuestaMayor)) {
 			this.notificarObservadores(Informe.FONDO_INSUFICIENTE);
 		} else {

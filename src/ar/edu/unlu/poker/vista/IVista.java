@@ -24,7 +24,7 @@ public interface IVista {
 
 	void iniciar();
 	
-	void solicitarApuestas(String input);
+	/*void solicitarApuestas(String input);
 	
 	void mostrarOpcionesApuestas();
 
@@ -34,6 +34,6 @@ public interface IVista {
 
 	void notificarApuestaRealizada();
 
-	void mostrarQueNoEsSuTurno(String nombreJugadorApuesta);
+	void mostrarQueNoEsSuTurno(String nombreJugadorApuesta);*/
 
 }

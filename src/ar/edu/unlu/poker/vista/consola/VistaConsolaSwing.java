@@ -74,10 +74,6 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         		esperandoEntrada = true;
         		menu(input);
         	break;
-        	case SOLICITAR_APUESTAS:
-        		esperandoEntrada = true;
-        		solicitarApuestas(input);
-        	break;
         }
     }
     
@@ -93,7 +89,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
                 esperandoEntrada = false;
                 mostrarOpcionesMenu(); 
             } else {
-                areaSalida.append("Nombre no válido. Por favor, ingrese un nombre para comenzar:\n");
+                areaSalida.append("Nombre no valido. Por favor, ingrese un nombre para comenzar:\n");
             }
             return;
         }
@@ -109,11 +105,10 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     				break;
     			case "2":
     				this.esperandoEntrada = false;
-    				this.estadoFlujo = Estados.SOLICITAR_APUESTAS;
     				controlador.iniciarGame();
     				break;
     			case "0":
-    				areaSalida.append("Se salió del juego exitosamente. ¡Saludos!\n");
+    				areaSalida.append("Se salio del juego exitosamente. Saludos!\n");
     				try {
     					controlador.jugadorSeRetiraDelJuego(jugadorActual);
     				} catch (RemoteException e) {
@@ -128,13 +123,12 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     	}
     }
     
-    public void solicitarApuestas(String input) {
+   /* public void solicitarApuestas(String input) {
         if (esperandoEntrada) {
         	switch (input.toLowerCase()) {
         		case "1":
         			try {
-        				//this.estadoFlujo = Informes.ESPERAR_DESCARTES
-        				controlador.igualarApuesta(jugadorActual);
+        				controlador.fichar(jugadorActual);
         				areaSalida.append(this.jugadorActual.getNombre() + " ha igualado la apuesta mayor\n");
         				this.esperandoEntrada = false;
         			} catch (RemoteException e1) {
@@ -142,13 +136,13 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         			};
         			break;
         		case "2":
-        				//this.estadoFlujo = Informes.ESPERAR_DESCARTES
         				this.esperandoEntrada = false;
         				this.estadoFlujo = Estados.ESPERANDO_INGRESO_APUESTA;
-        				solicitarMontoApuesta();
+        				controlador.realizarEnvite(this.jugadorActual);
         			break;
         		case "3":
         			jugadorActual.pasar();
+        			controlador.sacarJugadorRonda(this.jugadorActual);
         			areaSalida.append(this.jugadorActual.getNombre() + " ha pasado la ronda\n");
         			break;
         		default:
@@ -158,24 +152,18 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         }
     }
     
-    
- private void solicitarMontoApuesta() {
-	 areaSalida.append("Ingrese una suma igual o mayor como apuesta\n");
-	 String apuestaInput = campoEntrada.getText();
-	 try {
-		controlador.realizarApuesta(jugadorActual, Integer.parseInt(apuestaInput));
-	} catch (NumberFormatException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (RemoteException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
- }   
+    public void mostrarOpcionesApuestas() {
+    	areaSalida.append("Seleccione una opciï¿½n:\n");
+    	areaSalida.append("1 - Fichar\n");
+    	areaSalida.append("2 - Envitar\n");
+    	areaSalida.append("3 - Pasar\n");
+    	this.estadoFlujo = Estados.MENU_APUESTAS;
+    }
+    */ 
     
 
     private void mostrarOpcionesMenu() {
-        areaSalida.append("Seleccione una opción:\n");
+        areaSalida.append("Seleccione una opciï¿½n:\n");
         areaSalida.append("1 - Ver Lista de Jugadores\n");
         areaSalida.append("2 - Comenzar Juego\n");
         areaSalida.append("0 - Salir\n");
@@ -191,30 +179,6 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         mostrarOpcionesMenu();
     }
     
-    public void mostrarOpcionesApuestas() {
-    		areaSalida.append("Seleccione una opción:\n");
-    		areaSalida.append("1 - Fichar\n");
-    		areaSalida.append("2 - Envitar\n");
-    		areaSalida.append("3 - Pasar\n");
-    		this.estadoFlujo = Estados.SOLICITAR_APUESTAS;
-    	
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
     @Override
     public void mostrarJugadorMano(Jugador jugador) {
         areaSalida.append("Jugador en mano: " + jugador.getNombre() + "\n");
@@ -243,7 +207,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
     @Override
     public void informarCantJugadoresExcedidos() {
-        areaSalida.append("La cantidad de jugadores excede el límite permitido.\n");
+        areaSalida.append("La cantidad de jugadores excede el lï¿½mite permitido.\n");
     }
 
     @Override
@@ -260,7 +224,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         this.setVisible(true);
     }
     
-    public void notificarFondosInsuficientes() {
+   /* public void notificarFondosInsuficientes() {
     	areaSalida.append("Fondos insuficientes para realizar dicha apuesta\n");
     }
 
@@ -277,6 +241,6 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	@Override
 	public void mostrarQueNoEsSuTurno(String nombreJugadorApuesta) {
 		areaSalida.append("Espere su turno, " + nombreJugadorApuesta + " esta decidiendo en este momento");
-	}
+	}*/
     
 }

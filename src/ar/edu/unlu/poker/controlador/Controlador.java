@@ -65,12 +65,8 @@ public class Controlador implements IControladorRemoto{
 		mesa.sacarJugador(jugador);
 	}
 	
-	public void realizarApuesta(Jugador jugador, int apuesta) throws RemoteException {
-		mesa.gestionarApuestas(jugador, apuesta);
-	}
-	
-	public void igualarApuesta(Jugador jugador) throws RemoteException {
-		mesa.jugadorIgualaApuesta(jugador);
+	public void fichar(Jugador jugador) throws RemoteException {
+		mesa.jugadorFicha(jugador);
 	}
 	
 	public void iniciarGame() {
@@ -99,7 +95,7 @@ public class Controlador implements IControladorRemoto{
 		case DEVOLVER_GANADOR:
 			vista.mostrarGanador(((IMesa)modelo).devolverGanador());
 		break;
-		case FONDO_INSUFICIENTE:
+		/*case FONDO_INSUFICIENTE:
 			vista.notificarFondosInsuficientes();
 		break;
 		case APUESTA_INSUFICIENTE:
@@ -110,12 +106,12 @@ public class Controlador implements IControladorRemoto{
 		break;
 		case REALIZAR_APUESTAS:
 			this.gestionarApuestas();
-		break;
+		break;*/
 		
 	}
 	}
 	
-	private void gestionarApuestas() throws RemoteException {
+	/*private void gestionarApuestas() throws RemoteException {
 		if (this.jugadorActual.isEnJuego()) {
 			if (esTurnoJugador()) {
 				vista.mostrarOpcionesApuestas();
@@ -123,7 +119,7 @@ public class Controlador implements IControladorRemoto{
 		} else {
 			vista.mostrarQueNoEsSuTurno(this.mesa.getJugadoresMesa().get(0).getNombre());
 		}
-	}
+	}*/
 	
 	private boolean esTurnoJugador() throws RemoteException {
 		return this.mesa.getJugadoresMesa().get(0).getNombre().equals(jugadorActual.getNombre());
