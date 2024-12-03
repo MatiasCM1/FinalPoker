@@ -82,7 +82,7 @@ public class Jugador implements Serializable{
     }
 	
 	public boolean comprobarFondosSuficientes(int cantidad) {
-		if (cantidad > this.fondo) {
+		if (cantidad >= this.fondo) {
 			return false;
 		}
 		return true;

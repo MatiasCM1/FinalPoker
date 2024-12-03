@@ -9,6 +9,7 @@ import ar.edu.unlu.poker.modelo.IMesa;
 import ar.edu.unlu.poker.modelo.Informe;
 import ar.edu.unlu.poker.modelo.Jugador;
 import ar.edu.unlu.poker.vista.IVista;
+import ar.edu.unlu.poker.vista.consola.Estados;
 import ar.edu.unlu.rmimvc.cliente.IControladorRemoto;
 import ar.edu.unlu.rmimvc.observer.IObservableRemoto;
 
@@ -65,10 +66,6 @@ public class Controlador implements IControladorRemoto{
 		mesa.sacarJugador(jugador);
 	}
 	
-	public void fichar(Jugador jugador) throws RemoteException {
-		mesa.jugadorFicha(jugador);
-	}
-	
 	public void iniciarGame() {
 		try {
 			mesa.iniciarJuego();
@@ -95,35 +92,31 @@ public class Controlador implements IControladorRemoto{
 		case DEVOLVER_GANADOR:
 			vista.mostrarGanador(((IMesa)modelo).devolverGanador());
 		break;
-		/*case FONDO_INSUFICIENTE:
+		case JUGADOR_DECIDE_APOSTAR:
+			Jugador jugadorTurno = mesa.getJugadorTurnoApuesta();
+			vista.mostrarJugadoresTurnos(jugadorTurno);
+		break;
+		case TURNO_JUGADOR:
+			vista.mostrarOpcionesApuestas(mesa.getJugadorTurnoApuesta());
+		break;
+		case FONDO_INSUFICIENTE:
 			vista.notificarFondosInsuficientes();
 		break;
-		case APUESTA_INSUFICIENTE:
-			vista.notificarApuestaInsuficiente();
+		case FICHA_REALIZADA:
+			vista.notificarFichaRealizada();
 		break;
-		case APUESTA_REALIZADA:
-			vista.notificarApuestaRealizada();
+		case RONDA_TURNO_TERMINADA:
+			vista.rondaApuestasFinalizada();
 		break;
-		case REALIZAR_APUESTAS:
-			this.gestionarApuestas();
-		break;*/
-		
-	}
-	}
-	
-	/*private void gestionarApuestas() throws RemoteException {
-		if (this.jugadorActual.isEnJuego()) {
-			if (esTurnoJugador()) {
-				vista.mostrarOpcionesApuestas();
-			}
-		} else {
-			vista.mostrarQueNoEsSuTurno(this.mesa.getJugadoresMesa().get(0).getNombre());
+		case ENVITE_REALIZADO:
+			vista.notificarEnviteRealizado();
+		break;
+		case PASAR_REALIZADO:
+			vista.notificarJugadorHaPasado();
+		break;
 		}
-	}*/
-	
-	private boolean esTurnoJugador() throws RemoteException {
-		return this.mesa.getJugadoresMesa().get(0).getNombre().equals(jugadorActual.getNombre());
 	}
+	
 
 	@Override
 	public <T extends IObservableRemoto> void setModeloRemoto(T modeloRemoto) throws RemoteException {
@@ -141,6 +134,45 @@ public class Controlador implements IControladorRemoto{
 	
 	public Jugador getJugadorMano() throws RemoteException {
 		return mesa.getJugadoresMesa().get(0);
+	}
+	
+	public void jugadorFicha(Jugador jugador) throws RemoteException{
+		mesa.fichar(jugador);
+	}
+	
+	public void jugadorEnvita(Jugador jugador, int apuesta) {
+		try {
+			mesa.envitar(jugador, apuesta);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void jugadorPasa(Jugador jugador) {
+		try {
+			mesa.pasar(jugador);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public Jugador jugadorTurno(){
+		try {
+			return mesa.getJugadorTurnoApuesta();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void avanzarTurno() {
+		try {
+			mesa.determinarTurnoApuesta();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

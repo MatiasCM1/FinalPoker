@@ -15,8 +15,10 @@ import ar.edu.unlu.rmimvc.observer.ObservableRemoto;
 public class Mesa extends ObservableRemoto implements IMesa{
 	
 	private Queue<Jugador> jugadoresMesa = new LinkedList<Jugador>();
+	private  Queue<Jugador> jugadoresMesaAux = new LinkedList<Jugador>();
 	private static final HashMap<String, Integer> valorCarta = new HashMap<String, Integer>();
 	private int apuestaMayor;
+	private Jugador jugadorTurnoApuesta;
 	private Jugador jugadorMano;
 
 	static {
@@ -59,6 +61,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 
 			this.jugadoresMesa.forEach(jugador -> jugador.setEnJuego(true));
 			this.jugadoresMesa.forEach(jugador -> jugador.setApuesta(0));
+			this.jugadoresMesa.forEach(jugador -> jugador.setHaApostado(false));
 			
 			this.seleccionarJugadorRandom();
 			this.jugadorMano = this.jugadoresMesa.peek();
@@ -72,10 +75,12 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			dealer.repartirCartasRonda(this.jugadoresMesa);
 			
 			this.notificarObservadores(Informe.CARTAS_REPARTIDAS);
-		
-			this.gestionarTurnosApuestas();
 			
-			//esperarQueTodosApuesten();
+			this.jugadoresMesaAux = this.jugadoresMesa;
+		
+			this.determinarTurnoApuesta();
+			
+			esperarQueTodosApuesten();
 			
 			//igualar apuestas
 			
@@ -105,24 +110,11 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	}
 	
 	public void gestionarApuestas(Jugador jugador, int apuesta) throws RemoteException {
-		if (!jugador.comprobarFondosSuficientes(apuesta)) {
-			this.notificarObservadores(Informe.FONDO_INSUFICIENTE);
-		}
 		if (apuesta >= this.apuestaMayor) {
 			jugador.realizarApuesta(apuesta);
 			this.notificarObservadores(Informe.APUESTA_REALIZADA);
 		} else {
 			this.notificarObservadores(Informe.APUESTA_INSUFICIENTE);
-		}
-	}
-	
-	@Override
-	public void jugadorFicha(Jugador jugador) throws RemoteException {
-		if (!jugador.comprobarFondosSuficientes(this.apuestaMayor)) {
-			this.notificarObservadores(Informe.FONDO_INSUFICIENTE);
-		} else {
-			jugador.realizarApuesta(apuestaMayor);
-			this.notificarObservadores(Informe.APUESTA_REALIZADA);
 		}
 	}
 	
@@ -224,34 +216,61 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		this.jugadoresMesa.remove(jugador);
 	}
 	
-	private void gestionarTurnosApuestas() throws RemoteException {
-		 LinkedList<Jugador> colaAux = new LinkedList<Jugador>();
-		 Jugador jugador;
-		 while (!this.jugadoresMesa.isEmpty()) {
-			 jugador = this.jugadoresMesa.poll();
-			 this.notificarObservadores(Informe.REALIZAR_APUESTAS);
-			 //esperarQueJugadorApueste(jugador);
-			 colaAux.add(jugador);
-		 }
-		 
-		 for (Jugador j : colaAux) {
-			 this.jugadoresMesa.add(j);
-		 }
+	public void determinarTurnoApuesta() throws RemoteException {
+		if (!this.jugadoresMesaAux.isEmpty()) {
+			Jugador jugador;
+			jugador = jugadoresMesaAux.poll();
+			if (jugador.isEnJuego()) {
+				this.jugadorTurnoApuesta = jugador;
+				this.notificarObservadores(Informe.TURNO_JUGADOR);		 
+			}
+		} else {
+			this.notificarObservadores(Informe.RONDA_TURNO_TERMINADA);
+		}
+	}	
+	
+	public void fichar(Jugador jugador) throws RemoteException {
+		if (jugador.comprobarFondosSuficientes(this.apuestaMayor)) {
+			jugador.realizarApuesta(apuestaMayor);
+			this.notificarObservadores(Informe.FICHA_REALIZADA);
+		} else {
+			this.notificarObservadores(Informe.FONDO_INSUFICIENTE);
+		}
 	}
 	
-	
-	public void esperarQueJugadorApueste(Jugador jugador){
-	    boolean jugadorHaApostadoOPasado = false;
-	    while (!jugadorHaApostadoOPasado) {
-	        if (jugador.getHaApostado() || !jugador.isEnJuego()) {
-	        	jugadorHaApostadoOPasado = true;
-	        }
-	    }
+	public void envitar(Jugador jugador, int apuesta) {
+		if (jugador.comprobarFondosSuficientes(apuesta)) {
+			jugador.realizarApuesta(apuesta);
+			try {
+				setApuestaMayor(Math.max(getApuestaMayor(), apuesta));
+				this.notificarObservadores(Informe.ENVITE_REALIZADO);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				this.notificarObservadores(Informe.FONDO_INSUFICIENTE);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
-	
+	public void pasar(Jugador jugador) {
+		jugador.pasar();
+		try {
+			this.notificarObservadores(Informe.PASAR_REALIZADO);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+		
 	public Jugador getJugadorMano() {
 		return this.jugadorMano;
+	}
+	
+	public Jugador getJugadorTurnoApuesta() {
+		return this.jugadorTurnoApuesta;
 	}
 
 }
