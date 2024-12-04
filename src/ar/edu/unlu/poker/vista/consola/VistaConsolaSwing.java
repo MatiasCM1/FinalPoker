@@ -197,7 +197,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
    @Override
    public void mostrarOpcionesApuestas(Jugador jugadorTurno) {
-    	if (this.jugadorActual.getNombre().equals(jugadorTurno.getNombre())) {
+    	if (jugadorTurno != null && jugadorActual.getNombre().equals(jugadorTurno.getNombre())) {
     		areaSalida.append("Seleccione una opcion:\n");
     		areaSalida.append("1 - Fichar\n");
     		areaSalida.append("2 - Envitar\n");

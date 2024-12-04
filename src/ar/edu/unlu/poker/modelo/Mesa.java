@@ -100,23 +100,13 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	public void esperarQueTodosApuesten(){
 	    boolean todosHanApostadoOPasado = false;
 	    while (!todosHanApostadoOPasado) {
-	        todosHanApostadoOPasado = true;
-	        for (Jugador jugador : jugadoresMesa) {
-	            if (!jugador.getHaApostado() || jugador.isEnJuego()) {
-	                todosHanApostadoOPasado = false;
-	            }
-	        }
+	        todosHanApostadoOPasado = jugadoresMesa.stream().allMatch(
+	            jugador -> !jugador.isEnJuego() || jugador.getApuesta() == apuestaMayor
+	        );
 	    }
+	    
 	}
 	
-	public void gestionarApuestas(Jugador jugador, int apuesta) throws RemoteException {
-		if (apuesta >= this.apuestaMayor) {
-			jugador.realizarApuesta(apuesta);
-			this.notificarObservadores(Informe.APUESTA_REALIZADA);
-		} else {
-			this.notificarObservadores(Informe.APUESTA_INSUFICIENTE);
-		}
-	}
 	
 	
 	@Override
@@ -227,6 +217,11 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		} else {
 			this.notificarObservadores(Informe.RONDA_TURNO_TERMINADA);
 		}
+		if (jugadoresMesa.stream().noneMatch(Jugador::isEnJuego)) {
+		    notificarObservadores(Informe.RONDA_TURNO_TERMINADA);
+		    return;
+		}
+
 	}	
 	
 	public void fichar(Jugador jugador) throws RemoteException {
