@@ -78,9 +78,9 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			
 			this.jugadoresMesaAux = this.jugadoresMesa;
 		
-			this.determinarTurnoApuesta();
+			//this.determinarTurnoApuesta();
 			
-			esperarQueTodosApuesten();
+			//esperarQueTodosApuesten();
 			
 			//igualar apuestas
 			
