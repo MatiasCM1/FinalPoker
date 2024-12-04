@@ -204,6 +204,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     		areaSalida.append("3 - Pasar\n");
     		this.estadoFlujo = Estados.MENU_APUESTAS;
     	} else {
+    		this.esperandoEntrada = true;
     		areaSalida.append("Esperando a que " + jugadorTurno.getNombre() + " realice su apuesta\n");
     	}
     }
