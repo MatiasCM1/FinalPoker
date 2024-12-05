@@ -34,4 +34,8 @@ public interface IVista {
 
 	void informarNoTurno(String nombre);
 
+	void informarTurnoApuestaOtroJugador(String nombreJugadorApuesta);
+
+	void notificarApuestasDesiguales();
+
 }

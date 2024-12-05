@@ -89,6 +89,10 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         		esperandoEntrada = true;
         		realizarEnvite(input);
         	break;
+        	case MENU_APUESTAS_DESIGUALES:
+        		esperandoEntrada = true;
+        		menuApuestasDesiguales(input);
+        	break;
         }
     }
     
@@ -208,38 +212,61 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
     @Override
     public void mostrarMenuApuestas() {
-    	if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurnoParaAposter().getNombre())) {
-    		areaSalida.append("Seleccione una opcion:\n");
-    		areaSalida.append("1 - Envitar\n");
-    		this.estadoFlujo = Estados.MENU_APUESTAS;
-    	} else {
-    		areaSalida.append("Esperando a que " + controlador.getJugadorTurnoParaAposter().getNombre() + " realice su apuesta\n");
-    	}
+    	areaSalida.append("Seleccione una opcion:\n");
+    	areaSalida.append("1 - Envitar\n");
+    	this.estadoFlujo = Estados.MENU_APUESTAS;
     }
     
-    public void menuApuestas(String input) {	
-    	if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurnoParaAposter().getNombre())) {
-    		if (esperandoEntrada) {
-    			switch (input.toLowerCase()) {
-    				case "1":
-    					areaSalida.append("Ingrese el valor de la apuesta.\n");
-    					this.estadoFlujo = Estados.ESPERANDO_ENVITE;
-    					break;
-    				default:
-    					areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
-    					break;
+    public void menuApuestas(String input) {
+    	//VERIFICAR QUE SOLO PUEA INGRESAR EL QUE LE TOCA EL TURNO	
+    	if (esperandoEntrada) {
+    		switch (input.toLowerCase()) {
+    			case "1":
+    				areaSalida.append("Ingrese el valor de la apuesta.\n");
+    				this.estadoFlujo = Estados.ESPERANDO_ENVITE;
+    			break;
+    			default:
+    				areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
+    			break;
     			}
     		}
-    	}
     }
     
     public void realizarEnvite(String input) {
+    	//MODIFICAR ESTAS VALIDACIONES EN LA VISTA
     	if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurnoParaAposter().getNombre())) {
     		this.apuestaJugadorActual = Integer.parseInt(input);
     		controlador.realizarLasApuestas(this.jugadorActual, this.apuestaJugadorActual);
-    		//controlador.realizarEnvite(Integer.parseInt(input));
     		this.esperandoEntrada = false;
     	}
+    }
+    
+    private void menuApuestasDesiguales() {
+    	areaSalida.append("Seleccione una opcion:\n");
+    	areaSalida.append("1 - Fichar\n");
+    	areaSalida.append("2 - Pasar\n");
+    	this.estadoFlujo = Estados.MENU_APUESTAS_DESIGUALES;
+    }
+    
+    public void menuApuestasDesiguales(String input) {
+    	//VERIFICAR QUE SOLO PUEA INGRESAR AQUELLOS CON APUESTA MENOR A LA AMXIMA	
+    	if (esperandoEntrada) {
+    		switch (input.toLowerCase()) {
+    			case "1":
+    				areaSalida.append("Ha seleccionado la opcion de fichar\n");
+    				controlador.realizarFicha(this.jugadorActual);
+    				this.esperandoEntrada = false;
+    			break;
+    			case "2":
+    				areaSalida.append("Ha seleccionado la opcion de pasar\n");
+    				controlador.realizarPasar(this.jugadorActual);
+    				this.esperandoEntrada = false;
+    			break;
+    			default:
+    				areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
+    			break;
+    			}
+    		}
     }
    
 //----------------------------------------------------------------------------------------------------------
@@ -261,6 +288,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	   if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurnoParaAposter().getNombre())) {
 		   areaSalida.append("Fondos insuficientes para realizar la apuesta.\n");
 		   this.apuestaJugadorActual = 0;
+		   
 	   }
    }
 
@@ -286,6 +314,17 @@ public class VistaConsolaSwing extends JFrame implements IVista {
    @Override
    public void informarNoTurno(String nombre) {
 	   areaSalida.append("esperando a que" + nombre + " realice su apuesta.\n");
+   }
+
+   @Override
+	public void informarTurnoApuestaOtroJugador(String nombreJugadorApuesta) {
+	   areaSalida.append("Esperando a que " + nombreJugadorApuesta + " realice su apuesta\n");
+	}
+
+   @Override
+	public void notificarApuestasDesiguales() {
+	   areaSalida.append("Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima");
+	   menuApuestasDesiguales();
    }
  
     

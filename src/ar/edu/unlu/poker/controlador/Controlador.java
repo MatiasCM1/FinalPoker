@@ -38,10 +38,11 @@ public class Controlador implements IControladorRemoto{
 				vista.mostrarGanador(((IMesa)modelo).devolverGanador());
 				break;
 			case TURNO_APUESTA_JUGADOR:
-				vista.mostrarMenuApuestas();
-				break;
-			case ENVITE_REALIZADO:
-				vista.notificarEnviteRealizado();
+				if (this.jugadorActual.getNombre().equals(this.getJugadorTurnoParaAposter().getNombre())) {
+					vista.mostrarMenuApuestas();
+				} else {
+					vista.informarTurnoApuestaOtroJugador(this.jugadorActual.getNombre());
+				}
 				break;
 			case FONDO_INSUFICIENTE:
 				vista.informarFondosInsuficientes();
@@ -51,6 +52,11 @@ public class Controlador implements IControladorRemoto{
 				break;
 			case INFORMAR_NO_TURNO_APUESTA:
 				vista.informarNoTurno(this.getJugadorTurnoParaAposter().getNombre());
+				break;
+			case APUESTAS_DESIGUALES:
+				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual.getNombre())) { //Comprueba que el nombre del jugadorActuañ forme parte de la cola de jugadores con  apuesta menor a la mayor
+					vista.notificarApuestasDesiguales();
+				}
 				break;
 		}
 		
@@ -134,20 +140,29 @@ public class Controlador implements IControladorRemoto{
 		}
 		return null;
 	}
-	
-	public void realizarEnvite(int envite) {
+
+	public void realizarLasApuestas(Jugador jugador, int apuesta) {
 		try {
-			mesa.jugadorEnvita(envite);
+			mesa.realizarApuesta(jugador, apuesta);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void realizarFicha(Jugador jugador) {
+		try {
+			mesa.jugadorFicha(jugador);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void realizarLasApuestas(Jugador jugador, int apuesta) {
+	public void realizarPasar(Jugador jugador) {
 		try {
-			mesa.realizarApuesta(jugador, apuesta);
+			mesa.jugadorPasa(jugador);
 		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
