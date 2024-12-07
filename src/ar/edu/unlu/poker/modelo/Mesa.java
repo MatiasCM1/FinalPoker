@@ -146,7 +146,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		this.notificarObservadores(Informe.APUESTAS_DESIGUALES);
 	}
 
-	private void devolverResultados() throws RemoteException {
+	public void devolverResultados() throws RemoteException {
 		// TODO Auto-generated method stub
 		this.notificarObservadores(Informe.DEVOLVER_GANADOR);
 	}
@@ -162,7 +162,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		return this.jugadoresApuestaInsuficiente.contains(jugador);
 	}
 
-	private boolean comprobarIgualdad() {
+	public boolean comprobarIgualdad() throws RemoteException{
 		return mapa.values().stream().allMatch(apuesta -> apuesta == this.apuestaMayor);
 	}
 

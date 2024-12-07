@@ -34,4 +34,8 @@ public interface IMesa extends IObservableRemoto {
 	void jugadorPasaPostEnvite(Jugador jugador) throws RemoteException;
 
 	boolean perteneceJugadorApuestaMenor(Jugador jugador) throws RemoteException;
+	
+	public boolean comprobarIgualdad() throws RemoteException;
+	
+	void devolverResultados() throws RemoteException;
 }
