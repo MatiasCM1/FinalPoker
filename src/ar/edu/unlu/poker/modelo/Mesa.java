@@ -126,7 +126,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 					if (!comprobarIgualdad()) {
 						this.igualarApuestas(jugador);
 					} else {
-						this.devolverResultados();
+						this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA);
 					}
 				} else { 
 					this.notificarObservadores(Informe.TURNO_APUESTA_JUGADOR);
@@ -146,7 +146,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		this.notificarObservadores(Informe.APUESTAS_DESIGUALES);
 	}
 
-	public void devolverResultados() throws RemoteException {
+	private void devolverResultados() throws RemoteException {
 		// TODO Auto-generated method stub
 		this.notificarObservadores(Informe.DEVOLVER_GANADOR);
 	}
@@ -162,7 +162,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		return this.jugadoresApuestaInsuficiente.contains(jugador);
 	}
 
-	public boolean comprobarIgualdad() throws RemoteException{
+	private boolean comprobarIgualdad(){
 		return mapa.values().stream().allMatch(apuesta -> apuesta == this.apuestaMayor);
 	}
 
@@ -194,6 +194,13 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		this.rondaApuesta.remove(jugador);
 		this.notificarObservadores(Informe.JUGADOR_PASA_APUESTA);	
 	}
+	
+	@Override
+	public void mirarSiDevolverResultados() throws RemoteException {
+		if (this.comprobarIgualdad()) {
+			this.devolverResultados();
+		}
+	}	
 	
 	public int getApuestaJugador(Jugador jugador) throws RemoteException{
 		//Jugador juga = mapa.keySet().stream().filter(j -> j.equals(jugador)).findFirst().orElse(null);
@@ -306,6 +313,6 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			return jugador2;
 		} 
 		return null;
-	}	
+	}
 	
 }

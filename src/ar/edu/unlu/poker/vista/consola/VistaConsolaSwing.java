@@ -328,8 +328,8 @@ public class VistaConsolaSwing extends JFrame implements IVista {
    }
 
    @Override
-   public void notificarJugadorIgualaApuesta(String jugadorTurno) {
-	   areaSalida.append(jugadorTurno + " iguala la apuesta y sigue en el juego.\n");
+   public void notificarJugadorIgualaApuesta() {
+	   areaSalida.append("Se iguala la apuesta y sigue en el juego.\n");
    }
 
    @Override
@@ -340,6 +340,11 @@ public class VistaConsolaSwing extends JFrame implements IVista {
    @Override
    public void notificarEsperarJugadorIgualeApuesta() {
 	   areaSalida.append("esperando a que se igualen las apuestas.\n");
+   }
+
+   @Override
+   public void notificarRondaApuestaFinalizada() {
+	   areaSalida.append("Apuestas igualadas.\n");
    }
  
     

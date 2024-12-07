@@ -38,10 +38,12 @@ public interface IVista {
 
 	void notificarApuestasDesiguales();
 
-	void notificarJugadorIgualaApuesta(String jugadorTurno);
+	void notificarJugadorIgualaApuesta();
 
 	void notificarJugadorPasaApuesta();
 
 	void notificarEsperarJugadorIgualeApuesta();
+
+	void notificarRondaApuestaFinalizada();
 
 }
