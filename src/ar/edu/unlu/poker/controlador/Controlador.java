@@ -18,6 +18,7 @@ public class Controlador implements IControladorRemoto{
 	private IVista vista;
 	private IMesa mesa;
 	private Jugador jugadorActual;
+	private Jugador jugadorVistaApuestas;
 
 	@Override
 	public void actualizar(IObservableRemoto modelo, Object cambio) throws RemoteException {
@@ -41,7 +42,7 @@ public class Controlador implements IControladorRemoto{
 				if (this.jugadorActual.getNombre().equals(this.getJugadorTurnoParaAposter().getNombre())) {
 					vista.mostrarMenuApuestas();
 				} else {
-					vista.informarTurnoApuestaOtroJugador(this.jugadorActual.getNombre());
+					vista.informarTurnoApuestaOtroJugador();
 				}
 				break;
 			case FONDO_INSUFICIENTE:
@@ -51,11 +52,21 @@ public class Controlador implements IControladorRemoto{
 				vista.informarApuestaRealizada(this.getJugadorTurnoParaAposter().getNombre(), mesa.getApuestaJugador(this.getJugadorTurnoParaAposter()));
 				break;
 			case INFORMAR_NO_TURNO_APUESTA:
-				vista.informarNoTurno(this.getJugadorTurnoParaAposter().getNombre());
+				vista.informarNoTurno();
 				break;
 			case APUESTAS_DESIGUALES:
-				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual.getNombre())) { //Comprueba que el nombre del jugadorActuañ forme parte de la cola de jugadores con  apuesta menor a la mayor
+				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { //Comprueba que el nombre del jugadorActuañ forme parte de la cola de jugadores con  apuesta menor a la mayor
 					vista.notificarApuestasDesiguales();
+				} else {
+					vista.notificarEsperarJugadorIgualeApuesta();
+				}
+				break;
+			case JUGADOR_IGUALA_APUESTA:
+				vista.notificarJugadorIgualaApuesta(this.getJugadorTurnoParaAposter().getNombre());
+				break;
+			case JUGADOR_PASA_APUESTA:
+				if (this.jugadorVistaApuestas.getNombre().equals(this.jugadorActual.getNombre())) {
+					vista.notificarJugadorPasaApuesta();
 				}
 				break;
 		}
@@ -124,7 +135,7 @@ public class Controlador implements IControladorRemoto{
 	}
 	
 	public Jugador getJugadorMano() throws RemoteException {
-		return mesa.getJugadoresMesa().get(0);
+		return mesa.getJugadorMano();
 	}
 	
 	public void jugadorSeRetiraDelJuego(Jugador jugador) throws RemoteException {
@@ -151,7 +162,8 @@ public class Controlador implements IControladorRemoto{
 
 	public void realizarFicha(Jugador jugador) {
 		try {
-			mesa.jugadorFicha(jugador);
+			this.jugadorVistaApuestas = jugador;
+			mesa.jugadorFichaPostEnvite(jugador);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -160,7 +172,8 @@ public class Controlador implements IControladorRemoto{
 
 	public void realizarPasar(Jugador jugador) {
 		try {
-			mesa.jugadorPasa(jugador);
+			this.jugadorVistaApuestas = jugador;
+			mesa.jugadorPasaPostEnvite(jugador);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

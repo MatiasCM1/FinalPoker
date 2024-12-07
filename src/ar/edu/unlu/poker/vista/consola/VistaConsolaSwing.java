@@ -312,19 +312,34 @@ public class VistaConsolaSwing extends JFrame implements IVista {
    }
 
    @Override
-   public void informarNoTurno(String nombre) {
-	   areaSalida.append("esperando a que" + nombre + " realice su apuesta.\n");
+   public void informarNoTurno() {
+	   areaSalida.append("esperando a que se realicen las apuesta.\n");
    }
 
    @Override
-	public void informarTurnoApuestaOtroJugador(String nombreJugadorApuesta) {
-	   areaSalida.append("Esperando a que " + nombreJugadorApuesta + " realice su apuesta\n");
+	public void informarTurnoApuestaOtroJugador() {
+	   areaSalida.append("Esperando a que realicen su apuesta\n");
 	}
 
    @Override
 	public void notificarApuestasDesiguales() {
-	   areaSalida.append("Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima");
+	   areaSalida.append("Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima.\n");
 	   menuApuestasDesiguales();
+   }
+
+   @Override
+   public void notificarJugadorIgualaApuesta(String jugadorTurno) {
+	   areaSalida.append(jugadorTurno + " iguala la apuesta y sigue en el juego.\n");
+   }
+
+   @Override
+   public void notificarJugadorPasaApuesta() {
+	   areaSalida.append(this.jugadorActual.getNombre() + " pasa y queda fuera del juego.\n");
+   }
+
+   @Override
+   public void notificarEsperarJugadorIgualeApuesta() {
+	   areaSalida.append("esperando a que se igualen las apuestas.\n");
    }
  
     

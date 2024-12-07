@@ -32,10 +32,16 @@ public interface IVista {
 
 	void informarApuestaRealizada(String nombre, int apuestaJugador);
 
-	void informarNoTurno(String nombre);
+	void informarNoTurno();
 
-	void informarTurnoApuestaOtroJugador(String nombreJugadorApuesta);
+	void informarTurnoApuestaOtroJugador();
 
 	void notificarApuestasDesiguales();
+
+	void notificarJugadorIgualaApuesta(String jugadorTurno);
+
+	void notificarJugadorPasaApuesta();
+
+	void notificarEsperarJugadorIgualeApuesta();
 
 }

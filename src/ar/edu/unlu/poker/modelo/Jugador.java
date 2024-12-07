@@ -30,6 +30,13 @@ public class Jugador implements Serializable{
 	}
 	
 
+	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(nombre);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
