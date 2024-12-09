@@ -215,6 +215,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     	areaSalida.append("Seleccione una opcion:\n");
     	areaSalida.append("1 - Envitar\n");
     	areaSalida.append("2 - Fichar\n");
+    	areaSalida.append("3 - Pasar\n");
     	this.estadoFlujo = Estados.MENU_APUESTAS;
     }
     
@@ -229,6 +230,9 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     			case "2":
     				this.realizarFiche();
     			break;
+    			case "3":
+    				this.realizarPase();
+    			break;
     			default:
     				areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
     			break;
@@ -236,7 +240,14 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     		}
     }
     
-    public void realizarEnvite(String input) {
+    private void realizarPase() {
+    	if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurnoParaAposter().getNombre())) {
+    		controlador.realizarLosPases(this.jugadorActual);
+    		this.esperandoEntrada = false;
+    	}
+	}
+
+	public void realizarEnvite(String input) {
     	//MODIFICAR ESTAS VALIDACIONES EN LA VISTA
     	if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurnoParaAposter().getNombre())) {
     		this.apuestaJugadorActual = Integer.parseInt(input);
