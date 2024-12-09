@@ -163,6 +163,14 @@ public class Controlador implements IControladorRemoto{
 			e.printStackTrace();
 		}
 	}
+	
+	public void realizarLasApuestas(Jugador jugador) {
+		try {
+			mesa.realizarApuesta(jugador, mesa.getApuestaMayor());
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void realizarFicha(Jugador jugador) {
 		try {
