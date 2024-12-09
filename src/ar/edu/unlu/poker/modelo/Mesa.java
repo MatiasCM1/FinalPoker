@@ -15,9 +15,14 @@ import ar.edu.unlu.rmimvc.observer.ObservableRemoto;
 public class Mesa extends ObservableRemoto implements IMesa{
 	
 	private Queue<Jugador> jugadoresMesa = new LinkedList<Jugador>();
+	private  Queue<Jugador> rondaApuesta = new LinkedList<Jugador>();
+	private  List<Jugador> jugadoresApuestaInsuficiente = new LinkedList<Jugador>();
 	private static final HashMap<String, Integer> valorCarta = new HashMap<String, Integer>();
+	private HashMap<Jugador, Integer> mapa = new HashMap<Jugador, Integer>();
 	private int apuestaMayor;
 	private Jugador jugadorMano;
+	private Jugador jugadorTurnoApuesta;
+	private int pozo;
 
 	static {
 		valorCarta.put("2", 2);
@@ -59,9 +64,15 @@ public class Mesa extends ObservableRemoto implements IMesa{
 
 			this.jugadoresMesa.forEach(jugador -> jugador.setEnJuego(true));
 			this.jugadoresMesa.forEach(jugador -> jugador.setApuesta(0));
+			this.jugadoresMesa.forEach(jugador -> jugador.setHaApostado(false));
+			this.jugadoresApuestaInsuficiente.clear();
+			this.mapa.clear();
+			this.pozo = 0;
 			
 			this.seleccionarJugadorRandom();
-			this.jugadorMano = this.jugadoresMesa.peek();
+			this.jugadorMano = this.jugadoresMesa.poll();
+			this.jugadorTurnoApuesta = this.jugadorMano;
+			this.jugadoresMesa.add(this.jugadorMano);
 			
 			this.apuestaMayor = 0;
 			Dealer dealer = new Dealer();
@@ -72,60 +83,155 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			dealer.repartirCartasRonda(this.jugadoresMesa);
 			
 			this.notificarObservadores(Informe.CARTAS_REPARTIDAS);
-		
-			this.gestionarTurnosApuestas();
 			
-			//esperarQueTodosApuesten();
-			
-			//igualar apuestas
+			this.notificarObservadores(Informe.TURNO_APUESTA_JUGADOR);
 			
 			//descartes
 			//apuestas
 		
-			this.notificarObservadores(Informe.DEVOLVER_GANADOR);
-			this.jugadoresMesa.forEach(Jugador::resetearCartas);
+			//this.calcularPozo();
+			
+			//this.notificarObservadores(Informe.DEVOLVER_GANADOR);
+			//this.jugadoresMesa.forEach(Jugador::resetearCartas);
 			//pasar al siguiente jguador mano
-			jugadorAux = this.jugadoresMesa.poll();
-			this.jugadoresMesa.add(jugadorAux); //Agrego al anterior jugador mano al final de la cola
+			//jugadorAux = this.jugadoresMesa.poll();
+			//this.jugadoresMesa.add(jugadorAux); //Agrego al anterior jugador mano al final de la cola
 			
 			//deea seguir jugando]?
 		//}
 	}
 	
-	public void esperarQueTodosApuesten(){
-	    boolean todosHanApostadoOPasado = false;
-	    while (!todosHanApostadoOPasado) {
-	        todosHanApostadoOPasado = true;
-	        for (Jugador jugador : jugadoresMesa) {
-	            if (!jugador.getHaApostado() || jugador.isEnJuego()) {
-	                todosHanApostadoOPasado = false;
-	            }
-	        }
-	    }
+	private void calcularPozo() {
+		for (Jugador j : this.jugadoresMesa) {
+			this.pozo = this.pozo + j.getApuesta();
+		}
 	}
-	
-	public void gestionarApuestas(Jugador jugador, int apuesta) throws RemoteException {
-		if (!jugador.comprobarFondosSuficientes(apuesta)) {
-			this.notificarObservadores(Informe.FONDO_INSUFICIENTE);
-		}
-		if (apuesta >= this.apuestaMayor) {
-			jugador.realizarApuesta(apuesta);
-			this.notificarObservadores(Informe.APUESTA_REALIZADA);
+
+	@Override
+	public void realizarApuesta(Jugador jugador, int apuesta)  throws RemoteException{
+		int apuestaAnterior = 0;		
+		if (esJugadorTurnoApuesta(jugador)) {
+			if (jugador.comprobarFondosSuficientes(apuesta)) {
+				this.restarFondosAgregarApuestaJugador(this.jugadorTurnoApuesta, apuesta);
+				if (apuesta > this.apuestaMayor) {
+					this.apuestaMayor = apuesta;
+				}
+				this.rondaApuesta.add(jugador);
+				this.mapa.put(jugador, apuesta);
+				
+				this.notificarObservadores(Informe.APUESTA_REALIZADA);
+				this.jugadorTurnoApuesta = this.jugadoresMesa.poll();
+				this.jugadoresMesa.add(this.jugadorTurnoApuesta);
+				
+				
+				if (this.comprobarFinalVueltaApuesta(this.jugadorTurnoApuesta)) {
+					if (!comprobarIgualdad()) {
+						this.igualarApuestas(jugador);
+					} else {
+						this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA);
+					}
+				} else { 
+					this.notificarObservadores(Informe.TURNO_APUESTA_JUGADOR);
+				}
+			} else {
+				this.notificarObservadores(Informe.FONDO_INSUFICIENTE);
+				this.notificarObservadores(Informe.TURNO_APUESTA_JUGADOR);
+			}
 		} else {
-			this.notificarObservadores(Informe.APUESTA_INSUFICIENTE);
+			this.notificarObservadores(Informe.INFORMAR_NO_TURNO_APUESTA); //Informar quien debe hacer la apuesta, que espere su turno
 		}
+		
+	}
+
+	public void igualarApuestas(Jugador jugador) throws RemoteException {
+		this.determinarJugadoresConApuestaInsuficiente();
+		this.notificarObservadores(Informe.APUESTAS_DESIGUALES);
+	}
+
+	private void devolverResultados() throws RemoteException {
+		// TODO Auto-generated method stub
+		this.notificarObservadores(Informe.DEVOLVER_GANADOR);
+	}
+
+	private void determinarJugadoresConApuestaInsuficiente() {
+		mapa.entrySet().forEach(entry -> {if (entry.getValue() < this.apuestaMayor) { 
+			this.jugadoresApuestaInsuficiente.add(entry.getKey());
+		}});
 	}
 	
 	@Override
-	public void jugadorFicha(Jugador jugador) throws RemoteException {
-		if (!jugador.comprobarFondosSuficientes(this.apuestaMayor)) {
-			this.notificarObservadores(Informe.FONDO_INSUFICIENTE);
-		} else {
-			jugador.realizarApuesta(apuestaMayor);
-			this.notificarObservadores(Informe.APUESTA_REALIZADA);
+	public boolean perteneceJugadorApuestaMenor(Jugador jugador) throws RemoteException{
+		return this.jugadoresApuestaInsuficiente.contains(jugador);
+	}
+
+	private boolean comprobarIgualdad(){
+		return mapa.values().stream().allMatch(apuesta -> apuesta == this.apuestaMayor);
+	}
+
+	private void restarFondosAgregarApuestaJugador(Jugador jugador, int apuesta) {
+		jugador.realizarApuesta(apuesta);
+	}
+
+	private boolean comprobarFinalVueltaApuesta(Jugador jugador) {
+		return mapa.containsKey(jugador);
+	}
+
+	private boolean esJugadorTurnoApuesta(Jugador jugador) {
+		return jugador.getNombre().equals(this.jugadorTurnoApuesta.getNombre());
+	}
+	
+	public void jugadorFichaPostEnvite(Jugador jugador) throws RemoteException{
+		if (jugador.comprobarFondosSuficientes(this.apuestaMayor)) { //VERIFICAR SI TIENE FONDOS SUFICIENTES
+			jugador.setApuesta(this.apuestaMayor);//Actualizo la apuesta del jugador
+			mapa.put(jugador, this.apuestaMayor);//Actualizo la apuesta del jugador en el hash map
+			this.jugadoresApuestaInsuficiente.remove(jugador);
+			this.notificarObservadores(Informe.JUGADOR_IGUALA_APUESTA);
 		}
 	}
 	
+	public void jugadorPasaPostEnvite(Jugador jugador) throws RemoteException{
+		this.jugadoresApuestaInsuficiente.remove(jugador);
+		jugador.pasar();
+		this.mapa.remove(jugador);
+		this.rondaApuesta.remove(jugador);
+		this.notificarObservadores(Informe.JUGADOR_PASA_APUESTA);	
+	}
+	
+	@Override
+	public void jugadorPasa(Jugador jugador) throws RemoteException {
+		jugador.pasar();
+		this.notificarObservadores(Informe.JUGADOR_PASA_APUESTA);
+		this.jugadorTurnoApuesta = this.jugadoresMesa.poll();
+		this.jugadoresMesa.add(this.jugadorTurnoApuesta);
+		
+		
+		if (this.comprobarFinalVueltaApuesta(this.jugadorTurnoApuesta)) {
+			if (!comprobarIgualdad()) {
+				this.igualarApuestas(jugador);
+			} else {
+				this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA);
+			}
+		} else { 
+			this.notificarObservadores(Informe.TURNO_APUESTA_JUGADOR);
+		}	
+	}
+	
+	@Override
+	public void mirarSiDevolverResultados() throws RemoteException {
+		if (this.comprobarIgualdad()) {
+			this.devolverResultados();
+		}
+	}	
+	
+	public int getApuestaJugador(Jugador jugador) throws RemoteException{
+		//Jugador juga = mapa.keySet().stream().filter(j -> j.equals(jugador)).findFirst().orElse(null);
+		return this.mapa.get(jugador);
+	}
+
+	@Override
+	public Jugador getJugadorMano() throws RemoteException {
+		return this.jugadorMano;
+	}
 	
 	@Override
 	public List<Jugador> getJugadoresMesa() throws RemoteException{
@@ -140,7 +246,6 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		
 	}
 	
-	
 	@Override
 	public int getApuestaMayor() throws RemoteException{
 		return apuestaMayor;
@@ -149,6 +254,19 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	public void setApuestaMayor(int apuestaMayor) throws RemoteException{
 		this.apuestaMayor = apuestaMayor;
 	}
+	
+	public void sacarJugador(Jugador jugador) throws RemoteException{
+		this.jugadoresMesa.remove(jugador);
+	}
+	
+	@Override
+	public Jugador getJugadorTurnoApuesta() throws RemoteException {
+		return jugadorTurnoApuesta;
+	}
+	
+	
+	//------------------------------------------------------------------------------------------
+	//RESULTADOS
 	
 	private void calcularResultadoJugadores() {
 		this.jugadoresMesa.forEach(t -> {
@@ -201,8 +319,6 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	private boolean jugadorActualMayorJugadorGanador(Jugador jugadorGanador, Jugador jugadorActual) {
 		return jugadorActual.getResultadoValoresCartas().ordinal() > jugadorGanador.getResultadoValoresCartas().ordinal();
 	}
-
-
 	
 	private Jugador buscarCartaMayor(Jugador jugador1, Jugador jugador2) throws RemoteException {
 		Carta carta1 = jugador1.getCartasOrdenadas().getLast();
@@ -220,38 +336,4 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		return null;
 	}
 	
-	public void sacarJugador(Jugador jugador) {
-		this.jugadoresMesa.remove(jugador);
-	}
-	
-	private void gestionarTurnosApuestas() throws RemoteException {
-		 LinkedList<Jugador> colaAux = new LinkedList<Jugador>();
-		 Jugador jugador;
-		 while (!this.jugadoresMesa.isEmpty()) {
-			 jugador = this.jugadoresMesa.poll();
-			 this.notificarObservadores(Informe.REALIZAR_APUESTAS);
-			 //esperarQueJugadorApueste(jugador);
-			 colaAux.add(jugador);
-		 }
-		 
-		 for (Jugador j : colaAux) {
-			 this.jugadoresMesa.add(j);
-		 }
-	}
-	
-	
-	public void esperarQueJugadorApueste(Jugador jugador){
-	    boolean jugadorHaApostadoOPasado = false;
-	    while (!jugadorHaApostadoOPasado) {
-	        if (jugador.getHaApostado() || !jugador.isEnJuego()) {
-	        	jugadorHaApostadoOPasado = true;
-	        }
-	    }
-	}
-	
-	
-	public Jugador getJugadorMano() {
-		return this.jugadorMano;
-	}
-
 }

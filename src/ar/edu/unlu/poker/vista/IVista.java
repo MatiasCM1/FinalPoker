@@ -24,16 +24,26 @@ public interface IVista {
 
 	void iniciar();
 	
-	/*void solicitarApuestas(String input);
+	void mostrarMenuApuestas();
 	
-	void mostrarOpcionesApuestas();
+	void informarFondosInsuficientes();
 
-	void notificarFondosInsuficientes();
+	void notificarEnviteRealizado();
 
-	void notificarApuestaInsuficiente();
+	void informarApuestaRealizada(String nombre, int apuestaJugador);
 
-	void notificarApuestaRealizada();
+	void informarNoTurno();
 
-	void mostrarQueNoEsSuTurno(String nombreJugadorApuesta);*/
+	void informarTurnoApuestaOtroJugador();
+
+	void notificarApuestasDesiguales();
+
+	void notificarJugadorIgualaApuesta();
+
+	void notificarJugadorPasaApuesta();
+
+	void notificarEsperarJugadorIgualeApuesta();
+
+	void notificarRondaApuestaFinalizada();
 
 }

@@ -9,6 +9,7 @@ import ar.edu.unlu.poker.modelo.IMesa;
 import ar.edu.unlu.poker.modelo.Informe;
 import ar.edu.unlu.poker.modelo.Jugador;
 import ar.edu.unlu.poker.vista.IVista;
+import ar.edu.unlu.poker.vista.consola.Estados;
 import ar.edu.unlu.rmimvc.cliente.IControladorRemoto;
 import ar.edu.unlu.rmimvc.observer.IObservableRemoto;
 
@@ -17,6 +18,72 @@ public class Controlador implements IControladorRemoto{
 	private IVista vista;
 	private IMesa mesa;
 	private Jugador jugadorActual;
+	private Jugador jugadorVistaApuestas;
+
+	@Override
+	public void actualizar(IObservableRemoto modelo, Object cambio) throws RemoteException {
+		switch((Informe) cambio) {
+			case JUGADOR_MANO:
+				vista.mostrarJugadorMano((getJugadorMano()));
+				break;
+			case CARTAS_REPARTIDAS:
+				vista.mostrarCartasJugador(((IMesa)modelo).getJugadoresMesa());
+				break;
+			case CANT_JUGADORES_INSUFICIENTES:
+				vista.informarJugadoresInsuficientes();
+				break;
+			case CANT_JUGADORES_EXCEDIDOS:
+				vista.informarCantJugadoresExcedidos();
+				break;
+			case DEVOLVER_GANADOR:
+				vista.mostrarGanador(((IMesa)modelo).devolverGanador());
+				break;
+			case TURNO_APUESTA_JUGADOR:
+				if (this.jugadorActual.getNombre().equals(this.getJugadorTurnoParaAposter().getNombre())) {
+					vista.mostrarMenuApuestas();
+				} else {
+					vista.informarTurnoApuestaOtroJugador();
+				}
+				break;
+			case FONDO_INSUFICIENTE:
+				vista.informarFondosInsuficientes();
+				break;
+			case APUESTA_REALIZADA:
+				vista.informarApuestaRealizada(this.getJugadorTurnoParaAposter().getNombre(), mesa.getApuestaJugador(this.getJugadorTurnoParaAposter()));
+				break;
+			case INFORMAR_NO_TURNO_APUESTA:
+				vista.informarNoTurno();
+				break;
+			case APUESTAS_DESIGUALES:
+				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { //Comprueba que el nombre del jugadorActuañ forme parte de la cola de jugadores con  apuesta menor a la mayor
+					vista.notificarApuestasDesiguales();
+				} else {
+					vista.notificarEsperarJugadorIgualeApuesta();
+				}
+				break;
+			case JUGADOR_IGUALA_APUESTA:
+				vista.notificarJugadorIgualaApuesta();
+				mesa.mirarSiDevolverResultados();
+				break;
+			case JUGADOR_PASA_APUESTA:
+				vista.notificarJugadorPasaApuesta();
+				mesa.mirarSiDevolverResultados();
+				break;
+			case RONDA_APUESTAS_TERMINADA:
+				vista.notificarRondaApuestaFinalizada();
+				mesa.mirarSiDevolverResultados();
+				break;
+		}
+		
+	}
+	
+	public void iniciarGame() {
+		try {
+			mesa.iniciarJuego();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public Controlador(IVista vista) {
 		this.vista = vista;
@@ -28,10 +95,6 @@ public class Controlador implements IControladorRemoto{
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public int getApuestaMayor() throws RemoteException {
-		return mesa.getApuestaMayor();
 	}
 	
 	public List<Jugador> getJugadoresMesa(){
@@ -60,70 +123,6 @@ public class Controlador implements IControladorRemoto{
 		}
 		return null;
 	}
-	
-	public void jugadorSeRetiraDelJuego(Jugador jugador) throws RemoteException {
-		mesa.sacarJugador(jugador);
-	}
-	
-	public void fichar(Jugador jugador) throws RemoteException {
-		mesa.jugadorFicha(jugador);
-	}
-	
-	public void iniciarGame() {
-		try {
-			mesa.iniciarJuego();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void actualizar(IObservableRemoto modelo, Object cambio) throws RemoteException {
-		switch((Informe) cambio) {
-		case JUGADOR_MANO:
-			vista.mostrarJugadorMano((getJugadorMano()));
-		break;
-		case CARTAS_REPARTIDAS:
-			vista.mostrarCartasJugador(((IMesa)modelo).getJugadoresMesa());
-		break;
-		case CANT_JUGADORES_INSUFICIENTES:
-			vista.informarJugadoresInsuficientes();
-		break;
-		case CANT_JUGADORES_EXCEDIDOS:
-			vista.informarCantJugadoresExcedidos();
-		break;
-		case DEVOLVER_GANADOR:
-			vista.mostrarGanador(((IMesa)modelo).devolverGanador());
-		break;
-		/*case FONDO_INSUFICIENTE:
-			vista.notificarFondosInsuficientes();
-		break;
-		case APUESTA_INSUFICIENTE:
-			vista.notificarApuestaInsuficiente();
-		break;
-		case APUESTA_REALIZADA:
-			vista.notificarApuestaRealizada();
-		break;
-		case REALIZAR_APUESTAS:
-			this.gestionarApuestas();
-		break;*/
-		
-	}
-	}
-	
-	/*private void gestionarApuestas() throws RemoteException {
-		if (this.jugadorActual.isEnJuego()) {
-			if (esTurnoJugador()) {
-				vista.mostrarOpcionesApuestas();
-			}
-		} else {
-			vista.mostrarQueNoEsSuTurno(this.mesa.getJugadoresMesa().get(0).getNombre());
-		}
-	}*/
-	
-	private boolean esTurnoJugador() throws RemoteException {
-		return this.mesa.getJugadoresMesa().get(0).getNombre().equals(jugadorActual.getNombre());
-	}
 
 	@Override
 	public <T extends IObservableRemoto> void setModeloRemoto(T modeloRemoto) throws RemoteException {
@@ -140,7 +139,66 @@ public class Controlador implements IControladorRemoto{
 	}
 	
 	public Jugador getJugadorMano() throws RemoteException {
-		return mesa.getJugadoresMesa().get(0);
+		return mesa.getJugadorMano();
+	}
+	
+	public void jugadorSeRetiraDelJuego(Jugador jugador) throws RemoteException {
+		mesa.sacarJugador(jugador);
+	}
+	
+	public Jugador getJugadorTurnoParaAposter() {
+		try {
+			return mesa.getJugadorTurnoApuesta();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void realizarLasApuestas(Jugador jugador, int apuesta) {
+		try {
+			mesa.realizarApuesta(jugador, apuesta);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void realizarLasApuestas(Jugador jugador) {
+		try {
+			mesa.realizarApuesta(jugador, mesa.getApuestaMayor());
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void realizarLosPases(Jugador jugador) {
+		try {
+			mesa.jugadorPasa(jugador);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void realizarFicha(Jugador jugador) {
+		try {
+			this.jugadorVistaApuestas = jugador;
+			mesa.jugadorFichaPostEnvite(jugador);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void realizarPasar(Jugador jugador) {
+		try {
+			this.jugadorVistaApuestas = jugador;
+			mesa.jugadorPasaPostEnvite(jugador);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

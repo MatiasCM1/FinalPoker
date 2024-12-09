@@ -13,13 +13,16 @@ import ar.edu.unlu.poker.modelo.Jugador;
 import ar.edu.unlu.poker.vista.IVista;
 
 public class VistaConsolaSwing extends JFrame implements IVista {
-    private JTextArea areaSalida;
+	
+	private static final long serialVersionUID = 1L;
+	private JTextArea areaSalida;
     private JTextField campoEntrada;
     private Controlador controlador;
     private boolean esperandoEntrada;
     private String nombreJugadorActual;
     private Jugador jugadorActual;
     private Estados estadoFlujo;
+    private int apuestaJugadorActual = 0;
 
     public VistaConsolaSwing() {
     	this.estadoFlujo = Estados.SOLICITAR_NOMBRE_JUGADOR;
@@ -70,29 +73,57 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         		esperandoEntrada = true;
         		solicitarNombre(input);
         	break;
+        	case SOLICITAR_FONDO_JUGADOR:
+        		esperandoEntrada = true;
+        		solicitarFondo(input);
+        	break;
         	case MENU_PRINCIPAL:
         		esperandoEntrada = true;
         		menu(input);
         	break;
+        	case MENU_APUESTAS:
+        		esperandoEntrada = true;
+        		menuApuestas(input);
+        	break;
+        	case ESPERANDO_ENVITE:
+        		esperandoEntrada = true;
+        		realizarEnvite(input);
+        	break;
+        	case MENU_APUESTAS_DESIGUALES:
+        		esperandoEntrada = true;
+        		menuApuestasDesiguales(input);
+        	break;
         }
     }
+    
+  //----------------------------------------------------------------------------------------------------------
+  //JUEGO PRINCIPAL
+  //----------------------------------------------------------------------------------------------------------
     
     public void solicitarNombre(String input) {
     	if (esperandoEntrada) {
             nombreJugadorActual = input.trim();
             if (!nombreJugadorActual.isEmpty()) {
-                jugadorActual = new Jugador(nombreJugadorActual);
-                controlador.agregarJugador(jugadorActual);
-                controlador.setJugadorActual(jugadorActual);
-                setTitle("Poker - Jugador: " + nombreJugadorActual);
-                areaSalida.append("Bienvenido, " + nombreJugadorActual + "!\n");
-                esperandoEntrada = false;
-                mostrarOpcionesMenu(); 
+            	areaSalida.append("Ingrese el fondo que desea\n");
+            	this.estadoFlujo = Estados.SOLICITAR_FONDO_JUGADOR; 
             } else {
                 areaSalida.append("Nombre no valido. Por favor, ingrese un nombre para comenzar:\n");
             }
             return;
         }
+    }
+    
+    public void solicitarFondo(String input){
+    	//Validar que sea numero
+    	if (esperandoEntrada) {
+    		jugadorActual = new Jugador(this.nombreJugadorActual, Integer.parseInt(input));
+            controlador.agregarJugador(jugadorActual);
+            controlador.setJugadorActual(jugadorActual);
+            setTitle("Poker - Jugador: " + this.nombreJugadorActual);
+            areaSalida.append("Bienvenido, " + this.nombreJugadorActual + "!\n");
+            esperandoEntrada = false;
+            mostrarOpcionesMenu();
+    	}
     }
     
     public void menu(String input) {
@@ -123,47 +154,8 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     	}
     }
     
-   /* public void solicitarApuestas(String input) {
-        if (esperandoEntrada) {
-        	switch (input.toLowerCase()) {
-        		case "1":
-        			try {
-        				controlador.fichar(jugadorActual);
-        				areaSalida.append(this.jugadorActual.getNombre() + " ha igualado la apuesta mayor\n");
-        				this.esperandoEntrada = false;
-        			} catch (RemoteException e1) {
-        				e1.printStackTrace();
-        			};
-        			break;
-        		case "2":
-        				this.esperandoEntrada = false;
-        				this.estadoFlujo = Estados.ESPERANDO_INGRESO_APUESTA;
-        				controlador.realizarEnvite(this.jugadorActual);
-        			break;
-        		case "3":
-        			jugadorActual.pasar();
-        			controlador.sacarJugadorRonda(this.jugadorActual);
-        			areaSalida.append(this.jugadorActual.getNombre() + " ha pasado la ronda\n");
-        			break;
-        		default:
-        			areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
-        			break;
-        	}
-        }
-    }
-    
-    public void mostrarOpcionesApuestas() {
-    	areaSalida.append("Seleccione una opci�n:\n");
-    	areaSalida.append("1 - Fichar\n");
-    	areaSalida.append("2 - Envitar\n");
-    	areaSalida.append("3 - Pasar\n");
-    	this.estadoFlujo = Estados.MENU_APUESTAS;
-    }
-    */ 
-    
-
     private void mostrarOpcionesMenu() {
-        areaSalida.append("Seleccione una opci�n:\n");
+        areaSalida.append("Seleccione una opcion:\n");
         areaSalida.append("1 - Ver Lista de Jugadores\n");
         areaSalida.append("2 - Comenzar Juego\n");
         areaSalida.append("0 - Salir\n");
@@ -201,16 +193,6 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     }
 
     @Override
-    public void informarJugadoresInsuficientes() {
-        areaSalida.append("La cantidad de jugadores es insuficiente para iniciar el juego.\n");
-    }
-
-    @Override
-    public void informarCantJugadoresExcedidos() {
-        areaSalida.append("La cantidad de jugadores excede el l�mite permitido.\n");
-    }
-
-    @Override
     public void mostrarGanador(List<Jugador> ganadores) {
         areaSalida.append("Ganador:\n");
         for (Jugador ganador : ganadores) {
@@ -223,24 +205,169 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     public void iniciar() {
         this.setVisible(true);
     }
-    
-   /* public void notificarFondosInsuficientes() {
-    	areaSalida.append("Fondos insuficientes para realizar dicha apuesta\n");
+
+//----------------------------------------------------------------------------------------------------------
+//APUESTAS
+//----------------------------------------------------------------------------------------------------------
+
+    @Override
+    public void mostrarMenuApuestas() {
+    	areaSalida.append("Seleccione una opcion:\n");
+    	areaSalida.append("1 - Envitar\n");
+    	areaSalida.append("2 - Fichar\n");
+    	areaSalida.append("3 - Pasar\n");
+    	this.estadoFlujo = Estados.MENU_APUESTAS;
     }
-
-	@Override
-	public void notificarApuestaInsuficiente() {
-		areaSalida.append("Apuesta insuficiente\n");
+    
+    public void menuApuestas(String input) {
+    	//VERIFICAR QUE SOLO PUEA INGRESAR EL QUE LE TOCA EL TURNO	
+    	if (esperandoEntrada) {
+    		switch (input.toLowerCase()) {
+    			case "1":
+    				areaSalida.append("Ingrese el valor de la apuesta.\n");
+    				this.estadoFlujo = Estados.ESPERANDO_ENVITE;
+    			break;
+    			case "2":
+    				this.realizarFiche();
+    			break;
+    			case "3":
+    				this.realizarPase();
+    			break;
+    			default:
+    				areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
+    			break;
+    			}
+    		}
+    }
+    
+    private void realizarPase() {
+    	if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurnoParaAposter().getNombre())) {
+    		controlador.realizarLosPases(this.jugadorActual);
+    		this.esperandoEntrada = false;
+    	}
 	}
 
-	@Override
-	public void notificarApuestaRealizada() {
-		areaSalida.append("Apuesta de " + jugadorActual.getNombre() + ": " + jugadorActual.getApuesta() + "\n");
+	public void realizarEnvite(String input) {
+    	//MODIFICAR ESTAS VALIDACIONES EN LA VISTA
+    	if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurnoParaAposter().getNombre())) {
+    		this.apuestaJugadorActual = Integer.parseInt(input);
+    		controlador.realizarLasApuestas(this.jugadorActual, this.apuestaJugadorActual);
+    		this.esperandoEntrada = false;
+    	}
+    }
+    
+    private void realizarFiche() {
+    	if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurnoParaAposter().getNombre())) {
+    		controlador.realizarLasApuestas(this.jugadorActual);
+    		this.esperandoEntrada = false;
+    	}
+    }
+    
+    private void menuApuestasDesiguales() {
+    	areaSalida.append("Seleccione una opcion:\n");
+    	areaSalida.append("1 - Fichar\n");
+    	areaSalida.append("2 - Pasar\n");
+    	this.estadoFlujo = Estados.MENU_APUESTAS_DESIGUALES;
+    }
+    
+    public void menuApuestasDesiguales(String input) {
+    	//VERIFICAR QUE SOLO PUEA INGRESAR AQUELLOS CON APUESTA MENOR A LA AMXIMA	
+    	if (esperandoEntrada) {
+    		switch (input.toLowerCase()) {
+    			case "1":
+    				areaSalida.append("Ha seleccionado la opcion de fichar\n");
+    				controlador.realizarFicha(this.jugadorActual);
+    				this.esperandoEntrada = false;
+    			break;
+    			case "2":
+    				areaSalida.append("Ha seleccionado la opcion de pasar\n");
+    				controlador.realizarPasar(this.jugadorActual);
+    				this.esperandoEntrada = false;
+    			break;
+    			default:
+    				areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
+    			break;
+    			}
+    		}
+    }
+   
+//----------------------------------------------------------------------------------------------------------
+//NOTIFICACIONES
+//----------------------------------------------------------------------------------------------------------
+    
+   @Override
+   public void informarJugadoresInsuficientes() {
+       areaSalida.append("La cantidad de jugadores es insuficiente para iniciar el juego.\n");
+   }
+
+   @Override
+   public void informarCantJugadoresExcedidos() {
+       areaSalida.append("La cantidad de jugadores excede el limite permitido.\n");
+   }
+   
+   @Override
+   public void informarFondosInsuficientes() {
+	   if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurnoParaAposter().getNombre())) {
+		   areaSalida.append("Fondos insuficientes para realizar la apuesta.\n");
+		   this.apuestaJugadorActual = 0;
+		   
+	   }
+   }
+
+   @Override
+   public void notificarEnviteRealizado() {
+	   areaSalida.append(controlador.getJugadorTurnoParaAposter().getNombre() + " realizo con exito su apuesta " + mostrarApostado());
+   }
+   
+   private String mostrarApostado() {
+	   for (Jugador j : controlador.getJugadoresMesa()) {
+		   if (j.getNombre().equals(controlador.getJugadorTurnoParaAposter().getNombre())) {
+			   return String.valueOf(j.getApuesta());
+		   }
+	   }
+	   return "_";
+   }
+
+   @Override
+   public void informarApuestaRealizada(String nombre, int apuestaJugador) {
+	   areaSalida.append(nombre + " ha realizado su apuesta: " + apuestaJugador + ".\n");
+   }
+
+   @Override
+   public void informarNoTurno() {
+	   areaSalida.append("esperando a que se realicen las apuesta.\n");
+   }
+
+   @Override
+	public void informarTurnoApuestaOtroJugador() {
+	   areaSalida.append("Esperando a que realicen su apuesta\n");
 	}
 
-	@Override
-	public void mostrarQueNoEsSuTurno(String nombreJugadorApuesta) {
-		areaSalida.append("Espere su turno, " + nombreJugadorApuesta + " esta decidiendo en este momento");
-	}*/
+   @Override
+	public void notificarApuestasDesiguales() {
+	   areaSalida.append("Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima.\n");
+	   menuApuestasDesiguales();
+   }
+
+   @Override
+   public void notificarJugadorIgualaApuesta() {
+	   areaSalida.append("Se iguala la apuesta y sigue en el juego.\n");
+   }
+
+   @Override
+   public void notificarJugadorPasaApuesta() {
+	   areaSalida.append(this.jugadorActual.getNombre() + " pasa y queda fuera del juego.\n");
+   }
+
+   @Override
+   public void notificarEsperarJugadorIgualeApuesta() {
+	   areaSalida.append("esperando a que se igualen las apuestas.\n");
+   }
+
+   @Override
+   public void notificarRondaApuestaFinalizada() {
+	   areaSalida.append("Apuestas igualadas.\n");
+   }
+ 
     
 }
