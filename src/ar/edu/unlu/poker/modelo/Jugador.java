@@ -30,7 +30,9 @@ public class Jugador implements Serializable{
 	}
 	
 
-	
+	public void setListaCartas(LinkedList<Carta> cartas) {
+		this.cartas = cartas;
+	}
 
 	@Override
 	public int hashCode() {

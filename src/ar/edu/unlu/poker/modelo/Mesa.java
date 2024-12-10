@@ -116,6 +116,8 @@ public class Mesa extends ObservableRemoto implements IMesa{
 				if (apuesta > this.apuestaMayor) {
 					this.apuestaMayor = apuesta;
 				}
+				
+				jugador.setListaCartas(buscarCartasCorrespondeJugador(jugador)); //BUSCAR OTRA MANERA NO ME GUSTA
 				this.rondaApuesta.add(jugador);
 				this.mapa.put(jugador, apuesta);
 				
@@ -141,6 +143,17 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			this.notificarObservadores(Informe.INFORMAR_NO_TURNO_APUESTA); //Informar quien debe hacer la apuesta, que espere su turno
 		}
 		
+	}
+	
+	
+
+	private LinkedList<Carta> buscarCartasCorrespondeJugador(Jugador jugador) {
+		for (Jugador j : this.jugadoresMesa) {
+			if (jugador.equals(j)) {
+				return j.getCartas();
+			}
+		}
+		return null;
 	}
 
 	public void igualarApuestas(Jugador jugador) throws RemoteException {
@@ -269,11 +282,10 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	//RESULTADOS
 	
 	private void calcularResultadoJugadores() {
-		this.jugadoresMesa.forEach(t -> {
+		this.rondaApuesta.forEach(t -> {
 			try {
 				t.calcularValorCartas();
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		});
@@ -288,11 +300,11 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	    Queue<Jugador> ganadores = new LinkedList<>();
 	    
 	    // Iniciar con el primer jugador en la cola de jugadoresMesa
-	    Jugador jugadorGanador = this.jugadoresMesa.peek();
+	    Jugador jugadorGanador = this.rondaApuesta.peek();
 	    ganadores.add(jugadorGanador);  // A�adir el primer jugador como ganador temporal
 
 	    // Iterar sobre el resto de los jugadores en la cola
-	    for (Jugador jugadorActual : this.jugadoresMesa) {
+	    for (Jugador jugadorActual : this.rondaApuesta) {
 	        // Comparar el resultado del jugador actual con el jugador ganador
 	        if (jugadorActualMayorJugadorGanador(jugadorGanador, jugadorActual)) {
 	            ganadores.clear();  // Si hay un nuevo ganador, vaciar la cola de ganadores anteriores
