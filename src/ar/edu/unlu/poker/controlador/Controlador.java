@@ -158,7 +158,17 @@ public class Controlador implements IControladorRemoto{
 
 	public void realizarLasApuestas(Jugador jugador, int apuesta) {
 		try {
-			mesa.realizarApuesta(jugador, apuesta);
+			if (apuesta >= mesa.getApuestaMayor()) {
+				mesa.realizarApuesta(jugador, apuesta);
+			} else {
+				if (this.jugadorActual.getNombre().equals(this.getJugadorTurnoParaAposter().getNombre())) {
+					vista.notificarApuestaMenorALaAnterior();
+					vista.mostrarMenuApuestas();
+				} else {
+					vista.informarTurnoApuestaOtroJugador();
+				}
+				
+			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

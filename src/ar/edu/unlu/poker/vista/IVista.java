@@ -46,4 +46,6 @@ public interface IVista {
 
 	void notificarRondaApuestaFinalizada();
 
+	void notificarApuestaMenorALaAnterior();
+
 }

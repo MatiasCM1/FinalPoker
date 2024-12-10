@@ -368,6 +368,11 @@ public class VistaConsolaSwing extends JFrame implements IVista {
    public void notificarRondaApuestaFinalizada() {
 	   areaSalida.append("Apuestas igualadas.\n");
    }
+
+   @Override
+   public void notificarApuestaMenorALaAnterior() {
+	   areaSalida.append("La apuesta no puede ser menor a la apuesta anterior");
+   }
  
     
 }
