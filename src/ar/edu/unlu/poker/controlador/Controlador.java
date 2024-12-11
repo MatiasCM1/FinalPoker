@@ -63,15 +63,17 @@ public class Controlador implements IControladorRemoto{
 				break;
 			case JUGADOR_IGUALA_APUESTA:
 				vista.notificarJugadorIgualaApuesta();
-				mesa.mirarSiDevolverResultados();
+				//mesa.mirarSiDevolverResultados();
 				break;
 			case JUGADOR_PASA_APUESTA:
 				vista.notificarJugadorPasaApuesta();
-				mesa.mirarSiDevolverResultados();
+				//mesa.mirarSiDevolverResultados();
 				break;
 			case RONDA_APUESTAS_TERMINADA:
-				vista.notificarRondaApuestaFinalizada();
-				mesa.mirarSiDevolverResultados();
+				if (this.jugadorActual.getNombre().equals(this.getJugadorTurnoParaAposter().getNombre())) {
+					vista.notificarRondaApuestaFinalizada();
+					mesa.mirarSiDevolverResultados();
+				}
 				break;
 		}
 		
