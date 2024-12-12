@@ -54,4 +54,6 @@ public interface IVista {
 
 	void notificarErrorIntentarDescarteEnUnaCartaYaDescartada();
 
+	void notificarCartaDescartadaConExito();
+
 }

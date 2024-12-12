@@ -60,15 +60,18 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			return;
 		}
 		
+		if (this.jugadoresMesa.size() > 7) {
+			this.notificarObservadores(Informe.CANT_JUGADORES_EXCEDIDOS);
+			return;
+		}
+		
 		Jugador jugadorAux;
-		
-		
-		//while (this.jugadoresMesa.size() >= 2 && this.jugadoresMesa.size() <= 7) {
 
 			this.jugadoresMesa.forEach(jugador -> jugador.setEnJuego(true));
 			this.jugadoresMesa.forEach(jugador -> jugador.setApuesta(0));
 			this.jugadoresMesa.forEach(jugador -> jugador.setHaApostado(false));
 			this.jugadoresApuestaInsuficiente.clear();
+			this.jugadoresMesa.forEach(Jugador::resetearCartas);//HAGO ESTO PARA QUE CADA RONDA TENGAN DIFERENTES CARTAS
 			this.inicializarCartasADescartar();
 			this.rondaApuesta.clear();
 			this.rondaApuestaAux.clear();
@@ -92,22 +95,11 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			this.notificarObservadores(Informe.CARTAS_REPARTIDAS);
 			
 			this.notificarObservadores(Informe.TURNO_APUESTA_JUGADOR);
-			
-			//descartes
-			//apuestas
 		
 			//this.calcularPozo();
 			
-			//this.notificarObservadores(Informe.DEVOLVER_GANADOR);
-			//this.jugadoresMesa.forEach(Jugador::resetearCartas);
-			//pasar al siguiente jguador mano
-			//jugadorAux = this.jugadoresMesa.poll();
-			//this.jugadoresMesa.add(jugadorAux); //Agrego al anterior jugador mano al final de la cola
-			
-			//deea seguir jugando]?
-		//}
 	}
-	
+
 	private void calcularPozo() {
 		for (Jugador j : this.jugadoresMesa) {
 			this.pozo = this.pozo + j.getApuesta();
@@ -212,6 +204,9 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			mapa.put(jugador, this.apuestaMayor);//Actualizo la apuesta del jugador en el hash map
 			this.jugadoresApuestaInsuficiente.remove(jugador);
 			this.notificarObservadores(Informe.JUGADOR_IGUALA_APUESTA);
+			if (this.jugadoresApuestaInsuficiente.isEmpty()) {
+				this.notificarObservadores(Informe.TURNO_DESCARTE);
+			}
 		}
 	}
 	
@@ -221,6 +216,9 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		this.mapa.remove(jugador);
 		this.rondaApuesta.remove(jugador);
 		this.notificarObservadores(Informe.JUGADOR_PASA_APUESTA);	
+		if (this.jugadoresApuestaInsuficiente.isEmpty()) {
+			this.notificarObservadores(Informe.TURNO_DESCARTE);
+		}
 	}
 	
 	@Override
@@ -263,13 +261,11 @@ public class Mesa extends ObservableRemoto implements IMesa{
 				this.rondaApuesta.add(this.jugadorTurno);
 				
 				
-				System.out.println(this.jugadorTurno.getNombre());
-				
-				
 				if (this.comprobarFinalVueltaDescartes(this.jugadorTurno)) {//EN CASO DE QUE SEA EL FINAL SIGNIFICA QUE LA RONDA DE 
 					
 					//RONDA DE DESCARTE FINALIZADA MOSTRAR NUEVAS CARTAS E IR A LA SIGUIENTE APUESTA
 					this.notificarObservadores(Informe.CARTAS_REPARTIDAS);
+					//this.notificarObservadores(Informe.SEGUNDA_RONDA_APUESTAS);
 					this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA);
 					
 				} else { 
@@ -279,16 +275,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			this.notificarObservadores(Informe.INFORMAR_NO_TURNO); //Informar quien debe hacer la apuesta, que espere su turno
 		}
 	}
-	
-/*	@Override
-	public void jugadorNoDescarta(Jugador jugador) throws RemoteException { //EN CASO DE QUE EL JUGADOR DECIDA NO DESCARTAR
-		if (esJugadorTurno(jugador)) {
-			
-		} else {
-			this.notificarObservadores(Informe.INFORMAR_NO_TURNO);
-		}
-	}
-	*/
+
 	private void descartarCartas(Jugador jugador) throws RemoteException{
 		//DESCARTAR
 		//TENGO QUE BUSCAR LAS CARTAS DEL JUGADOR DE jugadoresMesa Y BORRARLAS
@@ -317,6 +304,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		if (!isCartaDescartada(cartas, posicionCarta, jugador)) {//DEVUELVE TRUE SI ES UNA CARTA DESCARTADA Y FALSE SI NO LO ES
 			cartas.add(buscarJugadorCoincidaCartas(jugador).get(posicionCarta));//AGREGO LA CARTA A DESCARTAR A LA LISTA
 			this.cartasADescartar.put(jugador, cartas);//CARGO LA LISTA AL HASHMAP
+			this.notificarObservadores(Informe.CARTA_DESCARTADA);
 		} else {
 			this.notificarObservadores(Informe.CARTA_YA_HABIA_SIDO_DESCARTADA);
 		}

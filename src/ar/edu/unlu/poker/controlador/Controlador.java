@@ -76,32 +76,34 @@ public class Controlador implements IControladorRemoto{
 				break;
 			case TURNO_DESCARTE:
 				//vista.notificarRondaApuestaFinalizada();
-				if (isJugadorTurnoApuesta()) {
+				if (isJugadorTurno()) {
 					vista.mostrarMenuDescartes();//LLAMO AL MENU DE DESCARTE
 				} else {
 					vista.notificarEsperarDescartes();
 				}
 				break;
 			case RONDA_APUESTAS_TERMINADA:
-				if (this.jugadorActual.equals(this.getJugadorTurno())) {
+				if (this.isJugadorTurno()) {
 					vista.notificarRondaApuestaFinalizada();
 					mesa.mirarSiDevolverResultados();
 				}
 				break;
+			case CARTA_DESCARTADA:
+				if (isJugadorTurno()) {
+					vista.notificarCartaDescartadaConExito();
+				}
+				break;
 			case CARTA_YA_HABIA_SIDO_DESCARTADA:
-				vista.notificarErrorIntentarDescarteEnUnaCartaYaDescartada();
+				if (isJugadorTurno()) {
+					vista.notificarErrorIntentarDescarteEnUnaCartaYaDescartada();
+				}
 				break;
 		}
 		
 	}
 	
-	private boolean isJugadorTurnoApuesta() {
-		try {
-			return this.jugadorActual.equals(mesa.getJugadorTurno());
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-		return false;
+	private boolean isJugadorTurno() throws RemoteException {
+		return this.jugadorActual.equals(this.getJugadorTurno());
 	}
 
 	public void iniciarGame() {

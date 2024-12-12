@@ -349,33 +349,33 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     		//PENSAR EN UNA FORMA DE QUE NO SE PUEDA ELEGIR DOS VECES LA MISMA CARTAS PARA DESCARTAR
     		
     			case "1":
-    				areaSalida.append("Se descarto la carta " + cartasJugador.get(0).getValor() + " de " + cartasJugador.get(0).getPalo());
+    				areaSalida.append("Se selecciono " + cartasJugador.get(0).getValor() + " de " + cartasJugador.get(0).getPalo() + "\n");
     				controlador.cartaADescartar(0, this.jugadorActual);//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
     				this.estadoFlujo = Estados.MENU_SELECCION_DESCARTES;
     			break;
     			case "2":
-    				areaSalida.append("Se descarto la carta " + cartasJugador.get(1).getValor() + " de " + cartasJugador.get(1).getPalo());//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
+    				areaSalida.append("Se selecciono " + cartasJugador.get(1).getValor() + " de " + cartasJugador.get(1).getPalo() + "\n");//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
     				controlador.cartaADescartar(1, this.jugadorActual);
     				this.estadoFlujo = Estados.MENU_SELECCION_DESCARTES;
     			break;
     			case "3":
-    				areaSalida.append("Se descarto la carta " + cartasJugador.get(2).getValor() + " de " + cartasJugador.get(2).getPalo());//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
+    				areaSalida.append("Se selecciono " + cartasJugador.get(2).getValor() + " de " + cartasJugador.get(2).getPalo() + "\n");//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
     				controlador.cartaADescartar(2, this.jugadorActual);
     				this.estadoFlujo = Estados.MENU_SELECCION_DESCARTES;
     			break;
     			case "4":
-    				areaSalida.append("Se descarto la carta " + cartasJugador.get(3).getValor() + " de " + cartasJugador.get(3).getPalo());//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
+    				areaSalida.append("Se selecciono " + cartasJugador.get(3).getValor() + " de " + cartasJugador.get(3).getPalo() + "\n");//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
     				controlador.cartaADescartar(3, this.jugadorActual);
     				this.estadoFlujo = Estados.MENU_SELECCION_DESCARTES;
     			break;
     			case "5":
-    				areaSalida.append("Se descarto la carta " + cartasJugador.get(4).getValor() + " de " + cartasJugador.get(4).getPalo());//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
+    				areaSalida.append("Se selecciono " + cartasJugador.get(4).getValor() + " de " + cartasJugador.get(4).getPalo() + "\n");//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
     				controlador.cartaADescartar(4, this.jugadorActual);
     				this.estadoFlujo = Estados.MENU_SELECCION_DESCARTES;
     			break;
     			case "6":
     				//CONTINUAR EL JUEGO
-    				//ordenar al controaldor que inicie el descarte
+    				//ordenar al controlador que inicie el descarte
     				controlador.continuarJuegoPostDescarte(this.jugadorActual);
     	    		this.esperandoEntrada = false;
     			break;
@@ -477,6 +477,11 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	@Override
 	public void notificarErrorIntentarDescarteEnUnaCartaYaDescartada() {
 		areaSalida.append("No se puede descartar una carta previamente descartada.\n");
+	}
+
+	@Override
+	public void notificarCartaDescartadaConExito() {
+		areaSalida.append("Carta descartada con exito.\n");
 	}
  
     
