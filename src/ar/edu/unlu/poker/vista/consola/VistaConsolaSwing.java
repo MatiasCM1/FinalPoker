@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
 import ar.edu.unlu.poker.controlador.Controlador;
+import ar.edu.unlu.poker.modelo.Carta;
 import ar.edu.unlu.poker.modelo.Jugador;
 import ar.edu.unlu.poker.vista.IVista;
 
@@ -92,6 +93,14 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         	case MENU_APUESTAS_DESIGUALES:
         		esperandoEntrada = true;
         		menuApuestasDesiguales(input);
+        	break;
+        	case MENU_OPCION_DESCARTES:
+        		esperandoEntrada = true;
+        		menuOpcionDescarte(input);
+        	break;
+        	case MENU_SELECCION_DESCARTES:
+        		esperandoEntrada = true;
+        		menuEsperandoDescarte(input);
         	break;
         }
     }
@@ -241,7 +250,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     }
     
     private void realizarPase() {
-    	if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurnoParaAposter().getNombre())) {
+    	if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno().getNombre())) {
     		controlador.realizarLosPases(this.jugadorActual);
     		this.esperandoEntrada = false;
     	}
@@ -249,7 +258,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	public void realizarEnvite(String input) {
     	//MODIFICAR ESTAS VALIDACIONES EN LA VISTA
-    	if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurnoParaAposter().getNombre())) {
+    	if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno().getNombre())) {
     		this.apuestaJugadorActual = Integer.parseInt(input);
     		controlador.realizarLasApuestas(this.jugadorActual, this.apuestaJugadorActual);
     		this.esperandoEntrada = false;
@@ -257,7 +266,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     }
     
     private void realizarFiche() {
-    	if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurnoParaAposter().getNombre())) {
+    	if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno().getNombre())) {
     		controlador.realizarLasApuestas(this.jugadorActual);
     		this.esperandoEntrada = false;
     	}
@@ -290,7 +299,92 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     			}
     		}
     }
+ 
+//----------------------------------------------------------------------------------------------------------
+//NOTIFICACIONES
+//----------------------------------------------------------------------------------------------------------
+    
+    @Override
+	public void mostrarMenuDescartes() {
+    	areaSalida.append("Seleccione una opcion:\n");
+    	areaSalida.append("1 - Descartar\n");
+    	areaSalida.append("2 - No descartar\n");
+    	this.estadoFlujo = Estados.MENU_OPCION_DESCARTES;
+	}
+    
+    public void menuOpcionDescarte(String input) throws RemoteException {
+    	if (esperandoEntrada) {
+    		switch (input.toLowerCase()) {
+    			case "1":
+    				mostrarMenuCartasDescartes();
+    			break;
+    			case "2":
+    				//JUGADOR DECIDE NO DESCARTAR
+    			break;
+    			default:
+    				areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
+    			break;
+    			}
+    		}
+    }
    
+    private void mostrarMenuCartasDescartes() throws RemoteException {
+    	LinkedList<Carta> cartasJugador = controlador.obtenerCartasJugador(this.jugadorActual);
+    	areaSalida.append("Seleccione las cartas a descartar.\n");
+    	int contador = 1;
+    	for (Carta c : cartasJugador) { //UNA FORMA DE MOSTRAR EL MENU CON LAS CARTAS QUE TIENE EL JUGADOR
+    		areaSalida.append(contador + "- " + c.getValor() + " de " + c.getPalo() + "\n");
+    		contador = contador + 1;
+    	}
+    	areaSalida.append("6- Dejar de descartar\n");
+    	this.estadoFlujo = Estados.MENU_SELECCION_DESCARTES;
+	}
+    
+    private void menuEsperandoDescarte(String input) {
+    	if (esperandoEntrada) {
+    		LinkedList<Carta> cartasJugador = controlador.obtenerCartasJugador(this.jugadorActual);
+    		switch (input.toLowerCase()) {
+    		
+    		//PENSAR EN UNA FORMA DE QUE NO SE PUEDA ELEGIR DOS VECES LA MISMA CARTAS PARA DESCARTAR
+    		
+    			case "1":
+    				areaSalida.append("Se descarto la carta " + cartasJugador.get(0));
+    				controlador.cartaADescartar(0, this.jugadorActual);//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
+    				this.estadoFlujo = Estados.MENU_SELECCION_DESCARTES;
+    			break;
+    			case "2":
+    				areaSalida.append("Se descarto la carta " + cartasJugador.get(1));//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
+    				controlador.cartaADescartar(1, this.jugadorActual);
+    				this.estadoFlujo = Estados.MENU_SELECCION_DESCARTES;
+    			break;
+    			case "3":
+    				areaSalida.append("Se descarto la carta " + cartasJugador.get(2));//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
+    				controlador.cartaADescartar(2, this.jugadorActual);
+    				this.estadoFlujo = Estados.MENU_SELECCION_DESCARTES;
+    			break;
+    			case "4":
+    				areaSalida.append("Se descarto la carta " + cartasJugador.get(3));//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
+    				controlador.cartaADescartar(3, this.jugadorActual);
+    				this.estadoFlujo = Estados.MENU_SELECCION_DESCARTES;
+    			break;
+    			case "5":
+    				areaSalida.append("Se descarto la carta " + cartasJugador.get(4));//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
+    				controlador.cartaADescartar(4, this.jugadorActual);
+    				this.estadoFlujo = Estados.MENU_SELECCION_DESCARTES;
+    			break;
+    			case "6":
+    				//CONTINUAR EL JUEGO
+    				//ordenar al controaldor que inicie el descarte
+    				controlador.continuarJuegoPostDescarte(this.jugadorActual);
+    	    		this.esperandoEntrada = false;
+    			break;
+    			default:
+    				areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
+    			break;
+    			}
+    		}
+    }
+
 //----------------------------------------------------------------------------------------------------------
 //NOTIFICACIONES
 //----------------------------------------------------------------------------------------------------------
@@ -307,7 +401,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
    
    @Override
    public void informarFondosInsuficientes() {
-	   if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurnoParaAposter().getNombre())) {
+	   if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno().getNombre())) {
 		   areaSalida.append("Fondos insuficientes para realizar la apuesta.\n");
 		   this.apuestaJugadorActual = 0;
 		   
@@ -316,12 +410,12 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
    @Override
    public void notificarEnviteRealizado() {
-	   areaSalida.append(controlador.getJugadorTurnoParaAposter().getNombre() + " realizo con exito su apuesta " + mostrarApostado());
+	   areaSalida.append(controlador.getJugadorTurno().getNombre() + " realizo con exito su apuesta " + mostrarApostado());
    }
    
    private String mostrarApostado() {
 	   for (Jugador j : controlador.getJugadoresMesa()) {
-		   if (j.getNombre().equals(controlador.getJugadorTurnoParaAposter().getNombre())) {
+		   if (j.getNombre().equals(controlador.getJugadorTurno().getNombre())) {
 			   return String.valueOf(j.getApuesta());
 		   }
 	   }
@@ -335,7 +429,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
    @Override
    public void informarNoTurno() {
-	   areaSalida.append("esperando a que se realicen las apuesta.\n");
+	   areaSalida.append("espera hasta que sea su turno.\n");
    }
 
    @Override
@@ -371,8 +465,18 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
    @Override
    public void notificarApuestaMenorALaAnterior() {
-	   areaSalida.append("La apuesta no puede ser menor a la apuesta anterior");
+	   areaSalida.append("La apuesta no puede ser menor a la apuesta anterior.\n");
    }
+	
+	@Override
+	public void notificarEsperarDescartes() {
+		areaSalida.append("Esperando a que se realicen los descartes.\n");
+	}
+
+	@Override
+	public void notificarErrorIntentarDescarteEnUnaCartaYaDescartada() {
+		areaSalida.append("No se puede descartar una carta previamente descartada.\n");
+	}
  
     
 }

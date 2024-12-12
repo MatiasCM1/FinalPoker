@@ -18,6 +18,11 @@ public class Dealer {
 		this.setearCartasRonda();
 	}
 	
+	public void inicializarDealer() throws RemoteException{
+		this.setearCartasTotales();
+		this.setearCartasRonda();
+	}
+	
 	private Carta repartirCarta() {
 		int indice = aleatorio.nextInt(this.cartas.size());
 		return this.cartas.remove(indice);
@@ -33,6 +38,14 @@ public class Dealer {
 	            jugadoresMesa.add(jugadorActual);
 	        }
 	    }
+	}
+	
+	public void repartirCartasPostDescarte(Queue<Jugador> listaJugadores) {
+		for (Jugador j : listaJugadores) {
+			while (j.getCartas().size() < 5) {
+				j.recibirCarta(this.repartirCarta());
+			}
+		}
 	}
 	
 	public LinkedList<Jugador> primerJugadorRepartir(LinkedList<Jugador> jugadoresAux) throws RemoteException{

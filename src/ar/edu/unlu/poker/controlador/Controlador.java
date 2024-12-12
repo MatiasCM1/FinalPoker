@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import ar.edu.unlu.poker.modelo.Carta;
 import ar.edu.unlu.poker.modelo.IMesa;
 import ar.edu.unlu.poker.modelo.Informe;
 import ar.edu.unlu.poker.modelo.Jugador;
@@ -39,7 +40,7 @@ public class Controlador implements IControladorRemoto{
 				vista.mostrarGanador(((IMesa)modelo).devolverGanador());
 				break;
 			case TURNO_APUESTA_JUGADOR:
-				if (this.jugadorActual.getNombre().equals(this.getJugadorTurnoParaAposter().getNombre())) {
+				if (this.jugadorActual.getNombre().equals(this.getJugadorTurno().getNombre())) {
 					vista.mostrarMenuApuestas();
 				} else {
 					vista.informarTurnoApuestaOtroJugador();
@@ -49,9 +50,9 @@ public class Controlador implements IControladorRemoto{
 				vista.informarFondosInsuficientes();
 				break;
 			case APUESTA_REALIZADA:
-				vista.informarApuestaRealizada(this.getJugadorTurnoParaAposter().getNombre(), mesa.getApuestaJugador(this.getJugadorTurnoParaAposter()));
+				vista.informarApuestaRealizada(this.getJugadorTurno().getNombre(), mesa.getApuestaJugador(this.getJugadorTurno()));
 				break;
-			case INFORMAR_NO_TURNO_APUESTA:
+			case INFORMAR_NO_TURNO:
 				vista.informarNoTurno();
 				break;
 			case APUESTAS_DESIGUALES:
@@ -62,23 +63,47 @@ public class Controlador implements IControladorRemoto{
 				}
 				break;
 			case JUGADOR_IGUALA_APUESTA:
+				//if (this.jugadorActual.equals(this.getJugadorTurnoParaAposter())) {
 				vista.notificarJugadorIgualaApuesta();
 				//mesa.mirarSiDevolverResultados();
+				//}
 				break;
 			case JUGADOR_PASA_APUESTA:
+				//if (this.jugadorActual.equals(this.getJugadorTurnoParaAposter())) {
 				vista.notificarJugadorPasaApuesta();
 				//mesa.mirarSiDevolverResultados();
+				
+				break;
+			case TURNO_DESCARTE:
+				vista.notificarRondaApuestaFinalizada();
+				if (isJugadorTurnoApuesta()) {
+					vista.mostrarMenuDescartes();//LLAMO AL MENU DE DESCARTE
+				} else {
+					vista.notificarEsperarDescartes();
+				}
 				break;
 			case RONDA_APUESTAS_TERMINADA:
-				if (this.jugadorActual.getNombre().equals(this.getJugadorTurnoParaAposter().getNombre())) {
+				if (this.jugadorActual.equals(this.getJugadorTurno())) {
 					vista.notificarRondaApuestaFinalizada();
 					mesa.mirarSiDevolverResultados();
 				}
+				break;
+			case CARTA_YA_HABIA_SIDO_DESCARTADA:
+				vista.notificarErrorIntentarDescarteEnUnaCartaYaDescartada();
 				break;
 		}
 		
 	}
 	
+	private boolean isJugadorTurnoApuesta() {
+		try {
+			return this.jugadorActual.equals(mesa.getJugadorTurno());
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public void iniciarGame() {
 		try {
 			mesa.iniciarJuego();
@@ -148,9 +173,9 @@ public class Controlador implements IControladorRemoto{
 		mesa.sacarJugador(jugador);
 	}
 	
-	public Jugador getJugadorTurnoParaAposter() {
+	public Jugador getJugadorTurno() {
 		try {
-			return mesa.getJugadorTurnoApuesta();
+			return mesa.getJugadorTurno();
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -163,7 +188,7 @@ public class Controlador implements IControladorRemoto{
 			if (apuesta >= mesa.getApuestaMayor()) {
 				mesa.realizarApuesta(jugador, apuesta);
 			} else {
-				if (this.jugadorActual.getNombre().equals(this.getJugadorTurnoParaAposter().getNombre())) {
+				if (this.jugadorActual.getNombre().equals(this.getJugadorTurno().getNombre())) {
 					vista.notificarApuestaMenorALaAnterior();
 					vista.mostrarMenuApuestas();
 				} else {
@@ -207,6 +232,38 @@ public class Controlador implements IControladorRemoto{
 		try {
 			this.jugadorVistaApuestas = jugador;
 			mesa.jugadorPasaPostEnvite(jugador);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public LinkedList<Carta> obtenerCartasJugador(Jugador jugador) {
+		try {
+			for (Jugador j : mesa.getJugadoresMesa()) {
+				if (j.equals(jugador)) {
+					return j.getCartas();
+				}
+			}
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void cartaADescartar(int posicionCarta, Jugador jugador) {
+		try {
+			mesa.agregarCartasADescartar(posicionCarta, jugador);//AGREGO EL JUGADOR Y LA CARTA EN UN HASHMAP
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void continuarJuegoPostDescarte(Jugador jugador) {
+		try {
+			mesa.realizarElDescarte(jugador);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

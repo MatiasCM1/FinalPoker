@@ -16,12 +16,15 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	
 	private Queue<Jugador> jugadoresMesa = new LinkedList<Jugador>();
 	private  Queue<Jugador> rondaApuesta = new LinkedList<Jugador>();
+	private  Queue<Jugador> rondaApuestaAux = new LinkedList<Jugador>();
+	private HashMap<Jugador, LinkedList<Carta>> cartasADescartar = new HashMap<Jugador, LinkedList<Carta>>();
 	private  List<Jugador> jugadoresApuestaInsuficiente = new LinkedList<Jugador>();
 	private static final HashMap<String, Integer> valorCarta = new HashMap<String, Integer>();
 	private HashMap<Jugador, Integer> mapa = new HashMap<Jugador, Integer>();
 	private int apuestaMayor;
 	private Jugador jugadorMano;
-	private Jugador jugadorTurnoApuesta;
+	private Jugador jugadorTurno;
+	private Dealer dealer;
 	private int pozo;
 
 	static {
@@ -66,16 +69,20 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			this.jugadoresMesa.forEach(jugador -> jugador.setApuesta(0));
 			this.jugadoresMesa.forEach(jugador -> jugador.setHaApostado(false));
 			this.jugadoresApuestaInsuficiente.clear();
+			this.inicializarCartasADescartar();
+			this.rondaApuesta.clear();
+			this.rondaApuestaAux.clear();
 			this.mapa.clear();
 			this.pozo = 0;
 			
 			this.seleccionarJugadorRandom();
 			this.jugadorMano = this.jugadoresMesa.poll();
-			this.jugadorTurnoApuesta = this.jugadorMano;
+			this.jugadorTurno = this.jugadorMano;
 			this.jugadoresMesa.add(this.jugadorMano);
 			
 			this.apuestaMayor = 0;
-			Dealer dealer = new Dealer();
+			
+			dealer = new Dealer();
 			dealer.setearCartasRonda();
 			
 			this.notificarObservadores(Informe.JUGADOR_MANO);
@@ -108,11 +115,10 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	}
 
 	@Override
-	public void realizarApuesta(Jugador jugador, int apuesta)  throws RemoteException{
-		int apuestaAnterior = 0;		
-		if (esJugadorTurnoApuesta(jugador)) {
+	public void realizarApuesta(Jugador jugador, int apuesta)  throws RemoteException{		
+		if (esJugadorTurno(jugador)) {
 			if (jugador.comprobarFondosSuficientes(apuesta)) {
-				this.restarFondosAgregarApuestaJugador(this.jugadorTurnoApuesta, apuesta);
+				this.restarFondosAgregarApuestaJugador(this.jugadorTurno, apuesta);
 				if (apuesta > this.apuestaMayor) {
 					this.apuestaMayor = apuesta;
 				}
@@ -126,15 +132,19 @@ public class Mesa extends ObservableRemoto implements IMesa{
 				this.mapa.put(jugador, apuesta);
 				
 				this.notificarObservadores(Informe.APUESTA_REALIZADA);
-				this.jugadorTurnoApuesta = this.jugadoresMesa.poll();
-				this.jugadoresMesa.add(this.jugadorTurnoApuesta);
+				this.jugadorTurno = this.jugadoresMesa.poll();
+				this.jugadoresMesa.add(this.jugadorTurno);
 				
 				
-				if (this.comprobarFinalVueltaApuesta(this.jugadorTurnoApuesta)) {
+				if (this.comprobarFinalVueltaApuesta(this.jugadorTurno)) {
 					if (!comprobarIgualdad()) {
 						this.igualarApuestas(jugador);
 					} else {
-						this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA);
+						this.jugadorTurno = this.rondaApuesta.poll();
+						this.rondaApuestaAux.add(this.jugadorTurno);
+						this.rondaApuesta.add(this.jugadorTurno);
+						this.notificarObservadores(Informe.TURNO_DESCARTE); //LLamo al menu de descarte
+						//this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA);
 					}
 				} else { 
 					this.notificarObservadores(Informe.TURNO_APUESTA_JUGADOR);
@@ -144,11 +154,10 @@ public class Mesa extends ObservableRemoto implements IMesa{
 				this.notificarObservadores(Informe.TURNO_APUESTA_JUGADOR);
 			}
 		} else {
-			this.notificarObservadores(Informe.INFORMAR_NO_TURNO_APUESTA); //Informar quien debe hacer la apuesta, que espere su turno
+			this.notificarObservadores(Informe.INFORMAR_NO_TURNO); //Informar quien debe hacer la apuesta, que espere su turno
 		}
 		
 	}
-	
 	
 
 	private LinkedList<Carta> buscarCartasCorrespondeJugador(Jugador jugador) {
@@ -193,8 +202,8 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		return mapa.containsKey(jugador);
 	}
 
-	private boolean esJugadorTurnoApuesta(Jugador jugador) {
-		return jugador.getNombre().equals(this.jugadorTurnoApuesta.getNombre());
+	private boolean esJugadorTurno(Jugador jugador) {
+		return jugador.getNombre().equals(this.jugadorTurno.getNombre());
 	}
 	
 	public void jugadorFichaPostEnvite(Jugador jugador) throws RemoteException{
@@ -218,11 +227,11 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	public void jugadorPasa(Jugador jugador) throws RemoteException {
 		jugador.pasar();
 		this.notificarObservadores(Informe.JUGADOR_PASA_APUESTA);
-		this.jugadorTurnoApuesta = this.jugadoresMesa.poll();
-		this.jugadoresMesa.add(this.jugadorTurnoApuesta);
+		this.jugadorTurno = this.jugadoresMesa.poll();
+		this.jugadoresMesa.add(this.jugadorTurno);
 		
 		
-		if (this.comprobarFinalVueltaApuesta(this.jugadorTurnoApuesta)) {
+		if (this.comprobarFinalVueltaApuesta(this.jugadorTurno)) {
 			if (!comprobarIgualdad()) {
 				this.igualarApuestas(jugador);
 			} else {
@@ -233,11 +242,121 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		}	
 	}
 	
+	
+//-----------------------------------------------------------------------------------------------------------------------
+//DESCARTES
+	
+	@Override
+	public void realizarElDescarte(Jugador jugador) throws RemoteException{
+		if (esJugadorTurno(jugador)) {
+			
+				
+				
+				//TENGO QUE HACER ESTO, PQ EL JUGADOR QUE VIENE DE LA VISTA NO TIENE LAS CARTAS, ENTONCES SE LAS TENGO QUE SETEAR
+				jugador.setListaCartas(buscarCartasCorrespondeJugador(jugador)); //BUSCAR OTRA MANERA NO ME GUSTA
+				
+				this.descartarCartas(jugador);
+				
+				this.rondaApuestaAux.add(jugador);
+				
+				this.jugadorTurno = this.rondaApuesta.poll();
+				this.rondaApuesta.add(this.jugadorTurno);
+				
+				
+				System.out.println(this.jugadorTurno.getNombre());
+				
+				
+				if (this.comprobarFinalVueltaDescartes(this.jugadorTurno)) {//EN CASO DE QUE SEA EL FINAL SIGNIFICA QUE LA RONDA DE 
+					
+					//RONDA DE DESCARTE FINALIZADA MOSTRAR NUEVAS CARTAS E IR A LA SIGUIENTE APUESTA
+					this.notificarObservadores(Informe.CARTAS_REPARTIDAS);
+					this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA);
+					
+				} else { 
+					this.notificarObservadores(Informe.TURNO_DESCARTE);//PASAR AL SIGUIENTE TURNO
+				}
+		} else {
+			this.notificarObservadores(Informe.INFORMAR_NO_TURNO); //Informar quien debe hacer la apuesta, que espere su turno
+		}
+	}
+	
+	private void descartarCartas(Jugador jugador) throws RemoteException{
+		//DESCARTAR
+		//TENGO QUE BUSCAR LAS CARTAS DEL JUGADOR DE jugadoresMesa Y BORRARLAS
+		for (Jugador j : this.rondaApuesta) {
+			if (j.equals(jugador)) {
+				j.getCartas().removeAll(this.cartasADescartar.get(jugador));
+			}
+		}
+		
+		
+		//REPONER CON NUEVAS CARTAS
+		this.dealer.repartirCartasPostDescarte(this.rondaApuesta);
+		
+		
+	
+	}
+	
+
+	private void inicializarCartasADescartar() {
+		this.cartasADescartar.clear();
+		LinkedList<Carta> listaVacia = new LinkedList<Carta>();
+		for (Jugador j : this.jugadoresMesa) {
+			this.cartasADescartar.put(j, listaVacia);
+		}
+	}
+	
+	public void agregarCartasADescartar(int posicionCarta, Jugador jugador) throws RemoteException{
+		LinkedList<Carta> cartas = this.cartasADescartar.get(jugador); //OBTENGO LAS CARTAS DESCARTADAS DEL JUGADOR DEL HASHMAP, SI NO TIENE CARTAS DEVUEVE UNA LISTA VACIA
+		if (!isCartaDescartada(cartas, posicionCarta, jugador)) {//DEVUELVE TRUE SI ES UNA CARTA DESCARTADA Y FALSE SI NO LO ES
+			cartas.add(buscarJugadorCoincidaCartas(jugador).get(posicionCarta));//AGREGO LA CARTA A DESCARTAR A LA LISTA
+			this.cartasADescartar.put(jugador, cartas);//CARGO LA LISTA AL HASHMAP
+		} else {
+			this.notificarObservadores(Informe.CARTA_YA_HABIA_SIDO_DESCARTADA);
+		}
+	}
+
+	private boolean isCartaDescartada(LinkedList<Carta> cartas, int posicionCarta, Jugador jugador) {
+		for (Carta c : cartas) {
+			//COMPARO PARA VER SI EN LA LISTA DE LAS CARTAS A DESCARTAR EXISTE UNA CARTA IGUAL A LA QUE QUIERO AGREGAR
+			if (this.igualdadDeCartas(c, buscarJugadorCoincidaCartas(jugador).get(posicionCarta))){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean igualdadDeCartas(Carta c1, Carta c2){
+		boolean flag = false;
+		try {
+			flag = (c1.getPalo().equals(c2.getPalo()) && c1.getValor().equals(c2.getValor()));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
+
+	private LinkedList<Carta> buscarJugadorCoincidaCartas(Jugador jugador) {
+		for (Jugador j : this.jugadoresMesa) {
+			if (j.equals(jugador)){
+				return j.getCartas();
+			}
+		}
+		return null;
+	}
+	
+	private boolean comprobarFinalVueltaDescartes(Jugador jugador) {
+		return this.rondaApuestaAux.contains(jugador);
+	}
+	
+//-----------------------------------------------------------------------------------------------------------------------
+	
 	@Override
 	public void mirarSiDevolverResultados() throws RemoteException {
-		if (this.comprobarIgualdad()) {
+		//if (this.comprobarIgualdad()) {
 			this.devolverResultados();
-		}
+		//}
 	}	
 	
 	public int getApuestaJugador(Jugador jugador) throws RemoteException{
@@ -248,6 +367,10 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	@Override
 	public Jugador getJugadorMano() throws RemoteException {
 		return this.jugadorMano;
+	}
+	
+	public HashMap<Jugador, LinkedList<Carta>> getCartasADescartar(){
+		return cartasADescartar;
 	}
 	
 	@Override
@@ -277,8 +400,8 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	}
 	
 	@Override
-	public Jugador getJugadorTurnoApuesta() throws RemoteException {
-		return jugadorTurnoApuesta;
+	public Jugador getJugadorTurno() throws RemoteException {
+		return jugadorTurno;
 	}
 	
 	
@@ -350,6 +473,11 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			return jugador2;
 		} 
 		return null;
+	}
+	
+	@Override
+	public List<Jugador> getRondaApuesta() throws RemoteException{
+		return List.copyOf(this.rondaApuesta);
 	}
 	
 }

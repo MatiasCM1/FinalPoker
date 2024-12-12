@@ -48,4 +48,10 @@ public interface IVista {
 
 	void notificarApuestaMenorALaAnterior();
 
+	void notificarEsperarDescartes();
+
+	void mostrarMenuDescartes();
+
+	void notificarErrorIntentarDescarteEnUnaCartaYaDescartada();
+
 }

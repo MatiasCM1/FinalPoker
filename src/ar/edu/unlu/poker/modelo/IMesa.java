@@ -1,6 +1,8 @@
 package ar.edu.unlu.poker.modelo;
 
 import java.rmi.RemoteException;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import ar.edu.unlu.rmimvc.observer.IObservableRemoto;
@@ -23,7 +25,7 @@ public interface IMesa extends IObservableRemoto {
 
 	void sacarJugador(Jugador jugador) throws RemoteException;
 	
-	Jugador getJugadorTurnoApuesta() throws RemoteException;
+	Jugador getJugadorTurno() throws RemoteException;
 	
 	void realizarApuesta(Jugador jugador, int apuesta)  throws RemoteException;
 	
@@ -38,4 +40,10 @@ public interface IMesa extends IObservableRemoto {
 	void mirarSiDevolverResultados() throws RemoteException;
 
 	void jugadorPasa(Jugador jugador) throws RemoteException;
+	
+	public void agregarCartasADescartar(int posicionCarta, Jugador jugador) throws RemoteException;
+
+	void realizarElDescarte(Jugador jugador) throws RemoteException;
+
+	List<Jugador> getRondaApuesta() throws RemoteException;
 }
