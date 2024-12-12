@@ -280,6 +280,15 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		}
 	}
 	
+/*	@Override
+	public void jugadorNoDescarta(Jugador jugador) throws RemoteException { //EN CASO DE QUE EL JUGADOR DECIDA NO DESCARTAR
+		if (esJugadorTurno(jugador)) {
+			
+		} else {
+			this.notificarObservadores(Informe.INFORMAR_NO_TURNO);
+		}
+	}
+	*/
 	private void descartarCartas(Jugador jugador) throws RemoteException{
 		//DESCARTAR
 		//TENGO QUE BUSCAR LAS CARTAS DEL JUGADOR DE jugadoresMesa Y BORRARLAS
@@ -289,12 +298,9 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			}
 		}
 		
-		
 		//REPONER CON NUEVAS CARTAS
 		this.dealer.repartirCartasPostDescarte(this.rondaApuesta);
 		
-		
-	
 	}
 	
 
@@ -354,9 +360,9 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	
 	@Override
 	public void mirarSiDevolverResultados() throws RemoteException {
-		//if (this.comprobarIgualdad()) {
+		if (this.comprobarIgualdad()) {
 			this.devolverResultados();
-		//}
+		}
 	}	
 	
 	public int getApuestaJugador(Jugador jugador) throws RemoteException{

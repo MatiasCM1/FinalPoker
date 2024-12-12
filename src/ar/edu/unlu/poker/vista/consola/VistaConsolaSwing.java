@@ -301,7 +301,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     }
  
 //----------------------------------------------------------------------------------------------------------
-//NOTIFICACIONES
+//DESCARTES
 //----------------------------------------------------------------------------------------------------------
     
     @Override
@@ -320,6 +320,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     			break;
     			case "2":
     				//JUGADOR DECIDE NO DESCARTAR
+    				controlador.continuarJuegoPostDescarte(this.jugadorActual);
     			break;
     			default:
     				areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
@@ -340,7 +341,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     	this.estadoFlujo = Estados.MENU_SELECCION_DESCARTES;
 	}
     
-    private void menuEsperandoDescarte(String input) {
+    private void menuEsperandoDescarte(String input) throws RemoteException {
     	if (esperandoEntrada) {
     		LinkedList<Carta> cartasJugador = controlador.obtenerCartasJugador(this.jugadorActual);
     		switch (input.toLowerCase()) {
@@ -348,27 +349,27 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     		//PENSAR EN UNA FORMA DE QUE NO SE PUEDA ELEGIR DOS VECES LA MISMA CARTAS PARA DESCARTAR
     		
     			case "1":
-    				areaSalida.append("Se descarto la carta " + cartasJugador.get(0));
+    				areaSalida.append("Se descarto la carta " + cartasJugador.get(0).getValor() + " de " + cartasJugador.get(0).getPalo());
     				controlador.cartaADescartar(0, this.jugadorActual);//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
     				this.estadoFlujo = Estados.MENU_SELECCION_DESCARTES;
     			break;
     			case "2":
-    				areaSalida.append("Se descarto la carta " + cartasJugador.get(1));//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
+    				areaSalida.append("Se descarto la carta " + cartasJugador.get(1).getValor() + " de " + cartasJugador.get(1).getPalo());//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
     				controlador.cartaADescartar(1, this.jugadorActual);
     				this.estadoFlujo = Estados.MENU_SELECCION_DESCARTES;
     			break;
     			case "3":
-    				areaSalida.append("Se descarto la carta " + cartasJugador.get(2));//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
+    				areaSalida.append("Se descarto la carta " + cartasJugador.get(2).getValor() + " de " + cartasJugador.get(2).getPalo());//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
     				controlador.cartaADescartar(2, this.jugadorActual);
     				this.estadoFlujo = Estados.MENU_SELECCION_DESCARTES;
     			break;
     			case "4":
-    				areaSalida.append("Se descarto la carta " + cartasJugador.get(3));//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
+    				areaSalida.append("Se descarto la carta " + cartasJugador.get(3).getValor() + " de " + cartasJugador.get(3).getPalo());//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
     				controlador.cartaADescartar(3, this.jugadorActual);
     				this.estadoFlujo = Estados.MENU_SELECCION_DESCARTES;
     			break;
     			case "5":
-    				areaSalida.append("Se descarto la carta " + cartasJugador.get(4));//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
+    				areaSalida.append("Se descarto la carta " + cartasJugador.get(4).getValor() + " de " + cartasJugador.get(4).getPalo());//AGREGA A LA COLA DE CARTAS A DESCARTAR INDICANDO LA POSICION y el jugador al que pertenecen
     				controlador.cartaADescartar(4, this.jugadorActual);
     				this.estadoFlujo = Estados.MENU_SELECCION_DESCARTES;
     			break;
