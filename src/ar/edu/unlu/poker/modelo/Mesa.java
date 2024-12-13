@@ -264,9 +264,20 @@ public class Mesa extends ObservableRemoto implements IMesa{
 				if (this.comprobarFinalVueltaDescartes(this.jugadorTurno)) {//EN CASO DE QUE SEA EL FINAL SIGNIFICA QUE LA RONDA DE 
 					
 					//RONDA DE DESCARTE FINALIZADA MOSTRAR NUEVAS CARTAS E IR A LA SIGUIENTE APUESTA
-					this.notificarObservadores(Informe.CARTAS_REPARTIDAS);
-					//this.notificarObservadores(Informe.SEGUNDA_RONDA_APUESTAS);
-					this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA);
+					if (continuaEnJuego(jugador)) {
+						this.notificarObservadores(Informe.CARTAS_REPARTIDAS);
+					}
+					
+					//RESETEO LA rondaApuestasAux para utilizarla para la segunda ronda de apuestas
+					this.rondaApuestaAux.clear();
+					
+					//DEFINO EL PRIMER JUGADOR TURNO PARA LA SEGUNDA RONDA APUESTAS
+					
+					this.jugadorTurno = this.rondaApuesta.poll();
+					this.rondaApuesta.add(this.jugadorTurno);
+					
+					this.notificarObservadores(Informe.SEGUNDA_RONDA_APUESTAS);
+					//this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA);
 					
 				} else { 
 					this.notificarObservadores(Informe.TURNO_DESCARTE);//PASAR AL SIGUIENTE TURNO
@@ -274,6 +285,10 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		} else {
 			this.notificarObservadores(Informe.INFORMAR_NO_TURNO); //Informar quien debe hacer la apuesta, que espere su turno
 		}
+	}
+
+	private boolean continuaEnJuego(Jugador jugador) {
+		return this.rondaApuesta.contains(jugador);
 	}
 
 	private void descartarCartas(Jugador jugador) throws RemoteException{

@@ -98,6 +98,9 @@ public class Controlador implements IControladorRemoto{
 					vista.notificarErrorIntentarDescarteEnUnaCartaYaDescartada();
 				}
 				break;
+			case SEGUNDA_RONDA_APUESTAS:
+				
+				break;
 		}
 		
 	}
@@ -262,15 +265,6 @@ public class Controlador implements IControladorRemoto{
 			e.printStackTrace();
 		}
 	}
-	
-	/*public void jugadorDecideNoDescartar(Jugador jugador) {
-		try {
-			mesa.jugadorNoDescarta(jugador);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}*/
 
 	public void continuarJuegoPostDescarte(Jugador jugador) {
 		try {
