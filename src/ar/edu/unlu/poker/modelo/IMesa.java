@@ -47,5 +47,7 @@ public interface IMesa extends IObservableRemoto {
 
 	List<Jugador> getRondaApuesta() throws RemoteException;
 
+	void realizarSegundaRondaApuesta(Jugador jugador, int apuesta) throws RemoteException;
+
 	//void jugadorNoDescarta(Jugador jugador) throws RemoteException;
 }

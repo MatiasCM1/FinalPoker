@@ -56,4 +56,8 @@ public interface IVista {
 
 	void notificarCartaDescartadaConExito();
 
+	void mostrarMenuSegundaRondaApuestas();
+
+	void notificarGanador(String nombre);
+
 }

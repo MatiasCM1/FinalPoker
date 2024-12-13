@@ -102,12 +102,21 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         		esperandoEntrada = true;
         		menuEsperandoDescarte(input);
         	break;
+        	case MENU_SEGUNDA_RONDA_APUESTAS:
+        		esperandoEntrada = true;
+        		menuSegundasApuestas(input);
+        	break;
+        	case ESPERANDO_ENVITE_SEGUNDA_RONDA:
+        		esperandoEntrada = true;
+        		relizarEnviteSegundaRonda(input);
+        	break;
         }
     }
-    
-  //----------------------------------------------------------------------------------------------------------
-  //JUEGO PRINCIPAL
-  //----------------------------------------------------------------------------------------------------------
+   
+
+//----------------------------------------------------------------------------------------------------------
+//JUEGO PRINCIPAL
+//----------------------------------------------------------------------------------------------------------
     
     public void solicitarNombre(String input) {
     	if (esperandoEntrada) {
@@ -228,8 +237,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     	this.estadoFlujo = Estados.MENU_APUESTAS;
     }
     
-    public void menuApuestas(String input) {
-    	//VERIFICAR QUE SOLO PUEA INGRESAR EL QUE LE TOCA EL TURNO	
+    public void menuApuestas(String input) {	
     	if (esperandoEntrada) {
     		switch (input.toLowerCase()) {
     			case "1":
@@ -299,6 +307,48 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     			}
     		}
     }
+    
+//----------------------------------------------------------------------------------------------------------
+//SEGUNDA RONDA APUESTAS
+//----------------------------------------------------------------------------------------------------------
+    
+    @Override
+	public void mostrarMenuSegundaRondaApuestas() {
+    	areaSalida.append("Seleccione una opcion:\n");
+    	areaSalida.append("1 - Envitar\n");
+    	//areaSalida.append("2 - Fichar\n");
+    	//areaSalida.append("3 - Pasar\n");
+    	this.estadoFlujo = Estados.MENU_SEGUNDA_RONDA_APUESTAS;
+	}
+    
+    private void menuSegundasApuestas(String input) {
+    	if (esperandoEntrada) {
+    		switch (input.toLowerCase()) {
+    			case "1":
+    				//ENVITAR
+    				areaSalida.append("Ingrese el valor de la apuesta.\n");
+    				this.estadoFlujo = Estados.ESPERANDO_ENVITE_SEGUNDA_RONDA;
+    			break;
+    			case "2":
+    				//FICHAR
+    				//this.realizarFicheSegundaRonda();
+    			break;
+    			case "3":
+    				//PASAR
+    				//this.realizarPaseSegundaRonda();
+    			break;
+    			default:
+    				areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
+    			break;
+    			}
+    		}
+	}
+    
+    private void relizarEnviteSegundaRonda(String input) {
+    	this.apuestaJugadorActual = Integer.parseInt(input);
+		controlador.realizarLasApuestasSegundaRonda(this.jugadorActual, this.apuestaJugadorActual);
+		this.esperandoEntrada = false;
+	}
  
 //----------------------------------------------------------------------------------------------------------
 //DESCARTES
@@ -482,6 +532,11 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	@Override
 	public void notificarCartaDescartadaConExito() {
 		areaSalida.append("Carta descartada con exito.\n");
+	}
+
+	@Override
+	public void notificarGanador(String nombre) {
+		areaSalida.append(nombre + " es el ganador debido a que todos se rindieron.\n");
 	}
  
     
