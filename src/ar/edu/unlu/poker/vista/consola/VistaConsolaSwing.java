@@ -316,7 +316,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	public void mostrarMenuSegundaRondaApuestas() {
     	areaSalida.append("Seleccione una opcion:\n");
     	areaSalida.append("1 - Envitar\n");
-    	//areaSalida.append("2 - Fichar\n");
+    	areaSalida.append("2 - Fichar\n");
     	//areaSalida.append("3 - Pasar\n");
     	this.estadoFlujo = Estados.MENU_SEGUNDA_RONDA_APUESTAS;
 	}
@@ -331,7 +331,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     			break;
     			case "2":
     				//FICHAR
-    				//this.realizarFicheSegundaRonda();
+    				this.realizarFicheSegundaRonda();
     			break;
     			case "3":
     				//PASAR
@@ -349,6 +349,13 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		controlador.realizarLasApuestasSegundaRonda(this.jugadorActual, this.apuestaJugadorActual);
 		this.esperandoEntrada = false;
 	}
+    
+    private void realizarFicheSegundaRonda() {
+    	if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno().getNombre())) {
+    		controlador.realizarLasApuestasSegundaRonda(this.jugadorActual);
+    		this.esperandoEntrada = false;
+    	}
+    }
  
 //----------------------------------------------------------------------------------------------------------
 //DESCARTES
