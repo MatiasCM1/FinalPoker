@@ -92,15 +92,6 @@ public class Controlador implements IControladorRemoto{
 			case RONDA_APUESTAS_TERMINADA:
 				if (mesa.getRondaApuesta().size() == 1) {
 					vista.notificarGanador(mesa.getRondaApuesta().getFirst().getNombre());
-					
-					
-					
-					
-					//LLAMAR A UN METODO PARA COMENZAR LA NUEVA RONDA
-					
-					
-					
-					
 				} else if (this.isJugadorTurno()) {
 					vista.notificarRondaApuestaFinalizada();
 					mesa.mirarSiDevolverResultados();
@@ -352,6 +343,19 @@ public class Controlador implements IControladorRemoto{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public boolean validarEntero(String input) {
+		try {
+			Integer.parseInt(input);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	public void prepararCola() {
+		mesa.prepararColaParaSiguienteJugadorMano();
 	}
 	
 	

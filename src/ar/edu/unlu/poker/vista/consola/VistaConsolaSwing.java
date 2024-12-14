@@ -110,6 +110,10 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         		esperandoEntrada = true;
         		relizarEnviteSegundaRonda(input);
         	break;
+        	case MENU_NUEVA_RONDA:
+        		esperandoEntrada = true;
+        		menuNuevaRonda(input);
+        	break;
         }
     }
    
@@ -134,14 +138,21 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     public void solicitarFondo(String input){
     	//Validar que sea numero
     	if (esperandoEntrada) {
-    		jugadorActual = new Jugador(this.nombreJugadorActual, Integer.parseInt(input));
-            controlador.agregarJugador(jugadorActual);
-            controlador.setJugadorActual(jugadorActual);
-            setTitle("Poker - Jugador: " + this.nombreJugadorActual);
-            areaSalida.append("Bienvenido, " + this.nombreJugadorActual + "!\n");
-            esperandoEntrada = false;
-            mostrarOpcionesMenu();
+    		if (controlador.validarEntero(input)) {
+    			jugadorActual = new Jugador(this.nombreJugadorActual, Integer.parseInt(input));
+            	controlador.agregarJugador(jugadorActual);
+            	controlador.setJugadorActual(jugadorActual);
+            	setTitle("Poker - Jugador: " + this.nombreJugadorActual);
+            	areaSalida.append("Bienvenido, " + this.nombreJugadorActual + "!\n");
+            	esperandoEntrada = false;
+            	mostrarOpcionesMenu();
+    		} else {
+    			areaSalida.append("¡Error, ingrese un valor numerico!\n");
+    			areaSalida.append("Ingrese el fondo que desea\n");
+            	this.estadoFlujo = Estados.SOLICITAR_FONDO_JUGADOR;
+    		}
     	}
+    		
     }
     
     public void menu(String input) {
@@ -216,7 +227,38 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         for (Jugador ganador : ganadores) {
             areaSalida.append(" - " + ganador.getNombre() + " con " + ganador.getResultadoValoresCartas() + "\n");
         }
-        mostrarOpcionesMenu();
+        mostrarOpcionesMenuEmpezarOtraRonda();
+    }
+    
+    private void mostrarOpcionesMenuEmpezarOtraRonda() {
+        areaSalida.append("Seleccione una opcion:\n");
+        areaSalida.append("1 - Seguir jugando\n");
+        areaSalida.append("0 - Salir\n");
+        this.estadoFlujo = Estados.MENU_NUEVA_RONDA;
+    }
+    
+    public void menuNuevaRonda(String input){
+    	if (esperandoEntrada) {
+    		switch (input.toLowerCase()) {
+    			case "1":
+    				this.esperandoEntrada = false;
+    				controlador.prepararCola();
+    				controlador.iniciarGame();
+    				break;
+    			case "0":
+    				areaSalida.append("Se salio del juego exitosamente. Saludos!\n");
+    				try {
+    					controlador.jugadorSeRetiraDelJuego(jugadorActual);
+    				} catch (RemoteException e) {
+    					e.printStackTrace();
+    				}
+    				System.exit(0);
+    				break;
+    			default:
+    				areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
+    				break;
+    		}
+    	}
     }
 
     @Override
@@ -520,7 +562,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
    @Override
    public void notificarJugadorPasaApuesta() {
-	   areaSalida.append(this.jugadorActual.getNombre() + " pasa y queda fuera del juego.\n");
+	   areaSalida.append("Jugador pasa y queda fuera del juego.\n");
    }
 
    @Override
