@@ -317,7 +317,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     	areaSalida.append("Seleccione una opcion:\n");
     	areaSalida.append("1 - Envitar\n");
     	areaSalida.append("2 - Fichar\n");
-    	//areaSalida.append("3 - Pasar\n");
+    	areaSalida.append("3 - Pasar\n");
     	this.estadoFlujo = Estados.MENU_SEGUNDA_RONDA_APUESTAS;
 	}
     
@@ -335,7 +335,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     			break;
     			case "3":
     				//PASAR
-    				//this.realizarPaseSegundaRonda();
+    				this.realizarPaseSegundaRonda();
     			break;
     			default:
     				areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
@@ -344,7 +344,14 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     		}
 	}
     
-    private void relizarEnviteSegundaRonda(String input) {
+    private void realizarPaseSegundaRonda() {
+    	if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno().getNombre())) {
+    		controlador.realizarLosPasesSegundaRonda(this.jugadorActual);
+    		this.esperandoEntrada = false;
+    	}
+	}
+
+	private void relizarEnviteSegundaRonda(String input) {
     	this.apuestaJugadorActual = Integer.parseInt(input);
 		controlador.realizarLasApuestasSegundaRonda(this.jugadorActual, this.apuestaJugadorActual);
 		this.esperandoEntrada = false;
@@ -403,7 +410,6 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     		LinkedList<Carta> cartasJugador = controlador.obtenerCartasJugador(this.jugadorActual);
     		switch (input.toLowerCase()) {
     		
-    		//PENSAR EN UNA FORMA DE QUE NO SE PUEDA ELEGIR DOS VECES LA MISMA CARTAS PARA DESCARTAR
     		
     			case "1":
     				areaSalida.append("Se selecciono " + cartasJugador.get(0).getValor() + " de " + cartasJugador.get(0).getPalo() + "\n");
