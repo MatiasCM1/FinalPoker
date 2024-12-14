@@ -629,7 +629,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	}
 
 	@Override
-	public void prepararColaParaSiguienteJugadorMano() {
+	public void prepararColaParaSiguienteJugadorMano() throws RemoteException{
 		Jugador jugadorAux = this.jugadoresMesa.poll();
 		this.jugadoresMesa.add(jugadorAux);
 	}

@@ -552,7 +552,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
    @Override
 	public void notificarApuestasDesigualesSegundaRonda() {
 	   areaSalida.append("Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima.\n");
-	   //menuApuestasDesigualesSegundaRonda();
+	   menuApuestasDesigualesSegundaRonda();
 	}
 
    @Override

@@ -355,7 +355,12 @@ public class Controlador implements IControladorRemoto{
 	}
 
 	public void prepararCola() {
-		mesa.prepararColaParaSiguienteJugadorMano();
+		try {
+			mesa.prepararColaParaSiguienteJugadorMano();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
