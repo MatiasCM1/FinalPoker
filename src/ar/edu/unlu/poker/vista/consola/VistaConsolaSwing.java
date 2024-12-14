@@ -500,6 +500,12 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	   areaSalida.append("Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima.\n");
 	   menuApuestasDesiguales();
    }
+   
+   @Override
+	public void notificarApuestasDesigualesSegundaRonda() {
+	   areaSalida.append("Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima.\n");
+	   //menuApuestasDesigualesSegundaRonda();
+	}
 
    @Override
    public void notificarJugadorIgualaApuesta() {
@@ -545,6 +551,10 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	public void notificarGanador(String nombre) {
 		areaSalida.append(nombre + " es el ganador debido a que todos se rindieron.\n");
 	}
- 
+
+	@Override
+	public void notificarJugadorManoDebeApostar() {
+		areaSalida.append("El jugador mano debe apostar obligatoriamente.\n");
+	}
     
 }

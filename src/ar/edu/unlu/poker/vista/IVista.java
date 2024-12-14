@@ -60,4 +60,8 @@ public interface IVista {
 
 	void notificarGanador(String nombre);
 
+	void notificarJugadorManoDebeApostar();
+
+	void notificarApuestasDesigualesSegundaRonda();
+
 }

@@ -62,6 +62,13 @@ public class Controlador implements IControladorRemoto{
 					vista.notificarEsperarJugadorIgualeApuesta();
 				}
 				break;
+			case APUESTAS_DESIGUALES_SEGUNDA_RONDA:
+				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { //Comprueba que el nombre del jugadorActuañ forme parte de la cola de jugadores con  apuesta menor a la mayor
+					vista.notificarApuestasDesigualesSegundaRonda();
+				} else {
+					vista.notificarEsperarJugadorIgualeApuesta();
+				}
+				break;
 			case JUGADOR_IGUALA_APUESTA:
 				//if (this.jugadorActual.equals(this.getJugadorTurnoParaAposter())) {
 				vista.notificarJugadorIgualaApuesta();
@@ -205,25 +212,42 @@ public class Controlador implements IControladorRemoto{
 
 	public void realizarLasApuestas(Jugador jugador, int apuesta) {
 		try {
-			if (apuesta >= mesa.getApuestaMayor()) {
-				mesa.realizarApuesta(jugador, apuesta);
-			} else {
-				if (this.jugadorActual.getNombre().equals(this.getJugadorTurno().getNombre())) {
-					vista.notificarApuestaMenorALaAnterior();
-					vista.mostrarMenuApuestas();
+			if (this.jugadorManoEnvita(jugador, apuesta)) {//OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA, IMPIDIENDO QUE FICHE O PASE
+				if (apuesta >= mesa.getApuestaMayor()) {
+					mesa.realizarApuesta(jugador, apuesta);
 				} else {
-					vista.informarTurnoApuestaOtroJugador();
-				}
+					if (this.jugadorActual.getNombre().equals(this.getJugadorTurno().getNombre())) {
+						vista.notificarApuestaMenorALaAnterior();
+						vista.mostrarMenuApuestas();
+					} else {
+						vista.informarTurnoApuestaOtroJugador();
+					}
 				
+				}
+			} else {
+				vista.notificarJugadorManoDebeApostar();
+				vista.mostrarMenuApuestas();
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	private boolean jugadorManoEnvita(Jugador jugador, int apuesta) throws RemoteException {
+		if (jugador.equals(mesa.getJugadorMano()) && apuesta == 0) {//OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA, IMPIDIENDO QUE FICHE O PASE
+			return false;
+		}
+		return true;
+	}
+	
 	public void realizarLasApuestas(Jugador jugador) {
 		try {
-			mesa.realizarApuesta(jugador, mesa.getApuestaMayor());
+			if (this.jugadorManoEnvita(jugador, mesa.getApuestaMayor())) {//OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA, IMPIDIENDO QUE FICHE O PASE
+				mesa.realizarApuesta(jugador, mesa.getApuestaMayor());
+			} else {
+				vista.notificarJugadorManoDebeApostar();
+				vista.mostrarMenuApuestas();
+			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -231,7 +255,12 @@ public class Controlador implements IControladorRemoto{
 	
 	public void realizarLosPases(Jugador jugador) {
 		try {
-			mesa.jugadorPasa(jugador);
+			if (!jugador.equals(mesa.getJugadorMano())) {
+				mesa.jugadorPasa(jugador);
+			} else {
+				vista.notificarJugadorManoDebeApostar();
+				vista.mostrarMenuApuestas();
+			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
