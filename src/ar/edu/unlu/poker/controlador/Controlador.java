@@ -90,6 +90,15 @@ public class Controlador implements IControladorRemoto{
 					mesa.mirarSiDevolverResultados();
 				}
 				break;
+			case RONDA_APUESTAS_TERMINADA_SEGUNDA_RONDA:
+				if (mesa.getRondaApuestaAux().size() == 1) {
+					vista.notificarGanador(mesa.getRondaApuestaAux().getFirst().getNombre());
+					vista.mostrarOpcionesMenuEmpezarOtraRonda();
+				} else if (this.isJugadorTurno()) {
+					vista.notificarRondaApuestaFinalizada();
+					mesa.mirarSiDevolverResultados();
+				}
+				break;
 			case CARTA_DESCARTADA:
 				if (isJugadorTurno()) {
 					vista.notificarCartaDescartadaConExito();

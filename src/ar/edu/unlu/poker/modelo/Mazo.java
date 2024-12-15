@@ -7,18 +7,18 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
-public class Dealer {
+public class Mazo {
 
 	private LinkedList<Carta> cartasTotales = new LinkedList<Carta>();
 	private LinkedList<Carta> cartas;
 	private Random aleatorio = new Random();
 	
-	public Dealer() throws RemoteException {
+	public Mazo() throws RemoteException {
 		this.setearCartasTotales();
 		this.setearCartasRonda();
 	}
 	
-	public void inicializarDealer() throws RemoteException{
+	public void inicializarMazo() throws RemoteException{
 		this.setearCartasTotales();
 		this.setearCartasRonda();
 	}
