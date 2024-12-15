@@ -201,22 +201,27 @@ public class Controlador implements IControladorRemoto{
 		return null;
 	}
 
-	public void realizarLasApuestas(Jugador jugador, int apuesta) {
+	public void realizarLasApuestas(Jugador jugador, String input) {
 		try {
-			if (this.jugadorManoEnvita(jugador, apuesta)) {//OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA, IMPIDIENDO QUE FICHE O PASE
-				if (apuesta >= mesa.getApuestaMayor()) {
-					mesa.realizarApuesta(jugador, apuesta);
-				} else {
-					if (this.jugadorActual.getNombre().equals(this.getJugadorTurno().getNombre())) {
-						vista.notificarApuestaMenorALaAnterior();
-						vista.mostrarMenuApuestas();
+			if (this.validarEntero(input)) {
+				int apuesta = Integer.parseInt(input);
+				if (this.jugadorManoEnvita(jugador, apuesta)) {//OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA, IMPIDIENDO QUE FICHE O PASE
+					if (apuesta >= mesa.getApuestaMayor()) {
+						mesa.realizarApuesta(jugador, apuesta);
 					} else {
-						vista.informarTurnoApuestaOtroJugador();
+						if (this.jugadorActual.getNombre().equals(this.getJugadorTurno().getNombre())) {
+							vista.notificarApuestaMenorALaAnterior();
+							vista.mostrarMenuApuestas();
+						} else {
+							vista.informarTurnoApuestaOtroJugador();
+						}
 					}
-				
+				} else {
+					vista.notificarJugadorManoDebeApostar();
+					vista.mostrarMenuApuestas();
 				}
 			} else {
-				vista.notificarJugadorManoDebeApostar();
+				vista.notificarErrorIngreseUnEntero();
 				vista.mostrarMenuApuestas();
 			}
 		} catch (RemoteException e) {
@@ -328,18 +333,23 @@ public class Controlador implements IControladorRemoto{
 		}
 	}
 
-	public void realizarLasApuestasSegundaRonda(Jugador jugador, int apuesta) {
+	public void realizarLasApuestasSegundaRonda(Jugador jugador, String input) {
 		try {
-			if (apuesta >= mesa.getApuestaMayor()) {
-				mesa.realizarSegundaRondaApuesta(jugador, apuesta);
-			} else {
-				if (this.jugadorActual.getNombre().equals(this.getJugadorTurno().getNombre())) {
-					vista.notificarApuestaMenorALaAnterior();
-					vista.mostrarMenuSegundaRondaApuestas();
+			if (this.validarEntero(input)) {
+				int apuesta = Integer.parseInt(input);
+				if (apuesta >= mesa.getApuestaMayor()) {
+					mesa.realizarSegundaRondaApuesta(jugador, apuesta);
 				} else {
-					vista.informarTurnoApuestaOtroJugador();
+					if (this.jugadorActual.getNombre().equals(this.getJugadorTurno().getNombre())) {
+						vista.notificarApuestaMenorALaAnterior();
+						vista.mostrarMenuSegundaRondaApuestas();
+					} else {
+						vista.informarTurnoApuestaOtroJugador();
+					}
 				}
-				
+			} else {
+				vista.notificarErrorIngreseUnEntero();
+				vista.mostrarMenuSegundaRondaApuestas();
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();

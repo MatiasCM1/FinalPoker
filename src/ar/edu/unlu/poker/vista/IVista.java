@@ -63,5 +63,7 @@ public interface IVista {
 	void notificarJugadorManoDebeApostar();
 
 	void notificarApuestasDesigualesSegundaRonda();
+	
+	void notificarErrorIngreseUnEntero();
 
 }
