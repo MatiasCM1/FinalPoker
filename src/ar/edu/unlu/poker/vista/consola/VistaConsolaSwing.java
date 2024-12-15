@@ -116,7 +116,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         	break;
         	case MENU_APUESTAS_DESIGUALES_SEGUNDA_RONDA:
         		esperandoEntrada = true;
-        		menuApuestasDesigualesSegundaRonda();
+        		menuApuestasDesigualesSegundaRonda(input);
         	break;
         }
     }
@@ -409,7 +409,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     	}
     }
     
-    private void menuApuestasDesigualesSegundaRonda(){
+    private void mostrarMenuApuestasDesigualesSegundaRonda(){
     	areaSalida.append("Seleccione una opcion:\n");
     	areaSalida.append("1 - Fichar\n");
     	areaSalida.append("2 - Pasar\n");
@@ -582,7 +582,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
    @Override
 	public void notificarApuestasDesigualesSegundaRonda() {
 	   areaSalida.append("Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima.\n");
-	   menuApuestasDesigualesSegundaRonda();
+	   mostrarMenuApuestasDesigualesSegundaRonda();
 	}
 
    @Override
