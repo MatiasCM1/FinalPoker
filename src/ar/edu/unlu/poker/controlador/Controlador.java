@@ -390,6 +390,15 @@ public class Controlador implements IControladorRemoto{
 			e.printStackTrace();
 		}
 	}
+
+	public boolean validarNombreNoRepetido(String input) {
+		for (Jugador j : this.getJugadoresMesa()) {
+			if (j.getNombre().equals(input)) {
+				return false;
+			}
+		}
+		return true;
+	}
 	
 	
 	

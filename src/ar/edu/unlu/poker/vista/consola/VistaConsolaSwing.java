@@ -127,15 +127,21 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     
     public void solicitarNombre(String input) {
     	if (esperandoEntrada) {
-            nombreJugadorActual = input.trim();
-            if (!nombreJugadorActual.isEmpty()) {
-            	areaSalida.append("Ingrese el fondo que desea\n");
-            	this.estadoFlujo = Estados.SOLICITAR_FONDO_JUGADOR; 
-            } else {
-                areaSalida.append("Nombre no valido. Por favor, ingrese un nombre para comenzar:\n");
-            }
-            return;
-        }
+    		if (controlador.validarNombreNoRepetido(input)) {
+    			nombreJugadorActual = input.trim();
+            	if (!nombreJugadorActual.isEmpty()) {
+            		areaSalida.append("Ingrese el fondo que desea\n");
+            		this.estadoFlujo = Estados.SOLICITAR_FONDO_JUGADOR; 
+            	} else {
+                	areaSalida.append("Nombre no valido. Por favor, ingrese un nombre para comenzar:\n");
+                	this.estadoFlujo = Estados.SOLICITAR_NOMBRE_JUGADOR;
+            	}
+            	return;
+    		} else {
+    			areaSalida.append("Nombre ya usado. Por favor, ingrese un nombre para comenzar:\n");
+            	this.estadoFlujo = Estados.SOLICITAR_NOMBRE_JUGADOR;
+    		}
+    	}
     }
     
     public void solicitarFondo(String input){
