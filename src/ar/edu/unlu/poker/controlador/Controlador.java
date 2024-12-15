@@ -19,7 +19,6 @@ public class Controlador implements IControladorRemoto{
 	private IVista vista;
 	private IMesa mesa;
 	private Jugador jugadorActual;
-	private Jugador jugadorVistaApuestas;
 
 	@Override
 	public void actualizar(IObservableRemoto modelo, Object cambio) throws RemoteException {
@@ -70,19 +69,12 @@ public class Controlador implements IControladorRemoto{
 				}
 				break;
 			case JUGADOR_IGUALA_APUESTA:
-				//if (this.jugadorActual.equals(this.getJugadorTurnoParaAposter())) {
 				vista.notificarJugadorIgualaApuesta();
-				//mesa.mirarSiDevolverResultados();
-				//}
 				break;
 			case JUGADOR_PASA_APUESTA:
-				//if (this.jugadorActual.equals(this.getJugadorTurnoParaAposter())) {
 				vista.notificarJugadorPasaApuesta();
-				//mesa.mirarSiDevolverResultados();
-				
 				break;
 			case TURNO_DESCARTE:
-				//vista.notificarRondaApuestaFinalizada();
 				if (isJugadorTurno()) {
 					vista.mostrarMenuDescartes();//LLAMO AL MENU DE DESCARTE
 				} else {
@@ -92,6 +84,7 @@ public class Controlador implements IControladorRemoto{
 			case RONDA_APUESTAS_TERMINADA:
 				if (mesa.getRondaApuesta().size() == 1) {
 					vista.notificarGanador(mesa.getRondaApuesta().getFirst().getNombre());
+					vista.mostrarOpcionesMenuEmpezarOtraRonda();
 				} else if (this.isJugadorTurno()) {
 					vista.notificarRondaApuestaFinalizada();
 					mesa.mirarSiDevolverResultados();
@@ -265,7 +258,6 @@ public class Controlador implements IControladorRemoto{
 
 	public void realizarFichaPostEnvite(Jugador jugador) {
 		try {
-			this.jugadorVistaApuestas = jugador;
 			mesa.jugadorFichaPostEnvite(jugador);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -275,7 +267,6 @@ public class Controlador implements IControladorRemoto{
 
 	public void realizarPasarPostEnvite(Jugador jugador) {
 		try {
-			this.jugadorVistaApuestas = jugador;
 			mesa.jugadorPasaPostEnvite(jugador);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block

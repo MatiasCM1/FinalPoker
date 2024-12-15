@@ -240,7 +240,8 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         mostrarOpcionesMenuEmpezarOtraRonda();
     }
     
-    private void mostrarOpcionesMenuEmpezarOtraRonda() {
+    @Override
+    public void mostrarOpcionesMenuEmpezarOtraRonda() {
         areaSalida.append("Seleccione una opcion:\n");
         areaSalida.append("1 - Seguir jugando\n");
         areaSalida.append("0 - Salir\n");
