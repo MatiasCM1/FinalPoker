@@ -114,6 +114,10 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         		esperandoEntrada = true;
         		menuNuevaRonda(input);
         	break;
+        	case MENU_APUESTAS_DESIGUALES_SEGUNDA_RONDA:
+        		esperandoEntrada = true;
+        		menuApuestasDesigualesSegundaRonda();
+        	break;
         }
     }
    
@@ -330,17 +334,16 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     }
     
     public void menuApuestasDesiguales(String input) {
-    	//VERIFICAR QUE SOLO PUEA INGRESAR AQUELLOS CON APUESTA MENOR A LA AMXIMA	
     	if (esperandoEntrada) {
     		switch (input.toLowerCase()) {
     			case "1":
     				areaSalida.append("Ha seleccionado la opcion de fichar\n");
-    				controlador.realizarFicha(this.jugadorActual);
+    				controlador.realizarFichaPostEnvite(this.jugadorActual);
     				this.esperandoEntrada = false;
     			break;
     			case "2":
     				areaSalida.append("Ha seleccionado la opcion de pasar\n");
-    				controlador.realizarPasar(this.jugadorActual);
+    				controlador.realizarPasarPostEnvite(this.jugadorActual);
     				this.esperandoEntrada = false;
     			break;
     			default:
@@ -404,6 +407,33 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     		controlador.realizarLasApuestasSegundaRonda(this.jugadorActual);
     		this.esperandoEntrada = false;
     	}
+    }
+    
+    private void menuApuestasDesigualesSegundaRonda(){
+    	areaSalida.append("Seleccione una opcion:\n");
+    	areaSalida.append("1 - Fichar\n");
+    	areaSalida.append("2 - Pasar\n");
+    	this.estadoFlujo = Estados.MENU_APUESTAS_DESIGUALES_SEGUNDA_RONDA;
+    }
+    
+    public void menuApuestasDesigualesSegundaRonda(String input) {
+    	if (esperandoEntrada) {
+    		switch (input.toLowerCase()) {
+    			case "1":
+    				areaSalida.append("Ha seleccionado la opcion de fichar\n");
+    				controlador.realizarFicharPostEnviteSegundaRonda(this.jugadorActual);
+    				this.esperandoEntrada = false;
+    			break;
+    			case "2":
+    				areaSalida.append("Ha seleccionado la opcion de pasar\n");
+    				controlador.realizarPasarPostEnviteSegundaRonda(this.jugadorActual);
+    				this.esperandoEntrada = false;
+    			break;
+    			default:
+    				areaSalida.append("Comando no reconocido. Intente nuevamente.\n");
+    			break;
+    			}
+    		}
     }
  
 //----------------------------------------------------------------------------------------------------------

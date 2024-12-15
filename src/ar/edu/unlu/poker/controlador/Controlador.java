@@ -258,7 +258,7 @@ public class Controlador implements IControladorRemoto{
 		}
 	}
 
-	public void realizarFicha(Jugador jugador) {
+	public void realizarFichaPostEnvite(Jugador jugador) {
 		try {
 			this.jugadorVistaApuestas = jugador;
 			mesa.jugadorFichaPostEnvite(jugador);
@@ -268,10 +268,28 @@ public class Controlador implements IControladorRemoto{
 		}
 	}
 
-	public void realizarPasar(Jugador jugador) {
+	public void realizarPasarPostEnvite(Jugador jugador) {
 		try {
 			this.jugadorVistaApuestas = jugador;
 			mesa.jugadorPasaPostEnvite(jugador);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void realizarFicharPostEnviteSegundaRonda(Jugador jugador) {
+		try {
+			mesa.jugadorFichaPostEnviteSegundaRonda(jugador);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}		
+	
+	public void realizarPasarPostEnviteSegundaRonda(Jugador jugador) {
+		try {
+			mesa.jugadorPasaPostEnviteSegundaRonda(jugador);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -474,6 +474,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		return this.rondaApuestaAux.contains(jugador);
 	}
 	
+	@Override
 	public void jugadorFichaPostEnviteSegundaRonda(Jugador jugador) throws RemoteException{
 		if (jugador.comprobarFondosSuficientes(this.apuestaMayor)) { //VERIFICAR SI TIENE FONDOS SUFICIENTES
 			jugador.realizarApuesta(this.apuestaMayor);//Actualizo la apuesta del jugador
@@ -486,6 +487,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		}
 	}
 	
+	@Override
 	public void jugadorPasaPostEnviteSegundaRonda(Jugador jugador) throws RemoteException{
 		this.jugadoresApuestaInsuficiente.remove(jugador);
 		jugador.pasar();
