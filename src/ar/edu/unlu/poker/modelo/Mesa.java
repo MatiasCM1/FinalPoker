@@ -300,8 +300,6 @@ public class Mesa extends ObservableRemoto implements IMesa{
 				
 				if (this.comprobarFinalVueltaDescartes(this.jugadorTurno)) {//EN CASO DE QUE SEA EL FINAL SIGNIFICA QUE LA RONDA DE 
 					
-					System.out.println("QUE HACES ACA");
-					
 					//RONDA DE DESCARTE FINALIZADA MOSTRAR NUEVAS CARTAS E IR A LA SIGUIENTE APUESTA
 					if (continuaEnJuego(jugador)) {
 						this.notificarObservadores(Informe.CARTAS_REPARTIDAS);
@@ -327,7 +325,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 						this.notificarObservadores(Informe.SEGUNDA_RONDA_APUESTAS);
 					}
 				} else { 
-					System.out.println("PASA POR ACA");
+					
 					this.notificarObservadores(Informe.TURNO_DESCARTE);//PASAR AL SIGUIENTE TURNO
 				}
 		} else {
@@ -440,7 +438,6 @@ public class Mesa extends ObservableRemoto implements IMesa{
 				
 				this.jugadorTurno = this.rondaApuesta.poll();
 				this.rondaApuesta.add(this.jugadorTurno);
-				
 				
 				if (this.comprobarFinalVueltaSegundaRondaApuesta(this.jugadorTurno)) {
 					if (!comprobarIgualdad()) {

@@ -110,10 +110,15 @@ public class Controlador implements IControladorRemoto{
 				}
 				break;
 			case SEGUNDA_RONDA_APUESTAS:
-				if (this.isJugadorTurno()) {
-					vista.mostrarMenuSegundaRondaApuestas();
+				if (mesa.getRondaApuesta().size() == 1) {
+					vista.notificarGanador(mesa.getRondaApuesta().getFirst().getNombre());
+					vista.mostrarOpcionesMenuEmpezarOtraRonda();
 				} else {
-					vista.informarTurnoApuestaOtroJugador();
+					if (this.isJugadorTurno()) {
+						vista.mostrarMenuSegundaRondaApuestas();
+					} else {
+						vista.informarTurnoApuestaOtroJugador();
+					}
 				}
 				break;
 		}
