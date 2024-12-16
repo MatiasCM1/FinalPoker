@@ -101,12 +101,11 @@ public class Controlador implements IControladorRemoto{
 				}
 				break;
 			case RONDA_APUESTAS_TERMINADA_SEGUNDA_RONDA:
+				vista.setEnableCampoEntrada(true);
 				if (mesa.getRondaApuestaAux().size() == 1) {
 					vista.notificarGanador(mesa.getRondaApuestaAux().getFirst().getNombre());
-					vista.setEnableCampoEntrada(true);
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
 				} else if (this.isJugadorTurno()) {
-					vista.setEnableCampoEntrada(true);
 					vista.notificarRondaApuestaFinalizada();
 					mesa.mirarSiDevolverResultados();
 				}
