@@ -66,7 +66,7 @@ public interface IVista {
 	
 	void notificarErrorIngreseUnEntero();
 	
-	void mostrarOpcionesMenuEmpezarOtraRonda();
+	void mostrarOpcionesMenuEmpezarOtraRonda() ;
 	
 	void setEnableCampoEntrada(boolean h);
 

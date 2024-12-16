@@ -181,10 +181,14 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     				this.esperandoEntrada = false;
     				controlador.iniciarGame();
     				break;
+    			case "3":
+    				mostrarFondos();
+    				this.esperandoEntrada = false;
+    				break;
     			case "0":
     				areaSalida.append("Se salio del juego exitosamente. Saludos!\n");
     				try {
-    					controlador.jugadorSeRetiraDelJuego(jugadorActual);
+    					controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
     				} catch (RemoteException e) {
     					e.printStackTrace();
     				}
@@ -197,10 +201,16 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     	}
     }
     
-    private void mostrarOpcionesMenu() {
+    private void mostrarFondos() {
+		areaSalida.append("Fondos: " + this.jugadorActual.getFondo() + ".\n");
+		this.mostrarOpcionesMenu();
+	}
+
+	private void mostrarOpcionesMenu() {
         areaSalida.append("Seleccione una opcion:\n");
         areaSalida.append("1 - Ver Lista de Jugadores\n");
         areaSalida.append("2 - Comenzar Juego\n");
+        areaSalida.append("3 - MostrarFondos\n");
         areaSalida.append("0 - Salir\n");
         this.estadoFlujo = Estados.MENU_PRINCIPAL;
     }
@@ -248,6 +258,8 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     public void mostrarOpcionesMenuEmpezarOtraRonda() {
         areaSalida.append("Seleccione una opcion:\n");
         areaSalida.append("1 - Seguir jugando\n");
+        areaSalida.append("2 - Mostrar Jugadores\n");
+        areaSalida.append("3 - Mostrar Fondos\n");
         areaSalida.append("0 - Salir\n");
         this.setEnableCampoEntrada(true);
         this.estadoFlujo = Estados.MENU_NUEVA_RONDA;
@@ -260,6 +272,14 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     				this.esperandoEntrada = false;
     				controlador.prepararCola();
     				controlador.iniciarGame();
+    				break;
+    			case "2":
+    				this.mostrarJugadores2();
+    				this.esperandoEntrada = false;
+    				break;
+    			case "3":
+    				this.mostrarFondos2();
+    				this.esperandoEntrada = false;
     				break;
     			case "0":
     				areaSalida.append("Se salio del juego exitosamente. Saludos!\n");
@@ -275,6 +295,21 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     				break;
     		}
     	}
+    }
+    
+    private void mostrarFondos2() {
+		areaSalida.append("Fondos: " + this.jugadorActual.getFondo() + ".\n");
+		this.mostrarOpcionesMenuEmpezarOtraRonda();
+	}
+
+
+    private void mostrarJugadores2() {
+        var jugadores = controlador.obtenerJugadores();
+        areaSalida.append("Lista de Jugadores:\n");
+        for (Jugador jugador : jugadores) {
+            areaSalida.append(" - " + jugador.getNombre() + "\n");
+        }
+        this.mostrarOpcionesMenuEmpezarOtraRonda();
     }
 
     @Override

@@ -658,5 +658,4 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		Jugador jugadorAux = this.jugadoresMesa.poll();
 		this.jugadoresMesa.add(jugadorAux);
 	}
-	
 }
