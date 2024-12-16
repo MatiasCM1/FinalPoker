@@ -60,6 +60,10 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     public void setControlador(Controlador controlador) {
         this.controlador = controlador;
     }
+    
+    public void setEnableCampoEntrada(boolean h) {
+    	this.campoEntrada.setEnabled(h);
+    }
 
     private void procesarEntrada(String input) throws RemoteException {
         
@@ -245,6 +249,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         areaSalida.append("Seleccione una opcion:\n");
         areaSalida.append("1 - Seguir jugando\n");
         areaSalida.append("0 - Salir\n");
+        this.setEnableCampoEntrada(true);
         this.estadoFlujo = Estados.MENU_NUEVA_RONDA;
     }
     
