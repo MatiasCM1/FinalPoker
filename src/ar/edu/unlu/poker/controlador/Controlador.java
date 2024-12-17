@@ -36,7 +36,11 @@ public class Controlador implements IControladorRemoto{
 				vista.informarCantJugadoresExcedidos();
 				break;
 			case DEVOLVER_GANADOR:
-				vista.mostrarGanador(((IMesa)modelo).devolverGanador());
+				List<Jugador> ganador = ((IMesa)modelo).devolverGanador(); 
+				if (this.isJugadorTurno()) {
+					mesa.darFondosGanador(ganador.getFirst());
+				}
+				vista.mostrarGanador(ganador);
 				break;
 			case TURNO_APUESTA_JUGADOR:
 				if (this.isJugadorTurno()) {
@@ -92,6 +96,9 @@ public class Controlador implements IControladorRemoto{
 			case RONDA_APUESTAS_TERMINADA:
 				if (mesa.getRondaApuesta().size() == 1) {
 					vista.notificarGanador(mesa.getRondaApuesta().getFirst().getNombre());
+					if (this.isJugadorTurno()) {
+						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
+					}
 					vista.setEnableCampoEntrada(true);
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
 				} else if (this.isJugadorTurno()) {
@@ -103,6 +110,9 @@ public class Controlador implements IControladorRemoto{
 			case RONDA_APUESTAS_TERMINADA_SEGUNDA_RONDA:
 				if (mesa.getRondaApuestaAux().size() == 1) {
 					vista.notificarGanador(mesa.getRondaApuestaAux().getFirst().getNombre());
+					if (this.isJugadorTurno()) {
+						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
+					}
 					vista.setEnableCampoEntrada(true);
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
 				} else if (this.isJugadorTurno()) {
@@ -124,6 +134,9 @@ public class Controlador implements IControladorRemoto{
 			case SEGUNDA_RONDA_APUESTAS:
 				if (mesa.getRondaApuesta().size() == 1) {
 					vista.notificarGanador(mesa.getRondaApuesta().getFirst().getNombre());
+					if (this.isJugadorTurno()) {
+						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
+					}
 					vista.setEnableCampoEntrada(true);
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
 				} else {

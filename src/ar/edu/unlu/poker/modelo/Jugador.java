@@ -129,5 +129,9 @@ public class Jugador implements Serializable{
 	public void setEnJuego(boolean enJuego) {
 		this.enJuego = enJuego;
 	}
+	
+	public void agregarFondos(int fondosAgregar) {
+		this.fondo += fondosAgregar;
+	}
 
 }

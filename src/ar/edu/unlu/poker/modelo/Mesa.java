@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
@@ -95,6 +97,15 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			this.notificarObservadores(Informe.TURNO_APUESTA_JUGADOR);
 			
 	}
+	
+	@Override
+	public void darFondosGanador(Jugador jugador) throws RemoteException{
+		for (Jugador j : this.jugadoresMesa) {
+			if (j.equals(jugador)) {
+				j.agregarFondos(this.pozo);
+			}
+		}
+	}
 
 //---------------------------------------------------------------------------------------------------------------------------
 //PRIMERA RONDA APUESTAS
@@ -134,9 +145,6 @@ public class Mesa extends ObservableRemoto implements IMesa{
 							this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA);
 						} else {
 							this.notificarObservadores(Informe.TURNO_DESCARTE); //LLamo al menu de descarte
-							
-							this.mostrarFondosJugadores(this.jugadoresMesa);
-							
 						}
 						
 					}
@@ -163,15 +171,6 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		return false;
 	} 
 
-	
-	//METODO DE PRUEBA
-	private void mostrarFondosJugadores(Queue<Jugador> jugadores) {
-		for (Jugador j : jugadores) {
-			System.out.println(j.getNombre() + " Fondos: " + j.getFondo() + ", Apuesta: " + j.getApuesta() + ", Mapa: " + mapa.get(j));
-		}
-		System.out.println("Pozo: " + this.getPozo());
-	}
-
 	public int getPozo() {
 		return pozo;
 	}
@@ -194,13 +193,25 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		// TODO Auto-generated method stub
 		this.notificarObservadores(Informe.DEVOLVER_GANADOR);
 	}
+	
+	private int buscarApuestaMayorEnElMapa() {
+		int apuestaMayor = 0;
+		int apuesta;
+		for (Entry<Jugador, Integer> entry : this.mapa.entrySet()) {
+			apuesta = entry.getValue();
+			if (apuesta > apuestaMayor) {
+				apuestaMayor = apuesta;
+			}
+		}
+		return apuestaMayor;
+	}
 
 	private void determinarJugadoresConApuestaInsuficiente() {
-		mapa.entrySet().forEach(entry -> {if (entry.getValue() < this.apuestaMayor) { 
+		mapa.entrySet().forEach(entry -> {if (entry.getValue() < this.buscarApuestaMayorEnElMapa()) { 
 			this.jugadoresApuestaInsuficiente.add(entry.getKey());
 		}});
-		
 	}
+
 	
 	@Override
 	public boolean perteneceJugadorApuestaMenor(Jugador jugador) throws RemoteException{
@@ -221,12 +232,13 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			if (j.equals(jugador)) {
 				j.realizarApuesta(apuesta);
 				this.mapa.put(j, (j.getApuesta()));
+				
 				if (apuesta > this.apuestaMayor) {
-					this.apuestaMayor = j.getApuesta();
+					this.apuestaMayor = apuesta;
 				}
 			}
 		}
-		//jugador.realizarApuesta(apuesta);
+		
 	}
 
 	private boolean comprobarFinalVueltaApuesta(Jugador jugador) {
@@ -242,12 +254,9 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			
 			int apuestaParaFichar = this.calcularCuantoFaltaParaFichar(jugador);
 			
-			this.restarFondosAgregarApuestaJugador(jugador, apuestaParaFichar);//Actualizo la apuesta del jugador
+			this.restarFondosAgregarApuestaJugador(jugador, /*this.apuestaMayor*/apuestaParaFichar);//Actualizo la apuesta del jugador
 			
-			
-			this.agregarAlPozo(this.apuestaMayor);
-			
-			//mapa.put(jugador, this.apuestaMayor);//Actualizo la apuesta del jugador en el hash map
+			this.agregarAlPozo(apuestaParaFichar);
 			
 			this.jugadoresApuestaInsuficiente.remove(jugador);
 			
@@ -485,8 +494,6 @@ public class Mesa extends ObservableRemoto implements IMesa{
 						//this.rondaApuestaAux.add(this.jugadorTurno);//CREO QUE ESTO NO VA EN ESTE MEDOTO DE REALIZAR APUESTA SEGUNDA RONDA
 						this.rondaApuesta.add(this.jugadorTurno);
 						
-						this.mostrarFondosJugadores(this.jugadoresMesa);
-						
 						this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA_SEGUNDA_RONDA);
 					}
 				} else { 
@@ -543,8 +550,6 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			
 			this.agregarAlPozo(apuestaParaFichar);
 			
-			//mapa.put(jugador, this.apuestaMayor);//Actualizo la apuesta del jugador en el hash map
-			
 			this.jugadoresApuestaInsuficiente.remove(jugador);
 			
 			this.notificarObservadores(Informe.JUGADOR_IGUALA_APUESTA);
@@ -560,7 +565,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	}
 
 	private int calcularCuantoFaltaParaFichar(Jugador jugador) { //HAGO UNA RESTA PARA SABER CUANTO LE FALTA AL JUGADOR PARA IGUALAR LA APUESTA MAXIMA
-		return this.apuestaMayor - this.mapa.get(jugador);
+		return Math.abs(this.apuestaMayor - this.mapa.get(jugador));
 	}
 
 	@Override
