@@ -263,6 +263,9 @@ public class Mesa extends ObservableRemoto implements IMesa{
 					this.notificarObservadores(Informe.TURNO_DESCARTE); //LLamo al menu de descarte
 				}
 			}
+		} else {
+			this.notificarObservadores(Informe.FONDO_INSUFICIENTE);
+			this.notificarObservadores(Informe.APUESTAS_DESIGUALES);
 		}
 	}
 	
@@ -550,6 +553,9 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			if (this.jugadoresApuestaInsuficiente.isEmpty()) {
 				this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA_SEGUNDA_RONDA);
 			}
+		} else {
+			this.notificarObservadores(Informe.FONDO_INSUFICIENTE);
+			this.notificarObservadores(Informe.APUESTAS_DESIGUALES);
 		}
 	}
 
