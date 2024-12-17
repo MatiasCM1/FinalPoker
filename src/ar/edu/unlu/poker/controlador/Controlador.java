@@ -51,7 +51,7 @@ public class Controlador implements IControladorRemoto{
 				vista.informarFondosInsuficientes();
 				break;
 			case APUESTA_REALIZADA:
-				vista.informarApuestaRealizada(this.getJugadorTurno().getNombre(), mesa.getApuestaJugador(this.getJugadorTurno()));
+				vista.informarApuestaRealizada(this.getJugadorTurno().getNombre(), getJugadorTurnoJugadoresMesa().getApuesta());
 				break;
 			case INFORMAR_NO_TURNO:
 				vista.informarNoTurno();
@@ -101,11 +101,12 @@ public class Controlador implements IControladorRemoto{
 				}
 				break;
 			case RONDA_APUESTAS_TERMINADA_SEGUNDA_RONDA:
-				vista.setEnableCampoEntrada(true);
 				if (mesa.getRondaApuestaAux().size() == 1) {
 					vista.notificarGanador(mesa.getRondaApuestaAux().getFirst().getNombre());
+					vista.setEnableCampoEntrada(true);
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
 				} else if (this.isJugadorTurno()) {
+					vista.setEnableCampoEntrada(true);
 					vista.notificarRondaApuestaFinalizada();
 					mesa.mirarSiDevolverResultados();
 				}
@@ -139,6 +140,15 @@ public class Controlador implements IControladorRemoto{
 		
 	}
 	
+	private Jugador getJugadorTurnoJugadoresMesa() {
+		for (Jugador j : this.getJugadoresMesa()) {
+			if (j.equals(this.getJugadorTurno())) {
+				return j;
+			}
+		}
+		return null;
+	}
+
 	private boolean isJugadorTurno() throws RemoteException {
 		return this.jugadorActual.equals(this.getJugadorTurno());
 	}
@@ -351,12 +361,21 @@ public class Controlador implements IControladorRemoto{
 			e.printStackTrace();
 		}
 	}
+	
+	private Jugador getJugadorMesa(Jugador jugador) {
+		for (Jugador j : this.getJugadoresMesa()) {
+			if (j.equals(jugador)) {
+				return j;
+			}
+		}
+		return null;
+	}
 
 	public void realizarLasApuestasSegundaRonda(Jugador jugador, String input) {
 		try {
 			if (this.validarEntero(input)) {
 				int apuesta = Integer.parseInt(input);
-				if (apuesta >= mesa.getApuestaMayor()) {
+				if ((apuesta + getJugadorMesa(jugador).getApuesta()) >= (mesa.getApuestaMayor())) {
 					mesa.realizarSegundaRondaApuesta(jugador, apuesta);
 				} else {
 					if (this.jugadorActual.getNombre().equals(this.getJugadorTurno().getNombre())) {
@@ -417,6 +436,15 @@ public class Controlador implements IControladorRemoto{
 			}
 		}
 		return true;
+	}
+
+	public int getFondosJugador(Jugador jugador) {
+		for (Jugador j : this.getJugadoresMesa()) {
+			if (j.equals(jugador)) {
+				return j.getFondo();
+			}
+		}
+		return 0;
 	}
 	
 	

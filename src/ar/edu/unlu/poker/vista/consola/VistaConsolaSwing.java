@@ -61,8 +61,8 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         this.controlador = controlador;
     }
     
-    public void setEnableCampoEntrada(boolean h) {
-    	this.campoEntrada.setEnabled(h);
+    public void setEnableCampoEntrada(boolean valor) {
+    	this.campoEntrada.setEnabled(valor);
     }
 
     private void procesarEntrada(String input) throws RemoteException {
@@ -202,7 +202,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     }
     
     private void mostrarFondos() {
-		areaSalida.append("Fondos: " + this.jugadorActual.getFondo() + ".\n");
+    	areaSalida.append("Fondos: " + controlador.getFondosJugador(this.jugadorActual) + ".\n");
 		this.mostrarOpcionesMenu();
 	}
 
@@ -298,7 +298,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     }
     
     private void mostrarFondos2() {
-		areaSalida.append("Fondos: " + this.jugadorActual.getFondo() + ".\n");
+		areaSalida.append("Fondos: " + controlador.getFondosJugador(this.jugadorActual) + ".\n");
 		this.mostrarOpcionesMenuEmpezarOtraRonda();
 	}
 

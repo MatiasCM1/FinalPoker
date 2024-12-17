@@ -93,29 +93,23 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			this.notificarObservadores(Informe.CARTAS_REPARTIDAS);
 			
 			this.notificarObservadores(Informe.TURNO_APUESTA_JUGADOR);
-		
-			//this.calcularPozo();
 			
 	}
 
-	private void calcularPozo() {
-		for (Jugador j : this.jugadoresMesa) {
-			this.pozo = this.pozo + j.getApuesta();
-		}
-	}
-	
 //---------------------------------------------------------------------------------------------------------------------------
 //PRIMERA RONDA APUESTAS
 
 	@Override
 	public void realizarApuesta(Jugador jugador, int apuesta)  throws RemoteException{		
 		if (esJugadorTurno(jugador)) {
-			if (jugador.comprobarFondosSuficientes(apuesta)) {
+			if (comprobarFondos(jugador, apuesta)) {
 				this.restarFondosAgregarApuestaJugador(this.jugadorTurno, apuesta);
 				if (apuesta > this.apuestaMayor) {
 					this.apuestaMayor = apuesta;
 				}
 				
+				//AGREGO EL VALOR DE LA APUESTA AL POZO
+				this.agregarAlPozo(apuesta);
 				
 				//TENGO QUE HACER ESTO, PQ EL JUGADOR QUE VIENE DE LA VISTA NO TIENE LAS CARTAS, ENTONCES SE LAS TENGO QUE SETEAR
 				jugador.setListaCartas(buscarCartasCorrespondeJugador(jugador)); //BUSCAR OTRA MANERA NO ME GUSTA
@@ -140,6 +134,9 @@ public class Mesa extends ObservableRemoto implements IMesa{
 							this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA);
 						} else {
 							this.notificarObservadores(Informe.TURNO_DESCARTE); //LLamo al menu de descarte
+							
+							this.mostrarFondosJugadores(this.jugadoresMesa);
+							
 						}
 						
 					}
@@ -156,6 +153,28 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		
 	}
 	
+
+	private boolean comprobarFondos(Jugador jugador, int apuesta) {
+		for (Jugador j : this.jugadoresMesa) {
+			if (j.equals(jugador)) {
+				return j.comprobarFondosSuficientes(apuesta);
+			}
+		}
+		return false;
+	} 
+
+	
+	//METODO DE PRUEBA
+	private void mostrarFondosJugadores(Queue<Jugador> jugadores) {
+		for (Jugador j : jugadores) {
+			System.out.println(j.getNombre() + " Fondos: " + j.getFondo() + ", Apuesta: " + j.getApuesta() + ", Mapa: " + mapa.get(j));
+		}
+		System.out.println("Pozo: " + this.getPozo());
+	}
+
+	public int getPozo() {
+		return pozo;
+	}
 
 	private LinkedList<Carta> buscarCartasCorrespondeJugador(Jugador jugador) {
 		for (Jugador j : this.jugadoresMesa) {
@@ -180,6 +199,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		mapa.entrySet().forEach(entry -> {if (entry.getValue() < this.apuestaMayor) { 
 			this.jugadoresApuestaInsuficiente.add(entry.getKey());
 		}});
+		
 	}
 	
 	@Override
@@ -197,7 +217,16 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	}
 
 	private void restarFondosAgregarApuestaJugador(Jugador jugador, int apuesta) {
-		jugador.realizarApuesta(apuesta);
+		for (Jugador j : this.jugadoresMesa) {
+			if (j.equals(jugador)) {
+				j.realizarApuesta(apuesta);
+				this.mapa.put(j, (j.getApuesta()));
+				if (apuesta > this.apuestaMayor) {
+					this.apuestaMayor = j.getApuesta();
+				}
+			}
+		}
+		//jugador.realizarApuesta(apuesta);
 	}
 
 	private boolean comprobarFinalVueltaApuesta(Jugador jugador) {
@@ -209,11 +238,21 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	}
 	
 	public void jugadorFichaPostEnvite(Jugador jugador) throws RemoteException{
-		if (jugador.comprobarFondosSuficientes(this.apuestaMayor)) { //VERIFICAR SI TIENE FONDOS SUFICIENTES
-			jugador.realizarApuesta(this.apuestaMayor);//Actualizo la apuesta del jugador
-			mapa.put(jugador, this.apuestaMayor);//Actualizo la apuesta del jugador en el hash map
+		if (comprobarFondos(jugador, this.apuestaMayor)) { //VERIFICAR SI TIENE FONDOS SUFICIENTES
+			
+			int apuestaParaFichar = this.calcularCuantoFaltaParaFichar(jugador);
+			
+			this.restarFondosAgregarApuestaJugador(jugador, apuestaParaFichar);//Actualizo la apuesta del jugador
+			
+			
+			this.agregarAlPozo(this.apuestaMayor);
+			
+			//mapa.put(jugador, this.apuestaMayor);//Actualizo la apuesta del jugador en el hash map
+			
 			this.jugadoresApuestaInsuficiente.remove(jugador);
+			
 			this.notificarObservadores(Informe.JUGADOR_IGUALA_APUESTA);
+			
 			if (this.jugadoresApuestaInsuficiente.isEmpty()) {
 				if (this.rondaApuesta.size() == 1) {
 					this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA);
@@ -416,14 +455,11 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		}*/
 		
 		if (esJugadorTurno(jugador)) {
-			if (jugador.comprobarFondosSuficientes(apuesta)) {
+			if (comprobarFondos(jugador, apuesta)) {
+				
 				this.restarFondosAgregarApuestaJugador(this.jugadorTurno, apuesta);
 				
-				
-				if (apuesta > this.apuestaMayor) {
-					this.apuestaMayor = apuesta;
-				}
-				
+				this.agregarAlPozo(apuesta);
 				
 				//TENGO QUE HACER ESTO, PQ EL JUGADOR QUE VIENE DE LA VISTA NO TIENE LAS CARTAS, ENTONCES SE LAS TENGO QUE SETEAR
 				jugador.setListaCartas(buscarCartasCorrespondeJugador(jugador)); //BUSCAR OTRA MANERA NO ME GUSTA
@@ -431,8 +467,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 				
 				this.rondaApuestaAux.add(jugador);
 				
-				
-				this.mapa.put(jugador, this.jugadorTurno.getApuesta());
+				//this.mapa.put(jugador, this.jugadorTurno.getApuesta());
 				
 				this.notificarObservadores(Informe.APUESTA_REALIZADA);
 				
@@ -446,6 +481,9 @@ public class Mesa extends ObservableRemoto implements IMesa{
 						this.jugadorTurno = this.rondaApuesta.poll();
 						//this.rondaApuestaAux.add(this.jugadorTurno);//CREO QUE ESTO NO VA EN ESTE MEDOTO DE REALIZAR APUESTA SEGUNDA RONDA
 						this.rondaApuesta.add(this.jugadorTurno);
+						
+						this.mostrarFondosJugadores(this.jugadoresMesa);
+						
 						this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA_SEGUNDA_RONDA);
 					}
 				} else { 
@@ -494,15 +532,29 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	
 	@Override
 	public void jugadorFichaPostEnviteSegundaRonda(Jugador jugador) throws RemoteException {
-		if (jugador.comprobarFondosSuficientes(this.apuestaMayor)) { //VERIFICAR SI TIENE FONDOS SUFICIENTES
-			jugador.realizarApuesta(this.apuestaMayor);//Actualizo la apuesta del jugador
-			mapa.put(jugador, this.apuestaMayor);//Actualizo la apuesta del jugador en el hash map
+		if (comprobarFondos(jugador, this.apuestaMayor)) { //VERIFICAR SI TIENE FONDOS SUFICIENTES
+			
+			int apuestaParaFichar = this.calcularCuantoFaltaParaFichar(jugador);
+			
+			this.restarFondosAgregarApuestaJugador(jugador, apuestaParaFichar);//Actualizo la apuesta del jugador
+			
+			this.agregarAlPozo(apuestaParaFichar);
+			
+			//mapa.put(jugador, this.apuestaMayor);//Actualizo la apuesta del jugador en el hash map
+			
 			this.jugadoresApuestaInsuficiente.remove(jugador);
+			
 			this.notificarObservadores(Informe.JUGADOR_IGUALA_APUESTA);
+			
+			
 			if (this.jugadoresApuestaInsuficiente.isEmpty()) {
 				this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA_SEGUNDA_RONDA);
 			}
 		}
+	}
+
+	private int calcularCuantoFaltaParaFichar(Jugador jugador) { //HAGO UNA RESTA PARA SABER CUANTO LE FALTA AL JUGADOR PARA IGUALAR LA APUESTA MAXIMA
+		return this.apuestaMayor - this.mapa.get(jugador);
 	}
 
 	@Override
@@ -658,4 +710,9 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		Jugador jugadorAux = this.jugadoresMesa.poll();
 		this.jugadoresMesa.add(jugadorAux);
 	}
+	
+	private void agregarAlPozo(int apuesta) {
+		this.pozo += apuesta;
+	}
+	
 }
