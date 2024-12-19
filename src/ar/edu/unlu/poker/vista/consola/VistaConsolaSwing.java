@@ -283,8 +283,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     		switch (input.toLowerCase()) {
     			case "1":
     				this.esperandoEntrada = false;
-    				controlador.prepararCola();
-    				controlador.iniciarGame();
+    				controlador.iniciarGamePostPrimeraRonda();
     				break;
     			case "2":
     				this.mostrarJugadores2();

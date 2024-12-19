@@ -28,6 +28,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	private Jugador jugadorTurno;
 	private Mazo mazo;
 	private int pozo;
+	private boolean primeraRonda;
 
 	static {
 		valorCarta.put("2", 2);
@@ -54,11 +55,6 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		}
 	}
 	
-	//@Override
-	//public void notificarObservadores(Object o) {
-		
-	//}
-	
 	@Override
 	public void iniciarJuego() throws RemoteException {
 		
@@ -84,7 +80,8 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			this.mapa.clear();
 			this.pozo = 0;
 			
-			this.seleccionarJugadorRandom();
+			this.determinarJugadorMano();
+			
 			this.jugadorMano = this.jugadoresMesa.poll();
 			this.jugadorTurno = this.jugadorMano;
 			this.jugadoresMesa.add(this.jugadorMano);
@@ -634,6 +631,12 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		return List.copyOf(this.jugadoresMesa);
 	}
 	
+	private void determinarJugadorMano() throws RemoteException {
+		if (this.isPrimeraRonda()) {
+			this.seleccionarJugadorRandom();
+		} 
+	}
+	
 	private void seleccionarJugadorRandom() throws RemoteException{
 		List<Jugador> jugadoresMezclados = new LinkedList<Jugador>(this.jugadoresMesa);
 		Collections.shuffle(jugadoresMezclados);
@@ -716,6 +719,8 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		return jugadorActual.getResultadoValoresCartas().ordinal() > jugadorGanador.getResultadoValoresCartas().ordinal();
 	}
 	
+	//preguntar si el resultado es poker, PAR, DOBLE_PAR, TRIO y busar el que tenga valor de trio mas alto
+	
 	private Jugador buscarCartaMayor(Jugador jugador1, Jugador jugador2) throws RemoteException {
 		Carta carta1 = jugador1.getCartasOrdenadas().getLast();
 		Carta carta2 = jugador2.getCartasOrdenadas().getLast();
@@ -741,15 +746,19 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	public List<Jugador> getRondaApuestaAux() throws RemoteException{
 		return List.copyOf(this.rondaApuestaAux);
 	}
-
-	@Override
-	public void prepararColaParaSiguienteJugadorMano() throws RemoteException{
-		Jugador jugadorAux = this.jugadoresMesa.poll();
-		this.jugadoresMesa.add(jugadorAux);
-	}
 	
 	private void agregarAlPozo(int apuesta) {
 		this.pozo += apuesta;
+	}
+
+	@Override
+	public boolean isPrimeraRonda() throws RemoteException{
+		return primeraRonda;
+	}
+
+	@Override
+	public void setPrimeraRonda(boolean primeraRonda) throws RemoteException{
+		this.primeraRonda = primeraRonda;
 	}
 	
 }

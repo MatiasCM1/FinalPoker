@@ -68,7 +68,12 @@ public class VistaLogin extends JFrame {
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnIngresar.setForeground(Color.black);
+				btnIngresar.setForeground(Color.white);
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("hola");
 			}
 		});
 		btnIngresar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

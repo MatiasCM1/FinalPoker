@@ -169,8 +169,19 @@ public class Controlador implements IControladorRemoto{
 
 	public void iniciarGame() {
 		try {
+			mesa.setPrimeraRonda(true);
 			mesa.iniciarJuego();
 		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void iniciarGamePostPrimeraRonda() {
+		try {
+			mesa.setPrimeraRonda(false);
+			mesa.iniciarJuego();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -442,15 +453,6 @@ public class Controlador implements IControladorRemoto{
 			return true;
 		} catch (NumberFormatException e) {
 			return false;
-		}
-	}
-
-	public void prepararCola() {
-		try {
-			mesa.prepararColaParaSiguienteJugadorMano();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
