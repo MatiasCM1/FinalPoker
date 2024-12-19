@@ -54,6 +54,11 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		}
 	}
 	
+	//@Override
+	//public void notificarObservadores(Object o) {
+		
+	//}
+	
 	@Override
 	public void iniciarJuego() throws RemoteException {
 		
@@ -61,6 +66,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			this.notificarObservadores(Informe.CANT_JUGADORES_INSUFICIENTES);
 			return;
 		}
+		
 		
 		if (this.jugadoresMesa.size() > 7) {
 			this.notificarObservadores(Informe.CANT_JUGADORES_EXCEDIDOS);

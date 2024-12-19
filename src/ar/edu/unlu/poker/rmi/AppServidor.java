@@ -16,7 +16,7 @@ public class AppServidor {
 			ArrayList<String> ips = Util.getIpDisponibles();
 			String ip = (String) JOptionPane.showInputDialog(
 					null, 
-					"Seleccione la IP en la que escuchar� peticiones el servidor", "IP del servidor", 
+					"Seleccione la IP en la que escuchara peticiones el servidor", "IP del servidor", 
 					JOptionPane.QUESTION_MESSAGE, 
 					null,
 					ips.toArray(),
@@ -24,7 +24,7 @@ public class AppServidor {
 			);
 			String port = (String) JOptionPane.showInputDialog(
 					null, 
-					"Seleccione el puerto en el que escuchar� peticiones el servidor", "Puerto del servidor", 
+					"Seleccione el puerto en el que escuchara peticiones el servidor", "Puerto del servidor", 
 					JOptionPane.QUESTION_MESSAGE,
 					null,
 					null,

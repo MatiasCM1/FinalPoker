@@ -232,6 +232,7 @@ public class Controlador implements IControladorRemoto{
 	}
 	
 	public void jugadorSeRetiraDelJuego(Jugador jugador) throws RemoteException {
+		mesa.removerObservador(this);
 		mesa.sacarJugador(jugador);
 	}
 	
