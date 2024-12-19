@@ -1,0 +1,95 @@
+1 CUANDO PASA A LA SIGUIENTE RONDA NO ROTA EL JUGADOR MANO AL SIGUIENTE DE LA COLA ORIGINAL, EN ESTE MENU DEBERIA ESTAR LA OPCION DE AGREGAR MAS FONDOS
+
+4 CUANDO TENGO POR EJEMPLO, FONDOS 1, Y APUESTO UNO EN LA PRIMERA RONDA DE APUESTAS, ME VUELVE A DEJAR APOSTAR 1 EN LA SEGUNDA, CUANDO DEBERIA TENER FONDOS INSUFICIENTES
+
+8 HAY OCACIONES MUY AISLADAS EN QUE LA DEVOLUCION DE RESULTADOS DA FALLIDA
+
+9 MIRAR BIEN EL TEMA DE LOS ENVITES Y LOS FICHES EN LAS REGLAS DEL JUEGO - PARA EL TEMA DE LAS APUESTAS, CREO QUE SI PASAN o FICHAN MIENTRAS otro jugador NO ENVITE no quedan automaticamente fuera del juego
+
+13 REVISAR QE CUANDO UN JUGADOR CIERRRA LA VISTA O SE VA DEL JUEGO, SALGA CORRECTAMENTE Y QUE NO SE SIGA CONTANDO - (ESTO GENERAR ERROR, SI TENGO 3 JUGADORES y UNO TOCA SALIR, CUADNO LE DOY A SEGUIR JUGADOR SALTA ERROR)
+
+18 MRAR QUE CUANDO APUESTEEN LA SEGUNDA RONDA, MUESTRE LA SUMA DE LA APUESTA NUEVA CON LA ANTERIOR
+
+22 EL GET FONFDOS EN EL CONTROLADOR NO ME GUSTA, l SOLUCION SERIA QUE CADA VEZ QUE SE REALIZA UNA APUESTA SE ACTUALICEN LOS FONDOS EN EL JUGAODR DE LA VISTA
+
+23 (PROBAR) EN LA SEGUNDA RONDA DE APUESTAS, E SUMA EL VALOR DEL POZO PERO NO DESCUENTA LOS FONDOS. CREO QUE  SI DESCUENTA, PERO LO HACE NE OTRO JUGADOR QUE NO TIENE LOS FONDOS TOCADOS
+
+25 AGREGAR OPCION DE AGREGAR MAS FONDOS EN EL NUEVO MENU
+
+26 LOS FONDOS QUE SE AGREGUEN NO PUEDEN SER NEGATIVOS
+
+27 NO PUEDO HACER QUE SE MUEVA LA VENTANA DE LA VISTA CON LOS EVENTOS QUE DICE EL VIDEO, el tema de los listeners basicamente
+
+COMO UNO LAS VISTAS NUEVAS A MI JUEGO
+
+28 EN LA VISTA CUANDO SE AGREGEN MAS FONDOS, O CUANDO INICIES EL PROGRAMA QE SOLICITE TU NOMBRE, CUANDO SE TENGA PERSISTENCIA SE DEBERIAN SUMAR A LOS QUE TIENEN ESE NOMBRE
+
+PROBAR, SI DOS JUGADORES FICHAN y EL TERCERO HACE UNA APUESTA MAYOR, QUE PASA?
+ 
+
+
+REGLAS DE LA SEGUNDA RONDA DE APUESTAS SEGUN GPT:
+En el sitio web que mencionas, se describe el póker cerrado o Five Card Draw, que es un tipo clásico de póker. Aquí tienes una explicación detallada de cómo funciona la ronda de apuestas después de los descartes:
+
+    Fase previa a los descartes:
+        Al inicio de la partida, cada jugador recibe cinco cartas.
+        Se lleva a cabo una primera ronda de apuestas basada en las manos iniciales de cada jugador.
+
+    Fase de descartes:
+        Cada jugador tiene la oportunidad de mejorar su mano intercambiando una o más de sus cartas.
+        Los jugadores deciden cuántas cartas quieren descartar (puede ser ninguna, si prefieren quedarse con su mano completa).
+        Estas cartas se reemplazan con nuevas cartas del mazo.
+
+    Ronda de apuestas post-descartes:
+        Una vez que todos los jugadores han recibido sus nuevas cartas, comienza una segunda ronda de apuestas.
+        En esta ronda, los jugadores apuestan basándose en la fortaleza de su nueva mano tras los descartes.
+        El orden para apostar suele ser el mismo que el de la ronda anterior (normalmente comenzando por el jugador a la izquierda del repartidor).
+
+    El showdown (si es necesario):
+        Si hay más de un jugador que sigue apostando después de esta ronda, se llega al "showdown". Aquí, los jugadores restantes muestran sus manos, y la mejor combinación gana el bote.
+
+Notas clave:
+
+    Esta ronda de apuestas post-descartes es importante porque los jugadores tienen información nueva después de haber mejorado (o no) sus manos.
+    Es común que los jugadores intenten "leer" a sus oponentes según el número de cartas que hayan descartado. Por ejemplo:
+        Un jugador que no descarta ninguna carta podría tener ya una mano fuerte (como un full o una escalera).
+        Un jugador que descarta varias cartas podría estar buscando mejorar una mano débil o incompleta.
+
+En la ronda de apuestas post-descartes de póker cerrado, los jugadores no están obligados a apostar, pero deben tomar decisiones basadas en las acciones de los demás jugadores. Aquí está el desglose:
+Opciones de los jugadores en la ronda de apuestas:
+
+    Pasar (Check):
+        Si nadie ha apostado todavía, puedes elegir no apostar y "pasar". Esto significa que te mantienes en el juego sin añadir fichas al bote.
+        Sin embargo, si algún jugador realiza una apuesta, ya no podrás pasar y tendrás que decidir entre las otras opciones.
+
+    Apostar (Bet):
+        Si nadie ha apostado aún, puedes iniciar la apuesta colocando fichas en el bote.
+
+    Igualar (Call):
+        Si un jugador ha hecho una apuesta, tienes la opción de igualarla colocando en el bote la misma cantidad que ese jugador.
+
+    Subir (Raise):
+        Si un jugador ha apostado, puedes decidir aumentar esa apuesta. Esto obliga a los demás jugadores a igualar (Call) o retirarse (Fold) si quieren continuar en la partida.
+
+    Retirarse (Fold):
+        Si no deseas igualar o subir una apuesta, puedes retirarte. Al hacerlo, pierdes cualquier fichaje que ya hayas apostado y renuncias a competir por el bote.
+
+Si un jugador sube su apuesta, ¿todos deben subirla?
+
+    Sí, pero solo si quieren seguir en la mano.
+        Los jugadores que quieran seguir compitiendo por el bote deben al menos igualar la apuesta más alta realizada en esa ronda.
+        Si no quieren igualar (o subir aún más), deben retirarse de la mano.
+
+Por ejemplo:
+
+    Un jugador apuesta 10 fichas.
+    El siguiente jugador decide subir (Raise) a 20 fichas.
+    Ahora, todos los jugadores restantes deben:
+        Igualar la apuesta más alta (20 fichas).
+        Subir aún más (Raise).
+        O retirarse (Fold).
+
+¿Qué pasa si nadie sube?
+
+    Si ningún jugador sube una apuesta inicial (Bet), la ronda termina cuando todos han tenido la oportunidad de actuar.
+    Si todos los jugadores pasan (Check), también termina la ronda de apuestas y se pasa al showdown (revelación de manos).
