@@ -121,6 +121,14 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         		esperandoEntrada = true;
         		menuApuestasDesigualesSegundaRonda(input);
         	break;
+        	case ESPERANDO_FONDOS:
+        		esperandoEntrada = true;
+        		agregandoFondos(input);
+        	break;
+        	case ESPERANDO_FONDOS_2:
+        		esperandoEntrada = true;
+        		agregandoFondos2(input);
+        	break;
         }
     }
    
@@ -185,13 +193,13 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     				mostrarFondos();
     				this.esperandoEntrada = false;
     				break;
+    			case "4":
+    				areaSalida.append("Ingrese los fondos.\n");
+    				this.estadoFlujo = Estados.ESPERANDO_FONDOS;
+    				break;
     			case "0":
     				areaSalida.append("Se salio del juego exitosamente. Saludos!\n");
-    				try {
-    					controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
-    				} catch (RemoteException e) {
-    					e.printStackTrace();
-    				}
+    				controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
     				System.exit(0);
     				break;
     			default:
@@ -205,12 +213,19 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     	areaSalida.append("Fondos: " + controlador.getFondosJugador(this.jugadorActual) + ".\n");
 		this.mostrarOpcionesMenu();
 	}
+    
+    private void agregandoFondos(String input) {
+    	controlador.incrementarFondos(this.jugadorActual, input);
+    	this.notificarFondosAgregados();
+    }
 
-	private void mostrarOpcionesMenu() {
+    @Override
+	public void mostrarOpcionesMenu() {
         areaSalida.append("Seleccione una opcion:\n");
         areaSalida.append("1 - Ver Lista de Jugadores\n");
         areaSalida.append("2 - Comenzar Juego\n");
-        areaSalida.append("3 - MostrarFondos\n");
+        areaSalida.append("3 - Mostrar Fondos\n");
+        areaSalida.append("4 - Agregar Fondos\n");
         areaSalida.append("0 - Salir\n");
         this.estadoFlujo = Estados.MENU_PRINCIPAL;
     }
@@ -246,12 +261,9 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     }
 
     @Override
-    public void mostrarGanador(List<Jugador> ganadores) {
+    public void mostrarGanador(Jugador ganador) {
         areaSalida.append("Ganador:\n");
-        for (Jugador ganador : ganadores) {
-            areaSalida.append(" - " + ganador.getNombre() + " con " + ganador.getResultadoValoresCartas() + "\n");
-        }
-        mostrarOpcionesMenuEmpezarOtraRonda();
+        areaSalida.append(" - " + ganador.getNombre() + " con " + ganador.getResultadoValoresCartas() + "\n");
     }
     
     @Override
@@ -260,6 +272,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         areaSalida.append("1 - Seguir jugando\n");
         areaSalida.append("2 - Mostrar Jugadores\n");
         areaSalida.append("3 - Mostrar Fondos\n");
+        areaSalida.append("4 - Agregar Fondos\n");
         areaSalida.append("0 - Salir\n");
         this.setEnableCampoEntrada(true);
         this.estadoFlujo = Estados.MENU_NUEVA_RONDA;
@@ -281,13 +294,13 @@ public class VistaConsolaSwing extends JFrame implements IVista {
     				this.mostrarFondos2();
     				this.esperandoEntrada = false;
     				break;
+    			case "4":
+    				areaSalida.append("Ingrese los fondos.\n");
+    				this.estadoFlujo = Estados.ESPERANDO_FONDOS_2;
+    				break;
     			case "0":
     				areaSalida.append("Se salio del juego exitosamente. Saludos!\n");
-    				try {
-    					controlador.jugadorSeRetiraDelJuego(jugadorActual);
-    				} catch (RemoteException e) {
-    					e.printStackTrace();
-    				}
+    				controlador.jugadorSeRetiraDelJuego(jugadorActual);
     				System.exit(0);
     				break;
     			default:
@@ -311,8 +324,13 @@ public class VistaConsolaSwing extends JFrame implements IVista {
         }
         this.mostrarOpcionesMenuEmpezarOtraRonda();
     }
+    
+    private void agregandoFondos2(String input) {
+    	controlador.incrementarFondos2(this.jugadorActual, input);
+    	this.notificarFondosAgregados2();
+    }
 
-    @Override
+	@Override
     public void iniciar() {
         this.setVisible(true);
     }
@@ -681,6 +699,16 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	@Override
 	public void notificarErrorIngreseUnEntero() {
 		areaSalida.append("¡Error, ingrese un numero entero!.\n");
+	}
+
+	private void notificarFondosAgregados() {
+		areaSalida.append("¡Fondos agregados con exito!.\n");
+		mostrarOpcionesMenu();
+	}
+	
+	private void notificarFondosAgregados2() {
+		areaSalida.append("¡Fondos agregados con exito!.\n");
+		mostrarOpcionesMenuEmpezarOtraRonda();
 	}
     
 }

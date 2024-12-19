@@ -20,7 +20,7 @@ public interface IVista {
 
 	void informarCantJugadoresExcedidos();
 
-	void mostrarGanador(List<Jugador> ganadores);
+	void mostrarGanador(Jugador ganador);
 
 	void iniciar();
 	
@@ -69,5 +69,7 @@ public interface IVista {
 	void mostrarOpcionesMenuEmpezarOtraRonda() ;
 	
 	void setEnableCampoEntrada(boolean h);
+	
+	void mostrarOpcionesMenu();
 
 }

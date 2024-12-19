@@ -570,8 +570,19 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		}
 	}
 
+	
+	private int buscarApuestaMayor() {
+		int apuestaMayorMapa = mapa.entrySet().iterator().next().getValue(); //Agarro un jugador cualquiera del mapa y tomo su apuesta y la establezmo como mayor
+		for (Entry<Jugador, Integer> entry : mapa.entrySet()) {
+			if (entry.getValue() > apuestaMayorMapa) {
+				apuestaMayorMapa = entry.getValue();
+			}
+		}
+		return apuestaMayorMapa;
+	}
+
 	private int calcularCuantoFaltaParaFichar(Jugador jugador) { //HAGO UNA RESTA PARA SABER CUANTO LE FALTA AL JUGADOR PARA IGUALAR LA APUESTA MAXIMA
-		return Math.abs(this.apuestaMayor - this.mapa.get(jugador));
+		return Math.abs(this.buscarApuestaMayor() - this.mapa.get(jugador));
 	}
 
 	@Override
@@ -594,6 +605,15 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			this.devolverResultados();
 		}
 	}	
+	
+	@Override
+	public void agregarNuevosFondos(Jugador jugador, int fondoAgregar) throws RemoteException {
+		for (Jugador j : this.jugadoresMesa) {
+			if (j.equals(jugador)) {
+				j.agregarFondos(fondoAgregar);
+			}
+		}
+	}
 	
 	public int getApuestaJugador(Jugador jugador) throws RemoteException{
 		//Jugador juga = mapa.keySet().stream().filter(j -> j.equals(jugador)).findFirst().orElse(null);

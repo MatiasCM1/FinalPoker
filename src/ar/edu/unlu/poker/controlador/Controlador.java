@@ -40,7 +40,8 @@ public class Controlador implements IControladorRemoto{
 				if (this.isJugadorTurno()) {
 					mesa.darFondosGanador(ganador.getFirst());
 				}
-				vista.mostrarGanador(ganador);
+				vista.mostrarGanador(ganador.getFirst());
+				vista.mostrarOpcionesMenuEmpezarOtraRonda();
 				break;
 			case TURNO_APUESTA_JUGADOR:
 				if (this.isJugadorTurno()) {
@@ -231,9 +232,19 @@ public class Controlador implements IControladorRemoto{
 		return mesa.getJugadorMano();
 	}
 	
-	public void jugadorSeRetiraDelJuego(Jugador jugador) throws RemoteException {
-		mesa.removerObservador(this);
-		mesa.sacarJugador(jugador);
+	public void jugadorSeRetiraDelJuego(Jugador jugador) {
+		try {
+			mesa.removerObservador(this);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			mesa.sacarJugador(jugador);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public Jugador getJugadorTurno() {
@@ -459,6 +470,36 @@ public class Controlador implements IControladorRemoto{
 			}
 		}
 		return 0;
+	}
+
+	public void incrementarFondos(Jugador jugador, String input) {
+		if (this.validarEntero(input)) {
+			int fondoAgregar = Integer.parseInt(input);
+			try {
+				mesa.agregarNuevosFondos(jugador, fondoAgregar);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			vista.notificarErrorIngreseUnEntero();
+			vista.mostrarOpcionesMenu();
+		}
+	}
+
+	public void incrementarFondos2(Jugador jugador, String input) {
+		if (this.validarEntero(input)) {
+			int fondoAgregar = Integer.parseInt(input);
+			try {
+				mesa.agregarNuevosFondos(jugador, fondoAgregar);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			vista.notificarErrorIngreseUnEntero();
+			vista.mostrarOpcionesMenuEmpezarOtraRonda();
+		}
 	}
 	
 	
