@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 import ar.edu.unlu.poker.controlador.Controlador;
 import ar.edu.unlu.poker.vista.IVista;
-import ar.edu.unlu.poker.vista.VistaConsolaSwing;
+import ar.edu.unlu.poker.vista.consola.VistaConsolaSwing;
 import ar.edu.unlu.rmimvc.RMIMVCException;
 import ar.edu.unlu.rmimvc.Util;
 import ar.edu.unlu.rmimvc.cliente.Cliente;
@@ -19,7 +19,7 @@ public class AppCliente {
 		ArrayList<String> ips = Util.getIpDisponibles();
 		String ip = (String) JOptionPane.showInputDialog(
 				null, 
-				"Seleccione la IP en la que escuchar� peticiones el cliente", "IP del cliente", 
+				"Seleccione la IP en la que escuchara peticiones el cliente", "IP del cliente", 
 				JOptionPane.QUESTION_MESSAGE, 
 				null,
 				ips.toArray(),
@@ -27,7 +27,7 @@ public class AppCliente {
 		);
 		String port = (String) JOptionPane.showInputDialog(
 				null, 
-				"Seleccione el puerto en el que escuchar� peticiones el cliente", "Puerto del cliente", 
+				"Seleccione el puerto en el que escuchara peticiones el cliente", "Puerto del cliente", 
 				JOptionPane.QUESTION_MESSAGE,
 				null,
 				null,
@@ -55,6 +55,7 @@ public class AppCliente {
 		vista.setControlador(controlador);
 		Cliente c = new Cliente(ip, Integer.parseInt(port), ipServidor, Integer.parseInt(portServidor));
 		vista.iniciar();
+		
 		try {
 			c.iniciar(controlador);
 		} catch (RemoteException e) {

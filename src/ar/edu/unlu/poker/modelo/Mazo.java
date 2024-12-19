@@ -4,15 +4,21 @@ import java.rmi.RemoteException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 
-public class Dealer {
+public class Mazo {
 
 	private LinkedList<Carta> cartasTotales = new LinkedList<Carta>();
 	private LinkedList<Carta> cartas;
 	private Random aleatorio = new Random();
 	
-	public Dealer() throws RemoteException {
+	public Mazo() throws RemoteException {
+		this.setearCartasTotales();
+		this.setearCartasRonda();
+	}
+	
+	public void inicializarMazo() throws RemoteException{
 		this.setearCartasTotales();
 		this.setearCartasRonda();
 	}
@@ -22,14 +28,22 @@ public class Dealer {
 		return this.cartas.remove(indice);
 	}
 	
-	public void repartirCartasRonda(List<Jugador> jugadoresMesa, int posJugadorMano) throws RemoteException{
-		for (int j = 0; j < 5; j++) {
-			for (int i = 0; i < jugadoresMesa.size(); i++) {
-				Jugador jugadorActual = jugadoresMesa.get(posJugadorMano);
-				if (jugadorActual.getCartas().size() < 5) {
-					jugadorActual.recibirCarta(this.repartirCarta());
-				}
-				posJugadorMano = (posJugadorMano + 1) % jugadoresMesa.size();
+	public void repartirCartasRonda(Queue<Jugador> jugadoresMesa) throws RemoteException {
+	    for (int j = 0; j < 5; j++) {
+	        for (int i = 0; i < jugadoresMesa.size(); i++) {
+	            Jugador jugadorActual = jugadoresMesa.poll();
+	            if (jugadorActual.getCartas().size() < 5) {
+	                jugadorActual.recibirCarta(this.repartirCarta());
+	            }
+	            jugadoresMesa.add(jugadorActual);
+	        }
+	    }
+	}
+	
+	public void repartirCartasPostDescarte(Queue<Jugador> listaJugadores) {
+		for (Jugador j : listaJugadores) {
+			while (j.getCartas().size() < 5) {
+				j.recibirCarta(this.repartirCarta());
 			}
 		}
 	}

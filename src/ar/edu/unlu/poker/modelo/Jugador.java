@@ -3,6 +3,7 @@ package ar.edu.unlu.poker.modelo;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class Jugador implements Serializable{
 
@@ -10,26 +11,46 @@ public class Jugador implements Serializable{
 	private String nombre;
 	private Resultado resultadoValoresCartas;
 	private int apuesta;
-	private int fondo;//Fondo disponible para apuestas
-	private boolean hapasado;
+	private int fondo;
 	private boolean enJuego;//Indica si el jugador sigue en juego o ha pasado
+	private boolean haApostado;
 	
 	public Jugador(String nombre) {
 		this.nombre = nombre;
-		this.apuesta = -1;
+		this.apuesta = 0;
 		this.fondo = 1000;// Fondo inicial por el momento
-		this.setHapasado(false);
 		this.setEnJuego(true);
 	}
 	
 	public Jugador(String nombre, int fondo) {
 		this.nombre = nombre;
 		this.fondo = fondo;
-		this.apuesta = -1;
-		this.setHapasado(false);
+		this.apuesta = 0;
 		this.setEnJuego(true);
 	}
 	
+
+	public void setListaCartas(LinkedList<Carta> cartas) {
+		this.cartas = cartas;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(nombre);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Jugador other = (Jugador) obj;
+		return Objects.equals(nombre, other.nombre);
+	}
+
 	public void resetearCartas() {
 		this.cartas.clear();
 	}
@@ -37,10 +58,6 @@ public class Jugador implements Serializable{
 	public LinkedList<Carta> getCartas() {
 		return cartas;
 	}
-	
-	/*public boolean descartarCarta(Carta c) {
-		return this.cartas.removeIf(carta -> carta.getValor().equals(c.getValor()) && carta.getPalo().equals(c.getPalo()));
-	}*/
 
 	public int getApuesta() {
 		return apuesta;
@@ -54,20 +71,29 @@ public class Jugador implements Serializable{
 		return nombre;
 	}
 	
-	public Informe realizarApuesta(int cantidad) {
-		if (cantidad <= this.fondo) {
-			this.apuesta += cantidad;
-			this.fondo -= cantidad;
-			this.setHapasado(false);
-			return Informe.APUESTA_REALIZADA;
-		} else {
-			return Informe.FONDO_INSUFICIENTE;
-		}
+	public void realizarApuesta(int cantidad) {
+		this.apuesta += cantidad;
+		this.fondo -= cantidad;
+		this.haApostado = true;
 	}
 	
-	/*public void pasar() {
-		this.setHapasado(true);
-	}*/
+	public boolean getHaApostado() {
+		return this.haApostado;
+	}
+	
+	public void setHaApostado(boolean aposto) {
+		this.haApostado = aposto;
+	}
+	
+	public void resetearTurno() {
+        this.haApostado = false;
+        this.enJuego = true;
+    }
+	
+	public boolean comprobarFondosSuficientes(int cantidad) {
+		return cantidad <= this.fondo;
+	}
+	
 
 	public void recibirCarta(Carta carta) {
 		this.cartas.add(carta);
@@ -87,33 +113,9 @@ public class Jugador implements Serializable{
 	public Resultado getResultadoValoresCartas() {
 		return resultadoValoresCartas;
 	}
-
-	public boolean isHapasado() {
-		return hapasado;
-	}
-
-	public void setHapasado(boolean hapasado) {
-		this.hapasado = hapasado;
-	}
 	
 	public int getFondo() {
 		return this.fondo;
-	}
-	
-	public void fichar(int cantidad) {
-		if (cantidad <= this.fondo) {
-			this.apuesta += cantidad;
-			this.fondo -= cantidad;
-			this.setEnJuego(true);
-		}
-	}
-	
-	public void envidar(int cantidad) {
-		if (cantidad > this.apuesta && cantidad <= this.fondo) {
-			this.apuesta = cantidad;
-			this.fondo -= cantidad;
-			this.setEnJuego(true);
-		}
 	}
 	
 	public void pasar() {
@@ -126,6 +128,10 @@ public class Jugador implements Serializable{
 
 	public void setEnJuego(boolean enJuego) {
 		this.enJuego = enJuego;
+	}
+	
+	public void agregarFondos(int fondosAgregar) {
+		this.fondo += fondosAgregar;
 	}
 
 }

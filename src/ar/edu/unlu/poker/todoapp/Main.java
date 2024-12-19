@@ -2,7 +2,7 @@ package ar.edu.unlu.poker.todoapp;
 
 import ar.edu.unlu.poker.controlador.Controlador;
 import ar.edu.unlu.poker.modelo.Mesa;
-import ar.edu.unlu.poker.vista.VistaConsolaSwing;
+import ar.edu.unlu.poker.vista.consola.VistaConsolaSwing;
 
 public class Main {
 
