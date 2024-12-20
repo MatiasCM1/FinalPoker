@@ -12,11 +12,17 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 import java.awt.Toolkit;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 public class VistaJuegoCartas extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private int xMouse;
+	private int yMouse;
 
 	/**
 	 * Launch the application.
@@ -38,6 +44,7 @@ public class VistaJuegoCartas extends JFrame {
 	 * Create the frame.
 	 */
 	public VistaJuegoCartas() {
+		setUndecorated(true);
 		setForeground(new Color(255, 255, 255));
 		setResizable(false);
 		setLocationByPlatform(true);
@@ -49,8 +56,55 @@ public class VistaJuegoCartas extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JPanel panelBarraSuperior = new JPanel();
+		panelBarraSuperior.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				int x = e.getXOnScreen();
+				int y = e.getYOnScreen();
+				setLocation(x - xMouse, y - yMouse);
+			}
+		});
+		panelBarraSuperior.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				xMouse = e.getX();
+				yMouse = e.getY();
+			}
+		});
+		panelBarraSuperior.setLayout(null);
+		panelBarraSuperior.setBounds(0, 0, 1121, 21);
+		contentPane.add(panelBarraSuperior);
+		
+		JButton btnSalir = new JButton("X");
+		btnSalir.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnSalir.setOpaque(true);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnSalir.setOpaque(false);
+			}
+		});
+		btnSalir.setOpaque(false);
+		btnSalir.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 10));
+		btnSalir.setBorder(null);
+		btnSalir.setBackground(Color.RED);
+		btnSalir.setBounds(1082, 1, 39, 19);
+		panelBarraSuperior.add(btnSalir);
+		
+		JLabel lblFondoMaderaBarra = new JLabel("New label");
+		lblFondoMaderaBarra.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\imagenMadera.jpg"));
+		lblFondoMaderaBarra.setBounds(0, 0, 1121, 21);
+		panelBarraSuperior.add(lblFondoMaderaBarra);
+		
 		JPanel panelNotificaciones = new JPanel();
-		panelNotificaciones.setBounds(623, 11, 472, 301);
+		panelNotificaciones.setBounds(639, 50, 472, 301);
 		contentPane.add(panelNotificaciones);
 		panelNotificaciones.setLayout(null);
 		
@@ -69,7 +123,7 @@ public class VistaJuegoCartas extends JFrame {
 		
 		JPanel panelCartas = new JPanel();
 		panelCartas.setOpaque(false);
-		panelCartas.setBounds(10, 323, 667, 239);
+		panelCartas.setBounds(10, 362, 667, 239);
 		contentPane.add(panelCartas);
 		panelCartas.setLayout(null);
 		
@@ -105,12 +159,12 @@ public class VistaJuegoCartas extends JFrame {
 		
 		JLabel lblImagenMesaFondo = new JLabel("New label");
 		lblImagenMesaFondo.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\FondoMesa.png"));
-		lblImagenMesaFondo.setBounds(28, 11, 597, 293);
+		lblImagenMesaFondo.setBounds(10, 58, 597, 293);
 		contentPane.add(lblImagenMesaFondo);
 		
 		JLabel lblImagenFondoVerde = new JLabel("Fondo");
 		lblImagenFondoVerde.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\FondoVerdeInicio.jpg"));
-		lblImagenFondoVerde.setBounds(0, 0, 1105, 573);
+		lblImagenFondoVerde.setBounds(0, 0, 1121, 612);
 		contentPane.add(lblImagenFondoVerde);
 	}
 }

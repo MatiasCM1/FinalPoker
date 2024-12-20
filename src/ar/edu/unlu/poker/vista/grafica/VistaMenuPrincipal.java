@@ -14,11 +14,16 @@ import java.awt.Cursor;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 public class VistaMenuPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private int xMouse;
+	private int yMouse;
 
 	/**
 	 * Launch the application.
@@ -40,6 +45,7 @@ public class VistaMenuPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public VistaMenuPrincipal() {
+		setUndecorated(true);
 		setResizable(false);
 		setLocationByPlatform(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,62 +56,133 @@ public class VistaMenuPrincipal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JPanel panelBarraSuperior = new JPanel();
+		panelBarraSuperior.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				int x = e.getXOnScreen();
+				int y = e.getYOnScreen();
+				setLocation(x - xMouse, y - yMouse);
+			}
+		});
+		panelBarraSuperior.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				xMouse = e.getX();
+				yMouse = e.getY();
+			}
+		});
+		panelBarraSuperior.setLayout(null);
+		panelBarraSuperior.setBounds(0, 0, 1121, 21);
+		contentPane.add(panelBarraSuperior);
+		
+		JButton btnSalir = new JButton("X");
+		btnSalir.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnSalir.setOpaque(true);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnSalir.setOpaque(false);
+			}
+		});
+		btnSalir.setOpaque(false);
+		btnSalir.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 10));
+		btnSalir.setBorder(null);
+		btnSalir.setBackground(Color.RED);
+		btnSalir.setBounds(1082, 1, 39, 19);
+		panelBarraSuperior.add(btnSalir);
+		
+		JLabel lblFondoMaderaBarra = new JLabel("New label");
+		lblFondoMaderaBarra.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\imagenMadera.jpg"));
+		lblFondoMaderaBarra.setBounds(0, 0, 1121, 21);
+		panelBarraSuperior.add(lblFondoMaderaBarra);
+		
 		JLabel lblTxtFondosDinamico = new JLabel("Fondos");
 		lblTxtFondosDinamico.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTxtFondosDinamico.setForeground(Color.WHITE);
 		lblTxtFondosDinamico.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		lblTxtFondosDinamico.setBounds(859, 74, 223, 43);
+		lblTxtFondosDinamico.setBounds(860, 136, 223, 43);
 		contentPane.add(lblTxtFondosDinamico);
 		
 		JLabel lblTxtNombreDinamico = new JLabel("Nombre");
 		lblTxtNombreDinamico.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		lblTxtNombreDinamico.setForeground(new Color(255, 255, 255));
 		lblTxtNombreDinamico.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTxtNombreDinamico.setBounds(608, 76, 223, 43);
+		lblTxtNombreDinamico.setBounds(609, 138, 223, 43);
 		contentPane.add(lblTxtNombreDinamico);
 		
 		JSeparator separator_fondos = new JSeparator();
-		separator_fondos.setBounds(880, 63, 176, 2);
+		separator_fondos.setBounds(881, 125, 176, 2);
 		contentPane.add(separator_fondos);
 		
 		JSeparator separator_nombre = new JSeparator();
-		separator_nombre.setBounds(633, 63, 176, 2);
+		separator_nombre.setBounds(634, 125, 176, 2);
 		contentPane.add(separator_nombre);
 		
 		JLabel lblFondosJugador = new JLabel("Fondos");
 		lblFondosJugador.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondosJugador.setForeground(Color.WHITE);
 		lblFondosJugador.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
-		lblFondosJugador.setBounds(859, 19, 222, 46);
+		lblFondosJugador.setBounds(860, 81, 222, 46);
 		contentPane.add(lblFondosJugador);
 		
 		JLabel lblNombreJudador = new JLabel("Nombre");
 		lblNombreJudador.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreJudador.setForeground(Color.WHITE);
 		lblNombreJudador.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
-		lblNombreJudador.setBounds(609, 19, 222, 46);
+		lblNombreJudador.setBounds(610, 81, 222, 46);
 		contentPane.add(lblNombreJudador);
 		
-		JButton btnSalir = new JButton("Salir");
-		btnSalir.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnSalir.setOpaque(false);
-		btnSalir.setForeground(Color.WHITE);
-		btnSalir.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
-		btnSalir.setBorder(null);
-		btnSalir.setBounds(25, 361, 374, 75);
-		contentPane.add(btnSalir);
+		JButton btnSalirGrande = new JButton("Salir");
+		btnSalirGrande.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnSalirGrande.setForeground(Color.black);
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnSalirGrande.setForeground(Color.white);
+			}
+		});
+		btnSalirGrande.setContentAreaFilled(false);
+		btnSalirGrande.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnSalirGrande.setOpaque(false);
+		btnSalirGrande.setForeground(Color.WHITE);
+		btnSalirGrande.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
+		btnSalirGrande.setBorder(null);
+		btnSalirGrande.setBounds(25, 361, 374, 75);
+		contentPane.add(btnSalirGrande);
 		
 		JButton btnComenzar = new JButton("Comenzar");
+		btnComenzar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnComenzar.setForeground(Color.black);
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnComenzar.setForeground(Color.white);
+			}
+		});
+		btnComenzar.setContentAreaFilled(false);
 		btnComenzar.setBorder(null);
 		btnComenzar.setOpaque(false);
 		btnComenzar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnComenzar.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
 		btnComenzar.setForeground(new Color(255, 255, 255));
-		btnComenzar.setBounds(25, 213, 374, 75);
+		btnComenzar.setBounds(25, 229, 374, 75);
 		contentPane.add(btnComenzar);
 		
 		JPanel panelMostrarJugadores = new JPanel();
-		panelMostrarJugadores.setBounds(609, 141, 472, 328);
+		panelMostrarJugadores.setBounds(610, 209, 472, 328);
 		contentPane.add(panelMostrarJugadores);
 		panelMostrarJugadores.setLayout(null);
 		
@@ -291,12 +368,12 @@ public class VistaMenuPrincipal extends JFrame {
 		
 		JLabel lblFondosJugadorFondomadera_1 = new JLabel("New label");
 		lblFondosJugadorFondomadera_1.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\imagenMadera.jpg"));
-		lblFondosJugadorFondomadera_1.setBounds(859, 76, 222, 43);
+		lblFondosJugadorFondomadera_1.setBounds(860, 136, 222, 43);
 		contentPane.add(lblFondosJugadorFondomadera_1);
 		
 		JLabel lblNombreJugadorFondomadera = new JLabel("New label");
 		lblNombreJugadorFondomadera.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\imagenMadera.jpg"));
-		lblNombreJugadorFondomadera.setBounds(609, 76, 222, 43);
+		lblNombreJugadorFondomadera.setBounds(609, 136, 222, 43);
 		contentPane.add(lblNombreJugadorFondomadera);
 		
 		JLabel lblBtnSalirFondomadera = new JLabel("New label");
@@ -306,17 +383,17 @@ public class VistaMenuPrincipal extends JFrame {
 		
 		JLabel lblBtnComenzarFondomadera = new JLabel("New label");
 		lblBtnComenzarFondomadera.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\imagenMadera.jpg"));
-		lblBtnComenzarFondomadera.setBounds(25, 213, 374, 75);
+		lblBtnComenzarFondomadera.setBounds(25, 229, 374, 75);
 		contentPane.add(lblBtnComenzarFondomadera);
 		
 		JLabel lblNombreJuegoPoker = new JLabel("POKER");
 		lblNombreJuegoPoker.setForeground(Color.WHITE);
 		lblNombreJuegoPoker.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 80));
-		lblNombreJuegoPoker.setBounds(49, 33, 292, 107);
+		lblNombreJuegoPoker.setBounds(71, 56, 292, 107);
 		contentPane.add(lblNombreJuegoPoker);
 		
 		JLabel lblImagenFondoVerde = new JLabel("Fondo");
-		lblImagenFondoVerde.setBounds(0, 0, 1105, 573);
+		lblImagenFondoVerde.setBounds(0, 0, 1121, 612);
 		lblImagenFondoVerde.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\FondoVerdeInicio.jpg"));
 		contentPane.add(lblImagenFondoVerde);
 	}

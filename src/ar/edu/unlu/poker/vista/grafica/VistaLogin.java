@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -46,6 +47,7 @@ public class VistaLogin extends JFrame {
 	 * Create the frame.
 	 */
 	public VistaLogin() {
+		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,10 +58,67 @@ public class VistaLogin extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JPanel panelBarraSuperior = new JPanel();
+		panelBarraSuperior.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				int x = e.getXOnScreen();
+				int y = e.getYOnScreen();
+				setLocation(x - xMouse, y - yMouse);
+			}
+		});
+		panelBarraSuperior.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				xMouse = e.getX();
+				yMouse = e.getY();
+			}
+		});
+		panelBarraSuperior.setLayout(null);
+		panelBarraSuperior.setBounds(0, 0, 1121, 21);
+		contentPane.add(panelBarraSuperior);
+		
+		JButton btnSalir = new JButton("X");
+		btnSalir.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnSalir.setOpaque(true);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnSalir.setOpaque(false);
+			}
+		});
+		btnSalir.setOpaque(false);
+		btnSalir.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 10));
+		btnSalir.setBorder(null);
+		btnSalir.setBackground(Color.RED);
+		btnSalir.setBounds(1082, 1, 39, 19);
+		panelBarraSuperior.add(btnSalir);
+		
+		JLabel lblFondoMaderaBarra = new JLabel("New label");
+		lblFondoMaderaBarra.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\imagenMadera.jpg"));
+		lblFondoMaderaBarra.setBounds(0, 0, 1121, 21);
+		panelBarraSuperior.add(lblFondoMaderaBarra);
+		
+		JPanel panelIngresar = new JPanel();
+		panelIngresar.setOpaque(false);
+		
+		panelIngresar.setBorder(null);
+		panelIngresar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		panelIngresar.setBackground(new Color(12, 79, 36));
+		panelIngresar.setBounds(358, 468, 374, 75);
+		contentPane.add(panelIngresar);
+		panelIngresar.setLayout(null);
+		
 		JButton btnIngresar = new JButton("Ingresar");
+		btnIngresar.setBounds(0, 0, 374, 75);
+		panelIngresar.add(btnIngresar);
 		btnIngresar.setOpaque(false);
-		btnIngresar.setBounds(358, 468, 374, 75);
-		contentPane.add(btnIngresar);
 		btnIngresar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -82,16 +141,6 @@ public class VistaLogin extends JFrame {
 		btnIngresar.setBorder(null);
 		btnIngresar.setBackground(new Color(255, 128, 0));
 		
-		JPanel panelIngresar = new JPanel();
-		panelIngresar.setOpaque(false);
-		
-		panelIngresar.setBorder(null);
-		panelIngresar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		panelIngresar.setBackground(new Color(12, 79, 36));
-		panelIngresar.setBounds(358, 468, 374, 75);
-		contentPane.add(panelIngresar);
-		panelIngresar.setLayout(null);
-		
 		JLabel lblBtnIngresar = new JLabel("");
 		
 		lblBtnIngresar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -112,6 +161,20 @@ public class VistaLogin extends JFrame {
 		contentPane.add(separator_fondos);
 		
 		txtFondos = new JTextField();
+		txtFondos.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 11));
+		txtFondos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (txtFondos.getText().equals("Ingrese los fondos")) {
+					txtFondos.setText("");
+					txtFondos.setForeground(Color.black);
+				}
+				if (txtNombre.getText().isEmpty()) {
+					txtNombre.setText("Ingrese su nombre de usuario");
+					txtNombre.setForeground(Color.gray);
+				}
+			}
+		});
 		txtFondos.setBorder(null);
 		txtFondos.setText("Ingrese los fondos");
 		txtFondos.setForeground(Color.LIGHT_GRAY);
@@ -130,6 +193,20 @@ public class VistaLogin extends JFrame {
 		contentPane.add(separator_nombre);
 		
 		txtNombre = new JTextField();
+		txtNombre.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 11));
+		txtNombre.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (txtNombre.getText().equals("Ingrese su nombre de usuario")) {
+					txtNombre.setText("");
+					txtNombre.setForeground(Color.black);
+				}
+				if (txtFondos.getText().isEmpty()) {
+					txtFondos.setText("Ingrese los fondos");
+					txtFondos.setForeground(Color.gray);
+				}
+			}
+		});
 		txtNombre.setBorder(null);
 		txtNombre.setText("Ingrese su nombre de usuario");
 		txtNombre.setForeground(new Color(192, 192, 192));
@@ -139,7 +216,7 @@ public class VistaLogin extends JFrame {
 		
 		JLabel lblImagenCartas = new JLabel("Fondo Fichas");
 		lblImagenCartas.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\FotoFichasInicio.png"));
-		lblImagenCartas.setBounds(892, 66, 239, 411);
+		lblImagenCartas.setBounds(892, 66, 229, 411);
 		contentPane.add(lblImagenCartas);
 		
 		JLabel lblNewLabel = new JLabel("Nombre");
@@ -151,12 +228,12 @@ public class VistaLogin extends JFrame {
 		JLabel lblNombreJuegoPoker = new JLabel("POKER");
 		lblNombreJuegoPoker.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 80));
 		lblNombreJuegoPoker.setForeground(new Color(255, 255, 255));
-		lblNombreJuegoPoker.setBounds(387, 31, 292, 107);
+		lblNombreJuegoPoker.setBounds(403, 45, 292, 107);
 		contentPane.add(lblNombreJuegoPoker);
 		
 		JLabel lblImagenFondoVerde = new JLabel("Fondo");
 		lblImagenFondoVerde.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\FondoVerdeInicio.jpg"));
-		lblImagenFondoVerde.setBounds(0, 0, 1131, 617);
+		lblImagenFondoVerde.setBounds(0, 0, 1121, 612);
 		contentPane.add(lblImagenFondoVerde);
 	}
 	
