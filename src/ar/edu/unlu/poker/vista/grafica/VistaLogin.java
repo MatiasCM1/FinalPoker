@@ -226,6 +226,37 @@ public class VistaLogin extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNombreJuegoPoker = new JLabel("POKER");
+		lblNombreJuegoPoker.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				String texto = lblNombreJuegoPoker.getText();
+		        StringBuilder textoHTML = new StringBuilder("<html>");
+		        Color[] colores = {Color.MAGENTA, Color.YELLOW, Color.GREEN, Color.CYAN, Color.RED};
+		        
+		        for (int i = 0; i < texto.length(); i++) {
+		            textoHTML.append("<font color='")
+		                     .append(toHex(colores[i % colores.length]))
+		                     .append("'>")
+		                     .append(texto.charAt(i))
+		                     .append("</font>");
+		        }
+		        textoHTML.append("</html>");
+		        lblNombreJuegoPoker.setText(textoHTML.toString());
+			}
+			
+			@Override
+		    public void mouseExited(MouseEvent e) {
+		        // Restaurar el texto original al quitar el mouse
+		        lblNombreJuegoPoker.setText("POKER");
+		        lblNombreJuegoPoker.setForeground(Color.WHITE);
+				lblNombreJuegoPoker.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 80));
+				lblNombreJuegoPoker.setBounds(403, 45, 292, 107);
+		    }
+			
+			private String toHex(Color color) {
+			    return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
+			}
+		});
 		lblNombreJuegoPoker.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 80));
 		lblNombreJuegoPoker.setForeground(new Color(255, 255, 255));
 		lblNombreJuegoPoker.setBounds(403, 45, 292, 107);
