@@ -101,10 +101,10 @@ public class VistaLogin extends JFrame {
 		panelBarraSuperior.add(btnSalir);
 		
 		JLabel lblFondoMaderaBarra = new JLabel("New label");
-		lblFondoMaderaBarra.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\imagenMadera.jpg"));
+		lblFondoMaderaBarra.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondoMaderaBarra.setBounds(0, 0, 1121, 21);
 		panelBarraSuperior.add(lblFondoMaderaBarra);
-		
+
 		JPanel panelIngresar = new JPanel();
 		panelIngresar.setOpaque(false);
 		
@@ -142,6 +142,7 @@ public class VistaLogin extends JFrame {
 		btnIngresar.setBackground(new Color(255, 128, 0));
 		
 		JLabel lblBtnIngresar = new JLabel("");
+		lblBtnIngresar.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		
 		lblBtnIngresar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblBtnIngresar.setHorizontalAlignment(SwingConstants.CENTER);
@@ -152,8 +153,7 @@ public class VistaLogin extends JFrame {
 
 		
 		JLabel lblFondomadera = new JLabel("New label");
-		lblFondomadera.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\imagenMadera.jpg"));
-		lblFondomadera.setBounds(358, 468, 374, 75);
+		lblFondomadera.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		contentPane.add(lblFondomadera);
 		
 		JSeparator separator_fondos = new JSeparator();
@@ -215,7 +215,7 @@ public class VistaLogin extends JFrame {
 		txtNombre.setColumns(10);
 		
 		JLabel lblImagenCartas = new JLabel("Fondo Fichas");
-		lblImagenCartas.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\FotoFichasInicio.png"));
+		lblImagenCartas.setIcon(new ImageIcon(getClass().getResource("/FotoFichasInicio.png")));
 		lblImagenCartas.setBounds(892, 66, 229, 411);
 		contentPane.add(lblImagenCartas);
 		
@@ -232,7 +232,7 @@ public class VistaLogin extends JFrame {
 		contentPane.add(lblNombreJuegoPoker);
 		
 		JLabel lblImagenFondoVerde = new JLabel("Fondo");
-		lblImagenFondoVerde.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\FondoVerdeInicio.jpg"));
+		lblImagenFondoVerde.setIcon(new ImageIcon(getClass().getResource("/FondoVerdeInicio.jpg")));
 		lblImagenFondoVerde.setBounds(0, 0, 1121, 612);
 		contentPane.add(lblImagenFondoVerde);
 	}

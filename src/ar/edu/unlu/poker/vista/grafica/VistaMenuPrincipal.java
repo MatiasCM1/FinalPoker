@@ -99,7 +99,7 @@ public class VistaMenuPrincipal extends JFrame {
 		panelBarraSuperior.add(btnSalir);
 		
 		JLabel lblFondoMaderaBarra = new JLabel("New label");
-		lblFondoMaderaBarra.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\imagenMadera.jpg"));
+		lblFondoMaderaBarra.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondoMaderaBarra.setBounds(0, 0, 1121, 21);
 		panelBarraSuperior.add(lblFondoMaderaBarra);
 		
@@ -364,25 +364,25 @@ public class VistaMenuPrincipal extends JFrame {
 		JLabel lblJugadoresFondoMadera = new JLabel("New label");
 		lblJugadoresFondoMadera.setBounds(0, 0, 472, 328);
 		panelMostrarJugadores.add(lblJugadoresFondoMadera);
-		lblJugadoresFondoMadera.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\imagenMadera.jpg"));
+		lblJugadoresFondoMadera.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		
 		JLabel lblFondosJugadorFondomadera_1 = new JLabel("New label");
-		lblFondosJugadorFondomadera_1.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\imagenMadera.jpg"));
+		lblFondosJugadorFondomadera_1.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondosJugadorFondomadera_1.setBounds(860, 136, 222, 43);
 		contentPane.add(lblFondosJugadorFondomadera_1);
 		
 		JLabel lblNombreJugadorFondomadera = new JLabel("New label");
-		lblNombreJugadorFondomadera.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\imagenMadera.jpg"));
+		lblNombreJugadorFondomadera.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblNombreJugadorFondomadera.setBounds(609, 136, 222, 43);
 		contentPane.add(lblNombreJugadorFondomadera);
 		
 		JLabel lblBtnSalirFondomadera = new JLabel("New label");
-		lblBtnSalirFondomadera.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\imagenMadera.jpg"));
+		lblBtnSalirFondomadera.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblBtnSalirFondomadera.setBounds(25, 361, 374, 75);
 		contentPane.add(lblBtnSalirFondomadera);
 		
 		JLabel lblBtnComenzarFondomadera = new JLabel("New label");
-		lblBtnComenzarFondomadera.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\imagenMadera.jpg"));
+		lblBtnComenzarFondomadera.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblBtnComenzarFondomadera.setBounds(25, 229, 374, 75);
 		contentPane.add(lblBtnComenzarFondomadera);
 		
@@ -394,7 +394,7 @@ public class VistaMenuPrincipal extends JFrame {
 		
 		JLabel lblImagenFondoVerde = new JLabel("Fondo");
 		lblImagenFondoVerde.setBounds(0, 0, 1121, 612);
-		lblImagenFondoVerde.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\src\\ar\\edu\\unlu\\poker\\images\\FondoVerdeInicio.jpg"));
+		lblImagenFondoVerde.setIcon(new ImageIcon(getClass().getResource("/FondoVerdeInicio.jpg")));
 		contentPane.add(lblImagenFondoVerde);
 	}
 }
