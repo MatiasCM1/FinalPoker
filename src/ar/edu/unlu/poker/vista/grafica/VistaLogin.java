@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -16,9 +17,14 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import ar.edu.unlu.poker.controlador.Controlador;
+import ar.edu.unlu.poker.modelo.Jugador;
+import ar.edu.unlu.poker.vista.IVista;
+
 import javax.swing.JButton;
 
-public class VistaLogin extends JFrame {
+public class VistaLogin extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -74,6 +80,12 @@ public class VistaLogin extends JFrame {
 				yMouse = e.getY();
 			}
 		});
+		
+		JLabel lblImgPoteMonedas = new JLabel("New label");
+		lblImgPoteMonedas.setVisible(false);
+		lblImgPoteMonedas.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\poteMonedas.png"));
+		lblImgPoteMonedas.setBounds(455, 66, 62, 59);
+		contentPane.add(lblImgPoteMonedas);
 		panelBarraSuperior.setLayout(null);
 		panelBarraSuperior.setBounds(0, 0, 1121, 21);
 		contentPane.add(panelBarraSuperior);
@@ -229,34 +241,17 @@ public class VistaLogin extends JFrame {
 		lblNombreJuegoPoker.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				String texto = lblNombreJuegoPoker.getText();
-		        StringBuilder textoHTML = new StringBuilder("<html>");
-		        Color[] colores = {Color.MAGENTA, Color.YELLOW, Color.GREEN, Color.CYAN, Color.RED};
-		        
-		        for (int i = 0; i < texto.length(); i++) {
-		            textoHTML.append("<font color='")
-		                     .append(toHex(colores[i % colores.length]))
-		                     .append("'>")
-		                     .append(texto.charAt(i))
-		                     .append("</font>");
-		        }
-		        textoHTML.append("</html>");
-		        lblNombreJuegoPoker.setText(textoHTML.toString());
+				lblNombreJuegoPoker.setText("P   KER");
+				lblImgPoteMonedas.setVisible(true);
 			}
 			
 			@Override
-		    public void mouseExited(MouseEvent e) {
-		        // Restaurar el texto original al quitar el mouse
-		        lblNombreJuegoPoker.setText("POKER");
-		        lblNombreJuegoPoker.setForeground(Color.WHITE);
-				lblNombreJuegoPoker.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 80));
-				lblNombreJuegoPoker.setBounds(403, 45, 292, 107);
-		    }
-			
-			private String toHex(Color color) {
-			    return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
+			public void mouseExited(MouseEvent e) {
+				lblNombreJuegoPoker.setText("POKER");
+				lblImgPoteMonedas.setVisible(false);
 			}
 		});
+		
 		lblNombreJuegoPoker.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 80));
 		lblNombreJuegoPoker.setForeground(new Color(255, 255, 255));
 		lblNombreJuegoPoker.setBounds(403, 45, 292, 107);
@@ -267,6 +262,4 @@ public class VistaLogin extends JFrame {
 		lblImagenFondoVerde.setBounds(0, 0, 1121, 612);
 		contentPane.add(lblImagenFondoVerde);
 	}
-	
-	
 }

@@ -72,6 +72,12 @@ public class VistaMenuPrincipal extends JFrame {
 				yMouse = e.getY();
 			}
 		});
+		
+		JLabel lblImgPoteMonedas = new JLabel("New label");
+		lblImgPoteMonedas.setVisible(false);
+		lblImgPoteMonedas.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\poteMonedas.png"));
+		lblImgPoteMonedas.setBounds(120, 81, 62, 59);
+		contentPane.add(lblImgPoteMonedas);
 		panelBarraSuperior.setLayout(null);
 		panelBarraSuperior.setBounds(0, 0, 1121, 21);
 		contentPane.add(panelBarraSuperior);
@@ -393,32 +399,14 @@ public class VistaMenuPrincipal extends JFrame {
 		lblNombreJuegoPoker.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				String texto = lblNombreJuegoPoker.getText();
-		        StringBuilder textoHTML = new StringBuilder("<html>");
-		        Color[] colores = {Color.MAGENTA, Color.YELLOW, Color.GREEN, Color.CYAN, Color.RED};
-		        
-		        for (int i = 0; i < texto.length(); i++) {
-		            textoHTML.append("<font color='")
-		                     .append(toHex(colores[i % colores.length]))
-		                     .append("'>")
-		                     .append(texto.charAt(i))
-		                     .append("</font>");
-		        }
-		        textoHTML.append("</html>");
-		        lblNombreJuegoPoker.setText(textoHTML.toString());
+				lblNombreJuegoPoker.setText("P   KER");
+				lblImgPoteMonedas.setVisible(true);
 			}
 			
 			@Override
-		    public void mouseExited(MouseEvent e) {
-		        // Restaurar el texto original al quitar el mouse
-		        lblNombreJuegoPoker.setText("POKER");
-		        lblNombreJuegoPoker.setForeground(Color.WHITE);
-				lblNombreJuegoPoker.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 80));
-				lblNombreJuegoPoker.setBounds(71, 56, 292, 107);
-		    }
-			
-			private String toHex(Color color) {
-			    return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
+			public void mouseExited(MouseEvent e) {
+				lblNombreJuegoPoker.setText("POKER");
+				lblImgPoteMonedas.setVisible(false);
 			}
 		});
 		
