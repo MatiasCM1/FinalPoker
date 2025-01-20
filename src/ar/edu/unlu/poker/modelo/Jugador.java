@@ -3,7 +3,9 @@ package ar.edu.unlu.poker.modelo;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Jugador implements Serializable{
 
@@ -132,6 +134,18 @@ public class Jugador implements Serializable{
 	
 	public void agregarFondos(int fondosAgregar) {
 		this.fondo += fondosAgregar;
+	}
+
+	public LinkedList<Carta> determinarCartasIguales() {
+		return cartas.stream().collect(Collectors.groupingBy(t -> {
+			try {
+				return t.getValor();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return nombre;
+		})).values().stream().filter(lista -> lista.size() > 1).flatMap(List::stream).collect(Collectors.toCollection(LinkedList::new));
 	}
 
 }

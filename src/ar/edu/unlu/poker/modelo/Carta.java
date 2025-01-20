@@ -3,7 +3,7 @@ package ar.edu.unlu.poker.modelo;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 
-public class Carta implements Serializable{
+public class Carta implements Serializable, Comparable<Carta>{
 
 	private String valor;
 	private String palo;
@@ -30,7 +30,7 @@ public class Carta implements Serializable{
 
 	private void setPalo(String palo) {
 		if (!verificarPaloValido(palo)) {
-			throw new IllegalArgumentException("Palo inválido:" + palo);
+			throw new IllegalArgumentException("Palo invï¿½lido:" + palo);
 		} else {
 			this.palo = palo;
 		}
@@ -48,5 +48,32 @@ public class Carta implements Serializable{
 		}
 		return false;
 	}
+	
+	@Override
+	public int compareTo(Carta otraCarta) {
+		int indiceValorCartaActual = this.getIndiceValor(this.valor);
+		int indiceValorOtraCarta = 0;
+		try {
+			indiceValorOtraCarta = this.getIndiceValor(otraCarta.getValor());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Integer.compare(indiceValorCartaActual, indiceValorOtraCarta);
+	}
+
+	private int getIndiceValor(String valor) {
+		for (int i = 0; i < ordenCartas.length; i++) {
+            if (ordenCartas[i].equals(valor)) {
+                return i;
+            }
+        }
+		throw new IllegalArgumentException("Valor no encontrado en el orden: " + valor);
+	}
+	
+	@Override
+    public String toString() {
+        return this.valor + " de " + this.palo;
+    }
 
 }

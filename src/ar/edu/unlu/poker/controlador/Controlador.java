@@ -36,11 +36,11 @@ public class Controlador implements IControladorRemoto{
 				vista.informarCantJugadoresExcedidos();
 				break;
 			case DEVOLVER_GANADOR:
-				List<Jugador> ganador = ((IMesa)modelo).devolverGanador(); 
+				Jugador ganador = ((IMesa)modelo).devolverGanador(); 
 				if (this.isJugadorTurno()) {
-					mesa.darFondosGanador(ganador.getFirst());
+					mesa.darFondosGanador(ganador);
 				}
-				vista.mostrarGanador(ganador.getFirst());
+				vista.mostrarGanador(ganador);
 				vista.mostrarOpcionesMenuEmpezarOtraRonda();
 				break;
 			case TURNO_APUESTA_JUGADOR:
