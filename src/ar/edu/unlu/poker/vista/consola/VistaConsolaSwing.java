@@ -709,5 +709,11 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		areaSalida.append("¡Fondos agregados con exito!.\n");
 		mostrarOpcionesMenuEmpezarOtraRonda();
 	}
+
+	@Override
+	public void actualizarTablaJugadores(List<Jugador> jugadores) {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

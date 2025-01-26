@@ -23,6 +23,9 @@ public class Controlador implements IControladorRemoto{
 	@Override
 	public void actualizar(IObservableRemoto modelo, Object cambio) throws RemoteException {
 		switch((Informe) cambio) {
+			case JUGADOR_NUEVO_AGREGADO:
+				vista.actualizarTablaJugadores(this.getJugadoresMesa());
+				break;
 			case JUGADOR_MANO:
 				vista.mostrarJugadorMano((getJugadorMano()));
 				break;
@@ -150,6 +153,9 @@ public class Controlador implements IControladorRemoto{
 					}
 				}
 				break;
+			case JUGADOR_SE_RETIRA:
+				vista.actualizarTablaJugadores(this.getJugadoresMesa());
+				break;
 		}
 		
 	}
@@ -246,6 +252,9 @@ public class Controlador implements IControladorRemoto{
 	public void jugadorSeRetiraDelJuego(Jugador jugador) {
 		try {
 			mesa.removerObservador(this);
+			
+			mesa.removerJugadores(jugador);
+			
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -504,6 +513,20 @@ public class Controlador implements IControladorRemoto{
 		}
 	}
 	
+	//---------------------------------
 	
+	public boolean validarTextoNombre(String textoNombre) {
+		if (textoNombre.equals("Ingrese su nombre de usuario") || textoNombre.trim().isEmpty() || !validarNombreNoRepetido(textoNombre)){
+			return false;
+		}
+		return true;
+	}
+
+	public boolean validarTextoFondos(String textoFondos) {
+		if (!validarEntero(textoFondos)) {
+			return false;
+		}
+		return true;
+	}
 	
 }

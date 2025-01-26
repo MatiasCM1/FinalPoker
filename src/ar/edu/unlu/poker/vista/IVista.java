@@ -72,4 +72,6 @@ public interface IVista {
 	
 	void mostrarOpcionesMenu();
 
+	void actualizarTablaJugadores(List<Jugador> jugadores);
+
 }

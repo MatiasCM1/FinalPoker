@@ -21,8 +21,11 @@ import javax.swing.border.EmptyBorder;
 import ar.edu.unlu.poker.controlador.Controlador;
 import ar.edu.unlu.poker.modelo.Jugador;
 import ar.edu.unlu.poker.vista.IVista;
+import ar.edu.unlu.poker.vista.consola.Estados;
 
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VistaLogin extends JFrame{
 
@@ -32,10 +35,9 @@ public class VistaLogin extends JFrame{
 	private JTextField txtFondos;
 	private int xMouse;
 	private int yMouse;
-
-	/**
-	 * Launch the application.
-	 */
+	private Controlador controlador;
+	
+	/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -48,11 +50,10 @@ public class VistaLogin extends JFrame{
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
-	public VistaLogin() {
+*/
+	
+	
+	public VistaLogin(Controlador controlador) {
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
@@ -60,6 +61,8 @@ public class VistaLogin extends JFrame{
 		setBounds(100, 100, 1121, 612);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		this.setControlador(controlador);
 		
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -73,6 +76,7 @@ public class VistaLogin extends JFrame{
 				setLocation(x - xMouse, y - yMouse);
 			}
 		});
+		
 		panelBarraSuperior.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -81,11 +85,22 @@ public class VistaLogin extends JFrame{
 			}
 		});
 		
-		JLabel lblImgPoteMonedas = new JLabel("New label");
-		lblImgPoteMonedas.setVisible(false);
-		lblImgPoteMonedas.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\poteMonedas.png"));
-		lblImgPoteMonedas.setBounds(455, 66, 62, 59);
-		contentPane.add(lblImgPoteMonedas);
+		JLabel lblMensajeErrorNombre = new JLabel("Error, ingrese un nombre de usuario");
+		lblMensajeErrorNombre.setVisible(false);
+		
+		JLabel lblMensajeErrorFondos = new JLabel("Error, ingrese los fondos correctamente");
+		lblMensajeErrorFondos.setVisible(false);
+		lblMensajeErrorFondos.setForeground(new Color(255, 0, 0));
+		lblMensajeErrorFondos.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMensajeErrorFondos.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
+		lblMensajeErrorFondos.setBounds(414, 410, 278, 21);
+		contentPane.add(lblMensajeErrorFondos);
+		lblMensajeErrorNombre.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMensajeErrorNombre.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
+		lblMensajeErrorNombre.setForeground(new Color(255, 0, 0));
+		lblMensajeErrorNombre.setBackground(new Color(255, 255, 255));
+		lblMensajeErrorNombre.setBounds(414, 253, 278, 16);
+		contentPane.add(lblMensajeErrorNombre);
 		panelBarraSuperior.setLayout(null);
 		panelBarraSuperior.setBounds(0, 0, 1121, 21);
 		contentPane.add(panelBarraSuperior);
@@ -128,6 +143,10 @@ public class VistaLogin extends JFrame{
 		panelIngresar.setLayout(null);
 		
 		JButton btnIngresar = new JButton("Ingresar");
+		btnIngresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnIngresar.setBounds(0, 0, 374, 75);
 		panelIngresar.add(btnIngresar);
 		btnIngresar.setOpaque(false);
@@ -144,8 +163,31 @@ public class VistaLogin extends JFrame{
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("hola");
+				
+				lblMensajeErrorNombre.setVisible(false);
+				lblMensajeErrorFondos.setVisible(false);
+				
+				boolean flag = false;
+				
+				if (!controlador.validarTextoNombre(txtNombre.getText())) {
+					lblMensajeErrorNombre.setVisible(true);
+					flag = true;
+				}
+				
+				if (!controlador.validarTextoFondos(txtFondos.getText())) {
+					lblMensajeErrorFondos.setVisible(true);
+					flag = true;
+				}
+				
+				if (!flag) {
+					VistaGrafica.getInstance().setJugador(txtNombre.getText(), Integer.parseInt(txtFondos.getText()));
+					
+					VistaGrafica.getInstance().pasarVistaMenu();
+				}
+			
 			}
+
+			
 		});
 		btnIngresar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnIngresar.setForeground(new Color(255, 255, 255));
@@ -238,28 +280,32 @@ public class VistaLogin extends JFrame{
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNombreJuegoPoker = new JLabel("POKER");
+		lblNombreJuegoPoker.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreJuegoPoker.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				lblNombreJuegoPoker.setText("P   KER");
-				lblImgPoteMonedas.setVisible(true);
+				lblNombreJuegoPoker.setText("P O K E R");
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
 				lblNombreJuegoPoker.setText("POKER");
-				lblImgPoteMonedas.setVisible(false);
 			}
 		});
 		
 		lblNombreJuegoPoker.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 80));
 		lblNombreJuegoPoker.setForeground(new Color(255, 255, 255));
-		lblNombreJuegoPoker.setBounds(403, 45, 292, 107);
+		lblNombreJuegoPoker.setBounds(358, 45, 374, 107);
 		contentPane.add(lblNombreJuegoPoker);
 		
 		JLabel lblImagenFondoVerde = new JLabel("Fondo");
 		lblImagenFondoVerde.setIcon(new ImageIcon(getClass().getResource("/FondoVerdeInicio.jpg")));
 		lblImagenFondoVerde.setBounds(0, 0, 1121, 612);
 		contentPane.add(lblImagenFondoVerde);
+	}
+
+	private void setControlador(Controlador controlador2) {
+		// TODO Auto-generated method stub
+		
 	}
 }
