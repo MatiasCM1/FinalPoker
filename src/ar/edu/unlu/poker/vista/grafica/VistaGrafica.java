@@ -1,5 +1,6 @@
 package ar.edu.unlu.poker.vista.grafica;
 
+import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,11 +36,8 @@ public class VistaGrafica implements IVista{
 	public void iniciar() {
     	
 		this.vistaLogin = new VistaLogin(this.controlador);
-	    this.vistaApuestas = new VistaApuestas();
-	    
+		
 	    this.vistaLogin.setVisible(true);
-	    this.vistaApuestas.setVisible(false);
-	    
 	    
 	}
     
@@ -59,11 +57,7 @@ public class VistaGrafica implements IVista{
 	    
     }
     
-    public void pasarVistaJuegoCartas() {
-    	this.vistaMenuPrincipal.setVisible(false);
-    	this.vistaJuegoCartas = new VistaJuegoCartas();
-	    this.vistaJuegoCartas.setVisible(true);
-    }
+    
     
     public void volverPantallaLogin() {
     	//CAMBIAR DE VISTA
@@ -81,8 +75,15 @@ public class VistaGrafica implements IVista{
     	controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
     }
     
-    public void iniciarElJuego() {
-    	controlador.iniciarGame();
+    public void listoParaIniciarJuego() {
+    	
+    	this.vistaMenuPrincipal.setVisible(false);
+    	
+    	this.vistaJuegoCartas = new VistaJuegoCartas();
+	    this.vistaJuegoCartas.setVisible(true);
+	    
+	    controlador.iniciarSiEstaListo(this.jugadorActual);
+    	
     }
     
     public Jugador getJugadorActual() {
@@ -100,8 +101,10 @@ public class VistaGrafica implements IVista{
 	
 	@Override
 	public void actualizarTablaJugadores(List<Jugador> jugadores) {
-		List<Jugador> jugardoresSinActual = this.listaSinJugador(jugadores);
-		this.vistaMenuPrincipal.actualzarTabla(jugardoresSinActual);
+		if (controlador.verificarCantidadDeJugadores()) {
+			List<Jugador> jugardoresSinActual = this.listaSinJugador(jugadores);
+			this.vistaMenuPrincipal.actualzarTabla(jugardoresSinActual);
+		}
 	}
 	
 	private List<Jugador> listaSinJugador(List<Jugador> jugadores){
@@ -116,13 +119,18 @@ public class VistaGrafica implements IVista{
 
 	@Override
 	public void mostrarJugadorMano(Jugador jugador) {
-		// TODO Auto-generated method stub
-		
+		this.vistaJuegoCartas.informarJugadorMano(jugador.getNombre());
 	}
 
 	@Override
 	public void mostrarCartasJugador(List<Jugador> jugadores) {
-		// TODO Auto-generated method stub
+		
+		for (Jugador jugador : jugadores) {
+            if (jugador.equals(jugadorActual)) { // Mostrar solo cartas del jugador actual
+            	this.vistaJuegoCartas.mostrarCartas(jugador.getCartas());
+            }
+        }
+		
 		
 	}
 

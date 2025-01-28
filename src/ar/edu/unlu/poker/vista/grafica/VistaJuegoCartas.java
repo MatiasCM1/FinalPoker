@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import ar.edu.unlu.poker.modelo.Carta;
+
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.Font;
@@ -16,6 +19,7 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.List;
 
 public class VistaJuegoCartas extends JFrame {
 
@@ -23,26 +27,14 @@ public class VistaJuegoCartas extends JFrame {
 	private JPanel contentPane;
 	private int xMouse;
 	private int yMouse;
+	private JTextArea textAreaNotificaciones;
+	private JLabel lblCarta1;
+	private JLabel lblCarta2;
+	private JLabel lblCarta3;
+	private JLabel lblCarta4;
+	private JLabel lblCarta5;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VistaJuegoCartas frame = new VistaJuegoCartas();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the frame.
-	 */
 	public VistaJuegoCartas() {
 		setUndecorated(true);
 		setForeground(new Color(255, 255, 255));
@@ -108,7 +100,7 @@ public class VistaJuegoCartas extends JFrame {
 		contentPane.add(panelNotificaciones);
 		panelNotificaciones.setLayout(null);
 		
-		JTextArea textAreaNotificaciones = new JTextArea();
+		textAreaNotificaciones = new JTextArea();
 		textAreaNotificaciones.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
 		textAreaNotificaciones.setForeground(new Color(255, 255, 255));
 		textAreaNotificaciones.setBounds(10, 11, 452, 279);
@@ -127,30 +119,30 @@ public class VistaJuegoCartas extends JFrame {
 		contentPane.add(panelCartas);
 		panelCartas.setLayout(null);
 		
-		JLabel lblCarta_1 = new JLabel("");
-		lblCarta_1.setBounds(-13, 11, 161, 217);
-		lblCarta_1.setIcon(new ImageIcon(getClass().getResource("/carts/Corazon - 2.png")));
-		panelCartas.add(lblCarta_1);
+		lblCarta1 = new JLabel("");
+		lblCarta1.setBounds(-13, 11, 161, 217);
+		lblCarta1.setIcon(null);
+		panelCartas.add(lblCarta1);
 		
-		JLabel lblCarta_2 = new JLabel("");
-		lblCarta_2.setBounds(122, 11, 161, 217);
-		panelCartas.add(lblCarta_2);
-		lblCarta_2.setIcon(new ImageIcon(getClass().getResource("/carts/Pica - AS.png")));
+		lblCarta2 = new JLabel("");
+		lblCarta2.setBounds(122, 11, 161, 217);
+		panelCartas.add(lblCarta2);
+		lblCarta2.setIcon(null);
 		
-		JLabel lblCarta_3 = new JLabel("");
-		lblCarta_3.setBounds(249, 11, 161, 217);
-		panelCartas.add(lblCarta_3);
-		lblCarta_3.setIcon(new ImageIcon(getClass().getResource("/carts/Trebol - K.png")));
+		lblCarta3 = new JLabel("");
+		lblCarta3.setBounds(249, 11, 161, 217);
+		panelCartas.add(lblCarta3);
+		lblCarta3.setIcon(null);
 		
-		JLabel lblCarta_4 = new JLabel("");
-		lblCarta_4.setBounds(377, 11, 161, 217);
-		panelCartas.add(lblCarta_4);
-		lblCarta_4.setIcon(new ImageIcon(getClass().getResource("/carts/Corazon - J.png")));
+		lblCarta4 = new JLabel("");
+		lblCarta4.setBounds(377, 11, 161, 217);
+		panelCartas.add(lblCarta4);
+		lblCarta4.setIcon(null);
 		
-		JLabel lblCarta_5 = new JLabel("");
-		lblCarta_5.setBounds(503, 11, 161, 217);
-		panelCartas.add(lblCarta_5);
-		lblCarta_5.setIcon(new ImageIcon(getClass().getResource("/carts/Corazon - 7.png")));
+		lblCarta5 = new JLabel("");
+		lblCarta5.setBounds(503, 11, 161, 217);
+		panelCartas.add(lblCarta5);
+		lblCarta5.setIcon(null);
 		
 		JLabel lblFondoMadera = new JLabel("New label");
 		lblFondoMadera.setBounds(-3, 0, 669, 239);
@@ -167,4 +159,34 @@ public class VistaJuegoCartas extends JFrame {
 		lblImagenFondoVerde.setBounds(0, 0, 1121, 612);
 		contentPane.add(lblImagenFondoVerde);
 	}
+	
+	public void informarJugadorMano(String nombreJugadorMano) {
+		this.textAreaNotificaciones.append("Jugador mano: " + nombreJugadorMano + ".\n");
+	}
+	
+	public void mostrarCartas(List<Carta> cartas) {
+		
+		JLabel[] labels = {lblCarta1, lblCarta2, lblCarta3, lblCarta4, lblCarta5};
+		
+		MapeoDeCartas cartasMapeadas = new MapeoDeCartas();
+		
+		for (int i = 0; i < cartas.size(); i++) {
+			
+			Carta carta = cartas.get(i);
+			System.out.println("Busca esto: " + cartasMapeadas.getImagenCarta(carta.toString()) + " de esto " + carta.toString());
+			ImageIcon imagenCarta = cartasMapeadas.getImagenCarta(carta.toString());
+		
+			
+			if (imagenCarta != null) {
+				System.out.println("PASO EL NULL MUY BIENNNN");
+				labels[i].setIcon(imagenCarta);
+			} else {
+				labels[i].setIcon(null);
+				labels[i].setText("Imagen no encontrada");
+			}
+			
+		}
+		
+	}
+	
 }

@@ -45,21 +45,6 @@ public class VistaMenuPrincipal extends JFrame {
 	private JLabel lblFondosJugador_5;
 	private JLabel lblFondosJugador_6;
 	private JLabel lblFondosJugador_7;
-
-	/*
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VistaMenuPrincipal frame = new VistaMenuPrincipal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
 	 
 	public VistaMenuPrincipal() {
 		setUndecorated(true);
@@ -214,8 +199,9 @@ public class VistaMenuPrincipal extends JFrame {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				VistaGrafica.getInstance().pasarVistaJuegoCartas();
-				VistaGrafica.getInstance().iniciarElJuego();
+				
+				VistaGrafica.getInstance().listoParaIniciarJuego();
+				
 			}
 		});
 		btnComenzar.setContentAreaFilled(false);

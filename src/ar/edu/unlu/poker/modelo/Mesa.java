@@ -99,6 +99,11 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			
 			this.notificarObservadores(Informe.CARTAS_REPARTIDAS);
 			
+			System.out.println("Jugador Mano: " + jugadorMano.getNombre());
+			for (Carta c : this.jugadorMano.getCartas()){
+				System.out.println(c.toString());
+			}
+			
 			this.notificarObservadores(Informe.TURNO_APUESTA_JUGADOR);
 			
 	}
@@ -939,6 +944,17 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	public void removerJugadores(Jugador jugador) throws RemoteException{
 		this.jugadoresMesa.remove(jugador);
 		this.notificarObservadores(Informe.JUGADOR_SE_RETIRA);
+	}
+
+	@Override
+	public void marcarComoListoParaIniciar(Jugador jugador) throws RemoteException {
+		for (Jugador j : this.jugadoresMesa) {
+			if (j.equals(jugador)) {
+				j.setListoParaIniciar(true);
+			}
+		}
+		
+		
 	}
 	
 }

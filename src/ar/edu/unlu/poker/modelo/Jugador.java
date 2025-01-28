@@ -16,11 +16,13 @@ public class Jugador implements Serializable{
 	private int fondo;
 	private boolean enJuego;//Indica si el jugador sigue en juego o ha pasado
 	private boolean haApostado;
+	private boolean listoParaIniciar;
 	
 	public Jugador(String nombre) {
 		this.nombre = nombre;
 		this.apuesta = 0;
 		this.fondo = 1000;// Fondo inicial por el momento
+		this.listoParaIniciar = false;
 		this.setEnJuego(true);
 	}
 	
@@ -28,6 +30,7 @@ public class Jugador implements Serializable{
 		this.nombre = nombre;
 		this.fondo = fondo;
 		this.apuesta = 0;
+		this.listoParaIniciar = false;
 		this.setEnJuego(true);
 	}
 	
@@ -146,6 +149,14 @@ public class Jugador implements Serializable{
 			}
 			return nombre;
 		})).values().stream().filter(lista -> lista.size() > 1).flatMap(List::stream).collect(Collectors.toCollection(LinkedList::new));
+	}
+
+	public boolean getListoParaIniciar() {
+		return listoParaIniciar;
+	}
+
+	public void setListoParaIniciar(boolean listoParaIniciar) {
+		this.listoParaIniciar = listoParaIniciar;
 	}
 
 }

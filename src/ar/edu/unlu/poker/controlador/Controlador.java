@@ -528,5 +528,34 @@ public class Controlador implements IControladorRemoto{
 		}
 		return true;
 	}
+
+	public void iniciarSiEstaListo(Jugador jugadorActual) {
+		try {
+			mesa.marcarComoListoParaIniciar(jugadorActual);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		if (todosListo()) {
+			this.iniciarGame();
+		}
+	}
+
+	private boolean todosListo() {
+		boolean flag = true;
+		for (Jugador j : this.getJugadoresMesa()) {
+			if (!j.getListoParaIniciar()) {
+				flag = false;
+			}
+		}
+		return flag;
+	}
+
+	public boolean verificarCantidadDeJugadores() {
+		if (this.getJugadoresMesa().size() > 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 }

@@ -279,17 +279,28 @@ public class VistaLogin extends JFrame{
 		lblNewLabel.setBounds(358, 163, 278, 46);
 		contentPane.add(lblNewLabel);
 		
+		
+		JLabel lblImgCartasTitulo = new JLabel("");
+		lblImgCartasTitulo.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblImgCartasTitulo.setVisible(false);
+		lblImgCartasTitulo.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\CartasTituloPoker.png"));
+		lblImgCartasTitulo.setBounds(463, 66, 59, 59);
+		contentPane.add(lblImgCartasTitulo);
+		
 		JLabel lblNombreJuegoPoker = new JLabel("POKER");
 		lblNombreJuegoPoker.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreJuegoPoker.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				lblNombreJuegoPoker.setText("P O K E R");
+				//blNombreJuegoPoker.setText("P O K E R");
+				lblNombreJuegoPoker.setText("P   KER");
+				lblImgCartasTitulo.setVisible(true);
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
 				lblNombreJuegoPoker.setText("POKER");
+				lblImgCartasTitulo.setVisible(false);
 			}
 		});
 		
