@@ -20,6 +20,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.List;
+import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VistaApuestas extends JFrame {
 
@@ -34,6 +37,7 @@ public class VistaApuestas extends JFrame {
 	private JLabel lblCarta5;
 	private JTextArea textAreaNotificaciones;
 	private JLabel lblNombreJugadorVentana;
+	private JTextField txtFieldCantidadApuesta;
 
 	
 
@@ -66,6 +70,64 @@ public class VistaApuestas extends JFrame {
 				yMouse = e.getY();
 			}
 		});
+		
+		JPanel panelRealizarEnvite = new JPanel();
+		panelRealizarEnvite.setBounds(298, 181, 309, 147);
+		contentPane.add(panelRealizarEnvite);
+		panelRealizarEnvite.setLayout(null);
+		
+		JButton btnAceptarEnvite = new JButton("Aceptar");
+		btnAceptarEnvite.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnAceptarEnvite.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnAceptarEnvite.setForeground(Color.white);
+			}
+		});
+		btnAceptarEnvite.setIcon(null);
+		btnAceptarEnvite.setForeground(Color.WHITE);
+		btnAceptarEnvite.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 25));
+		btnAceptarEnvite.setContentAreaFilled(false);
+		btnAceptarEnvite.setBounds(167, 101, 132, 35);
+		panelRealizarEnvite.add(btnAceptarEnvite);
+		
+		JButton btnCancelarEnvite = new JButton("Cancelar");
+		btnCancelarEnvite.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnCancelarEnvite.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnCancelarEnvite.setForeground(Color.white);
+			}
+		});
+		btnCancelarEnvite.setForeground(new Color(255, 255, 255));
+		btnCancelarEnvite.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 25));
+		btnCancelarEnvite.setContentAreaFilled(false);
+		btnCancelarEnvite.setIcon(null);
+		btnCancelarEnvite.setBounds(10, 101, 132, 35);
+		panelRealizarEnvite.add(btnCancelarEnvite);
+		
+		txtFieldCantidadApuesta = new JTextField();
+		txtFieldCantidadApuesta.setBounds(53, 60, 214, 20);
+		panelRealizarEnvite.add(txtFieldCantidadApuesta);
+		txtFieldCantidadApuesta.setColumns(10);
+		
+		JLabel lblEnvite = new JLabel("Envite");
+		lblEnvite.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
+		lblEnvite.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEnvite.setForeground(new Color(255, 255, 255));
+		lblEnvite.setBounds(89, 11, 132, 38);
+		panelRealizarEnvite.add(lblEnvite);
+		
+		JLabel lblFondoManderaEnvite = new JLabel("");
+		lblFondoManderaEnvite.setBounds(0, 0, 315, 147);
+		panelRealizarEnvite.add(lblFondoManderaEnvite);
+		lblFondoManderaEnvite.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
 		panelBarraSuperior.setLayout(null);
 		panelBarraSuperior.setBounds(0, 0, 1121, 21);
 		contentPane.add(panelBarraSuperior);
@@ -121,6 +183,10 @@ public class VistaApuestas extends JFrame {
 		panelBtnEnvite.setLayout(null);
 		
 		JButton btnEnvite = new JButton("Envitar");
+		btnEnvite.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnEnvite.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -301,5 +367,4 @@ public class VistaApuestas extends JFrame {
 	public void setearNombreEnLaBarra(String nombre) {
 		this.lblNombreJugadorVentana.setText(nombre);
 	}
-	
 }
