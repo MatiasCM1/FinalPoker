@@ -33,6 +33,7 @@ public class VistaJuegoCartas extends JFrame {
 	private JLabel lblCarta3;
 	private JLabel lblCarta4;
 	private JLabel lblCarta5;
+	private JLabel lblNombreJugadorVentana;
 
 
 	public VistaJuegoCartas() {
@@ -67,6 +68,12 @@ public class VistaJuegoCartas extends JFrame {
 		panelBarraSuperior.setLayout(null);
 		panelBarraSuperior.setBounds(0, 0, 1121, 21);
 		contentPane.add(panelBarraSuperior);
+		
+		lblNombreJugadorVentana = new JLabel("");
+		lblNombreJugadorVentana.setBounds(10, -1, 319, 21);
+		panelBarraSuperior.add(lblNombreJugadorVentana);
+		lblNombreJugadorVentana.setForeground(new Color(255, 255, 255));
+		lblNombreJugadorVentana.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
 		
 		JButton btnSalir = new JButton("X");
 		btnSalir.addMouseListener(new MouseAdapter() {
@@ -151,7 +158,7 @@ public class VistaJuegoCartas extends JFrame {
 		
 		JLabel lblImagenMesaFondo = new JLabel("New label");
 		lblImagenMesaFondo.setIcon(new ImageIcon(getClass().getResource("/FondoMesa.png")));
-		lblImagenMesaFondo.setBounds(10, 58, 597, 293);
+		lblImagenMesaFondo.setBounds(32, 88, 597, 265);
 		contentPane.add(lblImagenMesaFondo);
 		
 		JLabel lblImagenFondoVerde = new JLabel("Fondo");
@@ -173,12 +180,10 @@ public class VistaJuegoCartas extends JFrame {
 		for (int i = 0; i < cartas.size(); i++) {
 			
 			Carta carta = cartas.get(i);
-			System.out.println("Busca esto: " + cartasMapeadas.getImagenCarta(carta.toString()) + " de esto " + carta.toString());
 			ImageIcon imagenCarta = cartasMapeadas.getImagenCarta(carta.toString());
 		
 			
 			if (imagenCarta != null) {
-				System.out.println("PASO EL NULL MUY BIENNNN");
 				labels[i].setIcon(imagenCarta);
 			} else {
 				labels[i].setIcon(null);
@@ -188,5 +193,8 @@ public class VistaJuegoCartas extends JFrame {
 		}
 		
 	}
-	
+
+	public void setearNombreEnLaBarra(String nombre) {
+		this.lblNombreJugadorVentana.setText(nombre);
+	}
 }

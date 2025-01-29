@@ -26,6 +26,9 @@ public class Controlador implements IControladorRemoto{
 			case JUGADOR_NUEVO_AGREGADO:
 				vista.actualizarTablaJugadores(this.getJugadoresMesa());
 				break;
+			case ESTABLECER_NOMBRE_VENTANA_JUGADOR:
+				vista.mostrarNombreDelJugadorVentana();
+				break;
 			case JUGADOR_MANO:
 				vista.mostrarJugadorMano((getJugadorMano()));
 				break;

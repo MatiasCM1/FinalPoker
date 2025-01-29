@@ -74,4 +74,6 @@ public interface IVista {
 
 	void actualizarTablaJugadores(List<Jugador> jugadores);
 
+	void mostrarNombreDelJugadorVentana();
+
 }

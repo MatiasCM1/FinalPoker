@@ -715,5 +715,11 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void mostrarNombreDelJugadorVentana() {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

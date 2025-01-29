@@ -5,7 +5,12 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import ar.edu.unlu.poker.modelo.Carta;
+
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JLabel;
@@ -14,6 +19,7 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.List;
 
 public class VistaApuestas extends JFrame {
 
@@ -21,26 +27,16 @@ public class VistaApuestas extends JFrame {
 	private JPanel contentPane;
 	private int xMouse;
 	private int yMouse;
+	private JLabel lblCarta1;
+	private JLabel lblCarta2;
+	private JLabel lblCarta3;
+	private JLabel lblCarta4;
+	private JLabel lblCarta5;
+	private JTextArea textAreaNotificaciones;
+	private JLabel lblNombreJugadorVentana;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VistaApuestas frame = new VistaApuestas();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
-	/**
-	 * Create the frame.
-	 */
 	public VistaApuestas() {
 		setUndecorated(true);
 		setForeground(new Color(255, 255, 255));
@@ -89,12 +85,24 @@ public class VistaApuestas extends JFrame {
 				btnSalir.setOpaque(false);
 			}
 		});
+		
+		lblNombreJugadorVentana = new JLabel("");
+		lblNombreJugadorVentana.setBounds(10, -1, 319, 21);
+		panelBarraSuperior.add(lblNombreJugadorVentana);
+		lblNombreJugadorVentana.setForeground(new Color(255, 255, 255));
+		lblNombreJugadorVentana.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
 		btnSalir.setOpaque(false);
 		btnSalir.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 10));
 		btnSalir.setBorder(null);
 		btnSalir.setBackground(Color.RED);
 		btnSalir.setBounds(1082, 1, 39, 19);
 		panelBarraSuperior.add(btnSalir);
+		
+		
+		panelBarraSuperior.setLayout(null);
+		panelBarraSuperior.setBounds(0, 0, 1121, 21);
+		
+		
 		
 		JLabel lblFondoMaderaBarra = new JLabel("New label");
 		lblFondoMaderaBarra.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
@@ -202,7 +210,7 @@ public class VistaApuestas extends JFrame {
 		contentPane.add(panelNotificaciones);
 		panelNotificaciones.setLayout(null);
 		
-		JTextArea textAreaNotificaciones = new JTextArea();
+		textAreaNotificaciones = new JTextArea();
 		textAreaNotificaciones.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
 		textAreaNotificaciones.setForeground(new Color(255, 255, 255));
 		textAreaNotificaciones.setBounds(10, 11, 452, 279);
@@ -221,30 +229,30 @@ public class VistaApuestas extends JFrame {
 		contentPane.add(panelCartas);
 		panelCartas.setLayout(null);
 		
-		JLabel lblCarta_1 = new JLabel("");
-		lblCarta_1.setBounds(-13, 11, 161, 217);
-		lblCarta_1.setIcon(new ImageIcon(getClass().getResource("/carts/Corazon - 2.png")));
-		panelCartas.add(lblCarta_1);
+		lblCarta1 = new JLabel("");
+		lblCarta1.setBounds(-13, 11, 161, 217);
+		lblCarta1.setIcon(null);
+		panelCartas.add(lblCarta1);
 		
-		JLabel lblCarta_2 = new JLabel("");
-		lblCarta_2.setBounds(122, 11, 161, 217);
-		panelCartas.add(lblCarta_2);
-		lblCarta_2.setIcon(new ImageIcon(getClass().getResource("/carts/Pica - AS.png")));
+		lblCarta2 = new JLabel("");
+		lblCarta2.setBounds(122, 11, 161, 217);
+		panelCartas.add(lblCarta2);
+		lblCarta2.setIcon(null);
 		
-		JLabel lblCarta_3 = new JLabel("");
-		lblCarta_3.setBounds(249, 11, 161, 217);
-		panelCartas.add(lblCarta_3);
-		lblCarta_3.setIcon(new ImageIcon(getClass().getResource("/carts/Trebol - K.png")));
+		lblCarta3 = new JLabel("");
+		lblCarta3.setBounds(249, 11, 161, 217);
+		panelCartas.add(lblCarta3);
+		lblCarta3.setIcon(null);
 		
-		JLabel lblCarta_4 = new JLabel("");
-		lblCarta_4.setBounds(377, 11, 161, 217);
-		panelCartas.add(lblCarta_4);
-		lblCarta_4.setIcon(new ImageIcon(getClass().getResource("/carts/Corazon - J.png")));
+		lblCarta4 = new JLabel("");
+		lblCarta4.setBounds(377, 11, 161, 217);
+		panelCartas.add(lblCarta4);
+		lblCarta4.setIcon(null);
 		
-		JLabel lblCarta_5 = new JLabel("");
-		lblCarta_5.setBounds(503, 11, 161, 217);
-		panelCartas.add(lblCarta_5);
-		lblCarta_5.setIcon(new ImageIcon(getClass().getResource("/carts/Corazon - 7.png")));
+		lblCarta5 = new JLabel("");
+		lblCarta5.setBounds(503, 11, 161, 217);
+		panelCartas.add(lblCarta5);
+		lblCarta5.setIcon(null);
 		
 		JLabel lblFondoMadera = new JLabel("New label");
 		lblFondoMadera.setBounds(-3, 0, 669, 239);
@@ -261,4 +269,37 @@ public class VistaApuestas extends JFrame {
 		lblImagenFondoVerde.setIcon(new ImageIcon(getClass().getResource("/FondoVerdeInicio.jpg")));
 		contentPane.add(lblImagenFondoVerde);
 	}
+	
+	public void informarJugadorMano(String nombreJugadorMano) {
+		this.textAreaNotificaciones.append("Jugador mano: " + nombreJugadorMano + ".\n");
+	}
+	
+	public void mostrarCartas(List<Carta> cartas) {
+		
+		JLabel[] labels = {lblCarta1, lblCarta2, lblCarta3, lblCarta4, lblCarta5};
+		
+		MapeoDeCartas cartasMapeadas = new MapeoDeCartas();
+		
+		for (int i = 0; i < cartas.size(); i++) {
+			
+			Carta carta = cartas.get(i);
+			ImageIcon imagenCarta = cartasMapeadas.getImagenCarta(carta.toString());
+		
+			
+			if (imagenCarta != null) {
+				System.out.println("PASO EL NULL MUY BIENNNN");
+				labels[i].setIcon(imagenCarta);
+			} else {
+				labels[i].setIcon(null);
+				labels[i].setText("Imagen no encontrada");
+			}
+			
+		}
+		
+	}
+	
+	public void setearNombreEnLaBarra(String nombre) {
+		this.lblNombreJugadorVentana.setText(nombre);
+	}
+	
 }

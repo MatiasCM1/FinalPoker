@@ -93,21 +93,18 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			mazo = new Mazo();
 			mazo.setearCartasRonda();
 			
+			this.notificarObservadores(Informe.ESTABLECER_NOMBRE_VENTANA_JUGADOR);
+			
 			this.notificarObservadores(Informe.JUGADOR_MANO);
 			
 			mazo.repartirCartasRonda(this.jugadoresMesa);
 			
 			this.notificarObservadores(Informe.CARTAS_REPARTIDAS);
 			
-			System.out.println("Jugador Mano: " + jugadorMano.getNombre());
-			for (Carta c : this.jugadorMano.getCartas()){
-				System.out.println(c.toString());
-			}
-			
 			this.notificarObservadores(Informe.TURNO_APUESTA_JUGADOR);
 			
 	}
-	
+
 	@Override
 	public void darFondosGanador(Jugador jugador) throws RemoteException{
 		for (Jugador j : this.jugadoresMesa) {

@@ -19,6 +19,7 @@ public class VistaGrafica implements IVista{
     private VistaMenuPrincipal vistaMenuPrincipal;
     private VistaJuegoCartas vistaJuegoCartas;
     private VistaApuestas vistaApuestas;
+    private String nombreJugadorMano;
     private static VistaGrafica instancia;
    
     private VistaGrafica() {
@@ -80,13 +81,14 @@ public class VistaGrafica implements IVista{
     	this.vistaMenuPrincipal.setVisible(false);
     	
     	this.vistaJuegoCartas = new VistaJuegoCartas();
+    	
 	    this.vistaJuegoCartas.setVisible(true);
 	    
 	    controlador.iniciarSiEstaListo(this.jugadorActual);
     	
     }
-    
-    public Jugador getJugadorActual() {
+
+	public Jugador getJugadorActual() {
     	return this.jugadorActual;
     }
 	
@@ -119,6 +121,7 @@ public class VistaGrafica implements IVista{
 
 	@Override
 	public void mostrarJugadorMano(Jugador jugador) {
+		this.nombreJugadorMano = jugador.getNombre();
 		this.vistaJuegoCartas.informarJugadorMano(jugador.getNombre());
 	}
 
@@ -127,10 +130,26 @@ public class VistaGrafica implements IVista{
 		
 		for (Jugador jugador : jugadores) {
             if (jugador.equals(jugadorActual)) { // Mostrar solo cartas del jugador actual
+            	this.jugadorActual.setListaCartas(jugador.getCartas());
             	this.vistaJuegoCartas.mostrarCartas(jugador.getCartas());
             }
         }
 		
+		
+	}
+	
+	@Override
+	public void mostrarMenuApuestas() {
+		
+		this.vistaJuegoCartas.setVisible(false);
+		
+		this.vistaApuestas = new VistaApuestas();
+		
+		this.vistaApuestas.setVisible(true);
+		
+		this.vistaApuestas.informarJugadorMano(this.nombreJugadorMano);
+		
+		this.vistaApuestas.mostrarCartas(jugadorActual.getCartas());
 		
 	}
 
@@ -148,12 +167,6 @@ public class VistaGrafica implements IVista{
 
 	@Override
 	public void mostrarGanador(Jugador ganador) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mostrarMenuApuestas() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -294,6 +307,11 @@ public class VistaGrafica implements IVista{
 	public void mostrarOpcionesMenu() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void mostrarNombreDelJugadorVentana() {
+		this.vistaJuegoCartas.setearNombreEnLaBarra(this.jugadorActual.getNombre());
 	}
 
 }
