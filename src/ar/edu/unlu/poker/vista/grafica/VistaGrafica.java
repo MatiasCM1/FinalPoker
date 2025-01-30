@@ -149,7 +149,38 @@ public class VistaGrafica implements IVista{
 		
 		this.vistaApuestas.informarJugadorMano(this.nombreJugadorMano);
 		
+		this.mostrarNombreDelJugadorVentanaApuestas();
+		
+		this.vistaApuestas.escribirNotificaciones(this.vistaJuegoCartas.getNotificaciones());
+		
 		this.vistaApuestas.mostrarCartas(jugadorActual.getCartas());
+		
+	}
+	
+	public void realizarEnvite(String apuesta) {
+		controlador.realizarLasApuestas(jugadorActual, apuesta);
+	}
+	
+	@Override
+	public void informarApuestaRealizada(String nombreJugadorAposto, int apuestaJugador) {
+		if (this.jugadorActual.getNombre().equals(nombreJugadorAposto)) {
+			this.vistaApuestas.setVisible(false);
+			this.vistaJuegoCartas.setVisible(true);
+		}
+		this.vistaJuegoCartas.notificarApuestaJugador(nombreJugadorAposto, String.valueOf(apuestaJugador));
+	}
+	
+	@Override
+	public void mostrarNombreDelJugadorVentana() {
+		this.vistaJuegoCartas.setearNombreEnLaBarra(this.jugadorActual.getNombre());
+	}
+	
+	private void mostrarNombreDelJugadorVentanaApuestas() {
+		this.vistaApuestas.setearNombreEnLaBarra(this.jugadorActual.getNombre());
+	}
+	
+	@Override
+	public void notificarEnviteRealizado() {
 		
 	}
 
@@ -173,18 +204,6 @@ public class VistaGrafica implements IVista{
 
 	@Override
 	public void informarFondosInsuficientes() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void notificarEnviteRealizado() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void informarApuestaRealizada(String nombre, int apuestaJugador) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -307,11 +326,6 @@ public class VistaGrafica implements IVista{
 	public void mostrarOpcionesMenu() {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public void mostrarNombreDelJugadorVentana() {
-		this.vistaJuegoCartas.setearNombreEnLaBarra(this.jugadorActual.getNombre());
 	}
 
 }
