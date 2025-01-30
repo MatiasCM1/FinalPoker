@@ -23,6 +23,7 @@ import java.util.List;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JSeparator;
 
 public class VistaApuestas extends JFrame {
 
@@ -41,6 +42,9 @@ public class VistaApuestas extends JFrame {
 	private JButton btnCancelarEnvite;
 	private JPanel panelRealizarEnvite;
 	private JTextField txtFieldCantidadApuesta;
+	private JLabel lblFondoNegroError;
+	private JLabel lblIngreseNumeroEntero;
+	private JLabel lblErrorFondosInsuficientes;
 
 	
 
@@ -100,12 +104,38 @@ public class VistaApuestas extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				panelRealizarEnvite.setVisible(false);
 				
+				lblFondoNegroError.setVisible(false);
+				lblIngreseNumeroEntero.setVisible(false);
+				lblErrorFondosInsuficientes.setVisible(false);
+				
 				VistaGrafica.getInstance().realizarEnvite(txtFieldCantidadApuesta.getText());
 				//VistaGrafica.getInstance().notificarEnviteRealizado(txtFieldCantidadApuesta.getText());
 				
 				//txtFieldCantidadApuesta.setText("");
 			}
 		});
+		
+		lblErrorFondosInsuficientes = new JLabel("Error, fondos insuficientes");
+		lblErrorFondosInsuficientes.setVisible(false);
+		lblErrorFondosInsuficientes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblErrorFondosInsuficientes.setForeground(new Color(255, 0, 0));
+		lblErrorFondosInsuficientes.setBounds(53, 87, 214, 14);
+		panelRealizarEnvite.add(lblErrorFondosInsuficientes);
+		
+		lblIngreseNumeroEntero = new JLabel("Error, ingrese un numero entero");
+		lblIngreseNumeroEntero.setVisible(false);
+		lblIngreseNumeroEntero.setBackground(new Color(0, 0, 0));
+		lblIngreseNumeroEntero.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIngreseNumeroEntero.setForeground(new Color(255, 0, 0));
+		lblIngreseNumeroEntero.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
+		lblIngreseNumeroEntero.setBounds(53, 87, 214, 14);
+		panelRealizarEnvite.add(lblIngreseNumeroEntero);
+		
+		lblFondoNegroError = new JLabel("");
+		lblFondoNegroError.setVisible(false);
+		lblFondoNegroError.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\fondoNegro.jpg"));
+		lblFondoNegroError.setBounds(53, 87, 214, 14);
+		panelRealizarEnvite.add(lblFondoNegroError);
 		btnAceptarEnvite.setIcon(null);
 		btnAceptarEnvite.setForeground(Color.WHITE);
 		btnAceptarEnvite.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 25));
@@ -404,10 +434,13 @@ public class VistaApuestas extends JFrame {
 		this.textAreaNotificaciones.setText(notificaciones);
 	}
 	
-	/*public void notificarApuestaJugador(String nombreJugadorApuesta, String apuesta) {
-		this.textAreaNotificaciones.append(nombreJugadorApuesta + " realizo su apuesta: " + apuesta + ".\n");
-	}*/
+	public void mostrarMenuEnvite() {
+		this.panelRealizarEnvite.setVisible(true);
+	}
 	
-
+	public void mostrarErrorNumeroEntero() {
+		this.lblFondoNegroError.setVisible(true);
+		this.lblIngreseNumeroEntero.setVisible(true);
+	}
 	
 }

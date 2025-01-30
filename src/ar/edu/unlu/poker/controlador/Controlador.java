@@ -290,18 +290,18 @@ public class Controlador implements IControladorRemoto{
 					} else {
 						if (this.jugadorActual.getNombre().equals(this.getJugadorTurno().getNombre())) {
 							vista.notificarApuestaMenorALaAnterior();
-							vista.mostrarMenuApuestas();
+							//vista.mostrarMenuApuestas(); //ESTO NO ME SIRVE PARA LA VISTA GRAFICA
 						} else {
 							vista.informarTurnoApuestaOtroJugador();
 						}
 					}
 				} else {
 					vista.notificarJugadorManoDebeApostar();
-					vista.mostrarMenuApuestas();
+					//vista.mostrarMenuApuestas(); //ESTO NO ME SIRVE PARA LA VISTA GRAFICA
 				}
 			} else {
 				vista.notificarErrorIngreseUnEntero();
-				vista.mostrarMenuApuestas();
+				//vista.mostrarMenuApuestas(); //ESTO NO ME SIRVE PARA LA VISTA GRAFICA
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();

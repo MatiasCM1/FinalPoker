@@ -147,6 +147,8 @@ public class VistaGrafica implements IVista{
 		
 		this.vistaApuestas.setVisible(true);
 		
+		
+		//ESTO SE PUEDE SACAR?
 		this.vistaApuestas.informarJugadorMano(this.nombreJugadorMano);
 		
 		this.mostrarNombreDelJugadorVentanaApuestas();
@@ -177,6 +179,12 @@ public class VistaGrafica implements IVista{
 	
 	private void mostrarNombreDelJugadorVentanaApuestas() {
 		this.vistaApuestas.setearNombreEnLaBarra(this.jugadorActual.getNombre());
+	}
+	
+	@Override
+	public void notificarErrorIngreseUnEntero() {
+		this.vistaApuestas.mostrarMenuEnvite();
+		this.vistaApuestas.mostrarErrorNumeroEntero();
 	}
 	
 	@Override
@@ -300,12 +308,6 @@ public class VistaGrafica implements IVista{
 
 	@Override
 	public void notificarApuestasDesigualesSegundaRonda() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void notificarErrorIngreseUnEntero() {
 		// TODO Auto-generated method stub
 		
 	}
