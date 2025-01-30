@@ -188,6 +188,12 @@ public class VistaGrafica implements IVista{
 	}
 	
 	@Override
+	public void notificarApuestaMenorALaAnterior() {
+		this.vistaApuestas.mostrarMenuEnvite();
+		this.vistaApuestas.mostrarErrorApuestaInsuficiente();
+	}
+	
+	@Override
 	public void notificarEnviteRealizado() {
 		
 	}
@@ -254,12 +260,6 @@ public class VistaGrafica implements IVista{
 
 	@Override
 	public void notificarRondaApuestaFinalizada() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void notificarApuestaMenorALaAnterior() {
 		// TODO Auto-generated method stub
 		
 	}

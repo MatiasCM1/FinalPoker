@@ -42,9 +42,10 @@ public class VistaApuestas extends JFrame {
 	private JButton btnCancelarEnvite;
 	private JPanel panelRealizarEnvite;
 	private JTextField txtFieldCantidadApuesta;
-	private JLabel lblFondoNegroError;
+	private JLabel lblFondoNegroError_1;
 	private JLabel lblIngreseNumeroEntero;
-	private JLabel lblErrorFondosInsuficientes;
+	private JLabel lblErrorApuestaMenorAnterior;
+	private JLabel lblFondoNegroError_2;
 
 	
 
@@ -104,9 +105,10 @@ public class VistaApuestas extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				panelRealizarEnvite.setVisible(false);
 				
-				lblFondoNegroError.setVisible(false);
+				lblFondoNegroError_1.setVisible(false);
+				lblFondoNegroError_2.setVisible(false);
 				lblIngreseNumeroEntero.setVisible(false);
-				lblErrorFondosInsuficientes.setVisible(false);
+				lblErrorApuestaMenorAnterior.setVisible(false);
 				
 				VistaGrafica.getInstance().realizarEnvite(txtFieldCantidadApuesta.getText());
 				//VistaGrafica.getInstance().notificarEnviteRealizado(txtFieldCantidadApuesta.getText());
@@ -115,15 +117,15 @@ public class VistaApuestas extends JFrame {
 			}
 		});
 		
-		lblErrorFondosInsuficientes = new JLabel("Error, fondos insuficientes");
-		lblErrorFondosInsuficientes.setVisible(false);
-		lblErrorFondosInsuficientes.setHorizontalAlignment(SwingConstants.CENTER);
-		lblErrorFondosInsuficientes.setForeground(new Color(255, 0, 0));
-		lblErrorFondosInsuficientes.setBounds(53, 87, 214, 14);
-		panelRealizarEnvite.add(lblErrorFondosInsuficientes);
-		
-		lblIngreseNumeroEntero = new JLabel("Error, ingrese un numero entero");
+		lblIngreseNumeroEntero = new JLabel("Ingrese un numero entero");
 		lblIngreseNumeroEntero.setVisible(false);
+		
+		lblErrorApuestaMenorAnterior = new JLabel("La apuesta debe ser mayor o igual a la anterior");
+		lblErrorApuestaMenorAnterior.setVisible(false);
+		lblErrorApuestaMenorAnterior.setHorizontalAlignment(SwingConstants.CENTER);
+		lblErrorApuestaMenorAnterior.setForeground(new Color(255, 0, 0));
+		lblErrorApuestaMenorAnterior.setBounds(10, 87, 289, 14);
+		panelRealizarEnvite.add(lblErrorApuestaMenorAnterior);
 		lblIngreseNumeroEntero.setBackground(new Color(0, 0, 0));
 		lblIngreseNumeroEntero.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIngreseNumeroEntero.setForeground(new Color(255, 0, 0));
@@ -131,11 +133,17 @@ public class VistaApuestas extends JFrame {
 		lblIngreseNumeroEntero.setBounds(53, 87, 214, 14);
 		panelRealizarEnvite.add(lblIngreseNumeroEntero);
 		
-		lblFondoNegroError = new JLabel("");
-		lblFondoNegroError.setVisible(false);
-		lblFondoNegroError.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\fondoNegro.jpg"));
-		lblFondoNegroError.setBounds(53, 87, 214, 14);
-		panelRealizarEnvite.add(lblFondoNegroError);
+		lblFondoNegroError_2 = new JLabel("");
+		lblFondoNegroError_2.setVisible(false);
+		lblFondoNegroError_2.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\fondoNegro.jpg"));
+		lblFondoNegroError_2.setBounds(10, 87, 289, 14);
+		panelRealizarEnvite.add(lblFondoNegroError_2);
+		
+		lblFondoNegroError_1 = new JLabel("");
+		lblFondoNegroError_1.setVisible(false);
+		lblFondoNegroError_1.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\fondoNegro.jpg"));
+		lblFondoNegroError_1.setBounds(53, 87, 214, 14);
+		panelRealizarEnvite.add(lblFondoNegroError_1);
 		btnAceptarEnvite.setIcon(null);
 		btnAceptarEnvite.setForeground(Color.WHITE);
 		btnAceptarEnvite.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 25));
@@ -439,8 +447,13 @@ public class VistaApuestas extends JFrame {
 	}
 	
 	public void mostrarErrorNumeroEntero() {
-		this.lblFondoNegroError.setVisible(true);
+		this.lblFondoNegroError_1.setVisible(true);
 		this.lblIngreseNumeroEntero.setVisible(true);
+	}
+	
+	public void mostrarErrorApuestaInsuficiente() {
+		this.lblFondoNegroError_2.setVisible(true);
+		this.lblErrorApuestaMenorAnterior.setVisible(true);
 	}
 	
 }
