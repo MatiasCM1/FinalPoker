@@ -66,15 +66,6 @@ public class MapeoDeCartas {
 		
 		String nombreImagen = mapaImagenes.get(nombreCarta);
 		
-		/*if (nombreImagen != null) {
-			System.out.println("PASO ESTE IF, este es el nombre imagen: " + nombreImagen);
-			System.out.println(getClass().getResource("/cards/" + nombreImagen));
-			return new ImageIcon(getClass().getResource("/cards/" + nombreImagen));
-		} else {
-			System.err.println("Carta inexistente");
-			return null;
-		}*/
-		
 		if (nombreImagen != null) {
 	        java.net.URL recurso = getClass().getResource("/cards/" + nombreImagen + ".png");
 	        

@@ -71,7 +71,7 @@ public class Controlador implements IControladorRemoto{
 				break;
 			case APUESTAS_DESIGUALES:
 				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { //Comprueba que el nombre del jugadorActuañ forme parte de la cola de jugadores con  apuesta menor a la mayor
-					vista.setEnableCampoEntrada(true);
+					vista.setEnableCampoEntrada(true); //ESTO SE PUEDE PONER DENTRO DEL NOTIFICAR APUESTAS DESIGUALES DE LA VISTA CONSOLA
 					vista.notificarApuestasDesiguales();
 				} else {
 					vista.setEnableCampoEntrada(false);
@@ -336,7 +336,7 @@ public class Controlador implements IControladorRemoto{
 				mesa.jugadorPasa(jugador);
 			} else {
 				vista.notificarJugadorManoDebeApostar();
-				vista.mostrarMenuApuestas();
+				vista.mostrarMenuApuestas();//SE PUEDE PONER ESTE METODO DENTRO DEL NOTIFICAR EN LA VISTA CONSOLA
 			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block

@@ -224,10 +224,6 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	public boolean perteneceJugadorApuestaMenor(Jugador jugador) throws RemoteException{
 		return this.jugadoresApuestaInsuficiente.contains(jugador);
 	}
-
-	/*private boolean comprobarIgualdad(){
-		return mapa.values().stream().allMatch(apuesta -> apuesta == this.apuestaMayor);
-	}*/
 	
 	private boolean comprobarIgualdad(){
 		int primerApuesta = mapa.values().iterator().next();

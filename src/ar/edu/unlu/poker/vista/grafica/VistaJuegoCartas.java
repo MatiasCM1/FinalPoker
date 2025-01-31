@@ -167,13 +167,13 @@ public class VistaJuegoCartas extends JFrame {
 		contentPane.add(lblImagenFondoVerde);
 	}
 	
-	public void informarJugadorMano(String nombreJugadorMano) {
+	/*public void informarJugadorMano(String nombreJugadorMano) {
 		this.textAreaNotificaciones.append("Jugador mano: " + nombreJugadorMano + ".\n");
 	}
 	
 	public void notificarApuestaJugador(String nombreJugadorApuesta, String apuesta) {
 		this.textAreaNotificaciones.append(nombreJugadorApuesta + " realizo su apuesta: " + apuesta + ".\n");
-	}
+	}*/
 	
 	public void mostrarCartas(List<Carta> cartas) {
 		
@@ -204,21 +204,11 @@ public class VistaJuegoCartas extends JFrame {
 	
 	public String getNotificaciones() {
 		
-		/*int cantidadDeLineasDeTexto = this.textAreaNotificaciones.getLineCount();//Obtengo la cantidad de lineas de texto
-		
-		try {
-			int indiceDeLaUltimaLinea = cantidadDeLineasDeTexto - 1;
-			int indiceInicioLinea = this.textAreaNotificaciones.getLineStartOffset(indiceDeLaUltimaLinea);		
-			int indiceFinLinea = this.textAreaNotificaciones.getLineEndOffset(indiceDeLaUltimaLinea);
-			System.out.println(this.textAreaNotificaciones.getText(indiceInicioLinea, indiceFinLinea - indiceInicioLinea));
-			return this.textAreaNotificaciones.getText(indiceInicioLinea, indiceFinLinea - indiceInicioLinea);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return "";*/
-		
 		return this.textAreaNotificaciones.getText();
 		
+	}
+	
+	public void escribirNotificacion(String notificacion) {
+		this.textAreaNotificaciones.append(notificacion + ".\n");
 	}
 }
