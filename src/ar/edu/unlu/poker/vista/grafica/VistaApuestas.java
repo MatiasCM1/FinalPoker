@@ -46,6 +46,7 @@ public class VistaApuestas extends JFrame {
 	private JLabel lblIngreseNumeroEntero;
 	private JLabel lblErrorApuestaMenorAnterior;
 	private JLabel lblFondoNegroError_2;
+	private JLabel lblErrorFondosInsuficientes;
 
 	
 
@@ -109,6 +110,7 @@ public class VistaApuestas extends JFrame {
 				lblFondoNegroError_2.setVisible(false);
 				lblIngreseNumeroEntero.setVisible(false);
 				lblErrorApuestaMenorAnterior.setVisible(false);
+				lblErrorFondosInsuficientes.setVisible(false);
 				
 				VistaGrafica.getInstance().realizarEnvite(txtFieldCantidadApuesta.getText());
 				//VistaGrafica.getInstance().notificarEnviteRealizado(txtFieldCantidadApuesta.getText());
@@ -122,6 +124,14 @@ public class VistaApuestas extends JFrame {
 		
 		lblErrorApuestaMenorAnterior = new JLabel("La apuesta debe ser mayor o igual a la anterior");
 		lblErrorApuestaMenorAnterior.setVisible(false);
+		
+		lblErrorFondosInsuficientes = new JLabel("Fondos insuficientes");
+		lblErrorFondosInsuficientes.setForeground(new Color(255, 0, 0));
+		lblErrorFondosInsuficientes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblErrorFondosInsuficientes.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
+		lblErrorFondosInsuficientes.setVisible(false);
+		lblErrorFondosInsuficientes.setBounds(53, 87, 214, 14);
+		panelRealizarEnvite.add(lblErrorFondosInsuficientes);
 		lblErrorApuestaMenorAnterior.setHorizontalAlignment(SwingConstants.CENTER);
 		lblErrorApuestaMenorAnterior.setForeground(new Color(255, 0, 0));
 		lblErrorApuestaMenorAnterior.setBounds(10, 87, 289, 14);
@@ -395,7 +405,7 @@ public class VistaApuestas extends JFrame {
 		panelCartas.add(lblFondoMadera);
 		lblFondoMadera.setIcon(null);
 		
-		JLabel lblImagenMesaFondo = new JLabel("New label");
+		JLabel lblImagenMesaFondo = new JLabel("");
 		lblImagenMesaFondo.setBounds(10, 58, 597, 293);
 		lblImagenMesaFondo.setIcon(new ImageIcon(getClass().getResource("/FondoMesa.png")));
 		contentPane.add(lblImagenMesaFondo);
@@ -454,6 +464,12 @@ public class VistaApuestas extends JFrame {
 	public void mostrarErrorApuestaInsuficiente() {
 		this.lblFondoNegroError_2.setVisible(true);
 		this.lblErrorApuestaMenorAnterior.setVisible(true);
+	}
+	
+	
+	public void mostrarErrorFondosInsuficientes() {
+		this.lblFondoNegroError_1.setVisible(true);
+		this.lblErrorFondosInsuficientes.setVisible(true);
 	}
 	
 }

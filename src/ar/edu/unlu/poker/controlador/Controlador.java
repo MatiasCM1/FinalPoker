@@ -59,7 +59,9 @@ public class Controlador implements IControladorRemoto{
 				}
 				break;
 			case FONDO_INSUFICIENTE:
-				vista.informarFondosInsuficientes();
+				if (this.isJugadorTurno()) {
+					vista.informarFondosInsuficientes();
+				}
 				break;
 			case APUESTA_REALIZADA:
 				vista.informarApuestaRealizada(this.getJugadorTurno().getNombre(), getJugadorTurnoJugadoresMesa().getApuesta());

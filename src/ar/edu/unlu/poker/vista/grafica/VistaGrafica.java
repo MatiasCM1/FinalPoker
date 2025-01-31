@@ -143,7 +143,9 @@ public class VistaGrafica implements IVista{
 		
 		this.vistaJuegoCartas.setVisible(false);
 		
-		this.vistaApuestas = new VistaApuestas();
+		if (this.vistaApuestas == null) {
+			this.vistaApuestas = new VistaApuestas();
+		}
 		
 		this.vistaApuestas.setVisible(true);
 		
@@ -183,14 +185,28 @@ public class VistaGrafica implements IVista{
 	
 	@Override
 	public void notificarErrorIngreseUnEntero() {
+		//this.vistaApuestas.setVisible(true);
 		this.vistaApuestas.mostrarMenuEnvite();
 		this.vistaApuestas.mostrarErrorNumeroEntero();
 	}
 	
 	@Override
 	public void notificarApuestaMenorALaAnterior() {
+		//this.vistaApuestas.setVisible(true);
 		this.vistaApuestas.mostrarMenuEnvite();
 		this.vistaApuestas.mostrarErrorApuestaInsuficiente();
+	}
+	
+	@Override
+	public void informarFondosInsuficientes() {
+		
+		this.vistaApuestas.setVisible(true);
+		this.vistaApuestas.mostrarMenuEnvite();
+		this.vistaApuestas.mostrarErrorFondosInsuficientes();
+		
+		
+		
+	
 	}
 	
 	@Override
@@ -212,12 +228,6 @@ public class VistaGrafica implements IVista{
 
 	@Override
 	public void mostrarGanador(Jugador ganador) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void informarFondosInsuficientes() {
 		// TODO Auto-generated method stub
 		
 	}
