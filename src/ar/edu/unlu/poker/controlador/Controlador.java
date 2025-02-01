@@ -91,7 +91,7 @@ public class Controlador implements IControladorRemoto{
 				vista.notificarJugadorIgualaApuesta();
 				break;
 			case JUGADOR_PASA_APUESTA:
-				vista.notificarJugadorPasaApuesta();
+				vista.notificarJugadorPasaApuesta(); //DEBERIA DECIR EL NOMBRE DEL JUGADOR
 				break;
 			case TURNO_DESCARTE:
 				if (isJugadorTurno()) {
@@ -165,7 +165,7 @@ public class Controlador implements IControladorRemoto{
 		
 	}
 	
-	private Jugador getJugadorTurnoJugadoresMesa() {
+	public Jugador getJugadorTurnoJugadoresMesa() {
 		for (Jugador j : this.getJugadoresMesa()) {
 			if (j.equals(this.getJugadorTurno())) {
 				return j;

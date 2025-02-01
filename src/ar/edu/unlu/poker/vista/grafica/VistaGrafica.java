@@ -218,7 +218,7 @@ public class VistaGrafica implements IVista{
 	public void informarFondosInsuficientes() {
 		
 		this.vistaApuestas.setVisible(true);
-		this.vistaApuestas.mostrarMenuEnvite();
+		//this.vistaApuestas.mostrarMenuEnvite();
 		this.vistaApuestas.mostrarErrorFondosInsuficientes();
 	
 	}
@@ -228,7 +228,13 @@ public class VistaGrafica implements IVista{
 		
 		this.vistaJuegoCartas.escribirNotificacion("Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima");
 		
+		this.vistaJuegoCartas.setVisible(false);
+		
 		this.vistaApuestas.setVisible(true);
+		
+		this.vistaApuestas.escribirNotificaciones(this.vistaJuegoCartas.getNotificaciones());
+		
+		this.vistaApuestas.mostrarMenuApuestaDesigual();
 		
 	}
 	
@@ -239,6 +245,25 @@ public class VistaGrafica implements IVista{
 	
 	}
 	
+	public void realizarFichePostEnvite() {
+		
+		this.controlador.realizarFichaPostEnvite(this.jugadorActual);
+		
+	}
+	
+	@Override
+	public void notificarJugadorIgualaApuesta() {
+		
+		this.vistaJuegoCartas.escribirNotificacion("Jugador iguala la apuesta y sigue en el juego");
+		
+	}
+	
+	public void realizarPasarPostEnvite() {
+		
+		this.controlador.realizarPasarPostEnvite(this.jugadorActual);
+		
+	}
+	
 	@Override
 	public void notificarJugadorManoDebeApostar() {
 		this.vistaApuestas.setVisible(true);
@@ -247,7 +272,9 @@ public class VistaGrafica implements IVista{
 	
 	@Override
 	public void notificarJugadorPasaApuesta() {
-		this.vistaJuegoCartas.escribirNotificacion(this.jugadorActual.getNombre() + " pasa y queda fuera del juego");
+		this.vistaJuegoCartas.escribirNotificacion(controlador.getJugadorTurnoJugadoresMesa().getNombre() + " pasa y queda fuera del juego");
+		//this.vistaApuestas.setVisible(false);
+		//this.vistaJuegoCartas.setVisible(true);
 	}
 	
 	@Override
@@ -281,12 +308,6 @@ public class VistaGrafica implements IVista{
 
 	@Override
 	public void informarTurnoApuestaOtroJugador() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void notificarJugadorIgualaApuesta() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -356,5 +377,5 @@ public class VistaGrafica implements IVista{
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 }

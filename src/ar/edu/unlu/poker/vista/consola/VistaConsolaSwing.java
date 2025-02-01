@@ -652,7 +652,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
    @Override
    public void notificarJugadorPasaApuesta() {
-	   areaSalida.append("Jugador pasa y queda fuera del juego.\n");
+	   areaSalida.append(controlador.getJugadorTurnoJugadoresMesa().getNombre() + " pasa y queda fuera del juego.\n");
    }
 
    @Override
