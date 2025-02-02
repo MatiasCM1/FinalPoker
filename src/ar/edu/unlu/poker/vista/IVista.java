@@ -58,7 +58,7 @@ public interface IVista {
 
 	void mostrarMenuSegundaRondaApuestas();
 
-	void notificarGanador(String nombre);
+	void notificarGanadorUnicoEnMesa(String nombre);
 
 	void notificarJugadorManoDebeApostar();
 
@@ -75,5 +75,7 @@ public interface IVista {
 	void actualizarTablaJugadores(List<Jugador> jugadores);
 
 	void mostrarNombreDelJugadorVentana();
+
+	void limpiarNotificaciones();
 
 }

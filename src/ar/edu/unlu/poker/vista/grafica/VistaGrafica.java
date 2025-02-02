@@ -74,7 +74,7 @@ public class VistaGrafica implements IVista{
 	    
     }
     
-    public void seCierraLaVista() {
+    public void jugadorSaleDelJuego() {
     	controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
     	//NOTIFICAR QUE JGUADOR SE RETIRA DEL JUEGO
     	
@@ -85,7 +85,9 @@ public class VistaGrafica implements IVista{
     	
     	this.vistaMenuPrincipal.setVisible(false);
     	
-    	this.vistaJuegoCartas = new VistaJuegoCartas();
+    	if (this.vistaJuegoCartas == null) {
+    		this.vistaJuegoCartas = new VistaJuegoCartas();
+    	}
     	
 	    this.vistaJuegoCartas.setVisible(true);
 	    
@@ -278,6 +280,34 @@ public class VistaGrafica implements IVista{
 	}
 	
 	@Override
+	public void notificarGanadorUnicoEnMesa(String nombre) {
+	
+		this.vistaApuestas.setVisible(false);
+		this.vistaJuegoCartas.setVisible(true);
+		this.vistaJuegoCartas.escribirNotificacion("El ganador es " + nombre + " debido a que todos se retiraron");
+		
+	}
+	
+	@Override
+	public void mostrarOpcionesMenuEmpezarOtraRonda() {
+		controlador.establecerJugadorComoNoListo(this.jugadorActual);
+		this.vistaJuegoCartas.mostrarOpcionesParaNuevaRondaJuego();
+	}
+	
+	public void volverMenuPrincipal() {
+		
+		this.vistaJuegoCartas.setVisible(false);
+		controlador.establecerJugadorComoNoListo(this.jugadorActual);
+		this.vistaMenuPrincipal.setVisible(true);
+		
+	}
+	
+	@Override
+	public void limpiarNotificaciones() {
+		this.vistaJuegoCartas.limpiarPantalla();
+	}
+	
+	@Override
 	public void notificarEnviteRealizado() {
 		
 	}
@@ -349,19 +379,7 @@ public class VistaGrafica implements IVista{
 	}
 
 	@Override
-	public void notificarGanador(String nombre) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void notificarApuestasDesigualesSegundaRonda() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mostrarOpcionesMenuEmpezarOtraRonda() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -377,5 +395,6 @@ public class VistaGrafica implements IVista{
 		// TODO Auto-generated method stub
 		
 	}
+
 	
 }

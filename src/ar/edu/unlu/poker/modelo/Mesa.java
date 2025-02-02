@@ -950,4 +950,13 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		
 	}
 	
+	@Override 
+	public void marcarComoNoListoParaIniciar(Jugador jugador) throws RemoteException{
+		for (Jugador j : this.jugadoresMesa) {
+			if (j.equals(jugador)) {
+				j.setListoParaIniciar(false);
+			}
+		}
+	}
+	
 }

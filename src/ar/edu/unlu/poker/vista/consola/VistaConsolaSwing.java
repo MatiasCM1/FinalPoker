@@ -686,7 +686,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	}
 
 	@Override
-	public void notificarGanador(String nombre) {
+	public void notificarGanadorUnicoEnMesa(String nombre) {
 		areaSalida.append(nombre + " es el ganador debido a que todos se rindieron.\n");
 	}
 
@@ -720,6 +720,11 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	public void mostrarNombreDelJugadorVentana() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void limpiarNotificaciones() {
+		areaSalida.setText("");
 	}
     
 }

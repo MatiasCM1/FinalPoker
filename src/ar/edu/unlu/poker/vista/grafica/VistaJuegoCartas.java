@@ -20,6 +20,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.List;
+import java.awt.Cursor;
 
 public class VistaJuegoCartas extends JFrame {
 
@@ -34,6 +35,7 @@ public class VistaJuegoCartas extends JFrame {
 	private JLabel lblCarta4;
 	private JLabel lblCarta5;
 	private JLabel lblNombreJugadorVentana;
+	private JPanel panelOpcionesSiguienteRondaJuego;
 
 
 	public VistaJuegoCartas() {
@@ -65,6 +67,97 @@ public class VistaJuegoCartas extends JFrame {
 				yMouse = e.getY();
 			}
 		});
+		
+		panelOpcionesSiguienteRondaJuego = new JPanel();
+		panelOpcionesSiguienteRondaJuego.setVisible(false);
+		panelOpcionesSiguienteRondaJuego.setBounds(63, 67, 518, 200);
+		contentPane.add(panelOpcionesSiguienteRondaJuego);
+		panelOpcionesSiguienteRondaJuego.setLayout(null);
+		
+		JButton btnSeguirJugadorNuevaRonda = new JButton("Seguir jugando");
+		btnSeguirJugadorNuevaRonda.setBorderPainted(false);
+		btnSeguirJugadorNuevaRonda.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnSeguirJugadorNuevaRonda.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnSeguirJugadorNuevaRonda.setForeground(Color.white);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panelOpcionesSiguienteRondaJuego.setVisible(false);
+				VistaGrafica.getInstance().listoParaIniciarJuego();
+			}
+		});
+		btnSeguirJugadorNuevaRonda.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		btnSeguirJugadorNuevaRonda.setContentAreaFilled(false);
+		btnSeguirJugadorNuevaRonda.setForeground(new Color(255, 255, 255));
+		btnSeguirJugadorNuevaRonda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnSeguirJugadorNuevaRonda.setBounds(346, 114, 162, 59);
+		panelOpcionesSiguienteRondaJuego.add(btnSeguirJugadorNuevaRonda);
+		
+		JButton btnVolverMenuPrincipal = new JButton("Menu principal");
+		btnVolverMenuPrincipal.setBorderPainted(false);
+		btnVolverMenuPrincipal.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnVolverMenuPrincipal.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnVolverMenuPrincipal.setForeground(Color.white);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panelOpcionesSiguienteRondaJuego.setVisible(false);
+				VistaGrafica.getInstance().volverMenuPrincipal();
+			}
+		});
+		btnVolverMenuPrincipal.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnVolverMenuPrincipal.setForeground(new Color(255, 255, 255));
+		btnVolverMenuPrincipal.setContentAreaFilled(false);
+		btnVolverMenuPrincipal.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 17));
+		btnVolverMenuPrincipal.setBounds(182, 114, 162, 59);
+		panelOpcionesSiguienteRondaJuego.add(btnVolverMenuPrincipal);
+		
+		JButton btnSalirDelJuego = new JButton("Salir");
+		btnSalirDelJuego.setBorderPainted(false);
+		btnSalirDelJuego.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnSalirDelJuego.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnSalirDelJuego.setForeground(Color.white);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panelOpcionesSiguienteRondaJuego.setVisible(false);
+				VistaGrafica.getInstance().jugadorSaleDelJuego();
+				System.exit(0);
+			}
+		});
+		btnSalirDelJuego.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnSalirDelJuego.setContentAreaFilled(false);
+		btnSalirDelJuego.setForeground(new Color(255, 255, 255));
+		btnSalirDelJuego.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		btnSalirDelJuego.setBounds(10, 110, 162, 59);
+		panelOpcionesSiguienteRondaJuego.add(btnSalirDelJuego);
+		
+		JLabel lblRondaTerminada = new JLabel("Ronda terminada");
+		lblRondaTerminada.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 45));
+		lblRondaTerminada.setForeground(new Color(255, 255, 255));
+		lblRondaTerminada.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRondaTerminada.setBounds(10, 11, 498, 59);
+		panelOpcionesSiguienteRondaJuego.add(lblRondaTerminada);
+		
+		JLabel lblFondoMaderaSigRonda = new JLabel("");
+		lblFondoMaderaSigRonda.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
+		lblFondoMaderaSigRonda.setBounds(0, 0, 518, 199);
+		panelOpcionesSiguienteRondaJuego.add(lblFondoMaderaSigRonda);
 		panelBarraSuperior.setLayout(null);
 		panelBarraSuperior.setBounds(0, 0, 1121, 21);
 		contentPane.add(panelBarraSuperior);
@@ -76,9 +169,11 @@ public class VistaJuegoCartas extends JFrame {
 		lblNombreJugadorVentana.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
 		
 		JButton btnSalir = new JButton("X");
+		btnSalir.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSalir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				VistaGrafica.getInstance().jugadorSaleDelJuego();
 				System.exit(0);
 			}
 			@Override
@@ -210,5 +305,13 @@ public class VistaJuegoCartas extends JFrame {
 	
 	public void escribirNotificacion(String notificacion) {
 		this.textAreaNotificaciones.append(notificacion + ".\n");
+	}
+
+	public void mostrarOpcionesParaNuevaRondaJuego() {
+		this.panelOpcionesSiguienteRondaJuego.setVisible(true);
+	}
+
+	public void limpiarPantalla() {
+		this.textAreaNotificaciones.setText("");
 	}
 }

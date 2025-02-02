@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
+import java.awt.Cursor;
 
 public class VistaApuestas extends JFrame {
 
@@ -94,6 +95,7 @@ public class VistaApuestas extends JFrame {
 		panelErrores.setLayout(null);
 		
 		JButton btnSalirVentanaErrores = new JButton("X");
+		btnSalirVentanaErrores.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSalirVentanaErrores.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -177,6 +179,8 @@ public class VistaApuestas extends JFrame {
 		panelApuestasDesiguales.setLayout(null);
 		
 		JButton btnPasarApuestasDesiguales = new JButton("Pasar");
+		btnPasarApuestasDesiguales.setBorderPainted(false);
+		btnPasarApuestasDesiguales.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPasarApuestasDesiguales.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -201,6 +205,8 @@ public class VistaApuestas extends JFrame {
 		btnPasarApuestasDesiguales.setBackground(new Color(255, 255, 255, 100));
 		
 		JButton btnFicharApuestasDesiguales = new JButton("Fichar");
+		btnFicharApuestasDesiguales.setBorderPainted(false);
+		btnFicharApuestasDesiguales.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnFicharApuestasDesiguales.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -240,6 +246,7 @@ public class VistaApuestas extends JFrame {
 		panelRealizarEnvite.setLayout(null);
 		
 		btnAceptarEnvite = new JButton("Aceptar");
+		btnAceptarEnvite.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAceptarEnvite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -272,6 +279,7 @@ public class VistaApuestas extends JFrame {
 		panelRealizarEnvite.add(btnAceptarEnvite);
 		
 		btnCancelarEnvite = new JButton("Cancelar");
+		btnCancelarEnvite.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCancelarEnvite.setBackground(new Color(255, 255, 255, 100));
 		btnCancelarEnvite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -320,9 +328,11 @@ public class VistaApuestas extends JFrame {
 		contentPane.add(panelBarraSuperior);
 		
 		JButton btnSalir = new JButton("X");
+		btnSalir.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSalir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				VistaGrafica.getInstance().jugadorSaleDelJuego();
 				System.exit(0);
 			}
 			@Override
@@ -370,6 +380,7 @@ public class VistaApuestas extends JFrame {
 		panelBtnEnvite.setLayout(null);
 		
 		JButton btnEnvite = new JButton("Envitar");
+		btnEnvite.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEnvite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -408,6 +419,7 @@ public class VistaApuestas extends JFrame {
 		panelBtnFiche.setLayout(null);
 		
 		JButton btnFiche = new JButton("Fichar");
+		btnFiche.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnFiche.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -444,6 +456,7 @@ public class VistaApuestas extends JFrame {
 		panelBtnPase.setLayout(null);
 		
 		JButton btnPase = new JButton("Pasar");
+		btnPase.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPase.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {

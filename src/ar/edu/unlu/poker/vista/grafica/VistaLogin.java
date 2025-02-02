@@ -106,6 +106,7 @@ public class VistaLogin extends JFrame{
 		contentPane.add(panelBarraSuperior);
 		
 		JButton btnSalir = new JButton("X");
+		btnSalir.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSalir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

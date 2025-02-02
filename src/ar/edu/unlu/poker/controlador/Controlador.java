@@ -104,12 +104,13 @@ public class Controlador implements IControladorRemoto{
 				break;
 			case RONDA_APUESTAS_TERMINADA:
 				if (mesa.getRondaApuesta().size() == 1) {
-					vista.notificarGanador(mesa.getRondaApuesta().getFirst().getNombre());
+					vista.notificarGanadorUnicoEnMesa(mesa.getRondaApuesta().getFirst().getNombre());
 					if (this.isJugadorTurno()) {
 						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
 					}
 					vista.setEnableCampoEntrada(true);
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
+					
 				} else if (this.isJugadorTurno()) {
 					vista.setEnableCampoEntrada(true);
 					vista.notificarRondaApuestaFinalizada();
@@ -118,7 +119,7 @@ public class Controlador implements IControladorRemoto{
 				break;
 			case RONDA_APUESTAS_TERMINADA_SEGUNDA_RONDA:
 				if (mesa.getRondaApuestaAux().size() == 1) {
-					vista.notificarGanador(mesa.getRondaApuestaAux().getFirst().getNombre());
+					vista.notificarGanadorUnicoEnMesa(mesa.getRondaApuestaAux().getFirst().getNombre());
 					if (this.isJugadorTurno()) {
 						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
 					}
@@ -142,7 +143,7 @@ public class Controlador implements IControladorRemoto{
 				break;
 			case SEGUNDA_RONDA_APUESTAS:
 				if (mesa.getRondaApuesta().size() == 1) {
-					vista.notificarGanador(mesa.getRondaApuesta().getFirst().getNombre());
+					vista.notificarGanadorUnicoEnMesa(mesa.getRondaApuesta().getFirst().getNombre());
 					if (this.isJugadorTurno()) {
 						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
 					}
@@ -186,7 +187,8 @@ public class Controlador implements IControladorRemoto{
 			e.printStackTrace();
 		}
 	}
-	
+
+
 	public void iniciarGamePostPrimeraRonda() {
 		try {
 			mesa.setPrimeraRonda(false);
@@ -534,14 +536,27 @@ public class Controlador implements IControladorRemoto{
 		return true;
 	}
 
-	public void iniciarSiEstaListo(Jugador jugadorActual) {
+	public void iniciarSiEstaListo(Jugador jugadorActual){
 		try {
 			mesa.marcarComoListoParaIniciar(jugadorActual);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+		
+		vista.limpiarNotificaciones();
+		
 		if (todosListo()) {
-			this.iniciarGame();
+			try {
+				if (!mesa.isPrimeraRonda()) {
+					//vista.limpiarNotificaciones();
+					this.iniciarGamePostPrimeraRonda();
+				} else {
+					this.iniciarGame();
+				}
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -560,6 +575,15 @@ public class Controlador implements IControladorRemoto{
 			return true;
 		} else {
 			return false;
+		}
+	}
+
+	public void establecerJugadorComoNoListo(Jugador jugador) {
+		try {
+			mesa.marcarComoNoListoParaIniciar(jugador);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
