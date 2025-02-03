@@ -79,7 +79,71 @@ public class VistaJuegoCartas extends JFrame {
 		contentPane.add(panelDescartarCartas);
 		panelDescartarCartas.setLayout(null);
 		
+		JButton btnDescartarCarta5 = new JButton("Descartar");
+		btnDescartarCarta5.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnDescartarCarta5.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnDescartarCarta5.setForeground(Color.white);
+			}
+		});
+		btnDescartarCarta5.setContentAreaFilled(false);
+		btnDescartarCarta5.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnDescartarCarta5.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
+		btnDescartarCarta5.setForeground(new Color(255, 255, 255));
+		btnDescartarCarta5.setBounds(534, 123, 89, 23);
+		panelDescartarCartas.add(btnDescartarCarta5);
+		
+		JButton btnDescartarCarta4 = new JButton("Descartar");
+		btnDescartarCarta4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnDescartarCarta4.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnDescartarCarta4.setForeground(Color.white);
+			}
+		});
+		btnDescartarCarta4.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
+		btnDescartarCarta4.setForeground(new Color(255, 255, 255));
+		btnDescartarCarta4.setContentAreaFilled(false);
+		btnDescartarCarta4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnDescartarCarta4.setBounds(413, 123, 89, 23);
+		panelDescartarCartas.add(btnDescartarCarta4);
+		
+		JButton btnDescartarCarta3 = new JButton("Descartar");
+		btnDescartarCarta3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnDescartarCarta3.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnDescartarCarta3.setForeground(Color.white);
+			}
+		});
+		btnDescartarCarta3.setContentAreaFilled(false);
+		btnDescartarCarta3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnDescartarCarta3.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
+		btnDescartarCarta3.setForeground(new Color(255, 255, 255));
+		btnDescartarCarta3.setBounds(284, 123, 89, 23);
+		panelDescartarCartas.add(btnDescartarCarta3);
+		
 		JButton btnTerminarDescartes = new JButton("Finalizar descartes");
+		btnTerminarDescartes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnTerminarDescartes.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnTerminarDescartes.setForeground(Color.white);
+			}
+		});
 		btnTerminarDescartes.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
 		btnTerminarDescartes.setForeground(new Color(255, 255, 255));
 		btnTerminarDescartes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -88,6 +152,16 @@ public class VistaJuegoCartas extends JFrame {
 		panelDescartarCartas.add(btnTerminarDescartes);
 		
 		JButton btnDescartarCarta2 = new JButton("Descartar");
+		btnDescartarCarta2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnDescartarCarta2.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnDescartarCarta2.setForeground(Color.white);
+			}
+		});
 		btnDescartarCarta2.setBounds(154, 123, 89, 23);
 		panelDescartarCartas.add(btnDescartarCarta2);
 		btnDescartarCarta2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -95,13 +169,23 @@ public class VistaJuegoCartas extends JFrame {
 		btnDescartarCarta2.setForeground(new Color(255, 255, 255));
 		btnDescartarCarta2.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
 		
-		JButton btnDescarcartarCarta1 = new JButton("Descartar");
-		btnDescarcartarCarta1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
-		btnDescarcartarCarta1.setForeground(new Color(255, 255, 255));
-		btnDescarcartarCarta1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnDescarcartarCarta1.setContentAreaFilled(false);
-		btnDescarcartarCarta1.setBounds(25, 123, 89, 23);
-		panelDescartarCartas.add(btnDescarcartarCarta1);
+		JButton btnDescartarCarta1 = new JButton("Descartar");
+		btnDescartarCarta1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnDescartarCarta1.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnDescartarCarta1.setForeground(Color.white);
+			}
+		});
+		btnDescartarCarta1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
+		btnDescartarCarta1.setForeground(new Color(255, 255, 255));
+		btnDescartarCarta1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnDescartarCarta1.setContentAreaFilled(false);
+		btnDescartarCarta1.setBounds(25, 123, 89, 23);
+		panelDescartarCartas.add(btnDescartarCarta1);
 		
 		JLabel lblFondoMaderaBtnDescartes = new JLabel("New label");
 		lblFondoMaderaBtnDescartes.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
