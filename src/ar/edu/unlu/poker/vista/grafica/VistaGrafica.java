@@ -308,6 +308,16 @@ public class VistaGrafica implements IVista{
 	}
 	
 	@Override
+	public void mostrarMenuDescartes() {
+		this.vistaJuegoCartas.mostrarMenuDescartes();
+	}
+	
+	@Override
+	public void notificarEsperarDescartes() {
+		this.vistaJuegoCartas.escribirNotificacion("Esperando a que se realicen los descartes");
+	}
+	
+	@Override
 	public void notificarEnviteRealizado() {
 		
 	}
@@ -344,18 +354,6 @@ public class VistaGrafica implements IVista{
 
 	@Override
 	public void notificarRondaApuestaFinalizada() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void notificarEsperarDescartes() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mostrarMenuDescartes() {
 		// TODO Auto-generated method stub
 		
 	}
