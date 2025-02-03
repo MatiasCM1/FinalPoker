@@ -50,6 +50,8 @@ public class VistaApuestas extends JFrame {
 	private JLabel lblFondosInsuficientes;
 	private JLabel lblErrorJugadorManoEnvita;
 	private JPanel panelApuestasDesiguales;
+	private JPanel panelBtnApuestas;
+	private boolean apuestasDesiguales;
 
 	
 
@@ -113,6 +115,10 @@ public class VistaApuestas extends JFrame {
 				lblErrorNumeroEntero.setVisible(false);
 				lblFondoNegroErrores.setVisible(false);
 				lblErrorJugadorManoEnvita.setVisible(false);
+				panelBtnApuestas.setVisible(true);
+				if (apuestasDesiguales) {
+					mostrarMenuApuestaDesigual();
+				}
 			}
 		});
 		
@@ -193,6 +199,7 @@ public class VistaApuestas extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				panelApuestasDesiguales.setVisible(false);
+				panelBtnApuestas.setVisible(true);
 				VistaGrafica.getInstance().realizarPasarPostEnvite();
 			}
 		});
@@ -219,6 +226,7 @@ public class VistaApuestas extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				panelApuestasDesiguales.setVisible(false);
+				panelBtnApuestas.setVisible(true);
 				VistaGrafica.getInstance().realizarFichePostEnvite();
 			}
 		});
@@ -266,7 +274,11 @@ public class VistaApuestas extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				panelRealizarEnvite.setVisible(false);
 				
+				panelBtnApuestas.setVisible(true);
+				
 				VistaGrafica.getInstance().realizarEnvite(txtFieldCantidadApuesta.getText());
+				
+				txtFieldCantidadApuesta.setText("");
 				//VistaGrafica.getInstance().notificarEnviteRealizado(txtFieldCantidadApuesta.getText());
 				
 				//txtFieldCantidadApuesta.setText("");
@@ -297,6 +309,7 @@ public class VistaApuestas extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				panelRealizarEnvite.setVisible(false);
+				panelBtnApuestas.setVisible(true);
 				txtFieldCantidadApuesta.setText("");
 			}
 		});
@@ -368,7 +381,7 @@ public class VistaApuestas extends JFrame {
 		lblFondoMaderaBarra.setBounds(0, 0, 1121, 21);
 		panelBarraSuperior.add(lblFondoMaderaBarra);
 		
-		JPanel panelBtnApuestas = new JPanel();
+		panelBtnApuestas = new JPanel();
 		panelBtnApuestas.setOpaque(false);
 		panelBtnApuestas.setBounds(687, 362, 408, 239);
 		contentPane.add(panelBtnApuestas);
@@ -397,6 +410,7 @@ public class VistaApuestas extends JFrame {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				panelBtnApuestas.setVisible(false);
 				panelRealizarEnvite.setVisible(true);
 			}
 		});
@@ -587,39 +601,65 @@ public class VistaApuestas extends JFrame {
 	}
 	
 	public void mostrarMenuEnvite() {
+		this.panelBtnApuestas.setVisible(false);
 		this.panelRealizarEnvite.setVisible(true);
 	}
 	
 	public void mostrarErrorNumeroEntero() {
+		if (this.panelApuestasDesiguales.isVisible()) {
+			this.apuestasDesiguales = true;
+			this.panelApuestasDesiguales.setVisible(false);
+			
+		}
 		this.panelRealizarEnvite.setVisible(false);
 		this.panelErrores.setVisible(true);
 		this.lblFondoNegroErrores.setVisible(true);
 		this.lblErrorNumeroEntero.setVisible(true);
+		this.panelBtnApuestas.setVisible(false);
 	}
 	
 	public void mostrarErrorApuestaInsuficiente() {
+		if (this.panelApuestasDesiguales.isVisible()) {
+			this.apuestasDesiguales = true;
+			this.panelApuestasDesiguales.setVisible(false);
+		}
 		this.panelRealizarEnvite.setVisible(false);
 		this.panelErrores.setVisible(true);
 		this.lblFondoNegroErrores.setVisible(true);
 		this.lblApuestaMayorIgualAnterior.setVisible(true);
+		this.panelBtnApuestas.setVisible(false);
 	}
 	
 	
 	public void mostrarErrorFondosInsuficientes() {
+		System.out.println("Syso del error " + panelApuestasDesiguales.isVisible());
+		if (this.panelApuestasDesiguales.isVisible()) {
+			this.apuestasDesiguales = true;
+			this.panelApuestasDesiguales.setVisible(false);
+		}
 		this.panelRealizarEnvite.setVisible(false);
 		this.panelErrores.setVisible(true);
 		this.lblFondoNegroErrores.setVisible(true);
 		this.lblFondosInsuficientes.setVisible(true);
+		this.panelBtnApuestas.setVisible(false);
 	}
 
 	public void mostrarErrorJugadorManoDebeEnvitar() {
+		if (this.panelApuestasDesiguales.isVisible()) {
+			this.apuestasDesiguales = true;
+			this.panelApuestasDesiguales.setVisible(false);
+		}
 		this.panelRealizarEnvite.setVisible(false);
 		this.panelErrores.setVisible(true);
 		this.lblFondoNegroErrores.setVisible(true);
 		this.lblErrorJugadorManoEnvita.setVisible(true);
+		this.panelBtnApuestas.setVisible(false);
 	}
 
 	public void mostrarMenuApuestaDesigual() {
+		System.out.println("Syso mostrar menu " + panelApuestasDesiguales.isVisible());
+		this.panelBtnApuestas.setVisible(false);
+		this.apuestasDesiguales = false;
 		this.panelApuestasDesiguales.setVisible(true);
 	}
 }

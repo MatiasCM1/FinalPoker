@@ -36,6 +36,7 @@ public class VistaJuegoCartas extends JFrame {
 	private JLabel lblCarta5;
 	private JLabel lblNombreJugadorVentana;
 	private JPanel panelOpcionesSiguienteRondaJuego;
+	private JPanel panelDescartarCartas;
 
 
 	public VistaJuegoCartas() {
@@ -70,6 +71,47 @@ public class VistaJuegoCartas extends JFrame {
 		
 		panelOpcionesSiguienteRondaJuego = new JPanel();
 		panelOpcionesSiguienteRondaJuego.setVisible(false);
+		
+		panelDescartarCartas = new JPanel();
+		panelDescartarCartas.setVisible(false);
+		panelDescartarCartas.setOpaque(false);
+		panelDescartarCartas.setBounds(12, 458, 1099, 154);
+		contentPane.add(panelDescartarCartas);
+		panelDescartarCartas.setLayout(null);
+		
+		JButton btnTerminarDescartes = new JButton("Finalizar descartes");
+		btnTerminarDescartes.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
+		btnTerminarDescartes.setForeground(new Color(255, 255, 255));
+		btnTerminarDescartes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnTerminarDescartes.setContentAreaFilled(false);
+		btnTerminarDescartes.setBounds(697, -2, 333, 60);
+		panelDescartarCartas.add(btnTerminarDescartes);
+		
+		JButton btnDescartarCarta2 = new JButton("Descartar");
+		btnDescartarCarta2.setBounds(154, 123, 89, 23);
+		panelDescartarCartas.add(btnDescartarCarta2);
+		btnDescartarCarta2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnDescartarCarta2.setContentAreaFilled(false);
+		btnDescartarCarta2.setForeground(new Color(255, 255, 255));
+		btnDescartarCarta2.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
+		
+		JButton btnDescarcartarCarta1 = new JButton("Descartar");
+		btnDescarcartarCarta1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
+		btnDescarcartarCarta1.setForeground(new Color(255, 255, 255));
+		btnDescarcartarCarta1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnDescarcartarCarta1.setContentAreaFilled(false);
+		btnDescarcartarCarta1.setBounds(25, 123, 89, 23);
+		panelDescartarCartas.add(btnDescarcartarCarta1);
+		
+		JLabel lblFondoMaderaBtnDescartes = new JLabel("New label");
+		lblFondoMaderaBtnDescartes.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
+		lblFondoMaderaBtnDescartes.setBounds(0, 115, 664, 39);
+		panelDescartarCartas.add(lblFondoMaderaBtnDescartes);
+		
+		JLabel lblFondoMaderaBtnTerminarDescartes = new JLabel("New label");
+		lblFondoMaderaBtnTerminarDescartes.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
+		lblFondoMaderaBtnTerminarDescartes.setBounds(697, -2, 333, 60);
+		panelDescartarCartas.add(lblFondoMaderaBtnTerminarDescartes);
 		panelOpcionesSiguienteRondaJuego.setBounds(63, 67, 518, 200);
 		contentPane.add(panelOpcionesSiguienteRondaJuego);
 		panelOpcionesSiguienteRondaJuego.setLayout(null);
