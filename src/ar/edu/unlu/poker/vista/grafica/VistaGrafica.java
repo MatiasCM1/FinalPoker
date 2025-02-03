@@ -121,7 +121,9 @@ public class VistaGrafica implements IVista{
 		for (Jugador j : jugadores) {
 			if (!j.getNombre().equals(this.jugadorActual.getNombre())) {
 				listaResultado.add(j);
-			} 
+			} else {
+				this.vistaMenuPrincipal.actualizarJugadorVista(j);
+			}
 		}
 		return listaResultado;
 	}
@@ -315,6 +317,15 @@ public class VistaGrafica implements IVista{
 	@Override
 	public void notificarEsperarDescartes() {
 		this.vistaJuegoCartas.escribirNotificacion("Esperando a que se realicen los descartes");
+	}
+	
+	public void cartaADescartarSeleccionada(int posicionCarta) {
+		System.out.println("Se decarta la carta " + this.controlador.obtenerCartasJugador(this.jugadorActual).get(posicionCarta).toString());
+		this.controlador.cartaADescartar(posicionCarta, jugadorActual);
+	}
+	
+	public void finalizarFaseDescarte() {
+		this.controlador.continuarJuegoPostDescarte(this.jugadorActual);
 	}
 	
 	@Override

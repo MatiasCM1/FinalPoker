@@ -45,6 +45,8 @@ public class VistaMenuPrincipal extends JFrame {
 	private JLabel lblFondosJugador_5;
 	private JLabel lblFondosJugador_6;
 	private JLabel lblFondosJugador_7;
+	private JLabel lblTxtNombreDinamico;
+	private JLabel lblTxtFondosDinamico;
 	 
 	public VistaMenuPrincipal() {
 		setUndecorated(true);
@@ -117,14 +119,14 @@ public class VistaMenuPrincipal extends JFrame {
 		lblFondoMaderaBarra.setBounds(0, 0, 1121, 21);
 		panelBarraSuperior.add(lblFondoMaderaBarra);
 		
-		JLabel lblTxtFondosDinamico = new JLabel(String.valueOf(VistaGrafica.getInstance().getJugadorActual().getFondo()));
+		lblTxtFondosDinamico = new JLabel(String.valueOf(VistaGrafica.getInstance().getJugadorActual().getFondo()));
 		lblTxtFondosDinamico.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTxtFondosDinamico.setForeground(Color.WHITE);
 		lblTxtFondosDinamico.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		lblTxtFondosDinamico.setBounds(860, 136, 223, 43);
 		contentPane.add(lblTxtFondosDinamico);
 		
-		JLabel lblTxtNombreDinamico = new JLabel(VistaGrafica.getInstance().getJugadorActual().getNombre());
+		lblTxtNombreDinamico = new JLabel(VistaGrafica.getInstance().getJugadorActual().getNombre());
 		lblTxtNombreDinamico.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		lblTxtNombreDinamico.setForeground(new Color(255, 255, 255));
 		lblTxtNombreDinamico.setHorizontalAlignment(SwingConstants.CENTER);
@@ -505,6 +507,10 @@ public class VistaMenuPrincipal extends JFrame {
 	            labelsFondos[i].setText("");
 	        }
 	    }
+	}
+
+	public void actualizarJugadorVista(Jugador jugador) {
+		this.lblTxtFondosDinamico.setText(String.valueOf(jugador.getFondo()));
 	}
 	
 }

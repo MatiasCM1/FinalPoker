@@ -109,6 +109,9 @@ public class Controlador implements IControladorRemoto{
 						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
 					}
 					vista.setEnableCampoEntrada(true);
+					
+					vista.actualizarTablaJugadores(this.getJugadoresMesa());
+					
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
 					
 				} else if (this.isJugadorTurno()) {

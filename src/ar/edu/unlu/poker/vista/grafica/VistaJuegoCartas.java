@@ -37,6 +37,11 @@ public class VistaJuegoCartas extends JFrame {
 	private JLabel lblNombreJugadorVentana;
 	private JPanel panelOpcionesSiguienteRondaJuego;
 	private JPanel panelDescartarCartas;
+	private JButton btnDescartarCarta1;
+	private JButton btnDescartarCarta2;
+	private JButton btnDescartarCarta3;
+	private JButton btnDescartarCarta4;
+	private JButton btnDescartarCarta5;
 
 	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -92,7 +97,7 @@ public class VistaJuegoCartas extends JFrame {
 		contentPane.add(panelDescartarCartas);
 		panelDescartarCartas.setLayout(null);
 		
-		JButton btnDescartarCarta5 = new JButton("Descartar");
+		btnDescartarCarta5 = new JButton("Descartar");
 		btnDescartarCarta5.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -102,6 +107,11 @@ public class VistaJuegoCartas extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				btnDescartarCarta5.setForeground(Color.white);
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnDescartarCarta5.setVisible(false);
+				VistaGrafica.getInstance().cartaADescartarSeleccionada(4);
+			}
 		});
 		btnDescartarCarta5.setContentAreaFilled(false);
 		btnDescartarCarta5.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -110,7 +120,7 @@ public class VistaJuegoCartas extends JFrame {
 		btnDescartarCarta5.setBounds(534, 123, 89, 23);
 		panelDescartarCartas.add(btnDescartarCarta5);
 		
-		JButton btnDescartarCarta4 = new JButton("Descartar");
+		btnDescartarCarta4 = new JButton("Descartar");
 		btnDescartarCarta4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -120,6 +130,11 @@ public class VistaJuegoCartas extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				btnDescartarCarta4.setForeground(Color.white);
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnDescartarCarta4.setVisible(false);
+				VistaGrafica.getInstance().cartaADescartarSeleccionada(3);
+			}
 		});
 		btnDescartarCarta4.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
 		btnDescartarCarta4.setForeground(new Color(255, 255, 255));
@@ -128,7 +143,7 @@ public class VistaJuegoCartas extends JFrame {
 		btnDescartarCarta4.setBounds(413, 123, 89, 23);
 		panelDescartarCartas.add(btnDescartarCarta4);
 		
-		JButton btnDescartarCarta3 = new JButton("Descartar");
+		btnDescartarCarta3 = new JButton("Descartar");
 		btnDescartarCarta3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -137,6 +152,11 @@ public class VistaJuegoCartas extends JFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnDescartarCarta3.setForeground(Color.white);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnDescartarCarta3.setVisible(false);
+				VistaGrafica.getInstance().cartaADescartarSeleccionada(2);
 			}
 		});
 		btnDescartarCarta3.setContentAreaFilled(false);
@@ -156,6 +176,11 @@ public class VistaJuegoCartas extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				btnTerminarDescartes.setForeground(Color.white);
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panelDescartarCartas.setVisible(false);
+				VistaGrafica.getInstance().finalizarFaseDescarte();
+			}
 		});
 		btnTerminarDescartes.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
 		btnTerminarDescartes.setForeground(new Color(255, 255, 255));
@@ -164,7 +189,7 @@ public class VistaJuegoCartas extends JFrame {
 		btnTerminarDescartes.setBounds(697, -2, 333, 60);
 		panelDescartarCartas.add(btnTerminarDescartes);
 		
-		JButton btnDescartarCarta2 = new JButton("Descartar");
+		btnDescartarCarta2 = new JButton("Descartar");
 		btnDescartarCarta2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -174,6 +199,11 @@ public class VistaJuegoCartas extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				btnDescartarCarta2.setForeground(Color.white);
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnDescartarCarta2.setVisible(false);
+				VistaGrafica.getInstance().cartaADescartarSeleccionada(1);
+			}
 		});
 		btnDescartarCarta2.setBounds(154, 123, 89, 23);
 		panelDescartarCartas.add(btnDescartarCarta2);
@@ -182,7 +212,7 @@ public class VistaJuegoCartas extends JFrame {
 		btnDescartarCarta2.setForeground(new Color(255, 255, 255));
 		btnDescartarCarta2.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
 		
-		JButton btnDescartarCarta1 = new JButton("Descartar");
+		btnDescartarCarta1 = new JButton("Descartar");
 		btnDescartarCarta1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -191,6 +221,11 @@ public class VistaJuegoCartas extends JFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnDescartarCarta1.setForeground(Color.white);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnDescartarCarta1.setVisible(false);
+				VistaGrafica.getInstance().cartaADescartarSeleccionada(0);
 			}
 		});
 		btnDescartarCarta1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
@@ -469,5 +504,10 @@ public class VistaJuegoCartas extends JFrame {
 	
 	public void mostrarMenuDescartes() {
 		this.panelDescartarCartas.setVisible(true);
+		this.btnDescartarCarta1.setVisible(true);
+		this.btnDescartarCarta2.setVisible(true);
+		this.btnDescartarCarta3.setVisible(true);
+		this.btnDescartarCarta4.setVisible(true);
+		this.btnDescartarCarta5.setVisible(true);
 	}
 }
