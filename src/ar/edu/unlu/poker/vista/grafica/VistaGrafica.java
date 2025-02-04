@@ -12,13 +12,12 @@ import ar.edu.unlu.poker.vista.consola.Estados;
 public class VistaGrafica implements IVista{
 
 	private Controlador controlador;
-    private boolean esperandoEntrada;
     private Jugador jugadorActual;
-    private Estados estadoFlujo;
     private VistaLogin vistaLogin;
     private VistaMenuPrincipal vistaMenuPrincipal;
     private VistaJuegoCartas vistaJuegoCartas;
     private VistaApuestas vistaApuestas;
+    private VistaApuestas2 vistaApuestas2;
     private String nombreJugadorMano;
     private static VistaGrafica instancia;
    
@@ -329,6 +328,36 @@ public class VistaGrafica implements IVista{
 	}
 	
 	@Override
+	public void informarTurnoApuestaOtroJugador() {
+		this.vistaJuegoCartas.escribirNotificacion("Esperando a que realicen su apuesta");
+	}
+	
+	@Override
+	public void mostrarMenuSegundaRondaApuestas() {
+		this.vistaJuegoCartas.setVisible(false);
+		
+		if (this.vistaApuestas2 == null) {
+			this.vistaApuestas2 = new VistaApuestas2();
+		}
+		
+		this.vistaApuestas2.setVisible(true);
+		
+		
+		//ESTO SE PUEDE SACAR?
+		this.vistaApuestas2.informarJugadorMano(this.nombreJugadorMano);
+		
+		this.mostrarNombreDelJugadorVentanaApuestas2();
+		
+		this.vistaApuestas2.escribirNotificaciones(this.vistaJuegoCartas.getNotificaciones());
+		
+		this.vistaApuestas2.mostrarCartas(jugadorActual.getCartas());
+	}
+	
+	private void mostrarNombreDelJugadorVentanaApuestas2() {
+		this.vistaApuestas2.setearNombreEnLaBarra(this.jugadorActual.getNombre());
+	}
+	
+	@Override
 	public void notificarEnviteRealizado() {
 		
 	}
@@ -358,12 +387,6 @@ public class VistaGrafica implements IVista{
 	}
 
 	@Override
-	public void informarTurnoApuestaOtroJugador() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void notificarRondaApuestaFinalizada() {
 		// TODO Auto-generated method stub
 		
@@ -377,12 +400,6 @@ public class VistaGrafica implements IVista{
 
 	@Override
 	public void notificarCartaDescartadaConExito() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mostrarMenuSegundaRondaApuestas() {
 		// TODO Auto-generated method stub
 		
 	}

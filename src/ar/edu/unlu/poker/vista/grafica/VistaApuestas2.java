@@ -26,7 +26,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
 import java.awt.Cursor;
 
-public class VistaApuestas extends JFrame {
+public class VistaApuestas2 extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -55,7 +55,7 @@ public class VistaApuestas extends JFrame {
 
 	
 
-	public VistaApuestas() {
+	public VistaApuestas2() {
 		setUndecorated(true);
 		setForeground(new Color(255, 255, 255));
 		setResizable(false);
@@ -377,7 +377,7 @@ public class VistaApuestas extends JFrame {
 		
 		
 		JLabel lblFondoMaderaBarra = new JLabel("New label");
-		lblFondoMaderaBarra.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
+		lblFondoMaderaBarra.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
 		lblFondoMaderaBarra.setBounds(0, 0, 1121, 21);
 		panelBarraSuperior.add(lblFondoMaderaBarra);
 		
@@ -425,7 +425,7 @@ public class VistaApuestas extends JFrame {
 		JLabel lblFondoMaderaBtn = new JLabel("New label");
 		lblFondoMaderaBtn.setBounds(0, 0, 388, 60);
 		panelBtnEnvite.add(lblFondoMaderaBtn);
-		lblFondoMaderaBtn.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
+		lblFondoMaderaBtn.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
 		
 		JPanel panelBtnFiche = new JPanel();
 		panelBtnFiche.setBounds(10, 85, 388, 60);
@@ -460,7 +460,7 @@ public class VistaApuestas extends JFrame {
 		panelBtnFiche.add(btnFiche);
 		
 		JLabel lblFondoMaderaBtn_1 = new JLabel("New label");
-		lblFondoMaderaBtn_1.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
+		lblFondoMaderaBtn_1.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
 		lblFondoMaderaBtn_1.setBounds(0, 0, 388, 60);
 		panelBtnFiche.add(lblFondoMaderaBtn_1);
 		
@@ -495,7 +495,7 @@ public class VistaApuestas extends JFrame {
 		panelBtnPase.add(btnPase);
 		
 		JLabel lblFondoMaderaBtn_2 = new JLabel("New label");
-		lblFondoMaderaBtn_2.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
+		lblFondoMaderaBtn_2.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
 		lblFondoMaderaBtn_2.setBounds(0, 0, 388, 60);
 		panelBtnPase.add(lblFondoMaderaBtn_2);
 		
@@ -515,11 +515,11 @@ public class VistaApuestas extends JFrame {
 		JLabel lblFondoMaderaNotificaciones = new JLabel("");
 		lblFondoMaderaNotificaciones.setBounds(0, 0, 472, 301);
 		panelNotificaciones.add(lblFondoMaderaNotificaciones);
-		lblFondoMaderaNotificaciones.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
+		lblFondoMaderaNotificaciones.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
 		
 		JPanel panelCartas = new JPanel();
-		panelCartas.setBounds(10, 362, 667, 239);
 		panelCartas.setOpaque(false);
+		panelCartas.setBounds(10, 362, 667, 239);
 		contentPane.add(panelCartas);
 		panelCartas.setLayout(null);
 		
@@ -548,19 +548,19 @@ public class VistaApuestas extends JFrame {
 		panelCartas.add(lblCarta5);
 		lblCarta5.setIcon(null);
 		
-		JLabel lblFondoMadera = new JLabel("New label");
+		JLabel lblFondoMadera = new JLabel("");
 		lblFondoMadera.setBounds(-3, 0, 669, 239);
 		panelCartas.add(lblFondoMadera);
 		lblFondoMadera.setIcon(null);
 		
 		JLabel lblImagenMesaFondo = new JLabel("");
 		lblImagenMesaFondo.setBounds(10, 58, 597, 293);
-		lblImagenMesaFondo.setIcon(new ImageIcon(getClass().getResource("/FondoMesa.png")));
+		lblImagenMesaFondo.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\FondoMesa.png"));
 		contentPane.add(lblImagenMesaFondo);
 		
 		JLabel lblImagenFondoVerde = new JLabel("Fondo");
 		lblImagenFondoVerde.setBounds(0, 0, 1121, 612);
-		lblImagenFondoVerde.setIcon(new ImageIcon(getClass().getResource("/FondoVerdeInicio.jpg")));
+		lblImagenFondoVerde.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\FondoVerdeInicio.jpg"));
 		contentPane.add(lblImagenFondoVerde);
 	}
 	
@@ -656,7 +656,6 @@ public class VistaApuestas extends JFrame {
 	}
 
 	public void mostrarMenuApuestaDesigual() {
-		System.out.println("Syso mostrar menu " + panelApuestasDesiguales.isVisible());
 		this.panelBtnApuestas.setVisible(false);
 		this.apuestasDesiguales = false;
 		this.panelApuestasDesiguales.setVisible(true);
