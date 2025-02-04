@@ -288,7 +288,7 @@ public class VistaApuestas2 extends JFrame {
 				
 				panelBtnApuestas.setVisible(true);
 				
-				VistaGrafica.getInstance().realizarEnvite(txtFieldCantidadApuesta.getText());
+				VistaGrafica.getInstance().realizarEnvitarSegundaRonda(txtFieldCantidadApuesta.getText());
 				
 				txtFieldCantidadApuesta.setText("");
 				//VistaGrafica.getInstance().notificarEnviteRealizado(txtFieldCantidadApuesta.getText());
@@ -471,7 +471,7 @@ public class VistaApuestas2 extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				VistaGrafica.getInstance().realizarFiche();
+				VistaGrafica.getInstance().realizarFicharSegundaRonda();
 				
 			}
 		});

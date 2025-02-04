@@ -471,7 +471,7 @@ public class VistaMenuPrincipal extends JFrame {
 		this.lblFondosJugador_7.setText("");
 	}
 
-	public void actualzarTabla(List<Jugador> jugadores) {
+	public void actualizarTabla(List<Jugador> jugadores) {
 		
 		this.setearLabelsTablaJugadores();
 		

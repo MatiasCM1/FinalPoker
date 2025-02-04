@@ -111,7 +111,7 @@ public class VistaGrafica implements IVista{
 	public void actualizarTablaJugadores(List<Jugador> jugadores) {
 		if (controlador.verificarCantidadDeJugadores()) {
 			List<Jugador> jugardoresSinActual = this.listaSinJugador(jugadores);
-			this.vistaMenuPrincipal.actualzarTabla(jugardoresSinActual);
+			this.vistaMenuPrincipal.actualizarTabla(jugardoresSinActual);
 		}
 	}
 	
@@ -188,6 +188,9 @@ public class VistaGrafica implements IVista{
 	public void informarApuestaRealizada(String nombreJugadorAposto, int apuestaJugador) {
 		if (this.jugadorActual.getNombre().equals(nombreJugadorAposto)) {
 			this.vistaApuestas.setVisible(false);
+			if (this.vistaApuestas2 != null) {
+				this.vistaApuestas2.setVisible(false);
+			}
 			this.vistaJuegoCartas.setVisible(true);
 		}
 		//this.vistaJuegoCartas.notificarApuestaJugador(nombreJugadorAposto, String.valueOf(apuestaJugador));
@@ -276,8 +279,6 @@ public class VistaGrafica implements IVista{
 	@Override
 	public void notificarJugadorPasaApuesta() {
 		this.vistaJuegoCartas.escribirNotificacion(controlador.getJugadorTurnoJugadoresMesa().getNombre() + " pasa y queda fuera del juego");
-		//this.vistaApuestas.setVisible(false);
-		//this.vistaJuegoCartas.setVisible(true);
 	}
 	
 	@Override
@@ -299,6 +300,7 @@ public class VistaGrafica implements IVista{
 		
 		this.vistaJuegoCartas.setVisible(false);
 		controlador.establecerJugadorComoNoListo(this.jugadorActual);
+		this.actualizarTablaJugadores(getJugadoresMesa());
 		this.vistaMenuPrincipal.setVisible(true);
 		
 	}
@@ -319,7 +321,6 @@ public class VistaGrafica implements IVista{
 	}
 	
 	public void cartaADescartarSeleccionada(int posicionCarta) {
-		System.out.println("Se decarta la carta " + this.controlador.obtenerCartasJugador(this.jugadorActual).get(posicionCarta).toString());
 		this.controlador.cartaADescartar(posicionCarta, jugadorActual);
 	}
 	
@@ -344,7 +345,7 @@ public class VistaGrafica implements IVista{
 		
 		
 		//ESTO SE PUEDE SACAR?
-		this.vistaApuestas2.informarJugadorMano(this.nombreJugadorMano);
+		//this.vistaApuestas2.informarJugadorMano(this.nombreJugadorMano);
 		
 		this.mostrarNombreDelJugadorVentanaApuestas2();
 		
@@ -355,6 +356,21 @@ public class VistaGrafica implements IVista{
 	
 	private void mostrarNombreDelJugadorVentanaApuestas2() {
 		this.vistaApuestas2.setearNombreEnLaBarra(this.jugadorActual.getNombre());
+	}
+	
+	public void realizarEnvitarSegundaRonda(String apuesta) {
+		this.controlador.realizarLasApuestasSegundaRonda(this.jugadorActual, apuesta);
+	}
+	
+	public void realizarFicharSegundaRonda() {
+		this.controlador.realizarLasApuestasSegundaRonda(this.jugadorActual);
+	}
+	
+	@Override
+	public void mostrarGanador(Jugador ganador) {
+		this.vistaApuestas.setVisible(false);
+		this.vistaApuestas2.setVisible(false);
+		this.vistaJuegoCartas.escribirNotificacion("Ganador: " + ganador.getNombre() + " con " + ganador.getResultadoValoresCartas());
 	}
 	
 	@Override
@@ -370,12 +386,6 @@ public class VistaGrafica implements IVista{
 
 	@Override
 	public void informarCantJugadoresExcedidos() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mostrarGanador(Jugador ganador) {
 		// TODO Auto-generated method stub
 		
 	}
