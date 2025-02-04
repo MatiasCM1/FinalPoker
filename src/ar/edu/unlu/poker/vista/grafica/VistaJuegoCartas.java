@@ -267,24 +267,6 @@ public class VistaJuegoCartas extends JFrame {
 			}
 		});
 		
-		JButton btnVolverMenuPrincipal = new JButton("Menu principal");
-		btnVolverMenuPrincipal.setBorderPainted(false);
-		btnVolverMenuPrincipal.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnVolverMenuPrincipal.setForeground(Color.black);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnVolverMenuPrincipal.setForeground(Color.white);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				panelOpcionesSiguienteRondaJuego.setVisible(false);
-				VistaGrafica.getInstance().volverMenuPrincipal();
-			}
-		});
-		
 		JButton btnSeguirJugadorNuevaRonda = new JButton("Seguir jugando");
 		btnSeguirJugadorNuevaRonda.setContentAreaFilled(false);
 		btnSeguirJugadorNuevaRonda.setBackground(new Color(255, 255, 255));
@@ -304,6 +286,36 @@ public class VistaJuegoCartas extends JFrame {
 				VistaGrafica.getInstance().listoParaIniciarJuego();
 			}
 		});
+		
+		JButton btnVolverMenuPrincipal = new JButton("Menu principal");
+		btnVolverMenuPrincipal.setBorderPainted(false);
+		btnVolverMenuPrincipal.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnVolverMenuPrincipal.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnVolverMenuPrincipal.setForeground(Color.white);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panelOpcionesSiguienteRondaJuego.setVisible(false);
+				VistaGrafica.getInstance().volverMenuPrincipal();
+			}
+		});
+		btnVolverMenuPrincipal.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnVolverMenuPrincipal.setForeground(new Color(255, 255, 255));
+		btnVolverMenuPrincipal.setContentAreaFilled(false);
+		btnVolverMenuPrincipal.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 17));
+		btnVolverMenuPrincipal.setBounds(182, 114, 156, 59);
+		panelOpcionesSiguienteRondaJuego.add(btnVolverMenuPrincipal);
+		
+		JLabel lblBtnFondoMaderaMenuPrincipal = new JLabel("");
+		lblBtnFondoMaderaMenuPrincipal.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBtnFondoMaderaMenuPrincipal.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera.png"));
+		lblBtnFondoMaderaMenuPrincipal.setBounds(182, 114, 156, 59);
+		panelOpcionesSiguienteRondaJuego.add(lblBtnFondoMaderaMenuPrincipal);
 		btnSeguirJugadorNuevaRonda.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
 		btnSeguirJugadorNuevaRonda.setForeground(new Color(255, 255, 255));
 		btnSeguirJugadorNuevaRonda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -315,18 +327,6 @@ public class VistaJuegoCartas extends JFrame {
 		lblFondoMaderaBotonSeguirJugando.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoMaderaBotonSeguirJugando.setBounds(346, 114, 156, 59);
 		panelOpcionesSiguienteRondaJuego.add(lblFondoMaderaBotonSeguirJugando);
-		btnVolverMenuPrincipal.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnVolverMenuPrincipal.setForeground(new Color(255, 255, 255));
-		btnVolverMenuPrincipal.setContentAreaFilled(false);
-		btnVolverMenuPrincipal.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 17));
-		btnVolverMenuPrincipal.setBounds(182, 114, 156, 59);
-		panelOpcionesSiguienteRondaJuego.add(btnVolverMenuPrincipal);
-		
-		JLabel lblBtnFondoMaderaMenuPrincipal = new JLabel("");
-		lblBtnFondoMaderaMenuPrincipal.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBtnFondoMaderaMenuPrincipal.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera235.png"));
-		lblBtnFondoMaderaMenuPrincipal.setBounds(182, 114, 156, 59);
-		panelOpcionesSiguienteRondaJuego.add(lblBtnFondoMaderaMenuPrincipal);
 		btnSalirDelJuego.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSalirDelJuego.setContentAreaFilled(false);
 		btnSalirDelJuego.setForeground(new Color(255, 255, 255));

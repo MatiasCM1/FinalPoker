@@ -184,33 +184,6 @@ public class VistaApuestas extends JFrame {
 		contentPane.add(panelApuestasDesiguales);
 		panelApuestasDesiguales.setLayout(null);
 		
-		JButton btnPasarApuestasDesiguales = new JButton("Pasar");
-		btnPasarApuestasDesiguales.setBorderPainted(false);
-		btnPasarApuestasDesiguales.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnPasarApuestasDesiguales.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnPasarApuestasDesiguales.setForeground(Color.black);
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnPasarApuestasDesiguales.setForeground(Color.white);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				panelApuestasDesiguales.setVisible(false);
-				panelBtnApuestas.setVisible(true);
-				VistaGrafica.getInstance().realizarPasarPostEnvite();
-			}
-		});
-		btnPasarApuestasDesiguales.setBounds(167, 60, 132, 35);
-		panelApuestasDesiguales.add(btnPasarApuestasDesiguales);
-		btnPasarApuestasDesiguales.setIcon(null);
-		btnPasarApuestasDesiguales.setForeground(Color.WHITE);
-		btnPasarApuestasDesiguales.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 25));
-		btnPasarApuestasDesiguales.setContentAreaFilled(false);
-		btnPasarApuestasDesiguales.setBackground(new Color(255, 255, 255, 100));
-		
 		JButton btnFicharApuestasDesiguales = new JButton("Fichar");
 		btnFicharApuestasDesiguales.setBorderPainted(false);
 		btnFicharApuestasDesiguales.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -230,13 +203,52 @@ public class VistaApuestas extends JFrame {
 				VistaGrafica.getInstance().realizarFichePostEnvite();
 			}
 		});
-		btnFicharApuestasDesiguales.setBounds(20, 60, 132, 35);
+		
+		JButton btnPasarApuestasDesiguales = new JButton("Pasar");
+		btnPasarApuestasDesiguales.setBorderPainted(false);
+		btnPasarApuestasDesiguales.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnPasarApuestasDesiguales.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnPasarApuestasDesiguales.setForeground(Color.black);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnPasarApuestasDesiguales.setForeground(Color.white);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panelApuestasDesiguales.setVisible(false);
+				panelBtnApuestas.setVisible(true);
+				VistaGrafica.getInstance().realizarPasarPostEnvite();
+			}
+		});
+		btnPasarApuestasDesiguales.setBounds(167, 60, 111, 35);
+		panelApuestasDesiguales.add(btnPasarApuestasDesiguales);
+		btnPasarApuestasDesiguales.setIcon(null);
+		btnPasarApuestasDesiguales.setForeground(Color.WHITE);
+		btnPasarApuestasDesiguales.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 25));
+		btnPasarApuestasDesiguales.setContentAreaFilled(false);
+		btnPasarApuestasDesiguales.setBackground(new Color(255, 255, 255, 100));
+		
+		JLabel lblFondoBtnPasar = new JLabel("");
+		lblFondoBtnPasar.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera4.png"));
+		lblFondoBtnPasar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFondoBtnPasar.setBounds(167, 60, 111, 35);
+		panelApuestasDesiguales.add(lblFondoBtnPasar);
+		btnFicharApuestasDesiguales.setBounds(20, 60, 111, 35);
 		panelApuestasDesiguales.add(btnFicharApuestasDesiguales);
 		btnFicharApuestasDesiguales.setIcon(null);
 		btnFicharApuestasDesiguales.setForeground(Color.WHITE);
 		btnFicharApuestasDesiguales.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 25));
 		btnFicharApuestasDesiguales.setContentAreaFilled(false);
 		btnFicharApuestasDesiguales.setBackground(new Color(255, 255, 255, 100));
+		
+		JLabel lblFondoBtnFichar = new JLabel("");
+		lblFondoBtnFichar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFondoBtnFichar.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera4.png"));
+		lblFondoBtnFichar.setBounds(20, 60, 111, 35);
+		panelApuestasDesiguales.add(lblFondoBtnFichar);
 		
 		JLabel lblApuestasDesiguales = new JLabel("Apuestas Desiguales");
 		lblApuestasDesiguales.setBounds(20, 0, 289, 38);
@@ -284,11 +296,6 @@ public class VistaApuestas extends JFrame {
 				//txtFieldCantidadApuesta.setText("");
 			}
 		});
-		btnAceptarEnvite.setIcon(null);
-		btnAceptarEnvite.setForeground(Color.WHITE);
-		btnAceptarEnvite.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 25));
-		btnAceptarEnvite.setBounds(167, 101, 132, 35);
-		panelRealizarEnvite.add(btnAceptarEnvite);
 		
 		btnCancelarEnvite = new JButton("Cancelar");
 		btnCancelarEnvite.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -314,11 +321,28 @@ public class VistaApuestas extends JFrame {
 			}
 		});
 		btnCancelarEnvite.setForeground(new Color(255, 255, 255));
-		btnCancelarEnvite.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 25));
+		btnCancelarEnvite.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 17));
 		btnCancelarEnvite.setContentAreaFilled(false);
 		btnCancelarEnvite.setIcon(null);
-		btnCancelarEnvite.setBounds(10, 101, 132, 35);
+		btnCancelarEnvite.setBounds(23, 101, 107, 35);
 		panelRealizarEnvite.add(btnCancelarEnvite);
+		
+		JLabel lblFondoMaderaBtnCancelar = new JLabel("");
+		lblFondoMaderaBtnCancelar.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera4.png"));
+		lblFondoMaderaBtnCancelar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFondoMaderaBtnCancelar.setBounds(10, 101, 132, 35);
+		panelRealizarEnvite.add(lblFondoMaderaBtnCancelar);
+		btnAceptarEnvite.setIcon(null);
+		btnAceptarEnvite.setForeground(Color.WHITE);
+		btnAceptarEnvite.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 17));
+		btnAceptarEnvite.setBounds(178, 101, 107, 35);
+		panelRealizarEnvite.add(btnAceptarEnvite);
+		
+		JLabel lblFondoMaderaBtnAceptar = new JLabel("");
+		lblFondoMaderaBtnAceptar.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera4.png"));
+		lblFondoMaderaBtnAceptar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFondoMaderaBtnAceptar.setBounds(167, 101, 132, 35);
+		panelRealizarEnvite.add(lblFondoMaderaBtnAceptar);
 		
 		txtFieldCantidadApuesta = new JTextField();
 		txtFieldCantidadApuesta.setBounds(53, 60, 214, 20);
@@ -656,7 +680,6 @@ public class VistaApuestas extends JFrame {
 	}
 
 	public void mostrarMenuApuestaDesigual() {
-		System.out.println("Syso mostrar menu " + panelApuestasDesiguales.isVisible());
 		this.panelBtnApuestas.setVisible(false);
 		this.apuestasDesiguales = false;
 		this.panelApuestasDesiguales.setVisible(true);
