@@ -83,7 +83,7 @@ public class Controlador implements IControladorRemoto{
 				}
 				break;
 			case APUESTAS_DESIGUALES_SEGUNDA_RONDA:
-				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { //Comprueba que el nombre del jugadorActuañ forme parte de la cola de jugadores con  apuesta menor a la mayor
+				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { //Comprueba que el nombre del jugadorActual forme parte de la cola de jugadores con  apuesta menor a la mayor
 					vista.setEnableCampoEntrada(true);
 					vista.notificarApuestasDesigualesSegundaRonda();
 				} else {

@@ -378,6 +378,7 @@ public class VistaGrafica implements IVista{
 	public void mostrarGanador(Jugador ganador) {
 		this.vistaApuestas.setVisible(false);
 		this.vistaApuestas2.setVisible(false);
+		this.vistaJuegoCartas.setVisible(true);
 		this.vistaJuegoCartas.escribirNotificacion("Ganador: " + ganador.getNombre() + " con " + ganador.getResultadoValoresCartas());
 	}
 	
@@ -417,6 +418,14 @@ public class VistaGrafica implements IVista{
 		
 		this.vistaApuestas2.mostrarMenuApuestaDesigual();
 		
+	}
+	
+	public void realizarFicharPostEnviteSegundaRonda() {
+		this.controlador.realizarFicharPostEnviteSegundaRonda(this.jugadorActual);
+	}
+	
+	public void realizarPasePostEnviteSegundaRonda() {
+		this.controlador.realizarPasarPostEnviteSegundaRonda(this.jugadorActual);
 	}
 	
 	@Override
