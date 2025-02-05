@@ -726,5 +726,23 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	public void limpiarNotificaciones() {
 		areaSalida.setText("");
 	}
+
+	@Override
+	public void notificarErrorIngreseUnEnteroSegundaRonda() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void notificarApuestaMenorALaAnteriorSegundaRonda() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void informarFondosInsuficientesSegundaRonda() {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

@@ -63,6 +63,10 @@ public class Controlador implements IControladorRemoto{
 					vista.informarFondosInsuficientes();
 				}
 				break;
+			case FONDO_INSUFICIENTE_SEGUNDA_RONDA:
+				if (this.isJugadorTurno()) {
+					vista.informarFondosInsuficientesSegundaRonda();
+				}
 			case APUESTA_REALIZADA:
 				vista.informarApuestaRealizada(this.getJugadorTurno().getNombre(), getJugadorTurnoJugadoresMesa().getApuesta());
 				break;
@@ -434,14 +438,14 @@ public class Controlador implements IControladorRemoto{
 					mesa.realizarSegundaRondaApuesta(jugador, apuesta);
 				} else {
 					if (this.jugadorActual.getNombre().equals(this.getJugadorTurno().getNombre())) {
-						vista.notificarApuestaMenorALaAnterior();
+						vista.notificarApuestaMenorALaAnteriorSegundaRonda();
 						vista.mostrarMenuSegundaRondaApuestas();
 					} else {
 						vista.informarTurnoApuestaOtroJugador();
 					}
 				}
 			} else {
-				vista.notificarErrorIngreseUnEntero();
+				vista.notificarErrorIngreseUnEnteroSegundaRonda();
 				vista.mostrarMenuSegundaRondaApuestas();
 			}
 		} catch (RemoteException e) {

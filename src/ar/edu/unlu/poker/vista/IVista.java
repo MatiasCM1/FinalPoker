@@ -78,4 +78,10 @@ public interface IVista {
 
 	void limpiarNotificaciones();
 
+	void notificarErrorIngreseUnEnteroSegundaRonda();
+
+	void notificarApuestaMenorALaAnteriorSegundaRonda();
+
+	void informarFondosInsuficientesSegundaRonda();
+
 }

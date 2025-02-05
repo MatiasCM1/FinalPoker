@@ -280,11 +280,15 @@ public class VistaGrafica implements IVista{
 	public void notificarJugadorPasaApuesta() {
 		this.vistaJuegoCartas.escribirNotificacion(controlador.getJugadorTurnoJugadoresMesa().getNombre() + " pasa y queda fuera del juego");
 	}
+
 	
 	@Override
 	public void notificarGanadorUnicoEnMesa(String nombre) {
 	
 		this.vistaApuestas.setVisible(false);
+		if (this.vistaApuestas2 != null) {
+			this.vistaApuestas2.setVisible(false);
+		}
 		this.vistaJuegoCartas.setVisible(true);
 		this.vistaJuegoCartas.escribirNotificacion("El ganador es " + nombre + " debido a que todos se retiraron");
 		
@@ -366,11 +370,53 @@ public class VistaGrafica implements IVista{
 		this.controlador.realizarLasApuestasSegundaRonda(this.jugadorActual);
 	}
 	
+	public void realizarPasarSegundaRonda() {
+		this.controlador.realizarLosPasesSegundaRonda(this.jugadorActual);
+	}
+	
 	@Override
 	public void mostrarGanador(Jugador ganador) {
 		this.vistaApuestas.setVisible(false);
 		this.vistaApuestas2.setVisible(false);
 		this.vistaJuegoCartas.escribirNotificacion("Ganador: " + ganador.getNombre() + " con " + ganador.getResultadoValoresCartas());
+	}
+	
+	@Override
+	public void notificarErrorIngreseUnEnteroSegundaRonda() {
+		//this.vistaApuestas.setVisible(true);
+		this.vistaApuestas2.mostrarMenuEnvite();
+		this.vistaApuestas2.mostrarErrorNumeroEntero();
+	}
+	
+	@Override
+	public void notificarApuestaMenorALaAnteriorSegundaRonda() {
+		//this.vistaApuestas.setVisible(true);
+		this.vistaApuestas2.mostrarMenuEnvite();
+		this.vistaApuestas2.mostrarErrorApuestaInsuficiente();
+	}
+	
+	@Override
+	public void informarFondosInsuficientesSegundaRonda() {
+		
+		this.vistaApuestas2.setVisible(true);
+		//this.vistaApuestas.mostrarMenuEnvite();
+		this.vistaApuestas2.mostrarErrorFondosInsuficientes();
+	
+	}
+	
+	@Override
+	public void notificarApuestasDesigualesSegundaRonda() {
+		
+		this.vistaJuegoCartas.escribirNotificacion("Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima");
+		
+		this.vistaJuegoCartas.setVisible(false);
+		
+		this.vistaApuestas2.setVisible(true);
+		
+		this.vistaApuestas2.escribirNotificaciones(this.vistaJuegoCartas.getNotificaciones());
+		
+		this.vistaApuestas2.mostrarMenuApuestaDesigual();
+		
 	}
 	
 	@Override
@@ -410,12 +456,6 @@ public class VistaGrafica implements IVista{
 
 	@Override
 	public void notificarCartaDescartadaConExito() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void notificarApuestasDesigualesSegundaRonda() {
 		// TODO Auto-generated method stub
 		
 	}

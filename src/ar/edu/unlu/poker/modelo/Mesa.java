@@ -503,7 +503,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 					this.notificarObservadores(Informe.SEGUNDA_RONDA_APUESTAS);
 				}
 			} else {
-				this.notificarObservadores(Informe.FONDO_INSUFICIENTE);
+				this.notificarObservadores(Informe.FONDO_INSUFICIENTE_SEGUNDA_RONDA);
 				this.notificarObservadores(Informe.SEGUNDA_RONDA_APUESTAS);
 			}
 		} else {

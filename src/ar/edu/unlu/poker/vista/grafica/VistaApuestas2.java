@@ -507,7 +507,7 @@ public class VistaApuestas2 extends JFrame {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				VistaGrafica.getInstance().realizarPase();
+				VistaGrafica.getInstance().realizarPasarSegundaRonda();
 			}
 		});
 		btnPase.setContentAreaFilled(false);
