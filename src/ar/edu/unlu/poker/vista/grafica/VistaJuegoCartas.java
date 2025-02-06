@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import ar.edu.unlu.poker.modelo.Carta;
@@ -21,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.List;
 import java.awt.Cursor;
+import javax.swing.ScrollPaneConstants;
 
 public class VistaJuegoCartas extends JFrame {
 
@@ -54,13 +56,14 @@ public class VistaJuegoCartas extends JFrame {
 				try {
 					VistaJuegoCartas frame = new VistaJuegoCartas();
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}
-	*/
+	}*/
+	
 
 	public VistaJuegoCartas() {
 		setUndecorated(true);
@@ -436,12 +439,22 @@ public class VistaJuegoCartas extends JFrame {
 		panelNotificaciones.setLayout(null);
 		
 		textAreaNotificaciones = new JTextArea();
+		textAreaNotificaciones.setWrapStyleWord(true);
+		textAreaNotificaciones.setLineWrap(true);
+		textAreaNotificaciones.setEditable(false);
 		textAreaNotificaciones.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
 		textAreaNotificaciones.setForeground(new Color(255, 255, 255));
 		textAreaNotificaciones.setBounds(10, 11, 452, 279);
 		panelNotificaciones.add(textAreaNotificaciones);
 		textAreaNotificaciones.setBackground(new Color(0, 0, 0));
 		textAreaNotificaciones.setBorder(null);
+		
+		JScrollPane scrollBar = new JScrollPane(textAreaNotificaciones);
+		scrollBar.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollBar.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		scrollBar.setBounds(10, 11, 452, 279);
+		panelNotificaciones.add(scrollBar);
 		
 		JLabel lblFondoMaderaNotificaciones = new JLabel("");
 		lblFondoMaderaNotificaciones.setBounds(0, 0, 472, 301);
@@ -493,6 +506,13 @@ public class VistaJuegoCartas extends JFrame {
 		lblImagenFondoVerde.setIcon(new ImageIcon(getClass().getResource("/FondoVerdeInicio.jpg")));
 		lblImagenFondoVerde.setBounds(0, 0, 1121, 612);
 		contentPane.add(lblImagenFondoVerde);
+		
+		int i = 0;
+		
+		while (i < 30) {
+			textAreaNotificaciones.append(i + "\n");
+			i++;
+		}
 	}
 	
 	/*public void informarJugadorMano(String nombreJugadorMano) {

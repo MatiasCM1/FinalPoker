@@ -50,12 +50,14 @@ public class Controlador implements IControladorRemoto{
 				vista.mostrarOpcionesMenuEmpezarOtraRonda();
 				break;
 			case TURNO_APUESTA_JUGADOR:
-				if (this.isJugadorTurno()) {
-					vista.setEnableCampoEntrada(true);
-					vista.mostrarMenuApuestas();
-				} else {
-					vista.setEnableCampoEntrada(false);
-					vista.informarTurnoApuestaOtroJugador();
+				if (this.jugadorSigueEnJuego(this.jugadorActual)) {
+					if (this.isJugadorTurno()) {
+						vista.setEnableCampoEntrada(true);
+						vista.mostrarMenuApuestas();
+					} else {
+						vista.setEnableCampoEntrada(false);
+						vista.informarTurnoApuestaOtroJugador();
+					}
 				}
 				break;
 			case FONDO_INSUFICIENTE:
@@ -95,15 +97,20 @@ public class Controlador implements IControladorRemoto{
 				vista.notificarJugadorIgualaApuesta();
 				break;
 			case JUGADOR_PASA_APUESTA:
-				vista.notificarJugadorPasaApuesta(); //DEBERIA DECIR EL NOMBRE DEL JUGADOR
+				if (this.jugadorActual.getNombre().equals(this.getJugadorQuePaso().getNombre())) {
+					vista.jugadorPasaQuedaFuera();
+				}
+				vista.notificarJugadorPasaApuesta();
 				break;
 			case TURNO_DESCARTE:
-				if (isJugadorTurno()) {
-					vista.setEnableCampoEntrada(true);
-					vista.mostrarMenuDescartes();//LLAMO AL MENU DE DESCARTE
-				} else {
-					vista.setEnableCampoEntrada(false);
-					vista.notificarEsperarDescartes();
+				if (this.jugadorSigueEnJuego(this.jugadorActual)) {
+					if (isJugadorTurno()) {
+						vista.setEnableCampoEntrada(true);
+						vista.mostrarMenuDescartes();//LLAMO AL MENU DE DESCARTE
+					} else {
+						vista.setEnableCampoEntrada(false);
+						vista.notificarEsperarDescartes();
+					}
 				}
 				break;
 			case RONDA_APUESTAS_TERMINADA:
@@ -157,12 +164,14 @@ public class Controlador implements IControladorRemoto{
 					vista.setEnableCampoEntrada(true);
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
 				} else {
-					if (this.isJugadorTurno()) {
-						vista.setEnableCampoEntrada(true);
-						vista.mostrarMenuSegundaRondaApuestas();
-					} else {
-						vista.setEnableCampoEntrada(false);
-						vista.informarTurnoApuestaOtroJugador();
+					if (this.jugadorSigueEnJuego(this.jugadorActual)) {
+						if (this.isJugadorTurno()) {
+							vista.setEnableCampoEntrada(true);
+							vista.mostrarMenuSegundaRondaApuestas();
+						} else {
+							vista.setEnableCampoEntrada(false);
+							vista.informarTurnoApuestaOtroJugador();
+						}
 					}
 				}
 				break;
@@ -174,6 +183,16 @@ public class Controlador implements IControladorRemoto{
 				break;
 		}
 		
+	}
+	
+	private boolean jugadorSigueEnJuego(Jugador jugador) {
+		boolean flag = false;
+		for (Jugador j : this.getJugadoresMesa()) {
+			if (j.getNombre().equals(jugador.getNombre())) {
+				flag = j.isEnJuego();
+			}
+		}
+		return flag;
 	}
 	
 	public Jugador getJugadorTurnoJugadoresMesa() {
@@ -595,6 +614,16 @@ public class Controlador implements IControladorRemoto{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public Jugador getJugadorQuePaso() {
+		try {
+			return mesa.getJugadorPasa();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return jugadorActual;
 	}
 	
 }

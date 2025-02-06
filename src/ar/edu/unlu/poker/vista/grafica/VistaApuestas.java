@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import ar.edu.unlu.poker.modelo.Carta;
@@ -21,6 +22,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.List;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
@@ -199,7 +202,7 @@ public class VistaApuestas extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				panelApuestasDesiguales.setVisible(false);
-				panelBtnApuestas.setVisible(true);
+				//panelBtnApuestas.setVisible(true);
 				VistaGrafica.getInstance().realizarFichePostEnvite();
 			}
 		});
@@ -219,7 +222,7 @@ public class VistaApuestas extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				panelApuestasDesiguales.setVisible(false);
-				panelBtnApuestas.setVisible(true);
+				//panelBtnApuestas.setVisible(true);
 				VistaGrafica.getInstance().realizarPasarPostEnvite();
 			}
 		});
@@ -529,12 +532,22 @@ public class VistaApuestas extends JFrame {
 		panelNotificaciones.setLayout(null);
 		
 		textAreaNotificaciones = new JTextArea();
+		textAreaNotificaciones.setWrapStyleWord(true);
+		textAreaNotificaciones.setLineWrap(true);
+		textAreaNotificaciones.setEditable(false);
 		textAreaNotificaciones.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
 		textAreaNotificaciones.setForeground(new Color(255, 255, 255));
 		textAreaNotificaciones.setBounds(10, 11, 452, 279);
 		panelNotificaciones.add(textAreaNotificaciones);
 		textAreaNotificaciones.setBackground(new Color(0, 0, 0));
 		textAreaNotificaciones.setBorder(null);
+		
+		JScrollPane scrollBar = new JScrollPane(textAreaNotificaciones);
+		scrollBar.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollBar.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		scrollBar.setBounds(10, 11, 452, 279);
+		panelNotificaciones.add(scrollBar);
 		
 		JLabel lblFondoMaderaNotificaciones = new JLabel("");
 		lblFondoMaderaNotificaciones.setBounds(0, 0, 472, 301);
@@ -683,5 +696,9 @@ public class VistaApuestas extends JFrame {
 		this.panelBtnApuestas.setVisible(false);
 		this.apuestasDesiguales = false;
 		this.panelApuestasDesiguales.setVisible(true);
+	}
+	
+	public void mostrarBotonesApuesta() {
+		this.panelBtnApuestas.setVisible(true);
 	}
 }

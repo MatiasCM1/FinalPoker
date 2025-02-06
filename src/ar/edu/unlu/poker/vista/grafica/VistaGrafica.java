@@ -120,6 +120,8 @@ public class VistaGrafica implements IVista{
 	private List<Jugador> listaSinJugadorActualizarTabla(List<Jugador> jugadores){
 		List<Jugador> listaResultado = new LinkedList<Jugador>();
 		for (Jugador j : jugadores) {
+			
+			
 			if (!j.getNombre().equals(this.jugadorActual.getNombre())) {
 				listaResultado.add(j);
 			} else {
@@ -161,6 +163,8 @@ public class VistaGrafica implements IVista{
 		}
 		
 		this.vistaApuestas.setVisible(true);
+		
+		this.vistaApuestas.mostrarBotonesApuesta();
 		
 		
 		//ESTO SE PUEDE SACAR?
@@ -285,7 +289,16 @@ public class VistaGrafica implements IVista{
 	
 	@Override
 	public void notificarJugadorPasaApuesta() {
-		this.vistaJuegoCartas.escribirNotificacion(controlador.getJugadorTurnoJugadoresMesa().getNombre() + " pasa y queda fuera del juego");
+		this.vistaJuegoCartas.escribirNotificacion(controlador.getJugadorQuePaso().getNombre() + " pasa y queda fuera del juego");
+	}
+	
+	@Override
+	public void jugadorPasaQuedaFuera() {
+		this.vistaApuestas.setVisible(false);
+		if (this.vistaApuestas2 != null) {
+			this.vistaApuestas2.setVisible(false);
+		}
+		this.vistaJuegoCartas.setVisible(true);
 	}
 
 	
@@ -324,6 +337,7 @@ public class VistaGrafica implements IVista{
 	@Override
 	public void mostrarMenuDescartes() {
 		this.vistaApuestas.setVisible(false);
+		this.vistaApuestas.mostrarBotonesApuesta();
 		this.vistaJuegoCartas.setVisible(true);
 		this.vistaJuegoCartas.mostrarMenuDescartes();
 	}
@@ -355,6 +369,7 @@ public class VistaGrafica implements IVista{
 		}
 		
 		this.vistaApuestas2.setVisible(true);
+		this.vistaApuestas2.mostrarBotonesApuesta();
 		
 		
 		//ESTO SE PUEDE SACAR?
@@ -386,7 +401,9 @@ public class VistaGrafica implements IVista{
 	@Override
 	public void mostrarGanador(Jugador ganador) {
 		this.vistaApuestas.setVisible(false);
-		this.vistaApuestas2.setVisible(false);
+		if (this.vistaApuestas2 != null) {
+			this.vistaApuestas2.setVisible(false);
+		}
 		this.vistaJuegoCartas.setVisible(true);
 		this.vistaJuegoCartas.escribirNotificacion("Ganador: " + ganador.getNombre() + " con " + ganador.getResultadoValoresCartas());
 	}

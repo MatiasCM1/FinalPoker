@@ -652,7 +652,8 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
    @Override
    public void notificarJugadorPasaApuesta() {
-	   areaSalida.append(controlador.getJugadorTurnoJugadoresMesa().getNombre() + " pasa y queda fuera del juego.\n");
+	   
+	   areaSalida.append(controlador.getJugadorQuePaso().getNombre() + " pasa y queda fuera del juego.\n");
    }
 
    @Override
@@ -747,6 +748,12 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	@Override
 	public void notificarErrorIngreseUnEnteroAgregandoNuevosFondos() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void jugadorPasaQuedaFuera() {
 		// TODO Auto-generated method stub
 		
 	}

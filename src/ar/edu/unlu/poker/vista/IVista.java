@@ -86,4 +86,6 @@ public interface IVista {
 
 	void notificarErrorIngreseUnEnteroAgregandoNuevosFondos();
 
+	void jugadorPasaQuedaFuera();
+
 }

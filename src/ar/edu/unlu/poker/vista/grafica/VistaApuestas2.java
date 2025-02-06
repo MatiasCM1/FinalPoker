@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import ar.edu.unlu.poker.modelo.Carta;
@@ -21,6 +22,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.List;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
@@ -90,6 +93,11 @@ public class VistaApuestas2 extends JFrame {
 		
 		panelApuestasDesiguales = new JPanel();
 		panelApuestasDesiguales.setVisible(false);
+		
+		JLabel lblNewLabel = new JLabel("SEGUNDA");
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setBounds(337, 33, 46, 14);
+		contentPane.add(lblNewLabel);
 		
 		panelErrores = new JPanel();
 		panelErrores.setBounds(265, 159, 360, 187);
@@ -199,7 +207,7 @@ public class VistaApuestas2 extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				panelApuestasDesiguales.setVisible(false);
-				panelBtnApuestas.setVisible(true);
+				//panelBtnApuestas.setVisible(true);
 				VistaGrafica.getInstance().realizarFicharPostEnviteSegundaRonda();
 			}
 		});
@@ -219,7 +227,7 @@ public class VistaApuestas2 extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				panelApuestasDesiguales.setVisible(false);
-				panelBtnApuestas.setVisible(true);
+				//panelBtnApuestas.setVisible(true);
 				VistaGrafica.getInstance().realizarPasePostEnviteSegundaRonda();
 			}
 		});
@@ -529,12 +537,22 @@ public class VistaApuestas2 extends JFrame {
 		panelNotificaciones.setLayout(null);
 		
 		textAreaNotificaciones = new JTextArea();
+		textAreaNotificaciones.setWrapStyleWord(true);
+		textAreaNotificaciones.setLineWrap(true);
+		textAreaNotificaciones.setEditable(false);
 		textAreaNotificaciones.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
 		textAreaNotificaciones.setForeground(new Color(255, 255, 255));
 		textAreaNotificaciones.setBounds(10, 11, 452, 279);
 		panelNotificaciones.add(textAreaNotificaciones);
 		textAreaNotificaciones.setBackground(new Color(0, 0, 0));
 		textAreaNotificaciones.setBorder(null);
+		
+		JScrollPane scrollBar = new JScrollPane(textAreaNotificaciones);
+		scrollBar.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollBar.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		scrollBar.setBounds(10, 11, 452, 279);
+		panelNotificaciones.add(scrollBar);
 		
 		JLabel lblFondoMaderaNotificaciones = new JLabel("");
 		lblFondoMaderaNotificaciones.setBounds(0, 0, 472, 301);
@@ -627,6 +645,10 @@ public class VistaApuestas2 extends JFrame {
 	public void mostrarMenuEnvite() {
 		this.panelBtnApuestas.setVisible(false);
 		this.panelRealizarEnvite.setVisible(true);
+	}
+	
+	public void mostrarBotonesApuesta() {
+		this.panelBtnApuestas.setVisible(true);
 	}
 	
 	public void mostrarErrorNumeroEntero() {

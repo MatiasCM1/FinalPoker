@@ -30,6 +30,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	private Mazo mazo;
 	private int pozo;
 	private boolean primeraRonda;
+	private Jugador jugadorQuePaso = new Jugador("");
 
 	static {
 		valorCarta.put("2", 2);
@@ -70,6 +71,8 @@ public class Mesa extends ObservableRemoto implements IMesa{
 			this.notificarObservadores(Informe.CANT_JUGADORES_EXCEDIDOS);
 			return;
 		}
+		
+			this.jugadorQuePaso = null;
 
 			this.jugadoresMesa.forEach(jugador -> jugador.setEnJuego(true));
 			this.jugadoresMesa.forEach(jugador -> jugador.setApuesta(0));
@@ -290,6 +293,8 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		//ESTO NO SE SI ESTA BIEN
 		this.rondaApuesta.remove(jugador);
 		
+		this.jugadorQuePaso = jugador;
+		
 		this.notificarObservadores(Informe.JUGADOR_PASA_APUESTA);	
 		if (this.jugadoresApuestaInsuficiente.isEmpty()) {
 			if (this.rondaApuesta.size() == 1) {
@@ -306,6 +311,9 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	@Override
 	public void jugadorPasa(Jugador jugador) throws RemoteException {
 		jugador.pasar();
+		
+		this.jugadorQuePaso = jugador;
+		
 		this.notificarObservadores(Informe.JUGADOR_PASA_APUESTA);
 		this.rondaApuesta.remove(jugador);
 		this.mapa.remove(jugador);
@@ -514,6 +522,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 	@Override
 	public void jugadorPasaSegundaRonda(Jugador jugador) throws RemoteException {
 		jugador.pasar();
+		this.jugadorQuePaso = jugador;
 		this.notificarObservadores(Informe.JUGADOR_PASA_APUESTA);
 		
 		this.rondaApuestaAux.remove(jugador);
@@ -588,6 +597,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 		jugador.pasar();
 		this.mapa.remove(jugador);
 		this.rondaApuestaAux.remove(jugador);
+		this.jugadorQuePaso = jugador;
 		this.notificarObservadores(Informe.JUGADOR_PASA_APUESTA);	
 		if (this.jugadoresApuestaInsuficiente.isEmpty()) {
 			this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA_SEGUNDA_RONDA);
@@ -958,6 +968,11 @@ public class Mesa extends ObservableRemoto implements IMesa{
 				j.setListoParaIniciar(false);
 			}
 		}
+	}
+
+	@Override
+	public Jugador getJugadorPasa() throws RemoteException {
+		return this.jugadorQuePaso;
 	}
 	
 }
