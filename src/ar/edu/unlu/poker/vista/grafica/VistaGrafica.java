@@ -323,6 +323,8 @@ public class VistaGrafica implements IVista{
 	
 	@Override
 	public void mostrarMenuDescartes() {
+		this.vistaApuestas.setVisible(false);
+		this.vistaJuegoCartas.setVisible(true);
 		this.vistaJuegoCartas.mostrarMenuDescartes();
 	}
 	
