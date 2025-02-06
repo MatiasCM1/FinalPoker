@@ -169,6 +169,9 @@ public class Controlador implements IControladorRemoto{
 			case JUGADOR_SE_RETIRA:
 				vista.actualizarTablaJugadores(this.getJugadoresMesa());
 				break;
+			case SE_AGREGAN_FONDOS:
+				vista.actualizarTablaJugadores(this.getJugadoresMesa());
+				break;
 		}
 		
 	}
@@ -522,8 +525,8 @@ public class Controlador implements IControladorRemoto{
 				e.printStackTrace();
 			}
 		} else {
-			vista.notificarErrorIngreseUnEntero();
-			vista.mostrarOpcionesMenuEmpezarOtraRonda();
+			vista.notificarErrorIngreseUnEnteroAgregandoNuevosFondos();
+			//vista.mostrarOpcionesMenuEmpezarOtraRonda();
 		}
 	}
 	

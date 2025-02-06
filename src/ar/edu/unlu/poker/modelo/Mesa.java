@@ -610,6 +610,7 @@ public class Mesa extends ObservableRemoto implements IMesa{
 				j.agregarFondos(fondoAgregar);
 			}
 		}
+		this.notificarObservadores(Informe.SE_AGREGAN_FONDOS);
 	}
 	
 	public int getApuestaJugador(Jugador jugador) throws RemoteException{

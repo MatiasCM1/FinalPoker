@@ -744,5 +744,11 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void notificarErrorIngreseUnEnteroAgregandoNuevosFondos() {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

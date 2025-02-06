@@ -4,6 +4,8 @@ import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JTextField;
+
 import ar.edu.unlu.poker.controlador.Controlador;
 import ar.edu.unlu.poker.modelo.Jugador;
 import ar.edu.unlu.poker.vista.IVista;
@@ -110,12 +112,12 @@ public class VistaGrafica implements IVista{
 	@Override
 	public void actualizarTablaJugadores(List<Jugador> jugadores) {
 		if (controlador.verificarCantidadDeJugadores()) {
-			List<Jugador> jugardoresSinActual = this.listaSinJugador(jugadores);
+			List<Jugador> jugardoresSinActual = this.listaSinJugadorActualizarTabla(jugadores);
 			this.vistaMenuPrincipal.actualizarTabla(jugardoresSinActual);
 		}
 	}
 	
-	private List<Jugador> listaSinJugador(List<Jugador> jugadores){
+	private List<Jugador> listaSinJugadorActualizarTabla(List<Jugador> jugadores){
 		List<Jugador> listaResultado = new LinkedList<Jugador>();
 		for (Jugador j : jugadores) {
 			if (!j.getNombre().equals(this.jugadorActual.getNombre())) {
@@ -211,6 +213,11 @@ public class VistaGrafica implements IVista{
 		//this.vistaApuestas.setVisible(true);
 		this.vistaApuestas.mostrarMenuEnvite();
 		this.vistaApuestas.mostrarErrorNumeroEntero();
+	}
+	
+	@Override
+	public void notificarErrorIngreseUnEnteroAgregandoNuevosFondos() {
+		this.vistaMenuPrincipal.mostrarErrorNumeroInvalido();
 	}
 	
 	@Override
@@ -428,6 +435,10 @@ public class VistaGrafica implements IVista{
 		this.controlador.realizarPasarPostEnviteSegundaRonda(this.jugadorActual);
 	}
 	
+	public void agregarNuevosFondos(String nuevosFondos) {
+		this.controlador.incrementarFondos2(this.jugadorActual, nuevosFondos);
+	}
+	
 	@Override
 	public void notificarEnviteRealizado() {
 		
@@ -480,6 +491,7 @@ public class VistaGrafica implements IVista{
 		// TODO Auto-generated method stub
 		
 	}
+
 
 	
 }
