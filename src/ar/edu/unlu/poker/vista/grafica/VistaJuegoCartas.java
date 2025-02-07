@@ -206,7 +206,7 @@ public class VistaJuegoCartas extends JFrame {
 
 		lblFondoDescartarBtnC5 = new JLabel("");
 		lblFondoDescartarBtnC5
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera3.png"));
+				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera3.png")));
 		lblFondoDescartarBtnC5.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoDescartarBtnC5.setBounds(534, 123, 89, 23);
 		panelDescartarCartas.add(lblFondoDescartarBtnC5);
@@ -219,7 +219,7 @@ public class VistaJuegoCartas extends JFrame {
 
 		lblFondoDescartarBtnC4 = new JLabel("");
 		lblFondoDescartarBtnC4
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera3.png"));
+				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera3.png")));
 		lblFondoDescartarBtnC4.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoDescartarBtnC4.setBounds(413, 123, 89, 23);
 		panelDescartarCartas.add(lblFondoDescartarBtnC4);
@@ -232,7 +232,7 @@ public class VistaJuegoCartas extends JFrame {
 
 		lblFondoDescartarBtnC3 = new JLabel("");
 		lblFondoDescartarBtnC3
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera3.png"));
+				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera3.png")));
 		lblFondoDescartarBtnC3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoDescartarBtnC3.setBounds(284, 123, 89, 23);
 		panelDescartarCartas.add(lblFondoDescartarBtnC3);
@@ -245,7 +245,7 @@ public class VistaJuegoCartas extends JFrame {
 
 		lblFondoDescartarBtnC2 = new JLabel("");
 		lblFondoDescartarBtnC2
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera3.png"));
+				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera3.png")));
 		lblFondoDescartarBtnC2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoDescartarBtnC2.setBounds(154, 123, 89, 23);
 		panelDescartarCartas.add(lblFondoDescartarBtnC2);
@@ -258,7 +258,7 @@ public class VistaJuegoCartas extends JFrame {
 
 		lblFondoDescartarBtnC1 = new JLabel("");
 		lblFondoDescartarBtnC1
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera3.png"));
+				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera3.png")));
 		lblFondoDescartarBtnC1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoDescartarBtnC1.setBounds(25, 123, 89, 23);
 		panelDescartarCartas.add(lblFondoDescartarBtnC1);
@@ -290,13 +290,13 @@ public class VistaJuegoCartas extends JFrame {
 
 		JLabel lblFondoMaderaBtnDescartes = new JLabel("New label");
 		lblFondoMaderaBtnDescartes
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
+				.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondoMaderaBtnDescartes.setBounds(0, 115, 664, 39);
 		panelDescartarCartas.add(lblFondoMaderaBtnDescartes);
 
 		JLabel lblFondoMaderaBtnTerminarDescartes = new JLabel("New label");
 		lblFondoMaderaBtnTerminarDescartes
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
+				.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondoMaderaBtnTerminarDescartes.setBounds(697, -2, 333, 60);
 		panelDescartarCartas.add(lblFondoMaderaBtnTerminarDescartes);
 		panelOpcionesSiguienteRondaJuego.setBounds(63, 67, 518, 200);
@@ -375,7 +375,7 @@ public class VistaJuegoCartas extends JFrame {
 		JLabel lblBtnFondoMaderaMenuPrincipal = new JLabel("");
 		lblBtnFondoMaderaMenuPrincipal.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBtnFondoMaderaMenuPrincipal
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera.png"));
+				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera.png")));
 		lblBtnFondoMaderaMenuPrincipal.setBounds(182, 114, 156, 59);
 		panelOpcionesSiguienteRondaJuego.add(lblBtnFondoMaderaMenuPrincipal);
 		btnSeguirJugadorNuevaRonda.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
@@ -386,7 +386,7 @@ public class VistaJuegoCartas extends JFrame {
 
 		JLabel lblFondoMaderaBotonSeguirJugando = new JLabel("");
 		lblFondoMaderaBotonSeguirJugando
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera.png"));
+				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera.png")));
 		lblFondoMaderaBotonSeguirJugando.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoMaderaBotonSeguirJugando.setBounds(346, 114, 156, 59);
 		panelOpcionesSiguienteRondaJuego.add(lblFondoMaderaBotonSeguirJugando);
@@ -400,7 +400,7 @@ public class VistaJuegoCartas extends JFrame {
 		JLabel lblBtnFondoMaderaClaraSalir = new JLabel("");
 		lblBtnFondoMaderaClaraSalir.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBtnFondoMaderaClaraSalir
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera.png"));
+				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera.png")));
 		lblBtnFondoMaderaClaraSalir.setBounds(10, 114, 156, 59);
 		panelOpcionesSiguienteRondaJuego.add(lblBtnFondoMaderaClaraSalir);
 
@@ -413,7 +413,7 @@ public class VistaJuegoCartas extends JFrame {
 
 		JLabel lblFondoMaderaSigRonda = new JLabel("");
 		lblFondoMaderaSigRonda
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
+				.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondoMaderaSigRonda.setBounds(0, 0, 518, 199);
 		panelOpcionesSiguienteRondaJuego.add(lblFondoMaderaSigRonda);
 		panelBarraSuperior.setLayout(null);
@@ -530,24 +530,7 @@ public class VistaJuegoCartas extends JFrame {
 		lblImagenFondoVerde.setIcon(new ImageIcon(getClass().getResource("/FondoVerdeInicio.jpg")));
 		lblImagenFondoVerde.setBounds(0, 0, 1121, 612);
 		contentPane.add(lblImagenFondoVerde);
-
-		int i = 0;
-
-		while (i < 30) {
-			textAreaNotificaciones.append(i + "\n");
-			i++;
-		}
 	}
-
-	/*
-	 * public void informarJugadorMano(String nombreJugadorMano) {
-	 * this.textAreaNotificaciones.append("Jugador mano: " + nombreJugadorMano +
-	 * ".\n"); }
-	 * 
-	 * public void notificarApuestaJugador(String nombreJugadorApuesta, String
-	 * apuesta) { this.textAreaNotificaciones.append(nombreJugadorApuesta +
-	 * " realizo su apuesta: " + apuesta + ".\n"); }
-	 */
 
 	public void mostrarCartas(List<Carta> cartas) {
 

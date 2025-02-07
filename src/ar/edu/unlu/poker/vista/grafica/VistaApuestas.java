@@ -57,11 +57,11 @@ public class VistaApuestas extends JFrame {
 	private JPanel panelBtnApuestas;
 	private boolean apuestasDesiguales;
 	
-	public static void main(String[] args) { EventQueue.invokeLater(new
+	/*public static void main(String[] args) { EventQueue.invokeLater(new
 			  Runnable() { public void run() { try { VistaApuestas frame = new
 			  VistaApuestas(); frame.setVisible(true);
 			  
-			  } catch (Exception e) { e.printStackTrace(); } } }); }
+			  } catch (Exception e) { e.printStackTrace(); } } }); }*/
 
 	public VistaApuestas() {
 		setUndecorated(true);
