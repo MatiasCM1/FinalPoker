@@ -37,12 +37,13 @@ public class VistaLogin extends JFrame {
 	private int yMouse;
 	private Controlador controlador;
 
-	/*
-	 * public static void main(String[] args) { EventQueue.invokeLater(new
-	 * Runnable() { public void run() { try { VistaLogin frame = new VistaLogin();
-	 * frame.setVisible(true); } catch (Exception e) { e.printStackTrace(); } } });
-	 * }
-	 */
+	
+	/*public static void main(String[] args) { EventQueue.invokeLater(new
+			  Runnable() { public void run() { try { VistaLogin frame = new
+			  VistaLogin(); frame.setVisible(true);
+			  
+			  } catch (Exception e) { e.printStackTrace(); } } }); }*/
+	 
 
 	public VistaLogin(Controlador controlador) {
 		setUndecorated(true);
@@ -274,8 +275,7 @@ public class VistaLogin extends JFrame {
 		JLabel lblImgCartasTitulo = new JLabel("");
 		lblImgCartasTitulo.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblImgCartasTitulo.setVisible(false);
-		lblImgCartasTitulo.setIcon(
-				new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\CartasTituloPoker.png"));
+		lblImgCartasTitulo.setIcon(new ImageIcon(getClass().getResource("/CartasTituloPoker.png")));
 		lblImgCartasTitulo.setBounds(463, 66, 59, 59);
 		contentPane.add(lblImgCartasTitulo);
 
