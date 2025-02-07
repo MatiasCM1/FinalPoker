@@ -164,7 +164,7 @@ public class VistaGrafica implements IVista {
 
 		this.vistaApuestas.setVisible(true);
 
-		this.vistaApuestas.mostrarBotonesApuesta();
+		//this.vistaApuestas.mostrarBotonesApuesta();
 
 		// ESTO SE PUEDE SACAR?
 		this.vistaApuestas.informarJugadorMano(this.nombreJugadorMano);
