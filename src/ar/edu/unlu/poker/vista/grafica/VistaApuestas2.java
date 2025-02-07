@@ -55,6 +55,12 @@ public class VistaApuestas2 extends JFrame {
 	private JPanel panelApuestasDesiguales;
 	private JPanel panelBtnApuestas;
 	private boolean apuestasDesiguales;
+	
+	public static void main(String[] args) { EventQueue.invokeLater(new
+			  Runnable() { public void run() { try { VistaJuegoCartas frame = new
+			  VistaJuegoCartas(); frame.setVisible(true);
+			  
+			  } catch (Exception e) { e.printStackTrace(); } } }); }
 
 	public VistaApuestas2() {
 		setUndecorated(true);
@@ -91,11 +97,6 @@ public class VistaApuestas2 extends JFrame {
 
 		panelApuestasDesiguales = new JPanel();
 		panelApuestasDesiguales.setVisible(false);
-
-		JLabel lblNewLabel = new JLabel("SEGUNDA");
-		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setBounds(337, 33, 46, 14);
-		contentPane.add(lblNewLabel);
 
 		panelErrores = new JPanel();
 		panelErrores.setBounds(265, 159, 360, 187);
@@ -162,11 +163,12 @@ public class VistaApuestas2 extends JFrame {
 		lblErrorNumeroEntero.setBounds(10, 86, 340, 37);
 		panelErrores.add(lblErrorNumeroEntero);
 
-		lblFondoNegroErrores = new JLabel("New label");
+		lblFondoNegroErrores = new JLabel("");
 		lblFondoNegroErrores.setVisible(false);
 		lblFondoNegroErrores.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		lblFondoNegroErrores
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\fondoNegro.jpg"));
+				.setIcon(new ImageIcon(getClass().getResource("/fondoNegro.jpg")));
+		
 		lblFondoNegroErrores.setBounds(10, 86, 340, 37);
 		panelErrores.add(lblFondoNegroErrores);
 		btnSalirVentanaErrores.setContentAreaFilled(false);
@@ -188,7 +190,7 @@ public class VistaApuestas2 extends JFrame {
 		lblFondoMaderaErrores.setBounds(0, 0, 360, 187);
 		panelErrores.add(lblFondoMaderaErrores);
 		lblFondoMaderaErrores
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
+				.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		panelErrores.setVisible(false);
 		panelApuestasDesiguales.setBounds(298, 181, 309, 147);
 		contentPane.add(panelApuestasDesiguales);
@@ -247,7 +249,7 @@ public class VistaApuestas2 extends JFrame {
 
 		JLabel lblFondoBtnPasar = new JLabel("");
 		lblFondoBtnPasar
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera4.png"));
+				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera4.jpg")));
 		lblFondoBtnPasar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoBtnPasar.setBounds(167, 60, 111, 35);
 		panelApuestasDesiguales.add(lblFondoBtnPasar);
@@ -262,7 +264,7 @@ public class VistaApuestas2 extends JFrame {
 		JLabel lblFondoBtnFichar = new JLabel("");
 		lblFondoBtnFichar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoBtnFichar
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera4.png"));
+				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera4.jpg")));
 		lblFondoBtnFichar.setBounds(20, 60, 111, 35);
 		panelApuestasDesiguales.add(lblFondoBtnFichar);
 
@@ -350,7 +352,7 @@ public class VistaApuestas2 extends JFrame {
 
 		JLabel lblFondoMaderaBtnCancelar = new JLabel("");
 		lblFondoMaderaBtnCancelar
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera4.png"));
+				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera4.jpg")));
 		lblFondoMaderaBtnCancelar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoMaderaBtnCancelar.setBounds(10, 101, 132, 35);
 		panelRealizarEnvite.add(lblFondoMaderaBtnCancelar);
@@ -362,7 +364,7 @@ public class VistaApuestas2 extends JFrame {
 
 		JLabel lblFondoMaderaBtnAceptar = new JLabel("");
 		lblFondoMaderaBtnAceptar
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera4.png"));
+				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera4.jpg")));
 		lblFondoMaderaBtnAceptar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoMaderaBtnAceptar.setBounds(167, 101, 132, 35);
 		panelRealizarEnvite.add(lblFondoMaderaBtnAceptar);
@@ -383,7 +385,7 @@ public class VistaApuestas2 extends JFrame {
 		lblFondoManderaEnvite.setBounds(0, 0, 315, 147);
 		panelRealizarEnvite.add(lblFondoManderaEnvite);
 		lblFondoManderaEnvite
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
+				.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		panelBarraSuperior.setLayout(null);
 		panelBarraSuperior.setBounds(0, 0, 1121, 21);
 		contentPane.add(panelBarraSuperior);

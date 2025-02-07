@@ -51,11 +51,11 @@ public class VistaJuegoCartas extends JFrame {
 	private JLabel lblFondoDescartarBtnC5;
 
 	/*
-	 * public static void main(String[] args) { EventQueue.invokeLater(new
-	 * Runnable() { public void run() { try { VistaJuegoCartas frame = new
-	 * VistaJuegoCartas(); frame.setVisible(true);
-	 * 
-	 * } catch (Exception e) { e.printStackTrace(); } } }); }
+	 public static void main(String[] args) { EventQueue.invokeLater(new
+	  Runnable() { public void run() { try { VistaJuegoCartas frame = new
+	  VistaJuegoCartas(); frame.setVisible(true);
+	  
+	  } catch (Exception e) { e.printStackTrace(); } } }); }
 	 */
 
 	public VistaJuegoCartas() {
