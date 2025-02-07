@@ -3,28 +3,27 @@ package ar.edu.unlu.poker.modelo;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 
-public class Carta implements Serializable, Comparable<Carta>{
+public class Carta implements Serializable, Comparable<Carta> {
 
 	private String valor;
 	private String palo;
-	private String [] ordenCartas = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "AS"};
-	private String[] palosValidos = {"PICA", "CORAZON", "TREBOL", "DIAMANTE"};
-	
+	private String[] ordenCartas = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "AS" };
+	private String[] palosValidos = { "PICA", "CORAZON", "TREBOL", "DIAMANTE" };
+
 	public Carta(String valor, String palo) {
 		this.setPalo(palo);
-		this.setValor(valor); 
+		this.setValor(valor);
 	}
 
-	public String getValor() throws RemoteException{
+	public String getValor() throws RemoteException {
 		return valor;
 	}
-	
 
 	private void setValor(String valor) {
 		this.valor = valor;
 	}
 
-	public String getPalo() throws RemoteException{
+	public String getPalo() throws RemoteException {
 		return palo;
 	}
 
@@ -36,10 +35,10 @@ public class Carta implements Serializable, Comparable<Carta>{
 		}
 	}
 
-	public String [] getOrdenCartas() throws RemoteException{
+	public String[] getOrdenCartas() throws RemoteException {
 		return ordenCartas;
 	}
-	
+
 	private boolean verificarPaloValido(String palo) {
 		for (String p : palosValidos) {
 			if (p.equals(palo)) {
@@ -48,7 +47,7 @@ public class Carta implements Serializable, Comparable<Carta>{
 		}
 		return false;
 	}
-	
+
 	@Override
 	public int compareTo(Carta otraCarta) {
 		int indiceValorCartaActual = this.getIndiceValor(this.valor);
@@ -64,16 +63,16 @@ public class Carta implements Serializable, Comparable<Carta>{
 
 	private int getIndiceValor(String valor) {
 		for (int i = 0; i < ordenCartas.length; i++) {
-            if (ordenCartas[i].equals(valor)) {
-                return i;
-            }
-        }
+			if (ordenCartas[i].equals(valor)) {
+				return i;
+			}
+		}
 		throw new IllegalArgumentException("Valor no encontrado en el orden: " + valor);
 	}
-	
+
 	@Override
-    public String toString() {
-        return this.valor + " de " + this.palo;
-    }
+	public String toString() {
+		return this.valor + " de " + this.palo;
+	}
 
 }

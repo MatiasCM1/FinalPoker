@@ -19,22 +19,22 @@ public interface IMesa extends IObservableRemoto {
 
 	List<Jugador> getJugadoresMesa() throws RemoteException;
 
-	//List<Jugador> devolverGanador() throws RemoteException;
-	
+	// List<Jugador> devolverGanador() throws RemoteException;
+
 	Jugador devolverGanador() throws RemoteException;
-	
+
 	Jugador getJugadorMano() throws RemoteException;
 
 	void sacarJugador(Jugador jugador) throws RemoteException;
-	
+
 	Jugador getJugadorTurno() throws RemoteException;
-	
-	void realizarApuesta(Jugador jugador, int apuesta)  throws RemoteException;
-	
+
+	void realizarApuesta(Jugador jugador, int apuesta) throws RemoteException;
+
 	int getApuestaJugador(Jugador jugador) throws RemoteException;
 
 	void jugadorFichaPostEnvite(Jugador jugador) throws RemoteException;
-	
+
 	void jugadorPasaPostEnvite(Jugador jugador) throws RemoteException;
 
 	boolean perteneceJugadorApuestaMenor(Jugador jugador) throws RemoteException;
@@ -42,7 +42,7 @@ public interface IMesa extends IObservableRemoto {
 	void mirarSiDevolverResultados() throws RemoteException;
 
 	void jugadorPasa(Jugador jugador) throws RemoteException;
-	
+
 	public void agregarCartasADescartar(int posicionCarta, Jugador jugador) throws RemoteException;
 
 	void realizarElDescarte(Jugador jugador) throws RemoteException;
@@ -58,7 +58,7 @@ public interface IMesa extends IObservableRemoto {
 	void jugadorPasaPostEnviteSegundaRonda(Jugador jugador) throws RemoteException;
 
 	List<Jugador> getRondaApuestaAux() throws RemoteException;
-	
+
 	void darFondosGanador(Jugador jugador) throws RemoteException;
 
 	void agregarNuevosFondos(Jugador jugador, int fondoAgregar) throws RemoteException;
@@ -74,5 +74,5 @@ public interface IMesa extends IObservableRemoto {
 	void marcarComoNoListoParaIniciar(Jugador jugador) throws RemoteException;
 
 	Jugador getJugadorPasa() throws RemoteException;
-	
+
 }

@@ -23,9 +23,9 @@ public interface IVista {
 	void mostrarGanador(Jugador ganador);
 
 	void iniciar();
-	
+
 	void mostrarMenuApuestas();
-	
+
 	void informarFondosInsuficientes();
 
 	void notificarEnviteRealizado();
@@ -63,13 +63,13 @@ public interface IVista {
 	void notificarJugadorManoDebeApostar();
 
 	void notificarApuestasDesigualesSegundaRonda();
-	
+
 	void notificarErrorIngreseUnEntero();
-	
-	void mostrarOpcionesMenuEmpezarOtraRonda() ;
-	
+
+	void mostrarOpcionesMenuEmpezarOtraRonda();
+
 	void setEnableCampoEntrada(boolean h);
-	
+
 	void mostrarOpcionesMenu();
 
 	void actualizarTablaJugadores(List<Jugador> jugadores);
