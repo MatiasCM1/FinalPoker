@@ -51,6 +51,12 @@ public class VistaMenuPrincipal extends JFrame {
 	private JTextField txtNuevosFondos;
 	private JPanel panelBotones;
 	private JPanel panelErrorAgregarFondos;
+	
+	/*public static void main(String[] args) { EventQueue.invokeLater(new
+			  Runnable() { public void run() { try { VistaMenuPrincipal frame = new
+			  VistaMenuPrincipal(); frame.setVisible(true);
+			  
+			  } catch (Exception e) { e.printStackTrace(); } } }); }*/
 
 	public VistaMenuPrincipal() {
 		setUndecorated(true);
@@ -124,7 +130,7 @@ public class VistaMenuPrincipal extends JFrame {
 
 		JLabel lblFondoNegroError = new JLabel("New label");
 		lblFondoNegroError
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\fondoNegro.jpg"));
+				.setIcon(new ImageIcon(getClass().getResource("/fondoNegro.jpg")));
 		lblFondoNegroError.setBounds(50, 110, 365, 39);
 		panelErrorAgregarFondos.add(lblFondoNegroError);
 
@@ -137,7 +143,7 @@ public class VistaMenuPrincipal extends JFrame {
 
 		JLabel lblFondoMaderaErrores = new JLabel("New label");
 		lblFondoMaderaErrores
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
+				.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondoMaderaErrores.setBounds(0, 0, 472, 228);
 		panelErrorAgregarFondos.add(lblFondoMaderaErrores);
 		panelIngresoNuevosFondos.setBounds(394, 179, 350, 179);
@@ -172,7 +178,7 @@ public class VistaMenuPrincipal extends JFrame {
 
 		JLabel lblFondoMaderaBtnCancelar = new JLabel("");
 		lblFondoMaderaBtnCancelar
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera4.png"));
+				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera4.png")));
 		lblFondoMaderaBtnCancelar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoMaderaBtnCancelar.setBounds(32, 115, 132, 35);
 		panelIngresoNuevosFondos.add(lblFondoMaderaBtnCancelar);
@@ -206,7 +212,7 @@ public class VistaMenuPrincipal extends JFrame {
 
 		JLabel lblFondoMaderaBtnAceptar = new JLabel("");
 		lblFondoMaderaBtnAceptar
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\cartelMadera4.png"));
+				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera4.png")));
 		lblFondoMaderaBtnAceptar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoMaderaBtnAceptar.setBounds(190, 115, 132, 35);
 		panelIngresoNuevosFondos.add(lblFondoMaderaBtnAceptar);
@@ -225,7 +231,7 @@ public class VistaMenuPrincipal extends JFrame {
 
 		JLabel lblFondoManderaAgregarFondos = new JLabel("");
 		lblFondoManderaAgregarFondos
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
+				.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondoManderaAgregarFondos.setBounds(0, 0, 350, 179);
 		panelIngresoNuevosFondos.add(lblFondoManderaAgregarFondos);
 
@@ -300,7 +306,7 @@ public class VistaMenuPrincipal extends JFrame {
 		lblFondoMaderaBtnAgregarFondos.setBounds(10, 157, 374, 75);
 		panelBotones.add(lblFondoMaderaBtnAgregarFondos);
 		lblFondoMaderaBtnAgregarFondos
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
+				.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 
 		JButton btnSalirGrande = new JButton("Salir");
 		btnSalirGrande.setBounds(10, 285, 374, 75);
@@ -343,9 +349,8 @@ public class VistaMenuPrincipal extends JFrame {
 		JLabel lblImgCartasTitulo = new JLabel("");
 		lblImgCartasTitulo.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblImgCartasTitulo.setVisible(false);
-		lblImgCartasTitulo.setIcon(
-				new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\CartasTituloPoker.png"));
-		lblImgCartasTitulo.setBounds(124, 81, 59, 59);
+		lblImgCartasTitulo.setIcon(new ImageIcon(getClass().getResource("/CartasTituloPoker.png")));
+		lblImgCartasTitulo.setBounds(135, 67, 59, 59);
 		contentPane.add(lblImgCartasTitulo);
 		panelBarraSuperior.setLayout(null);
 		panelBarraSuperior.setBounds(0, 0, 1121, 21);
