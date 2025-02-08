@@ -102,6 +102,7 @@ public class VistaLogin extends JFrame {
 		btnSalir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				VistaGrafica.getInstance().jugadorSaleDelJuego();
 				System.exit(0);
 			}
 

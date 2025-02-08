@@ -78,13 +78,17 @@ public class Controlador implements IControladorRemoto {
 			}
 			break;
 		case FONDO_INSUFICIENTE:
-			if (this.isJugadorTurno()) {
-				vista.informarFondosInsuficientes();
+			if (!this.estoyEnVistaLogin) {
+				if (this.isJugadorTurno()) {
+					vista.informarFondosInsuficientes();
+				}
 			}
 			break;
 		case FONDO_INSUFICIENTE_SEGUNDA_RONDA:
-			if (this.isJugadorTurno()) {
-				vista.informarFondosInsuficientesSegundaRonda();
+			if (!this.estoyEnVistaLogin) {
+				if (this.isJugadorTurno()) {
+					vista.informarFondosInsuficientesSegundaRonda();
+				}
 			}
 		case APUESTA_REALIZADA:
 			if (!this.estoyEnVistaLogin) {
@@ -97,26 +101,28 @@ public class Controlador implements IControladorRemoto {
 			}
 			break;
 		case APUESTAS_DESIGUALES:
-			if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { // Comprueba que el nombre del jugadorActuañ
-																			// forme parte de la cola de jugadores con
-																			// apuesta menor a la mayor
-				vista.setEnableCampoEntrada(true); // ESTO SE PUEDE PONER DENTRO DEL NOTIFICAR APUESTAS DESIGUALES DE LA
-													// VISTA CONSOLA
-				vista.notificarApuestasDesiguales();
-			} else {
-				vista.setEnableCampoEntrada(false);
-				vista.notificarEsperarJugadorIgualeApuesta();
+			if (!this.estoyEnVistaLogin) {
+				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { // Comprueba que el nombre del jugadorActuañ
+																			// forme parte de la cola de jugadores con apuesta menor a la mayor
+					vista.setEnableCampoEntrada(true); // ESTO SE PUEDE PONER DENTRO DEL NOTIFICAR APUESTAS DESIGUALES DE LA VISTA CONSOLA
+					vista.notificarApuestasDesiguales();
+				} else {
+					vista.setEnableCampoEntrada(false);
+					vista.notificarEsperarJugadorIgualeApuesta();
+				}
 			}
 			break;
 		case APUESTAS_DESIGUALES_SEGUNDA_RONDA:
-			if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { // Comprueba que el nombre del jugadorActual
+			if (!this.estoyEnVistaLogin) {
+				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { // Comprueba que el nombre del jugadorActual
 																			// forme parte de la cola de jugadores con
 																			// apuesta menor a la mayor
-				vista.setEnableCampoEntrada(true);
-				vista.notificarApuestasDesigualesSegundaRonda();
-			} else {
-				vista.setEnableCampoEntrada(false);
-				vista.notificarEsperarJugadorIgualeApuesta();
+					vista.setEnableCampoEntrada(true);
+					vista.notificarApuestasDesigualesSegundaRonda();
+				} else {
+					vista.setEnableCampoEntrada(false);
+					vista.notificarEsperarJugadorIgualeApuesta();
+				}
 			}
 			break;
 		case JUGADOR_IGUALA_APUESTA:
@@ -125,27 +131,29 @@ public class Controlador implements IControladorRemoto {
 			}
 			break;
 		case JUGADOR_PASA_APUESTA:
-			if (this.jugadorActual.getNombre().equals(this.getJugadorQuePaso().getNombre())) {
-				vista.jugadorPasaQuedaFuera();
-			}
 			if (!this.estoyEnVistaLogin) {
+				if (this.jugadorActual.getNombre().equals(this.getJugadorQuePaso().getNombre())) {
+					vista.jugadorPasaQuedaFuera();
+				}
 				vista.notificarJugadorPasaApuesta();
 			}
 			break;
 		case TURNO_DESCARTE:
-			if (this.jugadorSigueEnJuego(this.jugadorActual)) {
-				if (isJugadorTurno()) {
-					vista.setEnableCampoEntrada(true);
-					vista.mostrarMenuDescartes();// LLAMO AL MENU DE DESCARTE
-				} else {
-					vista.setEnableCampoEntrada(false);
-					vista.notificarEsperarDescartes();
+			if (!this.estoyEnVistaLogin) {
+				if (this.jugadorSigueEnJuego(this.jugadorActual)) {
+					if (isJugadorTurno()) {
+						vista.setEnableCampoEntrada(true);
+						vista.mostrarMenuDescartes();// LLAMO AL MENU DE DESCARTE
+					} else {
+						vista.setEnableCampoEntrada(false);
+						vista.notificarEsperarDescartes();
+					}
 				}
 			}
 			break;
 		case RONDA_APUESTAS_TERMINADA:
-			if (mesa.getRondaApuesta().size() == 1) {
-				if (!this.estoyEnVistaLogin) {
+			if (!this.estoyEnVistaLogin) {
+				if (mesa.getRondaApuesta().size() == 1) {
 					vista.notificarGanadorUnicoEnMesa(mesa.getRondaApuesta().getFirst().getNombre());
 					if (this.isJugadorTurno()) {
 						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
@@ -155,52 +163,56 @@ public class Controlador implements IControladorRemoto {
 					vista.actualizarTablaJugadores(this.getJugadoresMesa());
 
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
-				}
+				
 
-			} else if (this.isJugadorTurno()) {
-				vista.setEnableCampoEntrada(true);
-				vista.notificarRondaApuestaFinalizada();
-				mesa.mirarSiDevolverResultados();
+				} else if (this.isJugadorTurno()) {
+					vista.setEnableCampoEntrada(true);
+					vista.notificarRondaApuestaFinalizada();
+					mesa.mirarSiDevolverResultados();
+				}
 			}
 			break;
 		case RONDA_APUESTAS_TERMINADA_SEGUNDA_RONDA:
-			if (mesa.getRondaApuestaAux().size() == 1) {
-				if (!this.estoyEnVistaLogin) {
+			if (!this.estoyEnVistaLogin) {
+				if (mesa.getRondaApuestaAux().size() == 1) {
 					vista.notificarGanadorUnicoEnMesa(mesa.getRondaApuestaAux().getFirst().getNombre());
 					if (this.isJugadorTurno()) {
 						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
 					}
 					vista.setEnableCampoEntrada(true);
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
+				} else if (this.isJugadorTurno()) {
+					vista.setEnableCampoEntrada(true);
+					vista.notificarRondaApuestaFinalizada();
+					mesa.mirarSiDevolverResultados();
 				}
-			} else if (this.isJugadorTurno()) {
-				vista.setEnableCampoEntrada(true);
-				vista.notificarRondaApuestaFinalizada();
-				mesa.mirarSiDevolverResultados();
-			}
+			}	
 			break;
 		case CARTA_DESCARTADA:
-			if (isJugadorTurno()) {
-				vista.notificarCartaDescartadaConExito();
+			if (!this.estoyEnVistaLogin) {
+				if (isJugadorTurno()) {
+					vista.notificarCartaDescartadaConExito();
+				}
 			}
 			break;
 		case CARTA_YA_HABIA_SIDO_DESCARTADA:
-			if (isJugadorTurno()) {
-				vista.notificarErrorIntentarDescarteEnUnaCartaYaDescartada();
+			if (!this.estoyEnVistaLogin) {
+				if (isJugadorTurno()) {
+					vista.notificarErrorIntentarDescarteEnUnaCartaYaDescartada();
+				}
 			}
 			break;
 		case SEGUNDA_RONDA_APUESTAS:
-			if (mesa.getRondaApuesta().size() == 1) {
-				if (!this.estoyEnVistaLogin) {
+			if (!this.estoyEnVistaLogin) {
+				if (mesa.getRondaApuesta().size() == 1) {
 					vista.notificarGanadorUnicoEnMesa(mesa.getRondaApuesta().getFirst().getNombre());
 					if (this.isJugadorTurno()) {
 						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
 					}	
 					vista.setEnableCampoEntrada(true);
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
-				}
-			} else {
-				if (!this.estoyEnVistaLogin) {
+				
+				} else {
 					if (this.jugadorSigueEnJuego(this.jugadorActual)) {
 						if (this.isJugadorTurno()) {
 							vista.setEnableCampoEntrada(true);
