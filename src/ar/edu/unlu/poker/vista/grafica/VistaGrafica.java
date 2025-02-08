@@ -48,6 +48,9 @@ public class VistaGrafica implements IVista {
 	}
 
 	public void pasarVistaMenu() {
+		
+		this.controlador.setEstoyEnVistaLogin(false);
+		
 		// CAMBIAR DE VISTA
 		this.vistaLogin.setVisible(false);
 		this.vistaMenuPrincipal = new VistaMenuPrincipal();
@@ -62,6 +65,9 @@ public class VistaGrafica implements IVista {
 	}
 
 	public void volverPantallaLogin() {
+		
+		this.controlador.setEstoyEnVistaLogin(true);
+		
 		// CAMBIAR DE VISTA
 		this.vistaMenuPrincipal.setVisible(false);
 		this.vistaLogin.setVisible(true);
@@ -137,17 +143,21 @@ public class VistaGrafica implements IVista {
 		// this.nombreJugadorMano = jugador.getNombre();
 		// this.vistaJuegoCartas.informarJugadorMano(jugador.getNombre());
 
-		this.vistaJuegoCartas.escribirNotificacion("Jugador mano: " + jugador.getNombre());
+		if (this.vistaJuegoCartas != null) {
+			this.vistaJuegoCartas.escribirNotificacion("Jugador mano: " + jugador.getNombre());
+		}
 
 	}
 
 	@Override
 	public void mostrarCartasJugador(List<Jugador> jugadores) {
 
-		for (Jugador jugador : jugadores) {
-			if (jugador.equals(jugadorActual)) { // Mostrar solo cartas del jugador actual
-				this.jugadorActual.setListaCartas(jugador.getCartas());
-				this.vistaJuegoCartas.mostrarCartas(jugador.getCartas());
+		if (this.vistaJuegoCartas != null) {
+			for (Jugador jugador : jugadores) {
+				if (jugador.equals(jugadorActual)) { // Mostrar solo cartas del jugador actual
+					this.jugadorActual.setListaCartas(jugador.getCartas());
+					this.vistaJuegoCartas.mostrarCartas(jugador.getCartas());
+				}
 			}
 		}
 
@@ -200,13 +210,14 @@ public class VistaGrafica implements IVista {
 		}
 		// this.vistaJuegoCartas.notificarApuestaJugador(nombreJugadorAposto,
 		// String.valueOf(apuestaJugador));
-		this.vistaJuegoCartas.escribirNotificacion(
-				nombreJugadorAposto + " realizo una apuesta de " + String.valueOf(apuestaJugador));
+		this.vistaJuegoCartas.escribirNotificacion(nombreJugadorAposto + " realizo una apuesta de " + String.valueOf(apuestaJugador));
 	}
 
 	@Override
 	public void mostrarNombreDelJugadorVentana() {
-		this.vistaJuegoCartas.setearNombreEnLaBarra(this.jugadorActual.getNombre());
+		//if (this.vistaJuegoCartas != null) {
+			this.vistaJuegoCartas.setearNombreEnLaBarra(this.jugadorActual.getNombre());
+		//}
 	}
 
 	private void mostrarNombreDelJugadorVentanaApuestas() {
