@@ -34,13 +34,13 @@ public interface IVista {
 
 	void informarNoTurno();
 
-	void informarTurnoApuestaOtroJugador();
+	void informarTurnoApuestaOtroJugador(String nombreJugador);
 
 	void notificarApuestasDesiguales();
 
-	void notificarJugadorIgualaApuesta();
+	void notificarJugadorIgualaApuesta(String nombreJugador);
 
-	void notificarJugadorPasaApuesta();
+	void notificarJugadorPasaApuesta(String nombreJugador);
 
 	void notificarEsperarJugadorIgualeApuesta();
 
@@ -48,7 +48,7 @@ public interface IVista {
 
 	void notificarApuestaMenorALaAnterior();
 
-	void notificarEsperarDescartes();
+	void notificarEsperarDescartes(String nombreJugador);
 
 	void mostrarMenuDescartes();
 

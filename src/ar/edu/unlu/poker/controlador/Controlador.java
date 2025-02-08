@@ -72,7 +72,7 @@ public class Controlador implements IControladorRemoto {
 						vista.mostrarMenuApuestas();
 					} else {
 						vista.setEnableCampoEntrada(false);
-						vista.informarTurnoApuestaOtroJugador();
+						vista.informarTurnoApuestaOtroJugador(this.getJugadorTurno().getNombre());
 					}
 				}
 			}
@@ -97,7 +97,7 @@ public class Controlador implements IControladorRemoto {
 			break;
 		case INFORMAR_NO_TURNO:
 			if (!this.estoyEnVistaLogin) {
-				vista.informarNoTurno();
+				vista.informarNoTurno(); // EST QUEDO OBSOLETO???
 			}
 			break;
 		case APUESTAS_DESIGUALES:
@@ -127,7 +127,7 @@ public class Controlador implements IControladorRemoto {
 			break;
 		case JUGADOR_IGUALA_APUESTA:
 			if (!this.estoyEnVistaLogin) {
-				vista.notificarJugadorIgualaApuesta();
+				vista.notificarJugadorIgualaApuesta(this.getJugadorTurno().getNombre());
 			}
 			break;
 		case JUGADOR_PASA_APUESTA:
@@ -135,7 +135,7 @@ public class Controlador implements IControladorRemoto {
 				if (this.jugadorActual.getNombre().equals(this.getJugadorQuePaso().getNombre())) {
 					vista.jugadorPasaQuedaFuera();
 				}
-				vista.notificarJugadorPasaApuesta();
+				vista.notificarJugadorPasaApuesta(this.getJugadorQuePaso().getNombre());
 			}
 			break;
 		case TURNO_DESCARTE:
@@ -146,7 +146,7 @@ public class Controlador implements IControladorRemoto {
 						vista.mostrarMenuDescartes();// LLAMO AL MENU DE DESCARTE
 					} else {
 						vista.setEnableCampoEntrada(false);
-						vista.notificarEsperarDescartes();
+						vista.notificarEsperarDescartes(this.getJugadorTurno().getNombre());
 					}
 				}
 			}
@@ -191,14 +191,14 @@ public class Controlador implements IControladorRemoto {
 		case CARTA_DESCARTADA:
 			if (!this.estoyEnVistaLogin) {
 				if (isJugadorTurno()) {
-					vista.notificarCartaDescartadaConExito();
+					vista.notificarCartaDescartadaConExito(); //ESTO SE OUEDE QUITAR
 				}
 			}
 			break;
 		case CARTA_YA_HABIA_SIDO_DESCARTADA:
 			if (!this.estoyEnVistaLogin) {
 				if (isJugadorTurno()) {
-					vista.notificarErrorIntentarDescarteEnUnaCartaYaDescartada();
+					vista.notificarErrorIntentarDescarteEnUnaCartaYaDescartada(); //ESTO SE PUEDE QUITAR SI SACO LA OPCION DE LA CARTA DESCARTADA DEL MENU
 				}
 			}
 			break;
@@ -219,7 +219,7 @@ public class Controlador implements IControladorRemoto {
 							vista.mostrarMenuSegundaRondaApuestas();
 						} else {
 							vista.setEnableCampoEntrada(false);
-							vista.informarTurnoApuestaOtroJugador();
+							vista.informarTurnoApuestaOtroJugador(this.getJugadorTurno().getNombre());
 						}
 					}
 				}
@@ -394,7 +394,7 @@ public class Controlador implements IControladorRemoto {
 							vista.notificarApuestaMenorALaAnterior();
 							// vista.mostrarMenuApuestas(); //ESTO NO ME SIRVE PARA LA VISTA GRAFICA
 						} else {
-							vista.informarTurnoApuestaOtroJugador();
+							vista.informarTurnoApuestaOtroJugador(this.getJugadorTurno().getNombre());
 						}
 					}
 				} else {
@@ -534,7 +534,7 @@ public class Controlador implements IControladorRemoto {
 						vista.notificarApuestaMenorALaAnteriorSegundaRonda();
 						vista.mostrarMenuSegundaRondaApuestas();
 					} else {
-						vista.informarTurnoApuestaOtroJugador();
+						vista.informarTurnoApuestaOtroJugador(this.getJugadorTurno().getNombre());
 					}
 				}
 			} else {

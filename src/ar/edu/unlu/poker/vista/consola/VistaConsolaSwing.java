@@ -637,8 +637,8 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	}
 
 	@Override
-	public void informarTurnoApuestaOtroJugador() {
-		areaSalida.append("Esperando a que realicen su apuesta\n");
+	public void informarTurnoApuestaOtroJugador(String nombreJugadorTurno) {
+		areaSalida.append("Esperando a que " + nombreJugadorTurno + " realice su apuesta\n");
 	}
 
 	@Override
@@ -654,14 +654,14 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	}
 
 	@Override
-	public void notificarJugadorIgualaApuesta() {
-		areaSalida.append("Se iguala la apuesta y sigue en el juego.\n");
+	public void notificarJugadorIgualaApuesta(String nombreJugadorIgualaApuesta) {
+		areaSalida.append(nombreJugadorIgualaApuesta + " iguala la apuesta y sigue en el juego.\n");
 	}
 
 	@Override
-	public void notificarJugadorPasaApuesta() {
+	public void notificarJugadorPasaApuesta(String nombreJugadorPasaApuesta) {
 
-		areaSalida.append(controlador.getJugadorQuePaso().getNombre() + " pasa y queda fuera del juego.\n");
+		areaSalida.append(nombreJugadorPasaApuesta + " pasa y queda fuera del juego.\n");
 	}
 
 	@Override
@@ -680,8 +680,8 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	}
 
 	@Override
-	public void notificarEsperarDescartes() {
-		areaSalida.append("Esperando a que se realicen los descartes.\n");
+	public void notificarEsperarDescartes(String nombreJugadorTurnoDescarte) {
+		areaSalida.append("Esperando a que " + nombreJugadorTurnoDescarte + " realice los descartes.\n");
 	}
 
 	@Override
@@ -765,5 +765,6 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		// TODO Auto-generated method stub
 
 	}
+
 
 }

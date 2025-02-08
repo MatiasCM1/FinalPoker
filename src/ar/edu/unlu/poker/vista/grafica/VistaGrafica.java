@@ -282,9 +282,9 @@ public class VistaGrafica implements IVista {
 	}
 
 	@Override
-	public void notificarJugadorIgualaApuesta() {
+	public void notificarJugadorIgualaApuesta(String nombreJugadorIgualaApuesta) {
 
-		this.vistaJuegoCartas.escribirNotificacion("Jugador iguala la apuesta y sigue en el juego");
+		this.vistaJuegoCartas.escribirNotificacion(nombreJugadorIgualaApuesta + " iguala la apuesta y sigue en el juego");
 
 	}
 
@@ -301,9 +301,8 @@ public class VistaGrafica implements IVista {
 	}
 
 	@Override
-	public void notificarJugadorPasaApuesta() {
-		this.vistaJuegoCartas
-				.escribirNotificacion(controlador.getJugadorQuePaso().getNombre() + " pasa y queda fuera del juego");
+	public void notificarJugadorPasaApuesta(String nombreJugadorQuePaso) {
+		this.vistaJuegoCartas.escribirNotificacion(nombreJugadorQuePaso + " pasa y queda fuera del juego");
 	}
 
 	@Override
@@ -329,6 +328,9 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void mostrarOpcionesMenuEmpezarOtraRonda() {
+		if (this.vistaApuestas2 != null) {
+			this.vistaApuestas2.mostrarBotonesApuesta();
+		}
 		controlador.establecerJugadorComoNoListo(this.jugadorActual);
 		this.vistaJuegoCartas.mostrarOpcionesParaNuevaRondaJuego();
 	}
@@ -356,8 +358,8 @@ public class VistaGrafica implements IVista {
 	}
 
 	@Override
-	public void notificarEsperarDescartes() {
-		this.vistaJuegoCartas.escribirNotificacion("Esperando a que se realicen los descartes");
+	public void notificarEsperarDescartes(String nombreJugadorTurnoDescarte) {
+		this.vistaJuegoCartas.escribirNotificacion("Esperando a que " + nombreJugadorTurnoDescarte + " realice los descartes");
 	}
 
 	public void cartaADescartarSeleccionada(int posicionCarta) {
@@ -369,8 +371,8 @@ public class VistaGrafica implements IVista {
 	}
 
 	@Override
-	public void informarTurnoApuestaOtroJugador() {
-		this.vistaJuegoCartas.escribirNotificacion("Esperando a que realicen su apuesta");
+	public void informarTurnoApuestaOtroJugador(String nombreJugadorTurno) {
+		this.vistaJuegoCartas.escribirNotificacion("Esperando a que " + nombreJugadorTurno + " realice su apuesta");
 	}
 
 	@Override
@@ -497,8 +499,7 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void notificarRondaApuestaFinalizada() {
-		// TODO Auto-generated method stub
-
+		this.vistaJuegoCartas.escribirNotificacion("Apuestas igualadas");
 	}
 
 	@Override

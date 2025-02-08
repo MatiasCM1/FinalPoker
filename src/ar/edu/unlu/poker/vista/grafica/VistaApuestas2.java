@@ -97,6 +97,11 @@ public class VistaApuestas2 extends JFrame {
 		
 				panelApuestasDesiguales = new JPanel();
 				panelApuestasDesiguales.setVisible(false);
+						
+						JLabel lblNewLabel = new JLabel("SECONDO");
+						lblNewLabel.setForeground(new Color(255, 255, 255));
+						lblNewLabel.setBounds(50, 33, 46, 14);
+						contentPane.add(lblNewLabel);
 				
 						panelErrores = new JPanel();
 						panelErrores.setBounds(265, 159, 360, 187);
