@@ -155,7 +155,7 @@ public class VistaApuestas2 extends JFrame {
 														lblApuestaMayorIgualAnterior.setBounds(10, 86, 340, 37);
 														panelErrores.add(lblApuestaMayorIgualAnterior);
 														
-																lblErrorNumeroEntero = new JLabel("Ingrese un numero entero");
+																lblErrorNumeroEntero = new JLabel("Ingrese un numero entero (> 0)");
 																lblErrorNumeroEntero.setVisible(false);
 																lblErrorNumeroEntero.setForeground(new Color(255, 0, 0));
 																lblErrorNumeroEntero.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
