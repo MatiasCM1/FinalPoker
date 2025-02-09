@@ -76,5 +76,9 @@ public interface IMesa extends IObservableRemoto {
 	int buscarApuestaMayorEnElMapa() throws RemoteException;
 
 	Jugador getJugadorPasa() throws RemoteException;
+	
+	void setComenzoPartida(boolean comenzo) throws RemoteException;
+	
+	boolean getComenzoPartida() throws RemoteException;
 
 }

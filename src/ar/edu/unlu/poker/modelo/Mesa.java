@@ -31,6 +31,7 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	private int pozo;
 	private boolean primeraRonda;
 	private Jugador jugadorQuePaso = new Jugador("");
+	private boolean comenzoPartida = false;
 
 	static {
 		valorCarta.put("2", 2);
@@ -72,6 +73,8 @@ public class Mesa extends ObservableRemoto implements IMesa {
 		}
 
 		this.jugadorQuePaso = null;
+		
+		this.comenzoPartida = true;
 
 		this.jugadoresMesa.forEach(jugador -> jugador.setEnJuego(true));
 		this.jugadoresMesa.forEach(jugador -> jugador.setApuesta(0));
@@ -997,6 +1000,16 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	@Override
 	public Jugador getJugadorPasa() throws RemoteException {
 		return this.jugadorQuePaso;
+	}
+
+	@Override
+	public boolean getComenzoPartida() throws RemoteException {
+		return comenzoPartida;
+	}
+	
+	@Override
+	public void setComenzoPartida(boolean comenzo) throws RemoteException{
+		this.comenzoPartida = comenzo;
 	}
 
 }

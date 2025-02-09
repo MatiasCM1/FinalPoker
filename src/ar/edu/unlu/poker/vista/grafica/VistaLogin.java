@@ -36,6 +36,9 @@ public class VistaLogin extends JFrame {
 	private int xMouse;
 	private int yMouse;
 	private Controlador controlador;
+	private JPanel panelErrores;
+	private JButton btnIngresar;
+	private JLabel lblBtnIngresar;
 
 	
 	/*public static void main(String[] args) { EventQueue.invokeLater(new
@@ -82,6 +85,60 @@ public class VistaLogin extends JFrame {
 
 		JLabel lblMensajeErrorFondos = new JLabel("Error, ingrese los fondos correctamente");
 		lblMensajeErrorFondos.setVisible(false);
+		
+		panelErrores = new JPanel();
+		panelErrores.setVisible(false);
+		panelErrores.setBounds(307, 163, 481, 268);
+		contentPane.add(panelErrores);
+		panelErrores.setLayout(null);
+		
+		JButton btnCerrarPanelErrores = new JButton("X");
+		btnCerrarPanelErrores.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnCerrarPanelErrores.setForeground(Color.red);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnCerrarPanelErrores.setForeground(Color.white);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnIngresar.setVisible(true);
+				lblBtnIngresar.setVisible(true);
+				panelErrores.setVisible(false);
+			}
+		});
+		
+		JLabel lblMsgErrorPartidaComenzada = new JLabel("La partida ya ha comenzado");
+		lblMsgErrorPartidaComenzada.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblMsgErrorPartidaComenzada.setForeground(new Color(255, 0, 0));
+		lblMsgErrorPartidaComenzada.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMsgErrorPartidaComenzada.setBounds(10, 113, 461, 34);
+		panelErrores.add(lblMsgErrorPartidaComenzada);
+		
+		JLabel lblFondoNegroErrores = new JLabel("New label");
+		lblFondoNegroErrores.setIcon(new ImageIcon(getClass().getResource("/fondoNegro.jpg")));
+		lblFondoNegroErrores.setBounds(10, 113, 461, 34);
+		panelErrores.add(lblFondoNegroErrores);
+		btnCerrarPanelErrores.setContentAreaFilled(false);
+		btnCerrarPanelErrores.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCerrarPanelErrores.setForeground(new Color(255, 255, 255));
+		btnCerrarPanelErrores.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
+		btnCerrarPanelErrores.setBounds(436, 0, 45, 34);
+		panelErrores.add(btnCerrarPanelErrores);
+		
+		JLabel lblTituloErrores = new JLabel("Error");
+		lblTituloErrores.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
+		lblTituloErrores.setForeground(new Color(255, 255, 255));
+		lblTituloErrores.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTituloErrores.setBounds(10, 11, 461, 45);
+		panelErrores.add(lblTituloErrores);
+		
+		JLabel lblFondoMaderaErrores = new JLabel("New label");
+		lblFondoMaderaErrores.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
+		lblFondoMaderaErrores.setBounds(0, 0, 481, 268);
+		panelErrores.add(lblFondoMaderaErrores);
 		lblMensajeErrorFondos.setForeground(new Color(255, 0, 0));
 		lblMensajeErrorFondos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMensajeErrorFondos.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
@@ -138,7 +195,7 @@ public class VistaLogin extends JFrame {
 		contentPane.add(panelIngresar);
 		panelIngresar.setLayout(null);
 
-		JButton btnIngresar = new JButton("Ingresar");
+		btnIngresar = new JButton("Ingresar");
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -165,20 +222,28 @@ public class VistaLogin extends JFrame {
 
 				boolean flag = false;
 
-				if (!controlador.validarTextoNombre(txtNombre.getText())) {
-					lblMensajeErrorNombre.setVisible(true);
-					flag = true;
-				}
+				if (!VistaGrafica.getInstance().comprobarPartidaComenzada()) {
+					
+				
+					if (!controlador.validarTextoNombre(txtNombre.getText())) {
+						lblMensajeErrorNombre.setVisible(true);
+						flag = true;
+					}
 
-				if (!controlador.validarTextoFondos(txtFondos.getText())) {
-					lblMensajeErrorFondos.setVisible(true);
-					flag = true;
-				}
+					if (!controlador.validarTextoFondos(txtFondos.getText())) {
+						lblMensajeErrorFondos.setVisible(true);
+						flag = true;
+					}
+				
+				
 
-				if (!flag) {
-					VistaGrafica.getInstance().setJugador(txtNombre.getText(), Integer.parseInt(txtFondos.getText()));
+					if (!flag) {
+						VistaGrafica.getInstance().setJugador(txtNombre.getText(), Integer.parseInt(txtFondos.getText()));
 
-					VistaGrafica.getInstance().pasarVistaMenu();
+						VistaGrafica.getInstance().pasarVistaMenu();
+					}
+				} else {
+					mostrarPanelErrores();
 				}
 
 			}
@@ -190,7 +255,7 @@ public class VistaLogin extends JFrame {
 		btnIngresar.setBorder(null);
 		btnIngresar.setBackground(new Color(255, 128, 0));
 
-		JLabel lblBtnIngresar = new JLabel("");
+		lblBtnIngresar = new JLabel("");
 		lblBtnIngresar.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 
 		lblBtnIngresar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -311,5 +376,10 @@ public class VistaLogin extends JFrame {
 	private void setControlador(Controlador controlador2) {
 		this.controlador = controlador2;
 	}
-
+	
+	public void mostrarPanelErrores() {
+		this.btnIngresar.setVisible(false);
+		this.lblBtnIngresar.setVisible(false);
+		this.panelErrores.setVisible(true);
+	}
 }

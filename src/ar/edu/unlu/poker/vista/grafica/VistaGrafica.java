@@ -473,6 +473,10 @@ public class VistaGrafica implements IVista {
 	public void agregarNuevosFondos(String nuevosFondos) {
 		this.controlador.incrementarFondos2(this.jugadorActual, nuevosFondos);
 	}
+	
+	public boolean comprobarPartidaComenzada() {
+		return this.controlador.comenzoPartida();
+	}
 
 	@Override
 	public void notificarEnviteRealizado() {

@@ -60,6 +60,9 @@ public class Controlador implements IControladorRemoto {
 				if (this.isJugadorTurno()) {
 					mesa.darFondosGanador(ganador);
 				}
+				
+				mesa.setComenzoPartida(false);
+				
 				vista.mostrarGanador(ganador);
 				vista.mostrarOpcionesMenuEmpezarOtraRonda();
 			}
@@ -158,6 +161,9 @@ public class Controlador implements IControladorRemoto {
 					if (this.isJugadorTurno()) {
 						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
 					}
+					
+					mesa.setComenzoPartida(false);
+					
 					vista.setEnableCampoEntrada(true);
 
 					vista.actualizarTablaJugadores(this.getJugadoresMesa());
@@ -179,6 +185,9 @@ public class Controlador implements IControladorRemoto {
 					if (this.isJugadorTurno()) {
 						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
 					}
+					
+					mesa.setComenzoPartida(false);
+					
 					vista.setEnableCampoEntrada(true);
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
 				} else if (this.isJugadorTurno()) {
@@ -209,6 +218,9 @@ public class Controlador implements IControladorRemoto {
 					if (this.isJugadorTurno()) {
 						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
 					}	
+					
+					mesa.setComenzoPartida(false);
+					
 					vista.setEnableCampoEntrada(true);
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
 				
@@ -673,6 +685,16 @@ public class Controlador implements IControladorRemoto {
 			}
 		}
 		return flag;
+	}
+	
+	public boolean comenzoPartida() {
+		try {
+			return mesa.getComenzoPartida();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public boolean verificarCantidadDeJugadores() {
