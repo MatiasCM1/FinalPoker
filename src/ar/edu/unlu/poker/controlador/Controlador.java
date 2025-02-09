@@ -527,7 +527,7 @@ public class Controlador implements IControladorRemoto {
 		try {
 			if (this.validarEnteroPositivo(input)) {
 				int apuesta = Integer.parseInt(input);
-				if ((apuesta + getJugadorMesa(jugador).getApuesta()) >= (mesa.getApuestaMayor())) {
+				if ((apuesta + getJugadorMesa(jugador).getApuesta()) >= (mesa.buscarApuestaMayorEnElMapa())) {
 					mesa.realizarSegundaRondaApuesta(jugador, apuesta);
 				} else {
 					if (this.jugadorActual.getNombre().equals(this.getJugadorTurno().getNombre())) {

@@ -202,7 +202,8 @@ public class Mesa extends ObservableRemoto implements IMesa {
 		this.notificarObservadores(Informe.DEVOLVER_GANADOR);
 	}
 
-	private int buscarApuestaMayorEnElMapa() {
+	@Override
+	public int buscarApuestaMayorEnElMapa() throws RemoteException {
 		int apuestaMayor = 0;
 		int apuesta;
 		for (Entry<Jugador, Integer> entry : this.mapa.entrySet()) {
@@ -216,8 +217,13 @@ public class Mesa extends ObservableRemoto implements IMesa {
 
 	private void determinarJugadoresConApuestaInsuficiente() {
 		mapa.entrySet().forEach(entry -> {
-			if (entry.getValue() < this.buscarApuestaMayorEnElMapa()) {
-				this.jugadoresApuestaInsuficiente.add(entry.getKey());
+			try {
+				if (entry.getValue() < this.buscarApuestaMayorEnElMapa()) {
+					this.jugadoresApuestaInsuficiente.add(entry.getKey());
+				}
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		});
 	}
