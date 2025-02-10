@@ -124,7 +124,7 @@ public class Controlador implements IControladorRemoto {
 																			// forme parte de la cola de jugadores con
 																			// apuesta menor a la mayor
 					vista.setEnableCampoEntrada(true);
-					System.out.println("LLEGO A APUESTAS DESIOGUALES SEGUNDA ROND");
+
 					vista.notificarApuestasDesigualesSegundaRonda();
 				} else {
 					vista.setEnableCampoEntrada(false);

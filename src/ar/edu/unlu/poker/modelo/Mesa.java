@@ -32,6 +32,7 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	private boolean primeraRonda;
 	private Jugador jugadorQuePaso = new Jugador("");
 	private boolean comenzoPartida = false;
+	private Integer apuestasPrimeraRonda = 0;
 
 	static {
 		valorCarta.put("2", 2);
@@ -264,11 +265,13 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	}
 
 	public void jugadorFichaPostEnvite(Jugador jugador) throws RemoteException {
-		if (comprobarFondos(jugador, this.apuestaMayor)) { // VERIFICAR SI TIENE FONDOS SUFICIENTES
+		
+		int apuestaParaFichar = this.calcularCuantoFaltaParaFichar(jugador);
+		
+		if (comprobarFondos(jugador, apuestaParaFichar)) { // VERIFICAR SI TIENE FONDOS SUFICIENTES
 
-			int apuestaParaFichar = this.calcularCuantoFaltaParaFichar(jugador);
 
-			this.restarFondosAgregarApuestaJugador(jugador, /* this.apuestaMayor */apuestaParaFichar);// Actualizo la
+			this.restarFondosAgregarApuestaJugador(jugador, apuestaParaFichar);// Actualizo la
 																										// apuesta del
 																										// jugador
 
@@ -353,6 +356,9 @@ public class Mesa extends ObservableRemoto implements IMesa {
 
 	@Override
 	public void realizarElDescarte(Jugador jugador) throws RemoteException {
+		
+		this.apuestasPrimeraRonda = this.mapa.get(jugador);
+		
 		if (esJugadorTurno(jugador)) {
 
 			// TENGO QUE HACER ESTO, PQ EL JUGADOR QUE VIENE DE LA VISTA NO TIENE LAS
@@ -572,9 +578,10 @@ public class Mesa extends ObservableRemoto implements IMesa {
 
 	@Override
 	public void jugadorFichaPostEnviteSegundaRonda(Jugador jugador) throws RemoteException {
-		if (comprobarFondos(jugador, this.apuestaMayor)) { // VERIFICAR SI TIENE FONDOS SUFICIENTES
-
-			int apuestaParaFichar = this.calcularCuantoFaltaParaFichar(jugador);
+		
+		int apuestaParaFichar = this.calcularCuantoFaltaParaFichar(jugador);
+		
+		if (comprobarFondos(jugador, apuestaParaFichar)) { // VERIFICAR SI TIENE FONDOS SUFICIENTES
 
 			this.restarFondosAgregarApuestaJugador(jugador, apuestaParaFichar);// Actualizo la apuesta del jugador
 
