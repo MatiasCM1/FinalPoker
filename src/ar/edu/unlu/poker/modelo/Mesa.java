@@ -506,8 +506,8 @@ public class Mesa extends ObservableRemoto implements IMesa {
 
 				this.rondaApuestaAux.add(jugador);
 
-				// this.mapa.put(jugador, this.jugadorTurno.getApuesta());
-
+				// this.mapa.put(jugador, this.jugadorTurno.getApuesta())
+				
 				this.notificarObservadores(Informe.APUESTA_REALIZADA);
 
 				this.jugadorTurno = this.rondaApuesta.poll();
@@ -588,8 +588,8 @@ public class Mesa extends ObservableRemoto implements IMesa {
 				this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA_SEGUNDA_RONDA);
 			}
 		} else {
-			this.notificarObservadores(Informe.FONDO_INSUFICIENTE);
-			this.notificarObservadores(Informe.APUESTAS_DESIGUALES);
+			this.notificarObservadores(Informe.APUESTAS_DESIGUALES_SEGUNDA_RONDA);
+			this.notificarObservadores(Informe.FONDO_INSUFICIENTE_SEGUNDA_RONDA);
 		}
 	}
 

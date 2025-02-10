@@ -131,7 +131,7 @@ public class VistaApuestas2 extends JFrame {
 										lblErrorJugadorManoEnvita.setVisible(false);
 										panelBtnApuestas.setVisible(true);
 										if (apuestasDesiguales) {
-											mostrarMenuApuestaDesigual();
+											mostrarMenuApuestaDesigual(); 
 										}
 									}
 								});
@@ -729,4 +729,5 @@ public class VistaApuestas2 extends JFrame {
 		this.apuestasDesiguales = false;
 		this.panelApuestasDesiguales.setVisible(true);
 	}
+	
 }

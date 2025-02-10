@@ -93,6 +93,7 @@ public class Controlador implements IControladorRemoto {
 					vista.informarFondosInsuficientesSegundaRonda();
 				}
 			}
+			break;
 		case APUESTA_REALIZADA:
 			if (!this.estoyEnVistaLogin) {
 				vista.informarApuestaRealizada(this.getJugadorTurno().getNombre(), getJugadorTurnoJugadoresMesa().getApuesta());
@@ -108,6 +109,8 @@ public class Controlador implements IControladorRemoto {
 				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { // Comprueba que el nombre del jugadorActuañ
 																			// forme parte de la cola de jugadores con apuesta menor a la mayor
 					vista.setEnableCampoEntrada(true); // ESTO SE PUEDE PONER DENTRO DEL NOTIFICAR APUESTAS DESIGUALES DE LA VISTA CONSOLA
+					
+					
 					vista.notificarApuestasDesiguales();
 				} else {
 					vista.setEnableCampoEntrada(false);
@@ -121,6 +124,7 @@ public class Controlador implements IControladorRemoto {
 																			// forme parte de la cola de jugadores con
 																			// apuesta menor a la mayor
 					vista.setEnableCampoEntrada(true);
+					System.out.println("LLEGO A APUESTAS DESIOGUALES SEGUNDA ROND");
 					vista.notificarApuestasDesigualesSegundaRonda();
 				} else {
 					vista.setEnableCampoEntrada(false);

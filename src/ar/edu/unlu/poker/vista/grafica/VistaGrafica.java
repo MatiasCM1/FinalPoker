@@ -223,12 +223,15 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void informarApuestaRealizada(String nombreJugadorAposto, int apuestaJugador) {
+	    
+		
 		if (this.jugadorActual.getNombre().equals(nombreJugadorAposto)) {
 			this.vistaApuestas.setVisible(false);
 			if (this.vistaApuestas2 != null) {
 				this.vistaApuestas2.setVisible(false);
 			}
 			this.vistaJuegoCartas.setVisible(true);
+			
 		}
 		// this.vistaJuegoCartas.notificarApuestaJugador(nombreJugadorAposto,
 		// String.valueOf(apuestaJugador));
@@ -277,8 +280,7 @@ public class VistaGrafica implements IVista {
 	@Override
 	public void notificarApuestasDesiguales() {
 
-		this.vistaJuegoCartas.escribirNotificacion(
-				"Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima");
+		this.vistaJuegoCartas.escribirNotificacion("Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima");
 
 		this.vistaJuegoCartas.setVisible(false);
 
@@ -464,7 +466,7 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void informarFondosInsuficientesSegundaRonda() {
-
+		
 		this.vistaApuestas2.setVisible(true);
 		// this.vistaApuestas.mostrarMenuEnvite();
 		this.vistaApuestas2.mostrarErrorFondosInsuficientes();
@@ -473,9 +475,9 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void notificarApuestasDesigualesSegundaRonda() {
+		
 
-		this.vistaJuegoCartas.escribirNotificacion(
-				"Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima");
+		this.vistaJuegoCartas.escribirNotificacion("Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima");
 
 		this.vistaJuegoCartas.setVisible(false);
 
