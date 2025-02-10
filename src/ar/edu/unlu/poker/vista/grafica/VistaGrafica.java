@@ -91,15 +91,37 @@ public class VistaGrafica implements IVista {
 
 	public void listoParaIniciarJuego() {
 
-		this.vistaMenuPrincipal.setVisible(false);
+		if (this.controlador.tieneFondosSuficientes(this.jugadorActual)) {
+			this.vistaMenuPrincipal.setVisible(false);
 
-		if (this.vistaJuegoCartas == null) {
-			this.vistaJuegoCartas = new VistaJuegoCartas();
+			if (this.vistaJuegoCartas == null) {
+				this.vistaJuegoCartas = new VistaJuegoCartas();
+			}
+
+			this.vistaJuegoCartas.setVisible(true);
+
+			controlador.iniciarSiEstaListo(this.jugadorActual);
+		} else {
+			mostrarFondosInsuficientesParaComenzar();
 		}
 
-		this.vistaJuegoCartas.setVisible(true);
+	}
+	
+	public void listoParaIniciarJuegoPostPrimerPartido() {
 
-		controlador.iniciarSiEstaListo(this.jugadorActual);
+		if (this.controlador.tieneFondosSuficientes(this.jugadorActual)) {
+			this.vistaMenuPrincipal.setVisible(false);
+
+			if (this.vistaJuegoCartas == null) {
+				this.vistaJuegoCartas = new VistaJuegoCartas();
+			}
+
+			this.vistaJuegoCartas.setVisible(true);
+
+			controlador.iniciarSiEstaListo(this.jugadorActual);
+		} else {
+			mostrarFondosInsuficientesParaComenzarPostPrimerPartido();
+		}
 
 	}
 
@@ -282,9 +304,9 @@ public class VistaGrafica implements IVista {
 	}
 
 	@Override
-	public void notificarJugadorIgualaApuesta(String nombreJugadorIgualaApuesta) {
+	public void notificarJugadorIgualaApuesta() {
 
-		this.vistaJuegoCartas.escribirNotificacion(nombreJugadorIgualaApuesta + " iguala la apuesta y sigue en el juego");
+		this.vistaJuegoCartas.escribirNotificacion("Jugador iguala la apuesta y sigue en el juego");
 
 	}
 
@@ -328,6 +350,9 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void mostrarOpcionesMenuEmpezarOtraRonda() {
+		if (this.vistaApuestas != null) {
+			this.vistaApuestas.mostrarBotonesApuesta();
+		}
 		if (this.vistaApuestas2 != null) {
 			this.vistaApuestas2.mostrarBotonesApuesta();
 		}
@@ -477,7 +502,22 @@ public class VistaGrafica implements IVista {
 	public boolean comprobarPartidaComenzada() {
 		return this.controlador.comenzoPartida();
 	}
+	
+	@Override
+	public void mostrarFondosInsuficientesParaComenzar() {
+		if (this.vistaMenuPrincipal != null) {
+			this.vistaMenuPrincipal.mostrarErrorFondosInsuficientesParaComenzar();
+		}
+		
+	}
 
+	@Override
+	public void mostrarFondosInsuficientesParaComenzarPostPrimerPartido() {
+		if (this.vistaJuegoCartas != null) {
+			this.vistaJuegoCartas.mostrarErrorFondosInsuficientesParaSeguirJugando();
+		}
+	}
+	
 	@Override
 	public void notificarEnviteRealizado() {
 

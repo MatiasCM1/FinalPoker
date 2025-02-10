@@ -130,7 +130,7 @@ public class Controlador implements IControladorRemoto {
 			break;
 		case JUGADOR_IGUALA_APUESTA:
 			if (!this.estoyEnVistaLogin) {
-				vista.notificarJugadorIgualaApuesta(this.getJugadorTurno().getNombre());
+				vista.notificarJugadorIgualaApuesta();
 			}
 			break;
 		case JUGADOR_PASA_APUESTA:
@@ -654,27 +654,33 @@ public class Controlador implements IControladorRemoto {
 	}
 
 	public void iniciarSiEstaListo(Jugador jugadorActual) {
-		try {
-			mesa.marcarComoListoParaIniciar(jugadorActual);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-
-		vista.limpiarNotificaciones();
-
-		if (todosListo()) {
 			try {
-				if (!mesa.isPrimeraRonda()) {
-					// vista.limpiarNotificaciones();
-					this.iniciarGamePostPrimeraRonda();
-				} else {
-					this.iniciarGame();
-				}
+				mesa.marcarComoListoParaIniciar(jugadorActual);
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
+			vista.limpiarNotificaciones();
+
+			if (todosListo()) {
+				try {
+					if (!mesa.isPrimeraRonda()) {
+						// vista.limpiarNotificaciones();
+						this.iniciarGamePostPrimeraRonda();
+					} else {
+						this.iniciarGame();
+					}
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+			}
+	}
+
+	public boolean tieneFondosSuficientes(Jugador jugador) {
+		if (this.getFondosJugador(jugador) >= 1) {
+			return true;
 		}
+		return false;
 	}
 
 	private boolean todosListo() {

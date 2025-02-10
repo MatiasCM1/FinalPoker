@@ -38,7 +38,7 @@ public interface IVista {
 
 	void notificarApuestasDesiguales();
 
-	void notificarJugadorIgualaApuesta(String nombreJugador);
+	void notificarJugadorIgualaApuesta();
 
 	void notificarJugadorPasaApuesta(String nombreJugador);
 
@@ -87,5 +87,9 @@ public interface IVista {
 	void notificarErrorIngreseUnEnteroAgregandoNuevosFondos();
 
 	void jugadorPasaQuedaFuera();
+
+	void mostrarFondosInsuficientesParaComenzar();
+
+	void mostrarFondosInsuficientesParaComenzarPostPrimerPartido();
 
 }

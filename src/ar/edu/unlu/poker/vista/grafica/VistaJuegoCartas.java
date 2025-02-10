@@ -49,6 +49,7 @@ public class VistaJuegoCartas extends JFrame {
 	private JLabel lblFondoDescartarBtnC3;
 	private JLabel lblFondoDescartarBtnC4;
 	private JLabel lblFondoDescartarBtnC5;
+	private JPanel panelErrores;
 
 	/*
 	 public static void main(String[] args) { EventQueue.invokeLater(new
@@ -93,6 +94,59 @@ public class VistaJuegoCartas extends JFrame {
 
 		panelDescartarCartas = new JPanel();
 		panelDescartarCartas.setVisible(false);
+		
+		panelErrores = new JPanel();
+		panelErrores.setVisible(false);
+		panelErrores.setBounds(143, 46, 459, 222);
+		contentPane.add(panelErrores);
+		panelErrores.setLayout(null);
+		
+		JButton btnSalirPanelErrores = new JButton("X");
+		btnSalirPanelErrores.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnSalirPanelErrores.setForeground(Color.red);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnSalirPanelErrores.setForeground(Color.white);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panelOpcionesSiguienteRondaJuego.setVisible(true);
+				panelErrores.setVisible(false);
+			}
+		});
+		
+		JLabel lblErrorFondosInsuficientes = new JLabel("Fondos insuficientes");
+		lblErrorFondosInsuficientes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblErrorFondosInsuficientes.setForeground(new Color(255, 0, 0));
+		lblErrorFondosInsuficientes.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblErrorFondosInsuficientes.setBounds(10, 106, 439, 40);
+		panelErrores.add(lblErrorFondosInsuficientes);
+		
+		JLabel lblFondoNegroMensajeError = new JLabel("");
+		lblFondoNegroMensajeError.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\fondoNegro.jpg"));
+		lblFondoNegroMensajeError.setBounds(10, 106, 439, 40);
+		panelErrores.add(lblFondoNegroMensajeError);
+		btnSalirPanelErrores.setForeground(new Color(255, 255, 255));
+		btnSalirPanelErrores.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnSalirPanelErrores.setContentAreaFilled(false);
+		btnSalirPanelErrores.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
+		btnSalirPanelErrores.setBounds(410, 0, 49, 40);
+		panelErrores.add(btnSalirPanelErrores);
+		
+		JLabel lblErroresTitulo = new JLabel("Error");
+		lblErroresTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblErroresTitulo.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
+		lblErroresTitulo.setForeground(new Color(255, 255, 255));
+		lblErroresTitulo.setBounds(10, 11, 439, 47);
+		panelErrores.add(lblErroresTitulo);
+		
+		JLabel lblFondoMaderaErrores = new JLabel("");
+		lblFondoMaderaErrores.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
+		lblFondoMaderaErrores.setBounds(0, 0, 459, 223);
+		panelErrores.add(lblFondoMaderaErrores);
 		panelDescartarCartas.setOpaque(false);
 		panelDescartarCartas.setBounds(12, 458, 1099, 154);
 		contentPane.add(panelDescartarCartas);
@@ -342,7 +396,7 @@ public class VistaJuegoCartas extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				panelOpcionesSiguienteRondaJuego.setVisible(false);
-				VistaGrafica.getInstance().listoParaIniciarJuego();
+				VistaGrafica.getInstance().listoParaIniciarJuegoPostPrimerPartido();
 			}
 		});
 
@@ -593,5 +647,10 @@ public class VistaJuegoCartas extends JFrame {
 
 		this.btnDescartarCarta5.setVisible(true);
 		this.lblFondoDescartarBtnC5.setVisible(true);
+	}
+
+	public void mostrarErrorFondosInsuficientesParaSeguirJugando() {
+		this.panelOpcionesSiguienteRondaJuego.setVisible(false);
+		this.panelErrores.setVisible(true);
 	}
 }

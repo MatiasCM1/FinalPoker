@@ -50,7 +50,9 @@ public class VistaMenuPrincipal extends JFrame {
 	private JLabel lblTxtFondosDinamico;
 	private JTextField txtNuevosFondos;
 	private JPanel panelBotones;
-	private JPanel panelErrorAgregarFondos;
+	private JPanel panelErrores;
+	private JLabel lblMensajeErrorNumeroEntero;
+	private JLabel lblMensajeErrorFondosInsuficientes;
 	
 	/*public static void main(String[] args) { EventQueue.invokeLater(new
 			  Runnable() { public void run() { try { VistaMenuPrincipal frame = new
@@ -90,12 +92,12 @@ public class VistaMenuPrincipal extends JFrame {
 		JPanel panelIngresoNuevosFondos = new JPanel();
 		panelIngresoNuevosFondos.setVisible(false);
 
-		panelErrorAgregarFondos = new JPanel();
-		panelErrorAgregarFondos.setOpaque(false);
-		panelErrorAgregarFondos.setVisible(false);
-		panelErrorAgregarFondos.setBounds(332, 160, 472, 228);
-		contentPane.add(panelErrorAgregarFondos);
-		panelErrorAgregarFondos.setLayout(null);
+		panelErrores = new JPanel();
+		panelErrores.setOpaque(false);
+		panelErrores.setVisible(false);
+		panelErrores.setBounds(332, 160, 472, 228);
+		contentPane.add(panelErrores);
+		panelErrores.setLayout(null);
 
 		JButton btnCerrrarPanelErrores = new JButton("X");
 		btnCerrrarPanelErrores.addMouseListener(new MouseAdapter() {
@@ -106,7 +108,9 @@ public class VistaMenuPrincipal extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				panelErrorAgregarFondos.setVisible(false);
+				panelErrores.setVisible(false);
+				lblMensajeErrorNumeroEntero.setVisible(false);
+				lblMensajeErrorFondosInsuficientes.setVisible(false);
 				panelBotones.setVisible(true);
 			}
 
@@ -115,37 +119,46 @@ public class VistaMenuPrincipal extends JFrame {
 				btnCerrrarPanelErrores.setForeground(Color.white);
 			}
 		});
+		
+		lblMensajeErrorFondosInsuficientes = new JLabel("Fondos insuficientes");
+		lblMensajeErrorFondosInsuficientes.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblMensajeErrorFondosInsuficientes.setVisible(false);
+		lblMensajeErrorFondosInsuficientes.setForeground(new Color(255, 0, 0));
+		lblMensajeErrorFondosInsuficientes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMensajeErrorFondosInsuficientes.setBounds(50, 110, 365, 39);
+		panelErrores.add(lblMensajeErrorFondosInsuficientes);
 		btnCerrrarPanelErrores.setContentAreaFilled(false);
 		btnCerrrarPanelErrores.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		btnCerrrarPanelErrores.setForeground(new Color(255, 255, 255));
 		btnCerrrarPanelErrores.setBounds(423, 0, 49, 39);
-		panelErrorAgregarFondos.add(btnCerrrarPanelErrores);
+		panelErrores.add(btnCerrrarPanelErrores);
 
-		JLabel lblMensajeErrorNumeroEntero = new JLabel("Ingrese un numero entero");
+		lblMensajeErrorNumeroEntero = new JLabel("Ingrese un numero entero");
+		lblMensajeErrorNumeroEntero.setVisible(false);
 		lblMensajeErrorNumeroEntero.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		lblMensajeErrorNumeroEntero.setForeground(new Color(255, 0, 0));
 		lblMensajeErrorNumeroEntero.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMensajeErrorNumeroEntero.setBounds(50, 110, 365, 39);
-		panelErrorAgregarFondos.add(lblMensajeErrorNumeroEntero);
+		panelErrores.add(lblMensajeErrorNumeroEntero);
 
 		JLabel lblFondoNegroError = new JLabel("New label");
 		lblFondoNegroError
 				.setIcon(new ImageIcon(getClass().getResource("/fondoNegro.jpg")));
 		lblFondoNegroError.setBounds(50, 110, 365, 39);
-		panelErrorAgregarFondos.add(lblFondoNegroError);
+		panelErrores.add(lblFondoNegroError);
 
 		JLabel lblTituloPanelErrores = new JLabel("Error");
 		lblTituloPanelErrores.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
 		lblTituloPanelErrores.setForeground(new Color(255, 255, 255));
 		lblTituloPanelErrores.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTituloPanelErrores.setBounds(10, 11, 452, 45);
-		panelErrorAgregarFondos.add(lblTituloPanelErrores);
+		panelErrores.add(lblTituloPanelErrores);
 
 		JLabel lblFondoMaderaErrores = new JLabel("New label");
 		lblFondoMaderaErrores
 				.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondoMaderaErrores.setBounds(0, 0, 472, 228);
-		panelErrorAgregarFondos.add(lblFondoMaderaErrores);
+		panelErrores.add(lblFondoMaderaErrores);
 		panelIngresoNuevosFondos.setBounds(394, 179, 350, 179);
 		contentPane.add(panelIngresoNuevosFondos);
 		panelIngresoNuevosFondos.setLayout(null);
@@ -693,12 +706,20 @@ public class VistaMenuPrincipal extends JFrame {
 	}
 
 	public void mostrarErrorNumeroInvalido() {
-		panelBotones.setVisible(false);
-		panelErrorAgregarFondos.setVisible(true);
+		
+		this.panelBotones.setVisible(false);
+		
+		this.panelErrores.setVisible(true);
+		this.lblMensajeErrorNumeroEntero.setVisible(true);
 	}
 
 	public void limpiarTablaJugadores() {
 		this.setearLabelsTablaJugadores();
 	}
 
+	public void mostrarErrorFondosInsuficientesParaComenzar() {
+		this.panelBotones.setVisible(false);
+		this.panelErrores.setVisible(true);
+		this.lblMensajeErrorFondosInsuficientes.setVisible(true);
+	}
 }

@@ -101,6 +101,11 @@ public class VistaApuestas extends JFrame {
 				
 						panelErrores = new JPanel();
 						panelErrores.setVisible(false);
+						
+						JLabel lblNewLabel = new JLabel("PRIMO");
+						lblNewLabel.setForeground(new Color(255, 255, 255));
+						lblNewLabel.setBounds(62, 50, 46, 14);
+						contentPane.add(lblNewLabel);
 						panelErrores.setBounds(265, 159, 360, 187);
 						contentPane.add(panelErrores);
 						panelErrores.setLayout(null);
@@ -213,7 +218,7 @@ public class VistaApuestas extends JFrame {
 							@Override
 							public void mouseClicked(MouseEvent e) {
 								panelApuestasDesiguales.setVisible(false);
-								// panelBtnApuestas.setVisible(true);
+								//panelBtnApuestas.setVisible(true);
 								VistaGrafica.getInstance().realizarFichePostEnvite();
 							}
 						});
@@ -235,7 +240,7 @@ public class VistaApuestas extends JFrame {
 									@Override
 									public void mouseClicked(MouseEvent e) {
 										panelApuestasDesiguales.setVisible(false);
-										// panelBtnApuestas.setVisible(true);
+										//panelBtnApuestas.setVisible(true);
 										VistaGrafica.getInstance().realizarPasarPostEnvite();
 									}
 								});

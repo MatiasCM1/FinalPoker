@@ -218,7 +218,7 @@ public class VistaApuestas2 extends JFrame {
 							@Override
 							public void mouseClicked(MouseEvent e) {
 								panelApuestasDesiguales.setVisible(false);
-								// panelBtnApuestas.setVisible(true);
+								//panelBtnApuestas.setVisible(true);
 								VistaGrafica.getInstance().realizarFicharPostEnviteSegundaRonda();
 							}
 						});
@@ -240,7 +240,7 @@ public class VistaApuestas2 extends JFrame {
 									@Override
 									public void mouseClicked(MouseEvent e) {
 										panelApuestasDesiguales.setVisible(false);
-										// panelBtnApuestas.setVisible(true);
+										//panelBtnApuestas.setVisible(true);
 										VistaGrafica.getInstance().realizarPasePostEnviteSegundaRonda();
 									}
 								});

@@ -654,8 +654,8 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	}
 
 	@Override
-	public void notificarJugadorIgualaApuesta(String nombreJugadorIgualaApuesta) {
-		areaSalida.append(nombreJugadorIgualaApuesta + " iguala la apuesta y sigue en el juego.\n");
+	public void notificarJugadorIgualaApuesta() {
+		areaSalida.append("Jugador iguala la apuesta y sigue en el juego.\n");
 	}
 
 	@Override
@@ -764,6 +764,18 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	public void jugadorPasaQuedaFuera() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void mostrarFondosInsuficientesParaComenzar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mostrarFondosInsuficientesParaComenzarPostPrimerPartido() {
+		// TODO Auto-generated method stub
+		
 	}
 
 
