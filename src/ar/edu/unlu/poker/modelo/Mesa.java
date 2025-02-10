@@ -32,7 +32,6 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	private boolean primeraRonda;
 	private Jugador jugadorQuePaso = new Jugador("");
 	private boolean comenzoPartida = false;
-	private Integer apuestasPrimeraRonda = 0;
 
 	static {
 		valorCarta.put("2", 2);
@@ -356,8 +355,6 @@ public class Mesa extends ObservableRemoto implements IMesa {
 
 	@Override
 	public void realizarElDescarte(Jugador jugador) throws RemoteException {
-		
-		this.apuestasPrimeraRonda = this.mapa.get(jugador);
 		
 		if (esJugadorTurno(jugador)) {
 
