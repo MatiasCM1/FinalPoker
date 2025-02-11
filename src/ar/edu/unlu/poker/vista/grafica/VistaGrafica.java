@@ -123,6 +123,8 @@ public class VistaGrafica implements IVista {
 		controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
 		if (!this.comprobarPartidaComenzada()) {
 			controlador.iniciarSiEstaListoPostPrimeraRonda();
+		} else {
+			//JUGADOR SE FUE ABRUPTAMENTE DE LA PARTIDA. MARCAR LA PARTIDA COMO NO COMENZADA. VOLVER AL MENU PRINCIPAL
 		}
 	}
 
