@@ -658,26 +658,69 @@ public class Controlador implements IControladorRemoto {
 	}
 
 	public void iniciarSiEstaListo(Jugador jugadorActual) {
-			try {
-				mesa.marcarComoListoParaIniciar(jugadorActual);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-
-			vista.limpiarNotificaciones();
-
-			if (todosListo()) {
+		
+		if (this.comprobarJugadoresSuficientes()) {
+			if (this.tieneFondosSuficientes(jugadorActual)) {
 				try {
-					if (!mesa.isPrimeraRonda()) {
-						// vista.limpiarNotificaciones();
-						this.iniciarGamePostPrimeraRonda();
-					} else {
-						this.iniciarGame();
-					}
+					mesa.marcarComoListoParaIniciar(jugadorActual);
 				} catch (RemoteException e) {
 					e.printStackTrace();
 				}
+
+				vista.limpiarNotificaciones();
+
+				if (todosListo()) {
+					try {
+						if (!mesa.isPrimeraRonda()) {
+							this.iniciarGamePostPrimeraRonda();
+						} else {
+							this.iniciarGame();
+						}
+					} catch (RemoteException e) {
+						e.printStackTrace();
+					}
+				} 
+			} else {
+				vista.mostrarFondosInsuficientesParaComenzar();
 			}
+		} else {
+			vista.informarJugadoresInsuficientes();
+		}
+	}
+	
+	public void iniciarSiEstaListoPostPrimeraRonda(Jugador jugadorActual) {
+		
+		if (this.comprobarJugadoresSuficientes()) {
+			if (this.tieneFondosSuficientes(jugadorActual)) {
+				try {
+					mesa.marcarComoListoParaIniciar(jugadorActual);
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+
+				vista.limpiarNotificaciones();
+
+				if (todosListo()) {
+					try {
+						if (!mesa.isPrimeraRonda()) {
+							this.iniciarGamePostPrimeraRonda();
+						} else {
+							this.iniciarGame();
+						}
+					} catch (RemoteException e) {
+						e.printStackTrace();
+					}
+				} 
+			} else {
+				vista.mostrarFondosInsuficientesParaComenzarPostPrimerPartido();
+			}
+		} else {
+			vista.informarJugadoresInsuficientesPostPrimerPartido();
+		}
+	}
+	
+	private boolean comprobarJugadoresSuficientes() {
+		return this.getJugadoresMesa().size() > 1;
 	}
 
 	public boolean tieneFondosSuficientes(Jugador jugador) {

@@ -50,6 +50,8 @@ public class VistaJuegoCartas extends JFrame {
 	private JLabel lblFondoDescartarBtnC4;
 	private JLabel lblFondoDescartarBtnC5;
 	private JPanel panelErrores;
+	private JLabel lblErrorFondosInsuficientes;
+	private JLabel lblErrorJugadoresInsuficientes;
 
 	/*
 	 public static void main(String[] args) { EventQueue.invokeLater(new
@@ -114,11 +116,22 @@ public class VistaJuegoCartas extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				panelOpcionesSiguienteRondaJuego.setVisible(true);
+				lblErrorFondosInsuficientes.setVisible(false);
+				lblErrorJugadoresInsuficientes.setVisible(false);
 				panelErrores.setVisible(false);
 			}
 		});
 		
-		JLabel lblErrorFondosInsuficientes = new JLabel("Fondos insuficientes");
+		lblErrorFondosInsuficientes = new JLabel("Fondos insuficientes");
+		lblErrorFondosInsuficientes.setVisible(false);
+		
+		lblErrorJugadoresInsuficientes = new JLabel("Jugadores insuficientes");
+		lblErrorJugadoresInsuficientes.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblErrorJugadoresInsuficientes.setForeground(new Color(255, 0, 0));
+		lblErrorJugadoresInsuficientes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblErrorJugadoresInsuficientes.setVisible(false);
+		lblErrorJugadoresInsuficientes.setBounds(10, 106, 439, 40);
+		panelErrores.add(lblErrorJugadoresInsuficientes);
 		lblErrorFondosInsuficientes.setHorizontalAlignment(SwingConstants.CENTER);
 		lblErrorFondosInsuficientes.setForeground(new Color(255, 0, 0));
 		lblErrorFondosInsuficientes.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
@@ -651,6 +664,13 @@ public class VistaJuegoCartas extends JFrame {
 
 	public void mostrarErrorFondosInsuficientesParaSeguirJugando() {
 		this.panelOpcionesSiguienteRondaJuego.setVisible(false);
+		this.panelErrores.setVisible(true);
+		this.lblErrorFondosInsuficientes.setVisible(true);
+	}
+
+	public void mostrarErrorJugadoresInsuficientes() {
+		this.panelOpcionesSiguienteRondaJuego.setVisible(false);
+		this.lblErrorJugadoresInsuficientes.setVisible(true);
 		this.panelErrores.setVisible(true);
 	}
 }

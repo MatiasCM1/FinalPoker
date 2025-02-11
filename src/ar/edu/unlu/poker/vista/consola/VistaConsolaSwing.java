@@ -778,5 +778,11 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		
 	}
 
+	@Override
+	public void informarJugadoresInsuficientesPostPrimerPartido() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

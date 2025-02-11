@@ -92,4 +92,6 @@ public interface IVista {
 
 	void mostrarFondosInsuficientesParaComenzarPostPrimerPartido();
 
+	void informarJugadoresInsuficientesPostPrimerPartido();
+
 }

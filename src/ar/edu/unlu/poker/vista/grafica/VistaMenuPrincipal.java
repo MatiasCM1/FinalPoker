@@ -53,6 +53,7 @@ public class VistaMenuPrincipal extends JFrame {
 	private JPanel panelErrores;
 	private JLabel lblMensajeErrorNumeroEntero;
 	private JLabel lblMensajeErrorFondosInsuficientes;
+	private JLabel lblMensajeErrorJugadoresInsuficientes;
 	
 	/*public static void main(String[] args) { EventQueue.invokeLater(new
 			  Runnable() { public void run() { try { VistaMenuPrincipal frame = new
@@ -111,6 +112,7 @@ public class VistaMenuPrincipal extends JFrame {
 				panelErrores.setVisible(false);
 				lblMensajeErrorNumeroEntero.setVisible(false);
 				lblMensajeErrorFondosInsuficientes.setVisible(false);
+				lblMensajeErrorJugadoresInsuficientes.setVisible(false);
 				panelBotones.setVisible(true);
 			}
 
@@ -123,6 +125,14 @@ public class VistaMenuPrincipal extends JFrame {
 		lblMensajeErrorFondosInsuficientes = new JLabel("Fondos insuficientes");
 		lblMensajeErrorFondosInsuficientes.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		lblMensajeErrorFondosInsuficientes.setVisible(false);
+		
+		lblMensajeErrorJugadoresInsuficientes = new JLabel("Cantidad de jugadores insuficientes");
+		lblMensajeErrorJugadoresInsuficientes.setVisible(false);
+		lblMensajeErrorJugadoresInsuficientes.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblMensajeErrorJugadoresInsuficientes.setForeground(new Color(255, 0, 0));
+		lblMensajeErrorJugadoresInsuficientes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMensajeErrorJugadoresInsuficientes.setBounds(50, 110, 365, 39);
+		panelErrores.add(lblMensajeErrorJugadoresInsuficientes);
 		lblMensajeErrorFondosInsuficientes.setForeground(new Color(255, 0, 0));
 		lblMensajeErrorFondosInsuficientes.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMensajeErrorFondosInsuficientes.setBounds(50, 110, 365, 39);
@@ -721,5 +731,11 @@ public class VistaMenuPrincipal extends JFrame {
 		this.panelBotones.setVisible(false);
 		this.panelErrores.setVisible(true);
 		this.lblMensajeErrorFondosInsuficientes.setVisible(true);
+	}
+	
+	public void mostrarErrorJugadoresInsuficientes() {
+		this.panelBotones.setVisible(false);
+		this.panelErrores.setVisible(true);
+		this.lblMensajeErrorJugadoresInsuficientes.setVisible(true);
 	}
 }

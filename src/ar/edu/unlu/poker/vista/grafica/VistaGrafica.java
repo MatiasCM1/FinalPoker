@@ -91,38 +91,49 @@ public class VistaGrafica implements IVista {
 
 	public void listoParaIniciarJuego() {
 
-		if (this.controlador.tieneFondosSuficientes(this.jugadorActual)) {
-			this.vistaMenuPrincipal.setVisible(false);
+		this.vistaMenuPrincipal.setVisible(false);
 
-			if (this.vistaJuegoCartas == null) {
+		if (this.vistaJuegoCartas == null) {
 				this.vistaJuegoCartas = new VistaJuegoCartas();
-			}
-
-			this.vistaJuegoCartas.setVisible(true);
-
-			controlador.iniciarSiEstaListo(this.jugadorActual);
-		} else {
-			mostrarFondosInsuficientesParaComenzar();
 		}
+		
+		this.vistaJuegoCartas.setVisible(true);
 
+		controlador.iniciarSiEstaListo(this.jugadorActual);
+		
+	}
+	
+	@Override
+	public void mostrarFondosInsuficientesParaComenzar() {
+		if (this.vistaMenuPrincipal != null) {
+			this.vistaMenuPrincipal.setVisible(true);
+			if (this.vistaJuegoCartas != null) {
+				this.vistaJuegoCartas.setVisible(false);
+			}
+			this.vistaMenuPrincipal.mostrarErrorFondosInsuficientesParaComenzar();
+		}
+		
 	}
 	
 	public void listoParaIniciarJuegoPostPrimerPartido() {
 
-		if (this.controlador.tieneFondosSuficientes(this.jugadorActual)) {
-			this.vistaMenuPrincipal.setVisible(false);
+		this.vistaMenuPrincipal.setVisible(false);
 
-			if (this.vistaJuegoCartas == null) {
-				this.vistaJuegoCartas = new VistaJuegoCartas();
-			}
-
-			this.vistaJuegoCartas.setVisible(true);
-
-			controlador.iniciarSiEstaListo(this.jugadorActual);
-		} else {
-			mostrarFondosInsuficientesParaComenzarPostPrimerPartido();
+		if (this.vistaJuegoCartas == null) {
+			this.vistaJuegoCartas = new VistaJuegoCartas();
 		}
 
+		this.vistaJuegoCartas.setVisible(true);
+
+		controlador.iniciarSiEstaListoPostPrimeraRonda(this.jugadorActual);
+
+	}
+
+	@Override
+	public void mostrarFondosInsuficientesParaComenzarPostPrimerPartido() {
+		if (this.vistaJuegoCartas != null) {
+			this.vistaJuegoCartas.mostrarErrorFondosInsuficientesParaSeguirJugando();
+		}
 	}
 
 	public Jugador getJugadorActual() {
@@ -506,28 +517,27 @@ public class VistaGrafica implements IVista {
 	}
 	
 	@Override
-	public void mostrarFondosInsuficientesParaComenzar() {
-		if (this.vistaMenuPrincipal != null) {
-			this.vistaMenuPrincipal.mostrarErrorFondosInsuficientesParaComenzar();
+	public void informarJugadoresInsuficientes() {
+		if (this.vistaJuegoCartas!= null) {
+			this.vistaJuegoCartas.setVisible(false);
 		}
 		
+		this.vistaMenuPrincipal.setVisible(true);
+		
+		this.vistaMenuPrincipal.mostrarErrorJugadoresInsuficientes();
 	}
-
+	
 	@Override
-	public void mostrarFondosInsuficientesParaComenzarPostPrimerPartido() {
-		if (this.vistaJuegoCartas != null) {
-			this.vistaJuegoCartas.mostrarErrorFondosInsuficientesParaSeguirJugando();
-		}
+	public void informarJugadoresInsuficientesPostPrimerPartido() {
+		if (this.vistaJuegoCartas!= null) {
+			this.vistaJuegoCartas.setVisible(true);
+		}	
+		
+		this.vistaJuegoCartas.mostrarErrorJugadoresInsuficientes();
 	}
 	
 	@Override
 	public void notificarEnviteRealizado() {
-
-	}
-
-	@Override
-	public void informarJugadoresInsuficientes() {
-		// TODO Auto-generated method stub
 
 	}
 
