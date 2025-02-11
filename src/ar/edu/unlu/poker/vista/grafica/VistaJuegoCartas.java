@@ -386,7 +386,7 @@ public class VistaJuegoCartas extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				panelOpcionesSiguienteRondaJuego.setVisible(false);
-				VistaGrafica.getInstance().jugadorSaleDelJuego();
+				VistaGrafica.getInstance().jugadorSaleDelJuegoPostPrimeraPartida();
 				System.exit(0);
 			}
 		});
@@ -498,7 +498,7 @@ public class VistaJuegoCartas extends JFrame {
 		btnSalir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				VistaGrafica.getInstance().jugadorSaleDelJuego();
+				VistaGrafica.getInstance().jugadorSaleDelJuegoPostPrimeraPartida();
 				System.exit(0);
 			}
 

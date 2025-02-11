@@ -63,6 +63,7 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	public void iniciarJuego() throws RemoteException {
 
 		if (this.jugadoresMesa.size() < 2) {
+			this.setearJugadorComoNoListo();
 			this.notificarObservadores(Informe.CANT_JUGADORES_INSUFICIENTES);
 			return;
 		}
@@ -116,6 +117,12 @@ public class Mesa extends ObservableRemoto implements IMesa {
 			if (j.equals(jugador)) {
 				j.agregarFondos(this.pozo);
 			}
+		}
+	}
+	
+	private void setearJugadorComoNoListo() {
+		if (!this.jugadoresMesa.isEmpty()) {
+			this.jugadoresMesa.peek().setListoParaIniciar(false);
 		}
 	}
 

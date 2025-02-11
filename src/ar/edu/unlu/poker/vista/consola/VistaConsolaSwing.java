@@ -784,5 +784,11 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		
 	}
 
+	@Override
+	public void mostrarErrorJugadoresInsuficientes() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

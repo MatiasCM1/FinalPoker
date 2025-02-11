@@ -46,7 +46,7 @@ public class Controlador implements IControladorRemoto {
 			break;
 		case CANT_JUGADORES_INSUFICIENTES:
 			if (!this.estoyEnVistaLogin) {
-				vista.informarJugadoresInsuficientes();
+				vista.mostrarErrorJugadoresInsuficientes();
 			}
 			break;
 		case CANT_JUGADORES_EXCEDIDOS:
@@ -690,6 +690,37 @@ public class Controlador implements IControladorRemoto {
 		} else {
 			vista.informarJugadoresInsuficientes();
 		}
+	}
+	
+	public void iniciarSiEstaListo() {
+		
+		if (todosListo()) {
+			try {
+				if (!mesa.isPrimeraRonda()) {
+					this.iniciarGamePostPrimeraRonda();
+				} else {
+					this.iniciarGame();
+				}
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void iniciarSiEstaListoPostPrimeraRonda() {
+		
+		if (todosListo()) {
+			try {
+				if (!mesa.isPrimeraRonda()) {
+					this.iniciarGamePostPrimeraRonda();
+				} else {
+					this.iniciarGame();
+				}
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		} 
+		
 	}
 	
 	public void iniciarSiEstaListoPostPrimeraRonda(Jugador jugadorActual) {

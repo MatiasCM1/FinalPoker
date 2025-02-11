@@ -70,6 +70,26 @@ public class VistaGrafica implements IVista {
 		this.vistaLogin.setVisible(true);
 		this.vistaLogin.mostrarErrorCantidadMaximaJugadores();
 	}
+	
+	@Override
+	public void mostrarErrorJugadoresInsuficientes() {
+		if (this.vistaJuegoCartas != null) {
+			this.vistaJuegoCartas.setVisible(false);
+		}
+		
+		if (this.vistaApuestas != null) {
+			this.vistaApuestas.setVisible(false);
+		}
+		
+		if (this.vistaApuestas2 != null) {
+			this.vistaApuestas2.setVisible(false);
+		}
+		
+		this.vistaMenuPrincipal.setVisible(true);
+		
+		this.vistaMenuPrincipal.mostrarErrorJugadoresInsuficientes();
+		
+	}
 
 	public void volverPantallaLogin() {
 		
@@ -81,6 +101,8 @@ public class VistaGrafica implements IVista {
 
 		// QUITAR AL JUGADOR
 		controlador.jugadorCierraSesion(this.jugadorActual);
+		
+		controlador.iniciarSiEstaListo();
 		// controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
 
 		// NOTIFICAR QUE JGUADOR SE RETIRA DEL JUEGO
@@ -91,9 +113,17 @@ public class VistaGrafica implements IVista {
 
 	public void jugadorSaleDelJuego() {
 		controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
+		controlador.iniciarSiEstaListo();
 		// NOTIFICAR QUE JGUADOR SE RETIRA DEL JUEGO
 
 		// QUITAR AL JUGADOR DE LA LISTA DE LOS DEMAS JUGADORES, DEL MENUPRINCIPAL
+	}
+	
+	public void jugadorSaleDelJuegoPostPrimeraPartida() {
+		controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
+		if (!this.comprobarPartidaComenzada()) {
+			controlador.iniciarSiEstaListoPostPrimeraRonda();
+		}
 	}
 
 	public void listoParaIniciarJuego() {

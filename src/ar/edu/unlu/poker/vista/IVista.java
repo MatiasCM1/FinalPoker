@@ -94,4 +94,6 @@ public interface IVista {
 
 	void informarJugadoresInsuficientesPostPrimerPartido();
 
+	void mostrarErrorJugadoresInsuficientes();
+
 }
