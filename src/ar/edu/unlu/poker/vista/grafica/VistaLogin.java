@@ -39,6 +39,8 @@ public class VistaLogin extends JFrame {
 	private JPanel panelErrores;
 	private JButton btnIngresar;
 	private JLabel lblBtnIngresar;
+	private JLabel lblMsgErrorPartidaComenzada;
+	private JLabel lblErrorCantidadJugadoresMaxima;
 
 	
 	/*public static void main(String[] args) { EventQueue.invokeLater(new
@@ -106,11 +108,22 @@ public class VistaLogin extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				btnIngresar.setVisible(true);
 				lblBtnIngresar.setVisible(true);
+				lblMsgErrorPartidaComenzada.setVisible(false);
+				lblErrorCantidadJugadoresMaxima.setVisible(false);
 				panelErrores.setVisible(false);
 			}
 		});
 		
-		JLabel lblMsgErrorPartidaComenzada = new JLabel("La partida ya ha comenzado");
+		lblMsgErrorPartidaComenzada = new JLabel("La partida ya ha comenzado");
+		lblMsgErrorPartidaComenzada.setVisible(false);
+		
+		lblErrorCantidadJugadoresMaxima = new JLabel("Cantidad de jugadores maxima");
+		lblErrorCantidadJugadoresMaxima.setVisible(false);
+		lblErrorCantidadJugadoresMaxima.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblErrorCantidadJugadoresMaxima.setHorizontalAlignment(SwingConstants.CENTER);
+		lblErrorCantidadJugadoresMaxima.setForeground(new Color(255, 0, 0));
+		lblErrorCantidadJugadoresMaxima.setBounds(10, 113, 461, 34);
+		panelErrores.add(lblErrorCantidadJugadoresMaxima);
 		lblMsgErrorPartidaComenzada.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		lblMsgErrorPartidaComenzada.setForeground(new Color(255, 0, 0));
 		lblMsgErrorPartidaComenzada.setHorizontalAlignment(SwingConstants.CENTER);
@@ -243,7 +256,7 @@ public class VistaLogin extends JFrame {
 						VistaGrafica.getInstance().pasarVistaMenu();
 					}
 				} else {
-					mostrarPanelErrores();
+					mostrarErrorPartidaComenzada();
 				}
 
 			}
@@ -377,9 +390,17 @@ public class VistaLogin extends JFrame {
 		this.controlador = controlador2;
 	}
 	
-	public void mostrarPanelErrores() {
+	public void mostrarErrorPartidaComenzada() {
 		this.btnIngresar.setVisible(false);
 		this.lblBtnIngresar.setVisible(false);
+		this.lblMsgErrorPartidaComenzada.setVisible(true);
+		this.panelErrores.setVisible(true);
+	}
+	
+	public void mostrarErrorCantidadMaximaJugadores() {
+		this.btnIngresar.setVisible(false);
+		this.lblBtnIngresar.setVisible(false);
+		this.lblErrorCantidadJugadoresMaxima.setVisible(true);
 		this.panelErrores.setVisible(true);
 	}
 }

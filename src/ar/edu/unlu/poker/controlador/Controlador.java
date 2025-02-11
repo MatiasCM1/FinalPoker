@@ -302,10 +302,14 @@ public class Controlador implements IControladorRemoto {
 	}
 
 	public void agregarJugador(Jugador j) {
-		try {
-			mesa.agregarJugador(j);
-		} catch (RemoteException e) {
-			e.printStackTrace();
+		if (this.getJugadoresMesa().size() < 7) {
+			try {
+				mesa.agregarJugador(j);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		} else {
+			vista.informarCantJugadoresExcedidos();
 		}
 	}
 

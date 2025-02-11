@@ -63,6 +63,13 @@ public class VistaGrafica implements IVista {
 		this.actualizarTablaJugadores(getJugadoresMesa());
 
 	}
+	
+	@Override
+	public void informarCantJugadoresExcedidos() {
+		this.vistaMenuPrincipal.setVisible(false);
+		this.vistaLogin.setVisible(true);
+		this.vistaLogin.mostrarErrorCantidadMaximaJugadores();
+	}
 
 	public void volverPantallaLogin() {
 		
@@ -538,12 +545,6 @@ public class VistaGrafica implements IVista {
 	
 	@Override
 	public void notificarEnviteRealizado() {
-
-	}
-
-	@Override
-	public void informarCantJugadoresExcedidos() {
-		// TODO Auto-generated method stub
 
 	}
 

@@ -51,7 +51,7 @@ public class Mesa extends ObservableRemoto implements IMesa {
 
 	@Override
 	public void agregarJugador(Jugador jugador) throws RemoteException {
-		if (this.jugadoresMesa.size() < 8) {
+		if (this.jugadoresMesa.size() < 7) {
 			this.jugadoresMesa.add(jugador);
 			this.notificarObservadores(Informe.JUGADOR_NUEVO_AGREGADO);
 		} else {
