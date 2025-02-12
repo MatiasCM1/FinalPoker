@@ -96,4 +96,8 @@ public interface IVista {
 
 	void mostrarErrorJugadoresInsuficientes();
 
+	void mostrarMenuPrincipal();
+
+	void mostrarErrorSalidaJugador();
+
 }

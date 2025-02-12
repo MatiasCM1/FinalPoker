@@ -120,12 +120,49 @@ public class VistaGrafica implements IVista {
 	}
 	
 	public void jugadorSaleDelJuegoPostPrimeraPartida() {
-		controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
 		if (!this.comprobarPartidaComenzada()) {
-			controlador.iniciarSiEstaListoPostPrimeraRonda();
+			controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
 		} else {
-			//JUGADOR SE FUE ABRUPTAMENTE DE LA PARTIDA. MARCAR LA PARTIDA COMO NO COMENZADA. VOLVER AL MENU PRINCIPAL
+			controlador.jugadorSeRetiraEnJuego(this.jugadorActual);
 		}
+		
+		//if (!this.comprobarPartidaComenzada()) {
+			//controlador.iniciarSiEstaListoPostPrimeraRonda();
+		//} else {
+			//System.out.println("LA PARTIDA YA COMENZO");
+			//JUGADOR SE FUE ABRUPTAMENTE DE LA PARTIDA. MARCAR LA PARTIDA COMO NO COMENZADA. VOLVER AL MENU PRINCIPAL
+		//}
+	}
+	
+	@Override
+	public void mostrarMenuPrincipal() {
+		
+		if (this.vistaJuegoCartas != null) {
+			//this.vistaJuegoCartas.ocultarBotones();
+			this.vistaJuegoCartas.setVisible(false);
+			this.vistaJuegoCartas = new VistaJuegoCartas();
+		}
+		
+		if (this.vistaApuestas != null) {
+			//this.vistaApuestas.ocultarBotones();
+			this.vistaApuestas.setVisible(false);
+			this.vistaApuestas = new VistaApuestas();
+		}
+		
+		if (this.vistaApuestas2 != null) {
+			//this.vistaApuestas2.ocultarBotones();
+			this.vistaApuestas2.setVisible(false);
+			this.vistaApuestas2 = new VistaApuestas2();
+		}
+		
+			this.vistaMenuPrincipal.setVisible(true);
+
+		
+	}
+	
+	@Override
+	public void mostrarErrorSalidaJugador() {
+		this.vistaMenuPrincipal.mostrarErrorJugadorSaleDeLaJuego();
 	}
 
 	public void listoParaIniciarJuego() {
@@ -613,6 +650,10 @@ public class VistaGrafica implements IVista {
 	public void mostrarOpcionesMenu() {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void jugadorNoListo() {
+		this.controlador.establecerJugadorComoNoListo(this.jugadorActual);
 	}
 
 }

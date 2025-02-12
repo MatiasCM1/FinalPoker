@@ -986,7 +986,16 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	@Override
 	public void removerJugadores(Jugador jugador) throws RemoteException {
 		this.jugadoresMesa.remove(jugador);
+		//this.devolverFondos();
 		this.notificarObservadores(Informe.JUGADOR_SE_RETIRA);
+	}
+	
+	@Override
+	public void removerJugadorSeRetiraEnJuego(Jugador jugador) throws RemoteException {
+		this.jugadoresMesa.remove(jugador);
+		this.setComenzoPartida(false);
+		this.devolverFondos();
+		this.notificarObservadores(Informe.JUGADOR_SE_RETIRA_EN_PARTIDA);
 	}
 
 	@Override
@@ -1021,6 +1030,16 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	@Override
 	public void setComenzoPartida(boolean comenzo) throws RemoteException{
 		this.comenzoPartida = comenzo;
+	}
+
+	@Override
+	public void devolverFondos() throws RemoteException {
+		if (!this.mapa.isEmpty()) {
+			for (Jugador j : this.jugadoresMesa) {
+				System.out.println(j.getNombre());
+				j.agregarFondos(this.mapa.get(j));
+			}
+		}
 	}
 
 }

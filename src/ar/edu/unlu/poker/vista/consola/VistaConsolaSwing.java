@@ -790,5 +790,17 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		
 	}
 
+	@Override
+	public void mostrarMenuPrincipal() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mostrarErrorSalidaJugador() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

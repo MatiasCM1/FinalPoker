@@ -246,6 +246,13 @@ public class Controlador implements IControladorRemoto {
 				vista.actualizarTablaJugadores(this.getJugadoresMesa());
 			}
 			break;
+		case JUGADOR_SE_RETIRA_EN_PARTIDA:
+			if (!this.estoyEnVistaLogin) {
+				vista.mostrarMenuPrincipal();
+				vista.mostrarErrorSalidaJugador();
+				vista.actualizarTablaJugadores(this.getJugadoresMesa());
+			}
+			break;
 		case SE_AGREGAN_FONDOS:
 			if (!this.estoyEnVistaLogin) {
 				vista.actualizarTablaJugadores(this.getJugadoresMesa());
@@ -374,21 +381,28 @@ public class Controlador implements IControladorRemoto {
 	}
 
 	public void jugadorSeRetiraDelJuego(Jugador jugador) {
+		
 		try {
 			mesa.removerObservador(this);
 
 			mesa.removerJugadores(jugador);
+			
 
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void jugadorSeRetiraEnJuego(Jugador jugador) {
 		try {
-			mesa.sacarJugador(jugador);
+			mesa.removerObservador(this);
+			mesa.removerJugadorSeRetiraEnJuego(jugador);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 
 	public Jugador getJugadorTurno() {

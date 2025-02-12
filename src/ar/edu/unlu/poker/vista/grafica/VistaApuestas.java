@@ -394,7 +394,7 @@ public class VistaApuestas extends JFrame {
 		btnSalir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				VistaGrafica.getInstance().jugadorSaleDelJuego();
+				VistaGrafica.getInstance().jugadorSaleDelJuegoPostPrimeraPartida();
 				System.exit(0);
 			}
 

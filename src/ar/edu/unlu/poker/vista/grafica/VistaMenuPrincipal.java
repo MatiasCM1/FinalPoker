@@ -54,6 +54,8 @@ public class VistaMenuPrincipal extends JFrame {
 	private JLabel lblMensajeErrorNumeroEntero;
 	private JLabel lblMensajeErrorFondosInsuficientes;
 	private JLabel lblMensajeErrorJugadoresInsuficientes;
+	private JLabel lblMensajeErrorJugadorSalePartida;
+	private JPanel panelMostrarJugadores;
 	
 	/*public static void main(String[] args) { EventQueue.invokeLater(new
 			  Runnable() { public void run() { try { VistaMenuPrincipal frame = new
@@ -113,6 +115,9 @@ public class VistaMenuPrincipal extends JFrame {
 				lblMensajeErrorNumeroEntero.setVisible(false);
 				lblMensajeErrorFondosInsuficientes.setVisible(false);
 				lblMensajeErrorJugadoresInsuficientes.setVisible(false);
+				lblMensajeErrorJugadorSalePartida.setVisible(false);
+				panelMostrarJugadores.setVisible(true);
+				VistaGrafica.getInstance().jugadorNoListo();
 				panelBotones.setVisible(true);
 			}
 
@@ -128,6 +133,14 @@ public class VistaMenuPrincipal extends JFrame {
 		
 		lblMensajeErrorJugadoresInsuficientes = new JLabel("Cantidad de jugadores insuficientes");
 		lblMensajeErrorJugadoresInsuficientes.setVisible(false);
+		
+		lblMensajeErrorJugadorSalePartida = new JLabel("Un jugador salio de la partida");
+		lblMensajeErrorJugadorSalePartida.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblMensajeErrorJugadorSalePartida.setForeground(new Color(255, 0, 0));
+		lblMensajeErrorJugadorSalePartida.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMensajeErrorJugadorSalePartida.setVisible(false);
+		lblMensajeErrorJugadorSalePartida.setBounds(50, 110, 365, 39);
+		panelErrores.add(lblMensajeErrorJugadorSalePartida);
 		lblMensajeErrorJugadoresInsuficientes.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		lblMensajeErrorJugadoresInsuficientes.setForeground(new Color(255, 0, 0));
 		lblMensajeErrorJugadoresInsuficientes.setHorizontalAlignment(SwingConstants.CENTER);
@@ -449,7 +462,7 @@ public class VistaMenuPrincipal extends JFrame {
 		lblNombreJudador.setBounds(610, 81, 222, 46);
 		contentPane.add(lblNombreJudador);
 
-		JPanel panelMostrarJugadores = new JPanel();
+		panelMostrarJugadores = new JPanel();
 		panelMostrarJugadores.setBounds(610, 209, 472, 328);
 		contentPane.add(panelMostrarJugadores);
 		panelMostrarJugadores.setLayout(null);
@@ -719,6 +732,8 @@ public class VistaMenuPrincipal extends JFrame {
 		
 		this.panelBotones.setVisible(false);
 		
+		this.panelMostrarJugadores.setVisible(false);
+		
 		this.panelErrores.setVisible(true);
 		this.lblMensajeErrorNumeroEntero.setVisible(true);
 	}
@@ -729,13 +744,22 @@ public class VistaMenuPrincipal extends JFrame {
 
 	public void mostrarErrorFondosInsuficientesParaComenzar() {
 		this.panelBotones.setVisible(false);
+		this.panelMostrarJugadores.setVisible(false);
 		this.panelErrores.setVisible(true);
 		this.lblMensajeErrorFondosInsuficientes.setVisible(true);
 	}
 	
 	public void mostrarErrorJugadoresInsuficientes() {
 		this.panelBotones.setVisible(false);
+		this.panelMostrarJugadores.setVisible(false);
 		this.panelErrores.setVisible(true);
 		this.lblMensajeErrorJugadoresInsuficientes.setVisible(true);
+	}
+
+	public void mostrarErrorJugadorSaleDeLaJuego() {
+		this.panelBotones.setVisible(false);
+		this.panelMostrarJugadores.setVisible(false);
+		this.panelErrores.setVisible(true);
+		this.lblMensajeErrorJugadorSalePartida.setVisible(true);
 	}
 }
