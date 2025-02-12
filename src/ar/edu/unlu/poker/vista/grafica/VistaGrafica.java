@@ -52,12 +52,10 @@ public class VistaGrafica implements IVista {
 		
 		this.controlador.setEstoyEnVistaLogin(false);
 		
-		// CAMBIAR DE VISTA
 		this.vistaLogin.setVisible(false);
 		this.vistaMenuPrincipal = new VistaMenuPrincipal();
 		this.vistaMenuPrincipal.setVisible(true);
 
-		// AGREGAR JUGADOR AL MODELO
 		controlador.agregarJugador(jugadorActual);
 		controlador.setJugadorActual(jugadorActual);
 
@@ -96,28 +94,18 @@ public class VistaGrafica implements IVista {
 		
 		this.controlador.setEstoyEnVistaLogin(true);
 		
-		// CAMBIAR DE VISTA
 		this.vistaMenuPrincipal.setVisible(false);
 		this.vistaLogin.setVisible(true);
 
-		// QUITAR AL JUGADOR
 		controlador.jugadorCierraSesion(this.jugadorActual);
 		
 		controlador.iniciarSiEstaListo();
-		// controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
-
-		// NOTIFICAR QUE JGUADOR SE RETIRA DEL JUEGO
-
-		// QUITAR AL JUGADOR DE LA LISTA DE LOS DEMAS JUGADORES, DEL MENUPRINCIPAL
 
 	}
 
 	public void jugadorSaleDelJuego() {
 		controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
 		controlador.iniciarSiEstaListo();
-		// NOTIFICAR QUE JGUADOR SE RETIRA DEL JUEGO
-
-		// QUITAR AL JUGADOR DE LA LISTA DE LOS DEMAS JUGADORES, DEL MENUPRINCIPAL
 	}
 	
 	public void jugadorSaleDelJuegoPostPrimeraPartida() {
@@ -126,32 +114,22 @@ public class VistaGrafica implements IVista {
 		} else {
 			controlador.jugadorSeRetiraEnJuego(this.jugadorActual);
 		}
-		
-		//if (!this.comprobarPartidaComenzada()) {
-			//controlador.iniciarSiEstaListoPostPrimeraRonda();
-		//} else {
-			//System.out.println("LA PARTIDA YA COMENZO");
-			//JUGADOR SE FUE ABRUPTAMENTE DE LA PARTIDA. MARCAR LA PARTIDA COMO NO COMENZADA. VOLVER AL MENU PRINCIPAL
-		//}
 	}
 	
 	@Override
 	public void mostrarMenuPrincipal() {
 		
 		if (this.vistaJuegoCartas != null) {
-			//this.vistaJuegoCartas.ocultarBotones();
 			this.vistaJuegoCartas.setVisible(false);
 			this.vistaJuegoCartas = new VistaJuegoCartas();
 		}
 		
 		if (this.vistaApuestas != null) {
-			//this.vistaApuestas.ocultarBotones();
 			this.vistaApuestas.setVisible(false);
 			this.vistaApuestas = new VistaApuestas();
 		}
 		
 		if (this.vistaApuestas2 != null) {
-			//this.vistaApuestas2.ocultarBotones();
 			this.vistaApuestas2.setVisible(false);
 			this.vistaApuestas2 = new VistaApuestas2();
 		}
@@ -250,8 +228,6 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void mostrarJugadorMano(Jugador jugador) {
-		// this.nombreJugadorMano = jugador.getNombre();
-		// this.vistaJuegoCartas.informarJugadorMano(jugador.getNombre());
 
 		if (this.vistaJuegoCartas != null) {
 			this.vistaJuegoCartas.escribirNotificacion("Jugador mano: " + jugador.getNombre());
@@ -283,8 +259,6 @@ public class VistaGrafica implements IVista {
 		}
 
 		this.vistaApuestas.setVisible(true);
-
-		//this.vistaApuestas.mostrarBotonesApuesta();
 
 		// ESTO SE PUEDE SACAR?
 		this.vistaApuestas.informarJugadorMano(this.nombreJugadorMano);
@@ -321,16 +295,12 @@ public class VistaGrafica implements IVista {
 			this.vistaJuegoCartas.setVisible(true);
 			
 		}
-		// this.vistaJuegoCartas.notificarApuestaJugador(nombreJugadorAposto,
-		// String.valueOf(apuestaJugador));
 		this.vistaJuegoCartas.escribirNotificacion(nombreJugadorAposto + " realizo una apuesta de " + String.valueOf(apuestaJugador));
 	}
 
 	@Override
 	public void mostrarNombreDelJugadorVentana() {
-		//if (this.vistaJuegoCartas != null) {
-			this.vistaJuegoCartas.setearNombreEnLaBarra(this.jugadorActual.getNombre());
-		//}
+		this.vistaJuegoCartas.setearNombreEnLaBarra(this.jugadorActual.getNombre());
 	}
 
 	private void mostrarNombreDelJugadorVentanaApuestas() {
@@ -339,7 +309,6 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void notificarErrorIngreseUnEntero() {
-		// this.vistaApuestas.setVisible(true);
 		this.vistaApuestas.mostrarMenuEnvite();
 		this.vistaApuestas.mostrarErrorNumeroEntero();
 	}
@@ -351,7 +320,6 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void notificarApuestaMenorALaAnterior() {
-		// this.vistaApuestas.setVisible(true);
 		this.vistaApuestas.mostrarMenuEnvite();
 		this.vistaApuestas.mostrarErrorApuestaInsuficiente();
 	}
@@ -360,7 +328,6 @@ public class VistaGrafica implements IVista {
 	public void informarFondosInsuficientes() {
 
 		this.vistaApuestas.setVisible(true);
-		// this.vistaApuestas.mostrarMenuEnvite();
 		this.vistaApuestas.mostrarErrorFondosInsuficientes();
 
 	}
@@ -507,10 +474,6 @@ public class VistaGrafica implements IVista {
 		}
 
 		this.vistaApuestas2.setVisible(true);
-		//this.vistaApuestas2.mostrarBotonesApuesta();
-
-		// ESTO SE PUEDE SACAR?
-		// this.vistaApuestas2.informarJugadorMano(this.nombreJugadorMano);
 
 		this.mostrarNombreDelJugadorVentanaApuestas2();
 
@@ -548,14 +511,12 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void notificarErrorIngreseUnEnteroSegundaRonda() {
-		// this.vistaApuestas.setVisible(true);
 		this.vistaApuestas2.mostrarMenuEnvite();
 		this.vistaApuestas2.mostrarErrorNumeroEntero();
 	}
 
 	@Override
 	public void notificarApuestaMenorALaAnteriorSegundaRonda() {
-		// this.vistaApuestas.setVisible(true);
 		this.vistaApuestas2.mostrarMenuEnvite();
 		this.vistaApuestas2.mostrarErrorApuestaInsuficiente();
 	}
@@ -564,7 +525,6 @@ public class VistaGrafica implements IVista {
 	public void informarFondosInsuficientesSegundaRonda() {
 		
 		this.vistaApuestas2.setVisible(true);
-		// this.vistaApuestas.mostrarMenuEnvite();
 		this.vistaApuestas2.mostrarErrorFondosInsuficientes();
 
 	}

@@ -39,13 +39,13 @@ public class VistaTop extends JFrame {
 	private JLabel lblNombreJugador5;
 	private JLabel lblNombreJugador6;
 	private JLabel lblNombreJugador7;
-	private JLabel lblFondosJugador_1;
-	private JLabel lblFondosJugador_2;
-	private JLabel lblFondosJugador_3;
-	private JLabel lblFondosJugador_4;
-	private JLabel lblFondosJugador_5;
-	private JLabel lblFondosJugador_6;
-	private JLabel lblFondosJugador_7;
+	private JLabel lblGanadasJugador_1;
+	private JLabel lblGanadasJugador_2;
+	private JLabel lblGanadasJugador_3;
+	private JLabel lblGanadasJugador_4;
+	private JLabel lblGanadasJugador_5;
+	private JLabel lblGanadasJugador_6;
+	private JLabel lblGanadasJugador_7;
 	private JPanel panelMostrarJugadores;
 
 	public VistaTop() {
@@ -130,12 +130,12 @@ public class VistaTop extends JFrame {
 		lblNombreJugador10.setBounds(60, 0, 222, 37);
 		panelJugador_10.add(lblNombreJugador10);
 		
-		JLabel lblFondosJugador_10 = new JLabel("");
-		lblFondosJugador_10.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFondosJugador_10.setForeground(Color.WHITE);
-		lblFondosJugador_10.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		lblFondosJugador_10.setBounds(456, 0, 222, 37);
-		panelJugador_10.add(lblFondosJugador_10);
+		JLabel lblGanadasJugador_10 = new JLabel("");
+		lblGanadasJugador_10.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGanadasJugador_10.setForeground(Color.WHITE);
+		lblGanadasJugador_10.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblGanadasJugador_10.setBounds(456, 0, 222, 37);
+		panelJugador_10.add(lblGanadasJugador_10);
 		
 		JSeparator separados_jugadores_10 = new JSeparator();
 		separados_jugadores_10.setBounds(23, 35, 689, 2);
@@ -154,12 +154,12 @@ public class VistaTop extends JFrame {
 		lblNombreJugador9.setBounds(60, 0, 222, 37);
 		panelJugador_9.add(lblNombreJugador9);
 		
-		JLabel lblFondosJugador_9 = new JLabel("");
-		lblFondosJugador_9.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFondosJugador_9.setForeground(Color.WHITE);
-		lblFondosJugador_9.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		lblFondosJugador_9.setBounds(456, 0, 222, 37);
-		panelJugador_9.add(lblFondosJugador_9);
+		JLabel lblGanadasJugador_9 = new JLabel("");
+		lblGanadasJugador_9.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGanadasJugador_9.setForeground(Color.WHITE);
+		lblGanadasJugador_9.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblGanadasJugador_9.setBounds(456, 0, 222, 37);
+		panelJugador_9.add(lblGanadasJugador_9);
 		
 		JSeparator separados_jugadores_9 = new JSeparator();
 		separados_jugadores_9.setBounds(23, 35, 689, 2);
@@ -178,12 +178,12 @@ public class VistaTop extends JFrame {
 		lblNombreJugador8.setBounds(60, 0, 222, 37);
 		panelJugador_8.add(lblNombreJugador8);
 		
-		JLabel lblFondosJugador_8 = new JLabel("");
-		lblFondosJugador_8.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFondosJugador_8.setForeground(Color.WHITE);
-		lblFondosJugador_8.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		lblFondosJugador_8.setBounds(456, 0, 222, 37);
-		panelJugador_8.add(lblFondosJugador_8);
+		JLabel lblGanadasJugador_8 = new JLabel("");
+		lblGanadasJugador_8.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGanadasJugador_8.setForeground(Color.WHITE);
+		lblGanadasJugador_8.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblGanadasJugador_8.setBounds(456, 0, 222, 37);
+		panelJugador_8.add(lblGanadasJugador_8);
 		
 		JSeparator separados_jugadores_8 = new JSeparator();
 		separados_jugadores_8.setBounds(23, 35, 689, 2);
@@ -202,12 +202,12 @@ public class VistaTop extends JFrame {
 		lblNombreJugador7.setBounds(60, 0, 222, 37);
 		panelJugador_7.add(lblNombreJugador7);
 
-		lblFondosJugador_7 = new JLabel("");
-		lblFondosJugador_7.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFondosJugador_7.setForeground(Color.WHITE);
-		lblFondosJugador_7.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		lblFondosJugador_7.setBounds(456, 0, 222, 37);
-		panelJugador_7.add(lblFondosJugador_7);
+		lblGanadasJugador_7 = new JLabel("");
+		lblGanadasJugador_7.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGanadasJugador_7.setForeground(Color.WHITE);
+		lblGanadasJugador_7.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblGanadasJugador_7.setBounds(456, 0, 222, 37);
+		panelJugador_7.add(lblGanadasJugador_7);
 
 		JSeparator separados_jugadores_7 = new JSeparator();
 		separados_jugadores_7.setBounds(23, 35, 689, 2);
@@ -226,12 +226,12 @@ public class VistaTop extends JFrame {
 		lblNombreJugador6.setBounds(60, 0, 222, 37);
 		panelJugador_6.add(lblNombreJugador6);
 
-		lblFondosJugador_6 = new JLabel("");
-		lblFondosJugador_6.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFondosJugador_6.setForeground(Color.WHITE);
-		lblFondosJugador_6.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		lblFondosJugador_6.setBounds(456, 0, 222, 37);
-		panelJugador_6.add(lblFondosJugador_6);
+		lblGanadasJugador_6 = new JLabel("");
+		lblGanadasJugador_6.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGanadasJugador_6.setForeground(Color.WHITE);
+		lblGanadasJugador_6.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblGanadasJugador_6.setBounds(456, 0, 222, 37);
+		panelJugador_6.add(lblGanadasJugador_6);
 
 		JSeparator separados_jugadores_6 = new JSeparator();
 		separados_jugadores_6.setBounds(23, 35, 689, 2);
@@ -250,12 +250,12 @@ public class VistaTop extends JFrame {
 		lblNombreJugador5.setBounds(60, 0, 222, 37);
 		panelJugador_5.add(lblNombreJugador5);
 
-		lblFondosJugador_5 = new JLabel("");
-		lblFondosJugador_5.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFondosJugador_5.setForeground(Color.WHITE);
-		lblFondosJugador_5.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		lblFondosJugador_5.setBounds(456, 0, 222, 37);
-		panelJugador_5.add(lblFondosJugador_5);
+		lblGanadasJugador_5 = new JLabel("");
+		lblGanadasJugador_5.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGanadasJugador_5.setForeground(Color.WHITE);
+		lblGanadasJugador_5.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblGanadasJugador_5.setBounds(456, 0, 222, 37);
+		panelJugador_5.add(lblGanadasJugador_5);
 
 		JSeparator separados_jugadores_5 = new JSeparator();
 		separados_jugadores_5.setBounds(23, 35, 689, 2);
@@ -274,12 +274,12 @@ public class VistaTop extends JFrame {
 		lblNombreJugador4.setBounds(60, 0, 222, 37);
 		panelJugador_4.add(lblNombreJugador4);
 
-		lblFondosJugador_4 = new JLabel("");
-		lblFondosJugador_4.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFondosJugador_4.setForeground(Color.WHITE);
-		lblFondosJugador_4.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		lblFondosJugador_4.setBounds(456, 0, 222, 37);
-		panelJugador_4.add(lblFondosJugador_4);
+		lblGanadasJugador_4 = new JLabel("");
+		lblGanadasJugador_4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGanadasJugador_4.setForeground(Color.WHITE);
+		lblGanadasJugador_4.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblGanadasJugador_4.setBounds(456, 0, 222, 37);
+		panelJugador_4.add(lblGanadasJugador_4);
 
 		JSeparator separados_jugadores_4 = new JSeparator();
 		separados_jugadores_4.setBounds(23, 35, 689, 2);
@@ -298,12 +298,12 @@ public class VistaTop extends JFrame {
 		lblNombreJugador3.setBounds(60, 0, 222, 37);
 		panelJugador_3.add(lblNombreJugador3);
 
-		lblFondosJugador_3 = new JLabel("");
-		lblFondosJugador_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFondosJugador_3.setForeground(Color.WHITE);
-		lblFondosJugador_3.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		lblFondosJugador_3.setBounds(456, 0, 222, 37);
-		panelJugador_3.add(lblFondosJugador_3);
+		lblGanadasJugador_3 = new JLabel("");
+		lblGanadasJugador_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGanadasJugador_3.setForeground(Color.WHITE);
+		lblGanadasJugador_3.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblGanadasJugador_3.setBounds(456, 0, 222, 37);
+		panelJugador_3.add(lblGanadasJugador_3);
 
 		JSeparator separados_jugadores_3 = new JSeparator();
 		separados_jugadores_3.setBounds(23, 35, 689, 2);
@@ -326,12 +326,12 @@ public class VistaTop extends JFrame {
 		lblNombreJugador2.setBounds(60, 0, 222, 37);
 		panelJugador_2.add(lblNombreJugador2);
 
-		lblFondosJugador_2 = new JLabel("");
-		lblFondosJugador_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFondosJugador_2.setForeground(Color.WHITE);
-		lblFondosJugador_2.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		lblFondosJugador_2.setBounds(456, 0, 222, 37);
-		panelJugador_2.add(lblFondosJugador_2);
+		lblGanadasJugador_2 = new JLabel("");
+		lblGanadasJugador_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGanadasJugador_2.setForeground(Color.WHITE);
+		lblGanadasJugador_2.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblGanadasJugador_2.setBounds(456, 0, 222, 37);
+		panelJugador_2.add(lblGanadasJugador_2);
 
 		JPanel panelJugador_1 = new JPanel();
 		panelJugador_1.setBounds(0, 55, 743, 37);
@@ -346,12 +346,12 @@ public class VistaTop extends JFrame {
 		lblNombreJugador1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		lblNombreJugador1.setForeground(new Color(255, 255, 255));
 
-		lblFondosJugador_1 = new JLabel("");
-		lblFondosJugador_1.setBounds(456, 0, 222, 37);
-		panelJugador_1.add(lblFondosJugador_1);
-		lblFondosJugador_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFondosJugador_1.setForeground(Color.WHITE);
-		lblFondosJugador_1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblGanadasJugador_1 = new JLabel("");
+		lblGanadasJugador_1.setBounds(456, 0, 222, 37);
+		panelJugador_1.add(lblGanadasJugador_1);
+		lblGanadasJugador_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGanadasJugador_1.setForeground(Color.WHITE);
+		lblGanadasJugador_1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 
 		JSeparator separados_jugadores = new JSeparator();
 		separados_jugadores.setBounds(23, 35, 689, 2);
@@ -392,13 +392,13 @@ public class VistaTop extends JFrame {
 		this.lblNombreJugador6.setText("");
 		this.lblNombreJugador7.setText("");
 
-		this.lblFondosJugador_1.setText("");
-		this.lblFondosJugador_2.setText("");
-		this.lblFondosJugador_3.setText("");
-		this.lblFondosJugador_4.setText("");
-		this.lblFondosJugador_5.setText("");
-		this.lblFondosJugador_6.setText("");
-		this.lblFondosJugador_7.setText("");
+		this.lblGanadasJugador_1.setText("");
+		this.lblGanadasJugador_2.setText("");
+		this.lblGanadasJugador_3.setText("");
+		this.lblGanadasJugador_4.setText("");
+		this.lblGanadasJugador_5.setText("");
+		this.lblGanadasJugador_6.setText("");
+		this.lblGanadasJugador_7.setText("");
 	}
 
 	public void actualizarTabla(List<Jugador> jugadores) {
@@ -408,8 +408,8 @@ public class VistaTop extends JFrame {
 		JLabel[] labelsNombres = { lblNombreJugador1, lblNombreJugador2, lblNombreJugador3, lblNombreJugador4,
 				lblNombreJugador5, lblNombreJugador6, lblNombreJugador7 };
 
-		JLabel[] labelsFondos = { lblFondosJugador_1, lblFondosJugador_2, lblFondosJugador_3, lblFondosJugador_4,
-				lblFondosJugador_5, lblFondosJugador_6, lblFondosJugador_7 };
+		JLabel[] labelsFondos = { lblGanadasJugador_1, lblGanadasJugador_2, lblGanadasJugador_3, lblGanadasJugador_4,
+				lblGanadasJugador_5, lblGanadasJugador_6, lblGanadasJugador_7 };
 
 		for (int i = 0; i < labelsNombres.length; i++) {
 			if (i < jugadores.size()) {
