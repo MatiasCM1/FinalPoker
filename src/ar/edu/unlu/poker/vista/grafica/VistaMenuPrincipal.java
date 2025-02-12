@@ -56,7 +56,8 @@ public class VistaMenuPrincipal extends JFrame {
 	private JLabel lblMensajeErrorJugadoresInsuficientes;
 	private JLabel lblMensajeErrorJugadorSalePartida;
 	private JPanel panelMostrarJugadores;
-	
+	private JPanel panelTop10;
+
 	/*public static void main(String[] args) { EventQueue.invokeLater(new
 			  Runnable() { public void run() { try { VistaMenuPrincipal frame = new
 			  VistaMenuPrincipal(); frame.setVisible(true);
@@ -98,6 +99,35 @@ public class VistaMenuPrincipal extends JFrame {
 		panelErrores = new JPanel();
 		panelErrores.setOpaque(false);
 		panelErrores.setVisible(false);
+		
+		panelTop10 = new JPanel();
+		panelTop10.setBounds(1035, 558, 48, 43);
+		contentPane.add(panelTop10);
+		panelTop10.setLayout(null);
+		
+		JButton btnTop10 = new JButton("");
+		btnTop10.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				VistaGrafica.getInstance().pasarVistaTop();
+			}
+		});
+		btnTop10.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnTop10.setContentAreaFilled(false);
+		btnTop10.setBounds(0, 0, 48, 43);
+		panelTop10.add(btnTop10);
+		
+		JLabel lblIconoTop10 = new JLabel("");
+
+		lblIconoTop10.setIcon(new ImageIcon(getClass().getResource("/logoTop.png")));
+		lblIconoTop10.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIconoTop10.setBounds(5, 5, 38, 33);
+		panelTop10.add(lblIconoTop10);
+		
+		JLabel lblFondoMaderaBtnTop = new JLabel("");
+		lblFondoMaderaBtnTop.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
+		lblFondoMaderaBtnTop.setBounds(0, 0, 48, 43);
+		panelTop10.add(lblFondoMaderaBtnTop);
 		panelErrores.setBounds(332, 160, 472, 228);
 		contentPane.add(panelErrores);
 		panelErrores.setLayout(null);
@@ -117,6 +147,7 @@ public class VistaMenuPrincipal extends JFrame {
 				lblMensajeErrorJugadoresInsuficientes.setVisible(false);
 				lblMensajeErrorJugadorSalePartida.setVisible(false);
 				panelMostrarJugadores.setVisible(true);
+				panelTop10.setVisible(true);
 				VistaGrafica.getInstance().jugadorNoListo();
 				panelBotones.setVisible(true);
 			}
@@ -734,6 +765,8 @@ public class VistaMenuPrincipal extends JFrame {
 		
 		this.panelMostrarJugadores.setVisible(false);
 		
+		this.panelTop10.setVisible(false);
+		
 		this.panelErrores.setVisible(true);
 		this.lblMensajeErrorNumeroEntero.setVisible(true);
 	}
@@ -745,6 +778,7 @@ public class VistaMenuPrincipal extends JFrame {
 	public void mostrarErrorFondosInsuficientesParaComenzar() {
 		this.panelBotones.setVisible(false);
 		this.panelMostrarJugadores.setVisible(false);
+		this.panelTop10.setVisible(false);
 		this.panelErrores.setVisible(true);
 		this.lblMensajeErrorFondosInsuficientes.setVisible(true);
 	}
@@ -752,6 +786,7 @@ public class VistaMenuPrincipal extends JFrame {
 	public void mostrarErrorJugadoresInsuficientes() {
 		this.panelBotones.setVisible(false);
 		this.panelMostrarJugadores.setVisible(false);
+		this.panelTop10.setVisible(false);
 		this.panelErrores.setVisible(true);
 		this.lblMensajeErrorJugadoresInsuficientes.setVisible(true);
 	}
@@ -759,6 +794,7 @@ public class VistaMenuPrincipal extends JFrame {
 	public void mostrarErrorJugadorSaleDeLaJuego() {
 		this.panelBotones.setVisible(false);
 		this.panelMostrarJugadores.setVisible(false);
+		this.panelTop10.setVisible(false);
 		this.panelErrores.setVisible(true);
 		this.lblMensajeErrorJugadorSalePartida.setVisible(true);
 	}

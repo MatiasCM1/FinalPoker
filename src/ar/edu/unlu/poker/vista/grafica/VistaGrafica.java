@@ -20,6 +20,7 @@ public class VistaGrafica implements IVista {
 	private VistaJuegoCartas vistaJuegoCartas;
 	private VistaApuestas vistaApuestas;
 	private VistaApuestas2 vistaApuestas2;
+	private VistaTop vistaTop;
 	private String nombreJugadorMano;
 	private static VistaGrafica instancia;
 
@@ -451,9 +452,17 @@ public class VistaGrafica implements IVista {
 
 	public void volverMenuPrincipal() {
 
-		this.vistaJuegoCartas.setVisible(false);
+		if (this.vistaJuegoCartas != null) {
+			this.vistaJuegoCartas.setVisible(false);
+		}
+		
+		if (this.vistaTop != null) {
+			this.vistaTop.setVisible(false);
+		}
+		
 		controlador.establecerJugadorComoNoListo(this.jugadorActual);
 		this.actualizarTablaJugadores(getJugadoresMesa());
+		
 		this.vistaMenuPrincipal.setVisible(true);
 
 	}
@@ -610,6 +619,14 @@ public class VistaGrafica implements IVista {
 		}	
 		
 		this.vistaJuegoCartas.mostrarErrorJugadoresInsuficientes();
+	}
+	
+	public void pasarVistaTop() {
+		this.vistaMenuPrincipal.setVisible(false);
+		if (this.vistaTop == null) {
+			this.vistaTop = new VistaTop();
+		}
+		this.vistaTop.setVisible(true);
 	}
 	
 	@Override
