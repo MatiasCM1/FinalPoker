@@ -71,32 +71,7 @@ public class Mesa extends ObservableRemoto implements IMesa {
 			return;
 		}
 
-		this.jugadorQuePaso = null;
-		
-		this.comenzoPartida = true;
-
-		this.jugadoresMesa.forEach(jugador -> jugador.setEnJuego(true));
-		this.jugadoresMesa.forEach(jugador -> jugador.setApuesta(0));
-		this.jugadoresMesa.forEach(jugador -> jugador.setHaApostado(false));
-		this.jugadoresApuestaInsuficiente.clear();
-		this.jugadoresMesa.forEach(Jugador::resetearCartas);// HAGO ESTO PARA QUE CADA RONDA TENGAN DIFERENTES CARTAS
-		this.inicializarCartasADescartar();
-		this.rondaApuesta.clear();
-		this.rondaApuestaAux.clear();
-		this.mapa.clear();
-		this.dealer = new Dealer(this);
-		this.pozo = 0;
-
-		this.dealer.determinarJugadorMano();
-
-		this.jugadorMano = this.jugadoresMesa.poll();
-		this.jugadorTurno = this.jugadorMano;
-		this.jugadoresMesa.add(this.jugadorMano);
-
-		this.apuestaMayor = 0;
-
-		mazo = new Mazo();
-		mazo.setearCartasRonda();
+		this.prepararMesaParaIniciarPartida();
 
 		this.notificarObservadores(Informe.ESTABLECER_NOMBRE_VENTANA_JUGADOR);
 
@@ -124,13 +99,46 @@ public class Mesa extends ObservableRemoto implements IMesa {
 			this.jugadoresMesa.peek().setListoParaIniciar(false);
 		}
 	}
+	
+	private void prepararMesaParaIniciarPartida() throws RemoteException {
+		
+		this.jugadorQuePaso = null;
+		
+		this.comenzoPartida = true;
+
+		this.jugadoresMesa.forEach(jugador -> jugador.setEnJuego(true));
+		this.jugadoresMesa.forEach(jugador -> jugador.setApuesta(0));
+		this.jugadoresMesa.forEach(jugador -> jugador.setHaApostado(false));
+		this.jugadoresApuestaInsuficiente.clear();
+		this.jugadoresMesa.forEach(Jugador::resetearCartas);// HAGO ESTO PARA QUE CADA RONDA TENGAN DIFERENTES CARTAS
+		this.inicializarCartasADescartar();
+		this.rondaApuesta.clear();
+		this.rondaApuestaAux.clear();
+		this.mapa.clear();
+		this.dealer = new Dealer(this);
+		this.pozo = 0;
+
+		this.dealer.determinarJugadorMano();
+
+		this.jugadorMano = this.jugadoresMesa.poll();
+		this.jugadorTurno = this.jugadorMano;
+		this.jugadoresMesa.add(this.jugadorMano);
+
+		this.apuestaMayor = 0;
+
+		mazo = new Mazo();
+		mazo.setearCartasRonda();
+		
+	}
 
 //---------------------------------------------------------------------------------------------------------------------------
 //PRIMERA RONDA APUESTAS
 
 	@Override
 	public void realizarApuesta(Jugador jugador, int apuesta) throws RemoteException {
+		
 		if (esJugadorTurno(jugador)) {
+			
 			if (comprobarFondos(jugador, apuesta)) {
 				this.restarFondosAgregarApuestaJugador(this.jugadorTurno, apuesta);
 				if (apuesta > this.apuestaMayor) {
