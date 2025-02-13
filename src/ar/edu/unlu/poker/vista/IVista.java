@@ -23,9 +23,9 @@ public interface IVista {
 	void mostrarGanador(Jugador ganador);
 
 	void iniciar();
-	
+
 	void mostrarMenuApuestas();
-	
+
 	void informarFondosInsuficientes();
 
 	void notificarEnviteRealizado();
@@ -34,13 +34,13 @@ public interface IVista {
 
 	void informarNoTurno();
 
-	void informarTurnoApuestaOtroJugador();
+	void informarTurnoApuestaOtroJugador(String nombreJugador);
 
 	void notificarApuestasDesiguales();
 
 	void notificarJugadorIgualaApuesta();
 
-	void notificarJugadorPasaApuesta();
+	void notificarJugadorPasaApuesta(String nombreJugador);
 
 	void notificarEsperarJugadorIgualeApuesta();
 
@@ -48,7 +48,7 @@ public interface IVista {
 
 	void notificarApuestaMenorALaAnterior();
 
-	void notificarEsperarDescartes();
+	void notificarEsperarDescartes(String nombreJugador);
 
 	void mostrarMenuDescartes();
 
@@ -58,18 +58,46 @@ public interface IVista {
 
 	void mostrarMenuSegundaRondaApuestas();
 
-	void notificarGanador(String nombre);
+	void notificarGanadorUnicoEnMesa(String nombre);
 
 	void notificarJugadorManoDebeApostar();
 
 	void notificarApuestasDesigualesSegundaRonda();
-	
+
 	void notificarErrorIngreseUnEntero();
-	
-	void mostrarOpcionesMenuEmpezarOtraRonda() ;
-	
+
+	void mostrarOpcionesMenuEmpezarOtraRonda();
+
 	void setEnableCampoEntrada(boolean h);
-	
+
 	void mostrarOpcionesMenu();
+
+	void actualizarTablaJugadores(List<Jugador> jugadores);
+
+	void mostrarNombreDelJugadorVentana();
+
+	void limpiarNotificaciones();
+
+	void notificarErrorIngreseUnEnteroSegundaRonda();
+
+	void notificarApuestaMenorALaAnteriorSegundaRonda();
+
+	void informarFondosInsuficientesSegundaRonda();
+
+	void notificarErrorIngreseUnEnteroAgregandoNuevosFondos();
+
+	void jugadorPasaQuedaFuera();
+
+	void mostrarFondosInsuficientesParaComenzar();
+
+	void mostrarFondosInsuficientesParaComenzarPostPrimerPartido();
+
+	void informarJugadoresInsuficientesPostPrimerPartido();
+
+	void mostrarErrorJugadoresInsuficientes();
+
+	void mostrarMenuPrincipal();
+
+	void mostrarErrorSalidaJugador();
 
 }

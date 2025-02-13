@@ -19,20 +19,22 @@ public interface IMesa extends IObservableRemoto {
 
 	List<Jugador> getJugadoresMesa() throws RemoteException;
 
-	List<Jugador> devolverGanador() throws RemoteException;
-	
+	// List<Jugador> devolverGanador() throws RemoteException;
+
+	Jugador devolverGanador() throws RemoteException;
+
 	Jugador getJugadorMano() throws RemoteException;
 
 	void sacarJugador(Jugador jugador) throws RemoteException;
-	
+
 	Jugador getJugadorTurno() throws RemoteException;
-	
-	void realizarApuesta(Jugador jugador, int apuesta)  throws RemoteException;
-	
+
+	void realizarApuesta(Jugador jugador, int apuesta) throws RemoteException;
+
 	int getApuestaJugador(Jugador jugador) throws RemoteException;
 
 	void jugadorFichaPostEnvite(Jugador jugador) throws RemoteException;
-	
+
 	void jugadorPasaPostEnvite(Jugador jugador) throws RemoteException;
 
 	boolean perteneceJugadorApuestaMenor(Jugador jugador) throws RemoteException;
@@ -40,7 +42,7 @@ public interface IMesa extends IObservableRemoto {
 	void mirarSiDevolverResultados() throws RemoteException;
 
 	void jugadorPasa(Jugador jugador) throws RemoteException;
-	
+
 	public void agregarCartasADescartar(int posicionCarta, Jugador jugador) throws RemoteException;
 
 	void realizarElDescarte(Jugador jugador) throws RemoteException;
@@ -56,7 +58,7 @@ public interface IMesa extends IObservableRemoto {
 	void jugadorPasaPostEnviteSegundaRonda(Jugador jugador) throws RemoteException;
 
 	List<Jugador> getRondaApuestaAux() throws RemoteException;
-	
+
 	void darFondosGanador(Jugador jugador) throws RemoteException;
 
 	void agregarNuevosFondos(Jugador jugador, int fondoAgregar) throws RemoteException;
@@ -64,5 +66,23 @@ public interface IMesa extends IObservableRemoto {
 	boolean isPrimeraRonda() throws RemoteException;
 
 	void setPrimeraRonda(boolean primeraRonda) throws RemoteException;
+
+	void removerJugadores(Jugador jugador) throws RemoteException;
+
+	void marcarComoListoParaIniciar(Jugador jugador) throws RemoteException;
+
+	void marcarComoNoListoParaIniciar(Jugador jugador) throws RemoteException;
 	
+	int buscarApuestaMayorEnElMapa() throws RemoteException;
+
+	Jugador getJugadorPasa() throws RemoteException;
+	
+	void setComenzoPartida(boolean comenzo) throws RemoteException;
+	
+	boolean getComenzoPartida() throws RemoteException;
+
+	void devolverFondos() throws RemoteException;
+
+	void removerJugadorSeRetiraEnJuego(Jugador jugador) throws RemoteException;
+
 }

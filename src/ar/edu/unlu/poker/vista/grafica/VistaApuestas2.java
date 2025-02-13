@@ -27,10 +27,9 @@ import javax.swing.ScrollPaneConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
-
 import java.awt.Cursor;
 
-public class VistaApuestas extends JFrame {
+public class VistaApuestas2 extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -58,12 +57,12 @@ public class VistaApuestas extends JFrame {
 	private boolean apuestasDesiguales;
 	
 	/*public static void main(String[] args) { EventQueue.invokeLater(new
-			  Runnable() { public void run() { try { VistaApuestas frame = new
-			  VistaApuestas(); frame.setVisible(true);
+			  Runnable() { public void run() { try { VistaApuestas2 frame = new
+			  VistaApuestas2(); frame.setVisible(true);
 			  
 			  } catch (Exception e) { e.printStackTrace(); } } }); }*/
 
-	public VistaApuestas() {
+	public VistaApuestas2() {
 		setUndecorated(true);
 		setForeground(new Color(255, 255, 255));
 		setResizable(false);
@@ -100,7 +99,6 @@ public class VistaApuestas extends JFrame {
 				panelApuestasDesiguales.setVisible(false);
 				
 						panelErrores = new JPanel();
-						panelErrores.setVisible(false);
 						panelErrores.setBounds(265, 159, 360, 187);
 						contentPane.add(panelErrores);
 						panelErrores.setLayout(null);
@@ -128,7 +126,7 @@ public class VistaApuestas extends JFrame {
 										lblErrorJugadorManoEnvita.setVisible(false);
 										panelBtnApuestas.setVisible(true);
 										if (apuestasDesiguales) {
-											mostrarMenuApuestaDesigual();
+											mostrarMenuApuestaDesigual(); 
 										}
 									}
 								});
@@ -165,11 +163,12 @@ public class VistaApuestas extends JFrame {
 																lblErrorNumeroEntero.setBounds(10, 86, 340, 37);
 																panelErrores.add(lblErrorNumeroEntero);
 																
-																		lblFondoNegroErrores = new JLabel("New label");
+																		lblFondoNegroErrores = new JLabel("");
 																		lblFondoNegroErrores.setVisible(false);
 																		lblFondoNegroErrores.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 																		lblFondoNegroErrores
 																				.setIcon(new ImageIcon(getClass().getResource("/fondoNegro.jpg")));
+																		
 																		lblFondoNegroErrores.setBounds(10, 86, 340, 37);
 																		panelErrores.add(lblFondoNegroErrores);
 																		btnSalirVentanaErrores.setContentAreaFilled(false);
@@ -192,6 +191,7 @@ public class VistaApuestas extends JFrame {
 																						panelErrores.add(lblFondoMaderaErrores);
 																						lblFondoMaderaErrores
 																								.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
+																						panelErrores.setVisible(false);
 				panelApuestasDesiguales.setBounds(298, 181, 309, 147);
 				contentPane.add(panelApuestasDesiguales);
 				panelApuestasDesiguales.setLayout(null);
@@ -214,7 +214,7 @@ public class VistaApuestas extends JFrame {
 							public void mouseClicked(MouseEvent e) {
 								panelApuestasDesiguales.setVisible(false);
 								//panelBtnApuestas.setVisible(true);
-								VistaGrafica.getInstance().realizarFichePostEnvite();
+								VistaGrafica.getInstance().realizarFicharPostEnviteSegundaRonda();
 							}
 						});
 						
@@ -236,7 +236,7 @@ public class VistaApuestas extends JFrame {
 									public void mouseClicked(MouseEvent e) {
 										panelApuestasDesiguales.setVisible(false);
 										//panelBtnApuestas.setVisible(true);
-										VistaGrafica.getInstance().realizarPasarPostEnvite();
+										VistaGrafica.getInstance().realizarPasePostEnviteSegundaRonda();
 									}
 								});
 								btnPasarApuestasDesiguales.setBounds(167, 60, 111, 35);
@@ -248,7 +248,8 @@ public class VistaApuestas extends JFrame {
 								btnPasarApuestasDesiguales.setBackground(new Color(255, 255, 255, 100));
 								
 										JLabel lblFondoBtnPasar = new JLabel("");
-										lblFondoBtnPasar.setIcon(new ImageIcon(getClass().getResource("/cartelMadera4.png")));
+										lblFondoBtnPasar
+												.setIcon(new ImageIcon(getClass().getResource("/cartelMadera4.png")));
 										lblFondoBtnPasar.setHorizontalAlignment(SwingConstants.CENTER);
 										lblFondoBtnPasar.setBounds(167, 60, 111, 35);
 										panelApuestasDesiguales.add(lblFondoBtnPasar);
@@ -276,7 +277,7 @@ public class VistaApuestas extends JFrame {
 														
 																JLabel lblFondoMaderaApuestasDesiguales = new JLabel("");
 																lblFondoMaderaApuestasDesiguales
-																		.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
+																		.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
 																lblFondoMaderaApuestasDesiguales.setBounds(0, 0, 309, 147);
 																panelApuestasDesiguales.add(lblFondoMaderaApuestasDesiguales);
 		panelRealizarEnvite.setBounds(298, 181, 309, 147);
@@ -308,7 +309,7 @@ public class VistaApuestas extends JFrame {
 
 				panelBtnApuestas.setVisible(true);
 
-				VistaGrafica.getInstance().realizarEnvite(txtFieldCantidadApuesta.getText());
+				VistaGrafica.getInstance().realizarEnvitarSegundaRonda(txtFieldCantidadApuesta.getText());
 
 				txtFieldCantidadApuesta.setText("");
 				// VistaGrafica.getInstance().notificarEnviteRealizado(txtFieldCantidadApuesta.getText());
@@ -497,7 +498,7 @@ public class VistaApuestas extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				VistaGrafica.getInstance().realizarFiche();
+				VistaGrafica.getInstance().realizarFicharSegundaRonda();
 
 			}
 		});
@@ -534,7 +535,7 @@ public class VistaApuestas extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				VistaGrafica.getInstance().realizarPase();
+				VistaGrafica.getInstance().realizarPasarSegundaRonda();
 			}
 		});
 		btnPase.setContentAreaFilled(false);
@@ -665,13 +666,16 @@ public class VistaApuestas extends JFrame {
 		this.panelRealizarEnvite.setVisible(true);
 	}
 
+	public void mostrarBotonesApuesta() {
+		this.panelBtnApuestas.setVisible(true);
+	}
+
 	public void mostrarErrorNumeroEntero() {
 		if (this.panelApuestasDesiguales.isVisible()) {
 			this.apuestasDesiguales = true;
 			this.panelApuestasDesiguales.setVisible(false);
 
 		}
-		this.panelBtnApuestas.setVisible(false);
 		this.panelRealizarEnvite.setVisible(false);
 		this.panelErrores.setVisible(true);
 		this.lblFondoNegroErrores.setVisible(true);
@@ -720,8 +724,5 @@ public class VistaApuestas extends JFrame {
 		this.apuestasDesiguales = false;
 		this.panelApuestasDesiguales.setVisible(true);
 	}
-
-	public void mostrarBotonesApuesta() {
-		this.panelBtnApuestas.setVisible(true);
-	}
+	
 }
