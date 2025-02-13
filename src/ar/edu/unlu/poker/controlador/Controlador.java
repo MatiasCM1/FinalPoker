@@ -190,11 +190,11 @@ public class Controlador implements IControladorRemoto {
 		case RONDA_APUESTAS_TERMINADA_SEGUNDA_RONDA:
 			if (!this.estoyEnVistaLogin) {
 				if (mesa.getRondaApuestaAux().size() == 1) {
-					Jugador ganador = mesa.getRondaApuesta().getFirst();
+					Jugador ganador = mesa.getRondaApuestaAux().getFirst();
 					vista.notificarGanadorUnicoEnMesa(ganador.getNombre());
 					if (this.isJugadorTurno()) {
 						this.registrarVictoria(ganador);
-						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
+						mesa.darFondosGanador(ganador);
 					}
 					
 					mesa.setComenzoPartida(false);
