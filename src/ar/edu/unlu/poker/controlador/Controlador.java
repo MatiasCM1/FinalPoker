@@ -9,6 +9,8 @@ import ar.edu.unlu.poker.modelo.Carta;
 import ar.edu.unlu.poker.modelo.IMesa;
 import ar.edu.unlu.poker.modelo.Informe;
 import ar.edu.unlu.poker.modelo.Jugador;
+import ar.edu.unlu.poker.serializacion.Serializador;
+import ar.edu.unlu.poker.serializacion.stats.EstadisticasJugador;
 import ar.edu.unlu.poker.vista.IVista;
 import ar.edu.unlu.poker.vista.consola.Estados;
 import ar.edu.unlu.rmimvc.cliente.IControladorRemoto;
@@ -58,6 +60,7 @@ public class Controlador implements IControladorRemoto {
 			if (!this.estoyEnVistaLogin) {
 				Jugador ganador = ((IMesa) modelo).devolverGanador();
 				if (this.isJugadorTurno()) {
+					this.registrarVictoria(ganador);
 					mesa.darFondosGanador(ganador);
 				}
 				
@@ -161,8 +164,10 @@ public class Controlador implements IControladorRemoto {
 		case RONDA_APUESTAS_TERMINADA:
 			if (!this.estoyEnVistaLogin) {
 				if (mesa.getRondaApuesta().size() == 1) {
-					vista.notificarGanadorUnicoEnMesa(mesa.getRondaApuesta().getFirst().getNombre());
+					Jugador ganador = mesa.getRondaApuesta().getFirst();
+					vista.notificarGanadorUnicoEnMesa(ganador.getNombre());
 					if (this.isJugadorTurno()) {
+						this.registrarVictoria(ganador);
 						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
 					}
 					
@@ -185,8 +190,10 @@ public class Controlador implements IControladorRemoto {
 		case RONDA_APUESTAS_TERMINADA_SEGUNDA_RONDA:
 			if (!this.estoyEnVistaLogin) {
 				if (mesa.getRondaApuestaAux().size() == 1) {
-					vista.notificarGanadorUnicoEnMesa(mesa.getRondaApuestaAux().getFirst().getNombre());
+					Jugador ganador = mesa.getRondaApuesta().getFirst();
+					vista.notificarGanadorUnicoEnMesa(ganador.getNombre());
 					if (this.isJugadorTurno()) {
+						this.registrarVictoria(ganador);
 						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
 					}
 					
@@ -218,8 +225,10 @@ public class Controlador implements IControladorRemoto {
 		case SEGUNDA_RONDA_APUESTAS:
 			if (!this.estoyEnVistaLogin) {
 				if (mesa.getRondaApuesta().size() == 1) {
-					vista.notificarGanadorUnicoEnMesa(mesa.getRondaApuesta().getFirst().getNombre());
+					Jugador ganador = mesa.getRondaApuesta().getFirst();
+					vista.notificarGanadorUnicoEnMesa(ganador.getNombre());
 					if (this.isJugadorTurno()) {
+						this.registrarVictoria(ganador);
 						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
 					}	
 					
@@ -837,6 +846,43 @@ public class Controlador implements IControladorRemoto {
 
 	public void setEstoyEnVistaLogin(boolean estoyEnVistaLogin) {
 		this.estoyEnVistaLogin = estoyEnVistaLogin;
+	}
+	
+	public void registrarVictoria(Jugador jugadorGanador) {
+		
+		//Cargo estadisticas anteriores
+		List<EstadisticasJugador> jugadores = Serializador.cargarEstadisticas();
+		
+		//Incremento o creo una estadistica para el ganador
+		boolean flag = false;
+		for (EstadisticasJugador j : jugadores) {
+			if (j.getNombreJugador().equals(jugadorGanador.getNombre())) {
+				j.incrementarCantidadPartidasGanadas();
+				flag = true;
+				break;
+			}
+		}
+		//Si no se encuentra al jugador, creo una nueva estadisticas para este jugador
+		if (!flag) {
+			EstadisticasJugador nuevoJugador = new EstadisticasJugador(jugadorGanador.getNombre());
+			nuevoJugador.incrementarCantidadPartidasGanadas();
+			jugadores.add(nuevoJugador);
+		}
+		
+		//Persistir los cambios
+		Serializador.guardarEstadisticas(new EstadisticasJugador(jugadorGanador.getNombre()));
+		
+	}
+	
+	public List<EstadisticasJugador> obtenerTopJugadores(){
+		
+		List<EstadisticasJugador> jugadores = Serializador.cargarEstadisticas();
+		
+		//Ordenar lista
+		jugadores.sort((a, b) -> Integer.compare(b.getCantPartidasGanadas(), a.getCantPartidasGanadas()));
+		
+		return jugadores.subList(0, Math.min(jugadores.size(), 10));
+		
 	}
 
 }

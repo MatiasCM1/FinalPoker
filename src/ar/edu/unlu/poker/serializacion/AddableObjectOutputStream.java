@@ -1,4 +1,4 @@
-package ar.edu.unlu.poker.serializacion.services;
+package ar.edu.unlu.poker.serializacion;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;

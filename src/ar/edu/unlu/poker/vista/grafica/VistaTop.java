@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import ar.edu.unlu.poker.modelo.Jugador;
+import ar.edu.unlu.poker.serializacion.stats.EstadisticasJugador;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -47,6 +48,12 @@ public class VistaTop extends JFrame {
 	private JLabel lblGanadasJugador_6;
 	private JLabel lblGanadasJugador_7;
 	private JPanel panelMostrarJugadores;
+	private JLabel lblGanadasJugador;
+	private JLabel lblNombreJugador8;
+	private JLabel lblGanadasJugador_8;
+	private JLabel lblNombreJugador9;
+	private JLabel lblGanadasJugador_9;
+	private JLabel lblNombreJugador10;
 
 	public VistaTop() {
 		setUndecorated(true);
@@ -123,19 +130,19 @@ public class VistaTop extends JFrame {
 		panelJugador_10.setBounds(0, 378, 743, 37);
 		panelMostrarJugadores.add(panelJugador_10);
 		
-		JLabel lblNombreJugador10 = new JLabel("");
+		lblNombreJugador10 = new JLabel("");
 		lblNombreJugador10.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreJugador10.setForeground(Color.WHITE);
 		lblNombreJugador10.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		lblNombreJugador10.setBounds(60, 0, 222, 37);
 		panelJugador_10.add(lblNombreJugador10);
 		
-		JLabel lblGanadasJugador_10 = new JLabel("");
-		lblGanadasJugador_10.setHorizontalAlignment(SwingConstants.CENTER);
-		lblGanadasJugador_10.setForeground(Color.WHITE);
-		lblGanadasJugador_10.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		lblGanadasJugador_10.setBounds(456, 0, 222, 37);
-		panelJugador_10.add(lblGanadasJugador_10);
+		lblGanadasJugador_9 = new JLabel("");
+		lblGanadasJugador_9.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGanadasJugador_9.setForeground(Color.WHITE);
+		lblGanadasJugador_9.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblGanadasJugador_9.setBounds(456, 0, 222, 37);
+		panelJugador_10.add(lblGanadasJugador_9);
 		
 		JSeparator separados_jugadores_10 = new JSeparator();
 		separados_jugadores_10.setBounds(23, 35, 689, 2);
@@ -147,19 +154,19 @@ public class VistaTop extends JFrame {
 		panelJugador_9.setBounds(0, 340, 743, 37);
 		panelMostrarJugadores.add(panelJugador_9);
 		
-		JLabel lblNombreJugador9 = new JLabel("");
+		lblNombreJugador9 = new JLabel("");
 		lblNombreJugador9.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreJugador9.setForeground(Color.WHITE);
 		lblNombreJugador9.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		lblNombreJugador9.setBounds(60, 0, 222, 37);
 		panelJugador_9.add(lblNombreJugador9);
 		
-		JLabel lblGanadasJugador_9 = new JLabel("");
-		lblGanadasJugador_9.setHorizontalAlignment(SwingConstants.CENTER);
-		lblGanadasJugador_9.setForeground(Color.WHITE);
-		lblGanadasJugador_9.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		lblGanadasJugador_9.setBounds(456, 0, 222, 37);
-		panelJugador_9.add(lblGanadasJugador_9);
+		lblGanadasJugador_8 = new JLabel("");
+		lblGanadasJugador_8.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGanadasJugador_8.setForeground(Color.WHITE);
+		lblGanadasJugador_8.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblGanadasJugador_8.setBounds(456, 0, 222, 37);
+		panelJugador_9.add(lblGanadasJugador_8);
 		
 		JSeparator separados_jugadores_9 = new JSeparator();
 		separados_jugadores_9.setBounds(23, 35, 689, 2);
@@ -171,19 +178,19 @@ public class VistaTop extends JFrame {
 		panelJugador_8.setBounds(0, 303, 743, 37);
 		panelMostrarJugadores.add(panelJugador_8);
 		
-		JLabel lblNombreJugador8 = new JLabel("");
+		lblNombreJugador8 = new JLabel("");
 		lblNombreJugador8.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreJugador8.setForeground(Color.WHITE);
 		lblNombreJugador8.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		lblNombreJugador8.setBounds(60, 0, 222, 37);
 		panelJugador_8.add(lblNombreJugador8);
 		
-		JLabel lblGanadasJugador_8 = new JLabel("");
-		lblGanadasJugador_8.setHorizontalAlignment(SwingConstants.CENTER);
-		lblGanadasJugador_8.setForeground(Color.WHITE);
-		lblGanadasJugador_8.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		lblGanadasJugador_8.setBounds(456, 0, 222, 37);
-		panelJugador_8.add(lblGanadasJugador_8);
+		lblGanadasJugador = new JLabel("");
+		lblGanadasJugador.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGanadasJugador.setForeground(Color.WHITE);
+		lblGanadasJugador.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblGanadasJugador.setBounds(456, 0, 222, 37);
+		panelJugador_8.add(lblGanadasJugador);
 		
 		JSeparator separados_jugadores_8 = new JSeparator();
 		separados_jugadores_8.setBounds(23, 35, 689, 2);
@@ -382,45 +389,32 @@ public class VistaTop extends JFrame {
 		lblImagenFondoVerde.setIcon(new ImageIcon(getClass().getResource("/FondoVerdeInicio.jpg")));
 		contentPane.add(lblImagenFondoVerde);
 	}
+	
+	public void actualizarTabla(List<EstadisticasJugador> listaJugadores) {
+		
+		JLabel[] lblNombreJugador = {lblNombreJugador1, lblNombreJugador2, lblNombreJugador3, 
+                lblNombreJugador4, lblNombreJugador5, lblNombreJugador6, 
+                lblNombreJugador7, lblNombreJugador8, lblNombreJugador9, 
+                lblNombreJugador10};
 
-	private void setearLabelsTablaJugadores() {
-		this.lblNombreJugador1.setText("");
-		this.lblNombreJugador2.setText("");
-		this.lblNombreJugador3.setText("");
-		this.lblNombreJugador4.setText("");
-		this.lblNombreJugador5.setText("");
-		this.lblNombreJugador6.setText("");
-		this.lblNombreJugador7.setText("");
-
-		this.lblGanadasJugador_1.setText("");
-		this.lblGanadasJugador_2.setText("");
-		this.lblGanadasJugador_3.setText("");
-		this.lblGanadasJugador_4.setText("");
-		this.lblGanadasJugador_5.setText("");
-		this.lblGanadasJugador_6.setText("");
-		this.lblGanadasJugador_7.setText("");
-	}
-
-	public void actualizarTabla(List<Jugador> jugadores) {
-
-		this.setearLabelsTablaJugadores();
-
-		JLabel[] labelsNombres = { lblNombreJugador1, lblNombreJugador2, lblNombreJugador3, lblNombreJugador4,
-				lblNombreJugador5, lblNombreJugador6, lblNombreJugador7 };
-
-		JLabel[] labelsFondos = { lblGanadasJugador_1, lblGanadasJugador_2, lblGanadasJugador_3, lblGanadasJugador_4,
-				lblGanadasJugador_5, lblGanadasJugador_6, lblGanadasJugador_7 };
-
-		for (int i = 0; i < labelsNombres.length; i++) {
-			if (i < jugadores.size()) {
-				Jugador jugador = jugadores.get(i);
-				labelsNombres[i].setText(jugador.getNombre());
-				labelsFondos[i].setText(String.valueOf(jugador.getFondo()));
-			} else {
-				labelsNombres[i].setText("");
-				labelsFondos[i].setText("");
-			}
+		JLabel[] lblVictoriasJugador = {lblGanadasJugador_1, lblGanadasJugador_2, lblGanadasJugador_3, 
+                  lblGanadasJugador_4, lblGanadasJugador_5, lblGanadasJugador_6, 
+                  lblGanadasJugador_7, lblGanadasJugador_8, lblGanadasJugador_9, 
+                  lblGanadasJugador_9};
+		
+		//Limpiar labels
+		for (int i = 0; i < 10; i++) {
+	        lblNombreJugador[i].setText("");
+	        lblVictoriasJugador[i].setText("");
+	    }
+		
+		//Lleno la tabla
+		for (int i = 0; i < listaJugadores.size() && i < 10; i++) {
+			lblNombreJugador[i].setText(listaJugadores.get(i).getNombreJugador());
+			lblVictoriasJugador[i].setText(String.valueOf(listaJugadores.get(i).getCantPartidasGanadas()));
 		}
+		
 	}
+
 }
 

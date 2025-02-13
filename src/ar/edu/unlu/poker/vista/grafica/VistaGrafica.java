@@ -586,6 +586,9 @@ public class VistaGrafica implements IVista {
 		if (this.vistaTop == null) {
 			this.vistaTop = new VistaTop();
 		}
+		
+		this.vistaTop.actualizarTabla(this.controlador.obtenerTopJugadores());
+		
 		this.vistaTop.setVisible(true);
 	}
 	
