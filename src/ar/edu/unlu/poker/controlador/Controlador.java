@@ -870,7 +870,7 @@ public class Controlador implements IControladorRemoto {
 		}
 		
 		//Persistir los cambios
-		Serializador.guardarEstadisticas(new EstadisticasJugador(jugadorGanador.getNombre()));
+		Serializador.guardarEstadisticas(jugadores);
 		
 	}
 	

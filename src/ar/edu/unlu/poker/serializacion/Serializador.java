@@ -18,60 +18,29 @@ public class Serializador {
 	
 	private static final String ARCHIVO = "estadisticasJugadores.dat";
 	
-	public static void guardarEstadisticas(EstadisticasJugador jugador) {
+	public static void guardarEstadisticas(List<EstadisticasJugador> jugadores) {
 		
-		List<EstadisticasJugador> jugadores = cargarEstadisticas();
-		
-		//Buscar si el jugador esta registrado
-		boolean flag = false;
-		
-		for (EstadisticasJugador j : jugadores) {
-			if (j.getNombreJugador().equals(jugador.getNombreJugador())) {
-				j.incrementarCantidadPartidasGanadas();
-				flag = true;
-				break;
-			}
-		}
-		
-		if (!flag) {
-			jugadores.add(jugador); //SI NO ESTA EN LA LISTA, SE AGREGA
-		}
-		
-		//Guardar datos en el archivo
-		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(ARCHIVO))){
-			for (EstadisticasJugador j : jugadores) {
-				out.writeObject(j);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		 try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO))) {
+	            oos.writeObject(jugadores);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static List<EstadisticasJugador> cargarEstadisticas(){
 		
-		List<EstadisticasJugador> jugadores = new ArrayList<>();
-		
 		File archivo = new File(ARCHIVO);
-		
-		if (!archivo.exists()) {
-			return jugadores; //No hay datos guardados
-		}
-		
-		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(archivo))){
-			while (true) {
-				try {
-					EstadisticasJugador jugador = (EstadisticasJugador) in.readObject();
-					jugadores.add(jugador);
-				} catch (EOFException e) {
-					break;
-				}
-			}
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		return jugadores;
+        if (!archivo.exists()) {
+            return new ArrayList<>(); // Si el archivo no existe, devolvemos una lista vacía
+        }
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ARCHIVO))) {
+            return (List<EstadisticasJugador>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return new ArrayList<>(); // Si hay un error, devolvemos una lista vacía
+        }
 		
 	}
 	
