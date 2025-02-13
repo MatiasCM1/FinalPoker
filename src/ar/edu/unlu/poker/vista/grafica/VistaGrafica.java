@@ -1,15 +1,12 @@
 package ar.edu.unlu.poker.vista.grafica;
 
-import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.JTextField;
 
 import ar.edu.unlu.poker.controlador.Controlador;
 import ar.edu.unlu.poker.modelo.Jugador;
 import ar.edu.unlu.poker.vista.IVista;
-import ar.edu.unlu.poker.vista.consola.Estados;
 
 public class VistaGrafica implements IVista {
 
@@ -112,7 +109,7 @@ public class VistaGrafica implements IVista {
 		if (!this.comprobarPartidaComenzada()) {
 			controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
 		} else {
-			controlador.jugadorSeRetiraEnJuego(this.jugadorActual);
+			controlador.jugadorSeRetiraConJuegoComenzado(this.jugadorActual);
 		}
 	}
 	

@@ -1,8 +1,6 @@
 package ar.edu.unlu.poker.modelo;
 
 import java.rmi.RemoteException;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 import ar.edu.unlu.rmimvc.observer.IObservableRemoto;
@@ -63,7 +61,7 @@ public interface IMesa extends IObservableRemoto {
 
 	void agregarNuevosFondos(Jugador jugador, int fondoAgregar) throws RemoteException;
 
-	boolean isPrimeraRonda() throws RemoteException;
+	boolean getPrimeraRonda() throws RemoteException;
 
 	void setPrimeraRonda(boolean primeraRonda) throws RemoteException;
 
@@ -84,5 +82,9 @@ public interface IMesa extends IObservableRemoto {
 	void devolverFondos() throws RemoteException;
 
 	void removerJugadorSeRetiraEnJuego(Jugador jugador) throws RemoteException;
+
+	void borrarJugadoresMesa() throws RemoteException;
+
+	void setearJugadoresMezclados(List<Jugador> jugadoresMezclados) throws RemoteException;
 
 }

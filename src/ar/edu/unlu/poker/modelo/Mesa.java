@@ -2,15 +2,12 @@ package ar.edu.unlu.poker.modelo;
 
 import java.rmi.RemoteException;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
-import java.util.Random;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import ar.edu.unlu.rmimvc.observer.ObservableRemoto;
@@ -32,6 +29,7 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	private boolean primeraRonda;
 	private Jugador jugadorQuePaso = new Jugador("");
 	private boolean comenzoPartida = false;
+	private Dealer dealer;
 
 	static {
 		valorCarta.put("2", 2);
@@ -86,9 +84,10 @@ public class Mesa extends ObservableRemoto implements IMesa {
 		this.rondaApuesta.clear();
 		this.rondaApuestaAux.clear();
 		this.mapa.clear();
+		this.dealer = new Dealer(this);
 		this.pozo = 0;
 
-		this.determinarJugadorMano();
+		this.dealer.determinarJugadorMano();
 
 		this.jugadorMano = this.jugadoresMesa.poll();
 		this.jugadorTurno = this.jugadorMano;
@@ -658,20 +657,6 @@ public class Mesa extends ObservableRemoto implements IMesa {
 		return List.copyOf(this.jugadoresMesa);
 	}
 
-	private void determinarJugadorMano() throws RemoteException {
-		if (this.isPrimeraRonda()) {
-			this.seleccionarJugadorRandom();
-		}
-	}
-
-	private void seleccionarJugadorRandom() throws RemoteException {
-		List<Jugador> jugadoresMezclados = new LinkedList<Jugador>(this.jugadoresMesa);
-		Collections.shuffle(jugadoresMezclados);
-		this.jugadoresMesa.clear();
-		this.jugadoresMesa.addAll(jugadoresMezclados);
-
-	}
-
 	@Override
 	public int getApuestaMayor() throws RemoteException {
 		return apuestaMayor;
@@ -690,6 +675,16 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	public Jugador getJugadorTurno() throws RemoteException {
 		return jugadorTurno;
 	}
+	
+	@Override
+	public void borrarJugadoresMesa() throws RemoteException {
+		this.jugadoresMesa.clear();
+	}
+
+	 @Override
+	public void setearJugadoresMezclados(List<Jugador> jugadoresMezclados) throws RemoteException {
+		 this.jugadoresMesa.addAll(jugadoresMezclados);
+	 }
 
 	// ------------------------------------------------------------------------------------------
 	// RESULTADOS
@@ -915,7 +910,7 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	}
 
 	@Override
-	public boolean isPrimeraRonda() throws RemoteException {
+	public boolean getPrimeraRonda() throws RemoteException {
 		return primeraRonda;
 	}
 
@@ -934,6 +929,7 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	@Override
 	public void removerJugadorSeRetiraEnJuego(Jugador jugador) throws RemoteException {
 		this.jugadoresMesa.remove(jugador);
+		this.mapa.remove(jugador);
 		this.setComenzoPartida(false);
 		this.devolverFondos();
 		this.notificarObservadores(Informe.JUGADOR_SE_RETIRA_EN_PARTIDA);
@@ -975,12 +971,13 @@ public class Mesa extends ObservableRemoto implements IMesa {
 
 	@Override
 	public void devolverFondos() throws RemoteException {
+		
 		if (!this.mapa.isEmpty()) {
 			for (Jugador j : this.jugadoresMesa) {
-				System.out.println(j.getNombre());
 				j.agregarFondos(this.mapa.get(j));
 			}
 		}
+		
 	}
 
 }

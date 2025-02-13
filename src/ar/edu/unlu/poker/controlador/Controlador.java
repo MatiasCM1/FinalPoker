@@ -3,7 +3,6 @@ package ar.edu.unlu.poker.controlador;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 import ar.edu.unlu.poker.modelo.Carta;
 import ar.edu.unlu.poker.modelo.IMesa;
@@ -12,7 +11,6 @@ import ar.edu.unlu.poker.modelo.Jugador;
 import ar.edu.unlu.poker.serializacion.Serializador;
 import ar.edu.unlu.poker.serializacion.stats.EstadisticasJugador;
 import ar.edu.unlu.poker.vista.IVista;
-import ar.edu.unlu.poker.vista.consola.Estados;
 import ar.edu.unlu.rmimvc.cliente.IControladorRemoto;
 import ar.edu.unlu.rmimvc.observer.IObservableRemoto;
 
@@ -252,11 +250,13 @@ public class Controlador implements IControladorRemoto {
 			break;
 		case JUGADOR_SE_RETIRA:
 			if (!this.estoyEnVistaLogin) {
+				mesa.marcarComoNoListoParaIniciar(this.jugadorActual);
 				vista.actualizarTablaJugadores(this.getJugadoresMesa());
 			}
 			break;
 		case JUGADOR_SE_RETIRA_EN_PARTIDA:
 			if (!this.estoyEnVistaLogin) {
+				mesa.marcarComoNoListoParaIniciar(this.jugadorActual);
 				vista.mostrarMenuPrincipal();
 				vista.mostrarErrorSalidaJugador();
 				vista.actualizarTablaJugadores(this.getJugadoresMesa());
@@ -403,7 +403,7 @@ public class Controlador implements IControladorRemoto {
 		}
 	}
 	
-	public void jugadorSeRetiraEnJuego(Jugador jugador) {
+	public void jugadorSeRetiraConJuegoComenzado(Jugador jugador) {
 		try {
 			mesa.removerObservador(this);
 			mesa.removerJugadorSeRetiraEnJuego(jugador);
@@ -698,7 +698,7 @@ public class Controlador implements IControladorRemoto {
 
 				if (todosListo()) {
 					try {
-						if (!mesa.isPrimeraRonda()) {
+						if (!mesa.getPrimeraRonda()) {
 							this.iniciarGamePostPrimeraRonda();
 						} else {
 							this.iniciarGame();
@@ -719,7 +719,7 @@ public class Controlador implements IControladorRemoto {
 		
 		if (todosListo()) {
 			try {
-				if (!mesa.isPrimeraRonda()) {
+				if (!mesa.getPrimeraRonda()) {
 					this.iniciarGamePostPrimeraRonda();
 				} else {
 					this.iniciarGame();
@@ -734,7 +734,7 @@ public class Controlador implements IControladorRemoto {
 		
 		if (todosListo()) {
 			try {
-				if (!mesa.isPrimeraRonda()) {
+				if (!mesa.getPrimeraRonda()) {
 					this.iniciarGamePostPrimeraRonda();
 				} else {
 					this.iniciarGame();
@@ -760,7 +760,7 @@ public class Controlador implements IControladorRemoto {
 
 				if (todosListo()) {
 					try {
-						if (!mesa.isPrimeraRonda()) {
+						if (!mesa.getPrimeraRonda()) {
 							this.iniciarGamePostPrimeraRonda();
 						} else {
 							this.iniciarGame();
@@ -831,15 +831,6 @@ public class Controlador implements IControladorRemoto {
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		return jugadorActual;
-	}
-	
-	private Jugador getJugadorActualMesa() {
-		for (Jugador j : getJugadoresMesa()) {
-			if (j.getNombre().equals(this.jugadorActual.getNombre())) {
-				return j;
-			}
 		}
 		return jugadorActual;
 	}
