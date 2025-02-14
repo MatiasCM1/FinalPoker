@@ -606,8 +606,8 @@ public class Mesa extends ObservableRemoto implements IMesa {
 		return apuestaMayorMapa;
 	}
 
-	private int calcularCuantoFaltaParaFichar(Jugador jugador) { // HAGO UNA RESTA PARA SABER CUANTO LE FALTA AL JUGADOR
-																	// PARA IGUALAR LA APUESTA MAXIMA
+	private int calcularCuantoFaltaParaFichar(Jugador jugador) { // HAGO UNA RESTA PARA SABER CUANTO LE FALTA AL JUGADOR 
+		// PARA IGUALAR LA APUESTA MAXIMA
 		return Math.abs(this.buscarApuestaMayor() - this.mapa.get(jugador));
 	}
 
@@ -689,215 +689,14 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	public void setearJugadoresMezclados(List<Jugador> jugadoresMezclados) throws RemoteException {
 		 this.jugadoresMesa.addAll(jugadoresMezclados);
 	 }
-
-	// ------------------------------------------------------------------------------------------
-	// RESULTADOS
-
-	private void calcularResultadoJugadores() {
-		this.rondaApuestaAux.forEach(t -> {
-			try {
-				t.calcularValorCartas();
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		});
-	}
-
+//-------------------------------------------------------------------------------------------------------------
 	@Override
 	public Jugador devolverGanador() throws RemoteException {
-
-		calcularResultadoJugadores(); // Calcula el resultado de las cartas para cada jugador
-
-		Queue<Jugador> ganadores = new LinkedList<Jugador>(); // Creo una lista donde voy poniendo el ganador o
-																// ganadores en caso de empate
-
-		Jugador jugadorGanador = this.rondaApuestaAux.peek(); // Defino como ganador al primer jugador
-		ganadores.add(jugadorGanador); // Defino como ganador al primer jugador
-
-		for (Jugador jugadorActual : this.rondaApuestaAux) {
-
-			if (jugadorActualMayorJugadorGanador(jugadorGanador, jugadorActual)) { // Comparo el resultado del jugador
-																					// actual sobre el ganador, si el
-																					// actual es mayor, lo pongo como el
-																					// nuevo ganador
-
-				ganadores.clear();
-				ganadores.add(jugadorActual);
-				jugadorGanador = jugadorActual;
-
-			} else if (jugadorActualIgualJugadorGanador(jugadorGanador, jugadorActual)) { // Comparo resultado del
-																							// jugador actal sobre el
-																							// gnador, si el actual es
-																							// igual, lo agrego a la
-																							// lista de ganadores
-				ganadores.add(jugadorActual);
-			}
-
-		}
-
-		return determinarGanador(ganadores);
+	
+		return this.dealer.devolverGanador(this.rondaApuestaAux);	
+		
 	}
 
-	private Jugador determinarGanador(Queue<Jugador> ganadores) throws RemoteException {
-
-		if (ganadores.size() == 1) {
-			return ganadores.peek();
-		}
-
-		Resultado resultadoGanador = ganadores.peek().getResultadoValoresCartas();
-
-		if (ResultadoEsCartaMayorColorEscaleraEscaleraColor(resultadoGanador)) { // Si el resultado es alguno de los
-																					// mencionados el ganador seria el
-																					// que tenga la carta mayor
-
-			try {
-				return buscarJugadorCartaMayor(ganadores);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		} else if (resultadoGanador.equals(Resultado.PAR)) {
-
-			return devolverGanadorResultadosCartasIguales(ganadores);
-
-		} else if (resultadoGanador.equals(Resultado.DOBLE_PAR)) {
-
-			return devolverGanadorResultadosCartasIguales(ganadores);
-
-		} else if (resultadoGanador.equals(Resultado.FULL)) {
-
-			return devolverGanadorResultadosCartasFull(ganadores);
-
-		} else if (resultadoGanador.equals(Resultado.TRIO)) {
-
-			return devolverGanadorResultadosCartasIguales(ganadores);
-
-		} else if (resultadoGanador.equals(Resultado.POKER)) {
-
-			return devolverGanadorResultadosCartasIguales(ganadores);
-
-		}
-		return jugadorMano;
-	}
-
-	private boolean ResultadoEsCartaMayorColorEscaleraEscaleraColor(Resultado resultadoGanador) {
-		return resultadoGanador.equals(Resultado.CARTA_MAYOR) || resultadoGanador.equals(Resultado.COLOR)
-				|| resultadoGanador.equals(Resultado.ESCALERA) || resultadoGanador.equals(Resultado.ESCALERA_COLOR);
-	}
-
-	private boolean jugadorActualIgualJugadorGanador(Jugador jugadorGanador, Jugador jugadorActual) {
-		return jugadorActual.getResultadoValoresCartas().ordinal() == jugadorGanador.getResultadoValoresCartas()
-				.ordinal();
-	}
-
-	private boolean jugadorActualMayorJugadorGanador(Jugador jugadorGanador, Jugador jugadorActual) {
-		return jugadorActual.getResultadoValoresCartas().ordinal() > jugadorGanador.getResultadoValoresCartas()
-				.ordinal();
-	}
-
-	private Jugador buscarJugadorCartaMayor(Queue<Jugador> ganadores) throws RemoteException {
-		Carta cartaMayor = ganadores.peek().getCartasOrdenadas().getLast(); // Tomo la carta mayor del primer jugador;
-		Jugador jugadorCartaMayor = ganadores.poll(); // Guardo el jugador que estableci como el que tiene la carta
-														// mayor
-
-		for (Jugador jugadorActual : ganadores) {
-
-			Carta cartaActual = jugadorActual.getCartasOrdenadas().getLast(); // Tomo la carta mayor del jugadorActual
-
-			if (cartaActual.compareTo(cartaMayor) > 0) { // Comparo la carta acutal es mayor que la mayor
-				cartaMayor = cartaActual;
-				jugadorCartaMayor = jugadorActual;
-			}
-
-		}
-
-		return jugadorCartaMayor;
-
-	}
-
-	private Jugador devolverGanadorResultadosCartasIguales(Queue<Jugador> ganadores) {
-		Jugador ganador = ganadores.poll();
-
-		for (Jugador jugadorActual : ganadores) {
-			if (cartasIgualadasMayores(ganador, jugadorActual)) {
-				ganador = jugadorActual;
-			}
-		}
-
-		return ganador;
-
-	}
-
-	private boolean cartasIgualadasMayores(Jugador ganadorActual, Jugador candidadatoAGanador) {
-
-		ResultadoJugadaJugador ordenadorResultados = new ResultadoJugadaJugador();
-
-		// le paso un lista de las cartas que son iguales, esta lista se ordena de menor
-		// a mayor y tomo la ultima, ya que esta seria la mayor
-		Carta cartaMayor1 = (ordenadorResultados.ordenarCartas(ganadorActual.determinarCartasIguales())).getLast();
-		Carta cartaMayor2 = (ordenadorResultados.ordenarCartas(candidadatoAGanador.determinarCartasIguales()))
-				.getLast();
-
-		// Devuelve true si la carta del resultado de candidatoAGanador es mayor a la
-		// del ganadorActual
-		return cartaMayor2.compareTo(cartaMayor1) >= 0;
-
-	}
-
-	private Jugador devolverGanadorResultadosCartasFull(Queue<Jugador> ganadores) {
-
-		Jugador ganador = ganadores.poll();
-
-		for (Jugador jugadorActual : ganadores) {
-			if (cartasIgualadasMayoresFull(ganador, jugadorActual)) {
-				ganador = jugadorActual;
-			}
-		}
-
-		return ganador;
-	}
-
-	private boolean cartasIgualadasMayoresFull(Jugador ganadorActual, Jugador candidadatoAGanador) {
-
-		// le paso un lista de las cartas que son iguales y tomo el valor del trio
-		Carta cartaMayor1 = obtenerValorTrio(ganadorActual.getCartas());
-		Carta cartaMayor2 = obtenerValorTrio(candidadatoAGanador.getCartas());
-
-		// Devuelve true si la carta del resultado de candidatoAGanador es mayor a la
-		// del ganadorActual
-		return cartaMayor2.compareTo(cartaMayor1) >= 0;
-	}
-
-	public Carta obtenerValorTrio(LinkedList<Carta> cartas) {
-
-		Map<String, Long> conteoCartas = cartas.stream().collect(Collectors.groupingBy(t -> {
-			try {
-				return t.getValor();
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}, Collectors.counting()));
-
-		// Encuentra el valor que aparece 3 veces
-		String valorTrio = conteoCartas.entrySet().stream().filter(entry -> entry.getValue() == 3)
-				.map(Map.Entry::getKey).findFirst().orElse(null);
-
-		return cartas.stream().filter(carta -> {
-			try {
-				return carta.getValor().equals(valorTrio);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return false;
-		}).findFirst().orElse(null);
-
-	}
-
-//-------------------------------------------------------------------------------------------------------------
 
 	@Override
 	public List<Jugador> getRondaApuesta() throws RemoteException {
