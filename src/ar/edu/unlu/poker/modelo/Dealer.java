@@ -31,8 +31,4 @@ public class Dealer {
 
 	}
 
-	public void limpiarJugadores() throws RemoteException {
-		this.mesa.getJugadoresMesa().clear();
-	}
-
 }

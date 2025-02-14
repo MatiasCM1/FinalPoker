@@ -215,7 +215,6 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	}
 
 	private void devolverResultados() throws RemoteException {
-		// TODO Auto-generated method stub
 		this.notificarObservadores(Informe.DEVOLVER_GANADOR);
 	}
 
@@ -239,7 +238,6 @@ public class Mesa extends ObservableRemoto implements IMesa {
 					this.jugadoresApuestaInsuficiente.add(entry.getKey());
 				}
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		});
@@ -316,7 +314,6 @@ public class Mesa extends ObservableRemoto implements IMesa {
 		this.mapa.remove(jugador);
 		this.rondaApuestaAux.remove(jugador);
 
-		// ESTO NO SE SI ESTA BIEN
 		this.rondaApuesta.remove(jugador);
 
 		this.jugadorQuePaso = jugador;
@@ -423,7 +420,6 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	}
 
 	private void descartarCartas(Jugador jugador) throws RemoteException {
-		// DESCARTAR
 		// TENGO QUE BUSCAR LAS CARTAS DEL JUGADOR DE jugadoresMesa Y BORRARLAS
 		for (Jugador j : this.rondaApuesta) {
 			if (j.equals(jugador)) {
