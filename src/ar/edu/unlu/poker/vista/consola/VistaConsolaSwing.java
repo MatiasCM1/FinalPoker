@@ -640,11 +640,6 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	}
 
 	@Override
-	public void informarNoTurno() {
-		areaSalida.append("espera hasta que sea su turno.\n");
-	}
-
-	@Override
 	public void informarTurnoApuestaOtroJugador(String nombreJugadorTurno) {
 		this.setEnableCampoEntrada(false);
 		areaSalida.append("Esperando a que " + nombreJugadorTurno + " realice su apuesta\n");

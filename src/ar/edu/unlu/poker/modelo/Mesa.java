@@ -177,8 +177,6 @@ public class Mesa extends ObservableRemoto implements IMesa {
 				this.notificarObservadores(Informe.FONDO_INSUFICIENTE);
 				this.notificarObservadores(Informe.TURNO_APUESTA_JUGADOR);
 			}
-		} else {
-			this.notificarObservadores(Informe.INFORMAR_NO_TURNO); // Informar quien debe hacer la apuesta, que espere su turno
 		}
 
 	}
@@ -398,8 +396,6 @@ public class Mesa extends ObservableRemoto implements IMesa {
 
 				this.notificarObservadores(Informe.TURNO_DESCARTE);// PASAR AL SIGUIENTE TURNO
 			}
-		} else {
-			this.notificarObservadores(Informe.INFORMAR_NO_TURNO); // Informar quien debe hacer la apuesta, que espere su turno
 		}
 	}
 
@@ -517,8 +513,6 @@ public class Mesa extends ObservableRemoto implements IMesa {
 				this.notificarObservadores(Informe.FONDO_INSUFICIENTE_SEGUNDA_RONDA);
 				this.notificarObservadores(Informe.SEGUNDA_RONDA_APUESTAS);
 			}
-		} else {
-			this.notificarObservadores(Informe.INFORMAR_NO_TURNO); // Informar quien debe hacer la apuesta, que espere su turno
 		}
 	}
 

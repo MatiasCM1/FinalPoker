@@ -98,11 +98,6 @@ public class Controlador implements IControladorRemoto {
 				vista.informarApuestaRealizada(this.getJugadorTurno().getNombre(), getJugadorTurnoJugadoresMesa().getApuesta());
 			}
 			break;
-		case INFORMAR_NO_TURNO:
-			if (!this.estoyEnVistaLogin) {
-				vista.informarNoTurno();
-			}
-			break;
 		case APUESTAS_DESIGUALES:
 			if (!this.estoyEnVistaLogin) {
 				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { // Comprueba que el nombre del jugadorActual forme parte de la cola de jugadores con apuesta menor a la mayor

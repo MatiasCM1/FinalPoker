@@ -29,8 +29,6 @@ public interface IVista {
 
 	void informarApuestaRealizada(String nombre, int apuestaJugador);
 
-	void informarNoTurno();
-
 	void informarTurnoApuestaOtroJugador(String nombreJugador);
 
 	void notificarApuestasDesiguales();

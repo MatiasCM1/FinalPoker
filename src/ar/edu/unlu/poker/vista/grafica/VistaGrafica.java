@@ -595,12 +595,6 @@ public class VistaGrafica implements IVista {
 	}
 
 	@Override
-	public void informarNoTurno() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void notificarRondaApuestaFinalizada() {
 		this.vistaJuegoCartas.escribirNotificacion("Apuestas igualadas");
 	}
