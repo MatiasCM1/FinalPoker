@@ -10,6 +10,7 @@ import java.util.List;
 import ar.edu.unlu.poker.controlador.Controlador;
 import ar.edu.unlu.poker.modelo.Carta;
 import ar.edu.unlu.poker.modelo.Jugador;
+import ar.edu.unlu.poker.serializacion.stats.EstadisticasJugador;
 import ar.edu.unlu.poker.vista.IVista;
 
 public class VistaConsolaSwing extends JFrame implements IVista {
@@ -195,6 +196,9 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 				areaSalida.append("Ingrese los fondos.\n");
 				this.estadoFlujo = Estados.ESPERANDO_FONDOS;
 				break;
+			case "5":
+				this.mostrarTopJugadores(this.controlador.obtenerTopJugadores());
+				break;
 			case "0":
 				areaSalida.append("Se salio del juego exitosamente. Saludos!\n");
 				controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
@@ -205,6 +209,17 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 				break;
 			}
 		}
+	}
+	
+	private void mostrarTopJugadores(List<EstadisticasJugador> listaTopJugadores) {
+		
+		int posicion = 1;
+		for (EstadisticasJugador j : listaTopJugadores) {
+			areaSalida.append(posicion + " - Nombre: " + j.getNombreJugador() + "             Partidas ganadas: " + j.getCantPartidasGanadas() + ".\n");
+			posicion++;
+		}
+		
+		this.mostrarOpcionesMenu();
 	}
 
 	private void mostrarFondos() {
@@ -225,6 +240,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		areaSalida.append("2 - Comenzar Juego\n");
 		areaSalida.append("3 - Mostrar Fondos\n");
 		areaSalida.append("4 - Agregar Fondos\n");
+		areaSalida.append("5 - Mostrar TOP de jugadores\n");
 		areaSalida.append("0 - Salir\n");
 		this.estadoFlujo = Estados.MENU_PRINCIPAL;
 	}
@@ -274,6 +290,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		areaSalida.append("2 - Mostrar Jugadores\n");
 		areaSalida.append("3 - Mostrar Fondos\n");
 		areaSalida.append("4 - Agregar Fondos\n");
+		areaSalida.append("5 - Mostrar TOP de jugadores\n");
 		areaSalida.append("0 - Salir\n");
 		this.setEnableCampoEntrada(true);
 		this.estadoFlujo = Estados.MENU_NUEVA_RONDA;
@@ -298,6 +315,9 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 				areaSalida.append("Ingrese los fondos.\n");
 				this.estadoFlujo = Estados.ESPERANDO_FONDOS_2;
 				break;
+			case "5":
+				this.mostrarTopJugadoresPostRonda(this.controlador.obtenerTopJugadores());
+				break;
 			case "0":
 				areaSalida.append("Se salio del juego exitosamente. Saludos!\n");
 				controlador.jugadorSeRetiraDelJuego(jugadorActual);
@@ -308,6 +328,17 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 				break;
 			}
 		}
+	}
+	
+	private void mostrarTopJugadoresPostRonda(List<EstadisticasJugador> listaTopJugadores) {
+		
+		int posicion = 1;
+		for (EstadisticasJugador j : listaTopJugadores) {
+			areaSalida.append(posicion + " - Nombre: " + j.getNombreJugador() + "             Partidas ganadas: " + j.getCantPartidasGanadas() + ".\n");
+			posicion++;
+		}
+		
+		this.mostrarOpcionesMenuEmpezarOtraRonda();
 	}
 
 	private void mostrarFondos2() {
