@@ -65,8 +65,6 @@ public interface IVista {
 
 	void mostrarOpcionesMenuEmpezarOtraRonda();
 
-	void setEnableCampoEntrada(boolean h);
-
 	void mostrarOpcionesMenu();
 
 	void actualizarTablaJugadores(List<Jugador> jugadores);

@@ -60,7 +60,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		this.controlador = controlador;
 	}
 
-	public void setEnableCampoEntrada(boolean valor) {
+	private void setEnableCampoEntrada(boolean valor) {
 		this.campoEntrada.setEnabled(valor);
 	}
 
@@ -185,7 +185,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 				break;
 			case "2":
 				this.esperandoEntrada = false;
-				controlador.iniciarGame();
+				controlador.iniciarSiEstaListo(this.jugadorActual);
 				break;
 			case "3":
 				mostrarFondos();
@@ -219,6 +219,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	@Override
 	public void mostrarOpcionesMenu() {
+		this.controlador.setEstoyEnVistaLogin(false);
 		areaSalida.append("Seleccione una opcion:\n");
 		areaSalida.append("1 - Ver Lista de Jugadores\n");
 		areaSalida.append("2 - Comenzar Juego\n");
@@ -266,6 +267,8 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	@Override
 	public void mostrarOpcionesMenuEmpezarOtraRonda() {
+		controlador.establecerJugadorComoNoListo(this.jugadorActual);
+		this.setEnableCampoEntrada(true);
 		areaSalida.append("Seleccione una opcion:\n");
 		areaSalida.append("1 - Seguir jugando\n");
 		areaSalida.append("2 - Mostrar Jugadores\n");
@@ -281,7 +284,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 			switch (input.toLowerCase()) {
 			case "1":
 				this.esperandoEntrada = false;
-				controlador.iniciarGamePostPrimeraRonda();
+				controlador.iniciarSiEstaListoPostPrimeraRonda(this.jugadorActual);
 				break;
 			case "2":
 				this.mostrarJugadores2();
@@ -337,6 +340,9 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	@Override
 	public void mostrarMenuApuestas() {
+		
+		this.setEnableCampoEntrada(true);
+		
 		areaSalida.append("Seleccione una opcion:\n");
 		areaSalida.append("1 - Envitar\n");
 		areaSalida.append("2 - Fichar\n");
@@ -420,6 +426,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	@Override
 	public void mostrarMenuSegundaRondaApuestas() {
+		this.setEnableCampoEntrada(true);
 		areaSalida.append("Seleccione una opcion:\n");
 		areaSalida.append("1 - Envitar\n");
 		areaSalida.append("2 - Fichar\n");
@@ -502,6 +509,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	@Override
 	public void mostrarMenuDescartes() {
+		this.setEnableCampoEntrada(true);
 		areaSalida.append("Seleccione una opcion:\n");
 		areaSalida.append("1 - Descartar\n");
 		areaSalida.append("2 - No descartar\n");
@@ -638,17 +646,20 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	@Override
 	public void informarTurnoApuestaOtroJugador(String nombreJugadorTurno) {
+		this.setEnableCampoEntrada(false);
 		areaSalida.append("Esperando a que " + nombreJugadorTurno + " realice su apuesta\n");
 	}
 
 	@Override
 	public void notificarApuestasDesiguales() {
+		this.setEnableCampoEntrada(true);
 		areaSalida.append("Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima.\n");
 		menuApuestasDesiguales();
 	}
 
 	@Override
 	public void notificarApuestasDesigualesSegundaRonda() {
+		this.setEnableCampoEntrada(true);
 		areaSalida.append("Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima.\n");
 		mostrarMenuApuestasDesigualesSegundaRonda();
 	}
@@ -666,11 +677,13 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	@Override
 	public void notificarEsperarJugadorIgualeApuesta() {
+		this.setEnableCampoEntrada(false);
 		areaSalida.append("esperando a que se igualen las apuestas.\n");
 	}
 
 	@Override
 	public void notificarRondaApuestaFinalizada() {
+		this.setEnableCampoEntrada(true);
 		areaSalida.append("Apuestas igualadas.\n");
 	}
 
@@ -681,6 +694,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	@Override
 	public void notificarEsperarDescartes(String nombreJugadorTurnoDescarte) {
+		this.setEnableCampoEntrada(false);
 		areaSalida.append("Esperando a que " + nombreJugadorTurnoDescarte + " realice los descartes.\n");
 	}
 

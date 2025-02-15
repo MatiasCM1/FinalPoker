@@ -72,10 +72,8 @@ public class Controlador implements IControladorRemoto {
 			if (!this.estoyEnVistaLogin) {
 				if (this.jugadorSigueEnJuego(this.jugadorActual)) {
 					if (this.isJugadorTurno()) {
-						vista.setEnableCampoEntrada(true);
 						vista.mostrarMenuApuestas();
 					} else {
-						vista.setEnableCampoEntrada(false);
 						vista.informarTurnoApuestaOtroJugador(this.getJugadorTurno().getNombre());
 					}
 				}
@@ -102,33 +100,23 @@ public class Controlador implements IControladorRemoto {
 			break;
 		case INFORMAR_NO_TURNO:
 			if (!this.estoyEnVistaLogin) {
-				vista.informarNoTurno(); // EST QUEDO OBSOLETO???
+				vista.informarNoTurno();
 			}
 			break;
 		case APUESTAS_DESIGUALES:
 			if (!this.estoyEnVistaLogin) {
-				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { // Comprueba que el nombre del jugadorActuañ
-																			// forme parte de la cola de jugadores con apuesta menor a la mayor
-					vista.setEnableCampoEntrada(true); // ESTO SE PUEDE PONER DENTRO DEL NOTIFICAR APUESTAS DESIGUALES DE LA VISTA CONSOLA
-					
-					
+				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { // Comprueba que el nombre del jugadorActual forme parte de la cola de jugadores con apuesta menor a la mayor
 					vista.notificarApuestasDesiguales();
 				} else {
-					vista.setEnableCampoEntrada(false);
 					vista.notificarEsperarJugadorIgualeApuesta();
 				}
 			}
 			break;
 		case APUESTAS_DESIGUALES_SEGUNDA_RONDA:
 			if (!this.estoyEnVistaLogin) {
-				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { // Comprueba que el nombre del jugadorActual
-																			// forme parte de la cola de jugadores con
-																			// apuesta menor a la mayor
-					vista.setEnableCampoEntrada(true);
-
+				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { // Comprueba que el nombre del jugadorActual forme parte de la cola de jugadores con apuesta menor a la mayor
 					vista.notificarApuestasDesigualesSegundaRonda();
 				} else {
-					vista.setEnableCampoEntrada(false);
 					vista.notificarEsperarJugadorIgualeApuesta();
 				}
 			}
@@ -150,10 +138,8 @@ public class Controlador implements IControladorRemoto {
 			if (!this.estoyEnVistaLogin) {
 				if (this.jugadorSigueEnJuego(this.jugadorActual)) {
 					if (isJugadorTurno()) {
-						vista.setEnableCampoEntrada(true);
 						vista.mostrarMenuDescartes();// LLAMO AL MENU DE DESCARTE
 					} else {
-						vista.setEnableCampoEntrada(false);
 						vista.notificarEsperarDescartes(this.getJugadorTurno().getNombre());
 					}
 				}
@@ -170,8 +156,6 @@ public class Controlador implements IControladorRemoto {
 					}
 					
 					mesa.setComenzoPartida(false);
-					
-					vista.setEnableCampoEntrada(true);
 
 					vista.actualizarTablaJugadores(this.getJugadoresMesa());
 
@@ -179,7 +163,6 @@ public class Controlador implements IControladorRemoto {
 				
 
 				} else if (this.isJugadorTurno()) {
-					vista.setEnableCampoEntrada(true);
 					vista.notificarRondaApuestaFinalizada();
 					mesa.mirarSiDevolverResultados();
 				}
@@ -197,10 +180,8 @@ public class Controlador implements IControladorRemoto {
 					
 					mesa.setComenzoPartida(false);
 					
-					vista.setEnableCampoEntrada(true);
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
 				} else if (this.isJugadorTurno()) {
-					vista.setEnableCampoEntrada(true);
 					vista.notificarRondaApuestaFinalizada();
 					mesa.mirarSiDevolverResultados();
 				}
@@ -232,16 +213,13 @@ public class Controlador implements IControladorRemoto {
 					
 					mesa.setComenzoPartida(false);
 					
-					vista.setEnableCampoEntrada(true);
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
 				
 				} else {
 					if (this.jugadorSigueEnJuego(this.jugadorActual)) {
 						if (this.isJugadorTurno()) {
-							vista.setEnableCampoEntrada(true);
 							vista.mostrarMenuSegundaRondaApuestas();
 						} else {
-							vista.setEnableCampoEntrada(false);
 							vista.informarTurnoApuestaOtroJugador(this.getJugadorTurno().getNombre());
 						}
 					}

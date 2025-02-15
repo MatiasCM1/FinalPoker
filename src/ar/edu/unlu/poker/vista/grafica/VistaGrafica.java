@@ -618,12 +618,6 @@ public class VistaGrafica implements IVista {
 	}
 
 	@Override
-	public void setEnableCampoEntrada(boolean h) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void mostrarOpcionesMenu() {
 		// TODO Auto-generated method stub
 
