@@ -25,8 +25,6 @@ public interface IVista {
 
 	void informarFondosInsuficientes();
 
-	void notificarEnviteRealizado();
-
 	void informarApuestaRealizada(String nombre, int apuestaJugador);
 
 	void informarTurnoApuestaOtroJugador(String nombreJugador);
@@ -62,8 +60,6 @@ public interface IVista {
 	void notificarErrorIngreseUnEntero();
 
 	void mostrarOpcionesMenuEmpezarOtraRonda();
-
-	void mostrarOpcionesMenu();
 
 	void actualizarTablaJugadores(List<Jugador> jugadores);
 

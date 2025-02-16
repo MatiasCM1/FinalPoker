@@ -237,7 +237,7 @@ public class VistaGrafica implements IVista {
 
 		if (this.vistaJuegoCartas != null) {
 			for (Jugador jugador : jugadores) {
-				if (jugador.equals(jugadorActual)) { // Mostrar solo cartas del jugador actual
+				if (jugador.equals(jugadorActual)) {
 					this.jugadorActual.setListaCartas(jugador.getCartas());
 					this.vistaJuegoCartas.mostrarCartas(jugador.getCartas());
 				}
@@ -257,7 +257,6 @@ public class VistaGrafica implements IVista {
 
 		this.vistaApuestas.setVisible(true);
 
-		// ESTO SE PUEDE SACAR?
 		this.vistaApuestas.informarJugadorMano(this.nombreJugadorMano);
 
 		this.mostrarNombreDelJugadorVentanaApuestas();
@@ -590,8 +589,8 @@ public class VistaGrafica implements IVista {
 	}
 	
 	@Override
-	public void notificarEnviteRealizado() {
-
+	public void notificarCartaDescartadaConExito() {
+		this.vistaJuegoCartas.escribirNotificacion("Descarte exitoso");
 	}
 
 	@Override
@@ -601,20 +600,7 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void notificarErrorIntentarDescarteEnUnaCartaYaDescartada() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void notificarCartaDescartadaConExito() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mostrarOpcionesMenu() {
-		// TODO Auto-generated method stub
-
+		this.vistaJuegoCartas.escribirNotificacion("No se puede descartas una carta ya descartada");
 	}
 
 	public void jugadorNoListo() {

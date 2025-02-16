@@ -162,12 +162,11 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 				jugadorActual = new Jugador(this.nombreJugadorActual, Integer.parseInt(input));
 				controlador.agregarJugador(jugadorActual);
 				controlador.setJugadorActual(jugadorActual);
-				setTitle("Poker - Jugador: " + this.nombreJugadorActual);
+				setTitle("Poker");
 				areaSalida.append("Bienvenido, " + this.nombreJugadorActual + "!\n");
 				esperandoEntrada = false;
 				mostrarOpcionesMenu();
 			} else {
-				this.notificarErrorIngreseUnEntero();
 				areaSalida.append("¡Error, ingrese un numero entero!\n");
 				areaSalida.append("Ingrese el fondo que desea\n");
 				this.estadoFlujo = Estados.SOLICITAR_FONDO_JUGADOR;
@@ -232,8 +231,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		this.notificarFondosAgregados();
 	}
 
-	@Override
-	public void mostrarOpcionesMenu() {
+	private void mostrarOpcionesMenu() {
 		this.controlador.setEstoyEnVistaLogin(false);
 		areaSalida.append("Seleccione una opcion:\n");
 		areaSalida.append("1 - Ver Lista de Jugadores\n");
@@ -409,8 +407,6 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	}
 
 	public void realizarEnvite(String input) {
-		// MODIFICAR ESTAS VALIDACIONES EN LA VISTA, SE DEBEN HACER CUANDO SE LLAMA AL
-		// mostrarMenuApuestas en el controlador
 		if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno().getNombre())) {
 			controlador.realizarLasApuestas(this.jugadorActual, input);
 			this.esperandoEntrada = false;
@@ -651,21 +647,6 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	}
 
 	@Override
-	public void notificarEnviteRealizado() {
-		areaSalida.append(
-				controlador.getJugadorTurno().getNombre() + " realizo con exito su apuesta " + mostrarApostado());
-	}
-
-	private String mostrarApostado() {
-		for (Jugador j : controlador.getJugadoresMesa()) {
-			if (j.getNombre().equals(controlador.getJugadorTurno().getNombre())) {
-				return String.valueOf(j.getApuesta());
-			}
-		}
-		return "_";
-	}
-
-	@Override
 	public void informarApuestaRealizada(String nombre, int apuestaJugador) {
 		areaSalida.append(nombre + " ha realizado su apuesta: " + apuestaJugador + ".\n");
 	}
@@ -716,6 +697,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	@Override
 	public void notificarApuestaMenorALaAnterior() {
 		areaSalida.append("La apuesta no puede ser menor a la apuesta anterior.\n");
+		this.mostrarMenuApuestas();
 	}
 
 	@Override
@@ -747,28 +729,32 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	@Override
 	public void notificarErrorIngreseUnEntero() {
 		areaSalida.append("¡Error, ingrese un numero entero!.\n");
+		if (this.estadoFlujo.equals(Estados.ESPERANDO_ENVITE)) {
+			mostrarMenuApuestas();
+		} else {
+			mostrarOpcionesMenu();
+		}
 	}
 
 	private void notificarFondosAgregados() {
-		areaSalida.append("¡Fondos agregados con exito!.\n");
 		mostrarOpcionesMenu();
 	}
 
 	private void notificarFondosAgregados2() {
-		areaSalida.append("¡Fondos agregados con exito!.\n");
 		mostrarOpcionesMenuEmpezarOtraRonda();
 	}
 
 	@Override
 	public void actualizarTablaJugadores(List<Jugador> jugadores) {
-		// TODO Auto-generated method stub
-
+		areaSalida.append("Lista de jugadores y fondos actualizados: \n");
+		for (Jugador j : jugadores) {
+			areaSalida.append("- Nombre - " + j.getNombre() + " - Fondos - " + j.getFondo() + "\n");
+		}
 	}
 
 	@Override
 	public void mostrarNombreDelJugadorVentana() {
-		// TODO Auto-generated method stub
-
+		setTitle("Poker - " + this.jugadorActual.getNombre());
 	}
 
 	@Override
@@ -778,68 +764,57 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	@Override
 	public void notificarErrorIngreseUnEnteroSegundaRonda() {
-		// TODO Auto-generated method stub
-
+		areaSalida.append("Error, ingrese un numero entero positivo\n");
 	}
 
 	@Override
 	public void notificarApuestaMenorALaAnteriorSegundaRonda() {
-		// TODO Auto-generated method stub
-
+		areaSalida.append("Error, la apuesta no puede ser menor a la anterior.\n");
 	}
 
 	@Override
 	public void informarFondosInsuficientesSegundaRonda() {
-		// TODO Auto-generated method stub
-
+		areaSalida.append("Error, fondos insuficientes para realzar la apuesta.\n");
 	}
 
 	@Override
 	public void notificarErrorIngreseUnEnteroAgregandoNuevosFondos() {
-		// TODO Auto-generated method stub
-
+		areaSalida.append("¡Error, ingrese un numero entero!.\n");
 	}
 
 	@Override
 	public void jugadorPasaQuedaFuera() {
-		// TODO Auto-generated method stub
-
+		areaSalida.append("Espere a que termine el juego.\n");
 	}
 
 	@Override
 	public void mostrarFondosInsuficientesParaComenzar() {
-		// TODO Auto-generated method stub
-		
+		areaSalida.append("Error, fondos insuficientes para comenzar una partida.\n");
 	}
 
 	@Override
 	public void mostrarFondosInsuficientesParaComenzarPostPrimerPartido() {
-		// TODO Auto-generated method stub
-		
+		areaSalida.append("Error, fondos insuficientes para comenzar una partida.\n");
 	}
 
 	@Override
 	public void informarJugadoresInsuficientesPostPrimerPartido() {
-		// TODO Auto-generated method stub
-		
+		areaSalida.append("Error, jugadores insuficientes para comenzar una partida.\n");
 	}
 
 	@Override
 	public void mostrarErrorJugadoresInsuficientes() {
-		// TODO Auto-generated method stub
-		
+		areaSalida.append("Error, jugadores insuficientes para comenzar una partida.\n");
 	}
 
 	@Override
 	public void mostrarMenuPrincipal() {
-		// TODO Auto-generated method stub
-		
+		this.mostrarMenuApuestas();
 	}
 
 	@Override
 	public void mostrarErrorSalidaJugador() {
-		// TODO Auto-generated method stub
-		
+		areaSalida.append("Error, jugador sale de la partida.\n");
 	}
 
 

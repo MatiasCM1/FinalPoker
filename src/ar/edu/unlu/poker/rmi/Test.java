@@ -39,10 +39,21 @@ public class Test {
 				e.printStackTrace();
 			}
 		});
+		
+		// Inicia el tercer cliente en otro hilo separado
+				Thread cliente3Thread = new Thread(() -> {
+					try {
+						primerClienteIniciado.await(); // Espera a que el primer cliente esté listo
+						AppCliente.main(new String[] {});
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				});
 
 		// Arranca los hilos
 		servidorThread.start();
 		cliente1Thread.start();
 		cliente2Thread.start();
+		cliente3Thread.start();
 	}
 }

@@ -185,14 +185,14 @@ public class Controlador implements IControladorRemoto {
 		case CARTA_DESCARTADA:
 			if (!this.estoyEnVistaLogin) {
 				if (isJugadorTurno()) {
-					vista.notificarCartaDescartadaConExito(); //ESTO SE OUEDE QUITAR
+					vista.notificarCartaDescartadaConExito();
 				}
 			}
 			break;
 		case CARTA_YA_HABIA_SIDO_DESCARTADA:
 			if (!this.estoyEnVistaLogin) {
 				if (isJugadorTurno()) {
-					vista.notificarErrorIntentarDescarteEnUnaCartaYaDescartada(); //ESTO SE PUEDE QUITAR SI SACO LA OPCION DE LA CARTA DESCARTADA DEL MENU
+					vista.notificarErrorIntentarDescarteEnUnaCartaYaDescartada();
 				}
 			}
 			break;
@@ -401,25 +401,21 @@ public class Controlador implements IControladorRemoto {
 		try {
 			if (this.validarEnteroPositivo(input)) {
 				int apuesta = Integer.parseInt(input);
-				if (this.jugadorManoEnvita(jugador, apuesta)) {// OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA,
-																// IMPIDIENDO QUE FICHE O PASE
+				if (this.jugadorManoEnvita(jugador, apuesta)) {// OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA, IMPIDIENDO QUE FICHE O PASE
 					if (apuesta >= mesa.getApuestaMayor()) {
 						mesa.realizarApuesta(jugador, apuesta);
 					} else {
 						if (this.jugadorActual.getNombre().equals(this.getJugadorTurno().getNombre())) {
 							vista.notificarApuestaMenorALaAnterior();
-							// vista.mostrarMenuApuestas(); //ESTO NO ME SIRVE PARA LA VISTA GRAFICA
 						} else {
 							vista.informarTurnoApuestaOtroJugador(this.getJugadorTurno().getNombre());
 						}
 					}
 				} else {
 					vista.notificarJugadorManoDebeApostar();
-					// vista.mostrarMenuApuestas(); //ESTO NO ME SIRVE PARA LA VISTA GRAFICA
 				}
 			} else {
 				vista.notificarErrorIngreseUnEntero();
-				// vista.mostrarMenuApuestas(); //ESTO NO ME SIRVE PARA LA VISTA GRAFICA
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -427,8 +423,7 @@ public class Controlador implements IControladorRemoto {
 	}
 
 	private boolean jugadorManoEnvita(Jugador jugador, int apuesta) throws RemoteException {
-		if (jugador.equals(mesa.getJugadorMano()) && apuesta == 0) {// OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA,
-																	// IMPIDIENDO QUE FICHE O PASE
+		if (jugador.equals(mesa.getJugadorMano()) && apuesta == 0) {// OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA, IMPIDIENDO QUE FICHE O PASE
 			return false;
 		}
 		return true;
@@ -436,8 +431,7 @@ public class Controlador implements IControladorRemoto {
 
 	public void realizarLasApuestas(Jugador jugador) {
 		try {
-			if (this.jugadorManoEnvita(jugador, mesa.getApuestaMayor())) {// OBLIGA AL JUGADOR MANO A REALIZAR UNA
-																			// APUESTA, IMPIDIENDO QUE FICHE O PASE
+			if (this.jugadorManoEnvita(jugador, mesa.getApuestaMayor())) {// OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA, IMPIDIENDO QUE FICHE O PASE
 				mesa.realizarApuesta(jugador, mesa.getApuestaMayor());
 			} else {
 				vista.notificarJugadorManoDebeApostar();
@@ -454,7 +448,7 @@ public class Controlador implements IControladorRemoto {
 				mesa.jugadorPasa(jugador);
 			} else {
 				vista.notificarJugadorManoDebeApostar();
-				vista.mostrarMenuApuestas();// SE PUEDE PONER ESTE METODO DENTRO DEL NOTIFICAR EN LA VISTA CONSOLA
+				vista.mostrarMenuApuestas();
 			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -621,7 +615,6 @@ public class Controlador implements IControladorRemoto {
 			}
 		} else {
 			vista.notificarErrorIngreseUnEntero();
-			vista.mostrarOpcionesMenu();
 		}
 	}
 
@@ -636,7 +629,6 @@ public class Controlador implements IControladorRemoto {
 			}
 		} else {
 			vista.notificarErrorIngreseUnEnteroAgregandoNuevosFondos();
-			// vista.mostrarOpcionesMenuEmpezarOtraRonda();
 		}
 	}
 
