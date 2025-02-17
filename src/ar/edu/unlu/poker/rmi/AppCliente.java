@@ -30,8 +30,8 @@ public class AppCliente {
 				"Seleccione el puerto en el que corre el servidor", "Puerto del servidor", JOptionPane.QUESTION_MESSAGE,
 				null, null, 8888);
 
-		IVista vista = VistaGrafica.getInstance();
-		//IVista vista = new VistaConsolaSwing();
+		//IVista vista = VistaGrafica.getInstance();
+		IVista vista = new VistaConsolaSwing();
 
 		Controlador controlador = new Controlador(vista);
 		vista.setControlador(controlador);

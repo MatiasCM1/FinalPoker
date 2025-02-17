@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
 
@@ -303,6 +304,12 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	public void jugadorPasaPostEnvite(Jugador jugador) throws RemoteException {
 		this.jugadoresApuestaInsuficiente.remove(jugador);
 		jugador.pasar();
+		//PONGO QUE PASO EN LA LISTA DE JUGADORES MESA
+		for (Jugador j : this.jugadoresMesa) {
+			if (j.getNombre().equals(jugador.getNombre())) {
+				j.pasar();
+			}
+		}
 		this.mapa.remove(jugador);
 		this.rondaApuestaAux.remove(jugador);
 
@@ -325,7 +332,15 @@ public class Mesa extends ObservableRemoto implements IMesa {
 
 	@Override
 	public void jugadorPasa(Jugador jugador) throws RemoteException {
+		
 		jugador.pasar();
+		
+		//PONGO QUE PASO EN LA LISTA DE JUGADORES MESA
+		for (Jugador j : this.jugadoresMesa) {
+			if (j.getNombre().equals(jugador.getNombre())) {
+				j.pasar();
+			}
+		}
 
 		this.jugadorQuePaso = jugador;
 
@@ -519,6 +534,12 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	@Override
 	public void jugadorPasaSegundaRonda(Jugador jugador) throws RemoteException {
 		jugador.pasar();
+		//PONGO QUE PASO EN LA LISTA DE JUGADORES MESA
+		for (Jugador j : this.jugadoresMesa) {
+			if (j.getNombre().equals(jugador.getNombre())) {
+				j.pasar();
+			}
+		}
 		this.jugadorQuePaso = jugador;
 		this.notificarObservadores(Informe.JUGADOR_PASA_APUESTA);
 
@@ -591,6 +612,12 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	public void jugadorPasaPostEnviteSegundaRonda(Jugador jugador) throws RemoteException {
 		this.jugadoresApuestaInsuficiente.remove(jugador);
 		jugador.pasar();
+		//PONGO QUE PASO EN LA LISTA DE JUGADORES MESA
+		for (Jugador j : this.jugadoresMesa) {
+			if (j.getNombre().equals(jugador.getNombre())) {
+				j.pasar();
+			}
+		}
 		this.mapa.remove(jugador);
 		this.rondaApuestaAux.remove(jugador);
 		this.jugadorQuePaso = jugador;
@@ -750,7 +777,9 @@ public class Mesa extends ObservableRemoto implements IMesa {
 		
 		if (!this.mapa.isEmpty()) {
 			for (Jugador j : this.jugadoresMesa) {
-				j.agregarFondos(this.mapa.get(j));
+				if (j.isEnJuego()) {
+					j.agregarFondos(this.mapa.get(j));
+				}
 			}
 		}
 		
