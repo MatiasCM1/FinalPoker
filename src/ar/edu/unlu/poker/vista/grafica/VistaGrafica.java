@@ -131,7 +131,12 @@ public class VistaGrafica implements IVista {
 			this.vistaApuestas2 = new VistaApuestas2();
 		}
 		
-			this.vistaMenuPrincipal.setVisible(true);
+		if (this.vistaTop != null) {
+			this.vistaTop.setVisible(false);
+			this.vistaTop = new VistaTop();
+		}
+		
+		this.vistaMenuPrincipal.setVisible(true);
 
 		
 	}

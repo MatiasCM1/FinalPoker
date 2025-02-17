@@ -28,7 +28,19 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		this.estadoFlujo = Estados.SOLICITAR_NOMBRE_JUGADOR;
 		setTitle("Poker");
 		setSize(800, 600);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+		    public void windowClosing(java.awt.event.WindowEvent e) {
+		        jugadorSaleDelJuegoPostPrimeraPartida();
+		        System.exit(0);
+		    }
+		});
+		
+		
 		setLayout(new BorderLayout());
 		areaSalida = new JTextArea();
 		areaSalida.setEditable(false);
@@ -54,6 +66,20 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		setVisible(true);
 
 		areaSalida.append("Ingrese su nombre\n");
+	}
+
+	private void jugadorSaleDelJuegoPostPrimeraPartida() {
+		
+		if (!this.comprobarPartidaComenzada()) {
+			controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
+		} else {
+			controlador.jugadorSeRetiraConJuegoComenzado(this.jugadorActual);
+		}
+		
+	}
+	
+	private boolean comprobarPartidaComenzada() {
+		return this.controlador.comenzoPartida();
 	}
 
 	@Override
@@ -233,6 +259,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	private void mostrarOpcionesMenu() {
 		this.controlador.setEstoyEnVistaLogin(false);
+		this.setEnableCampoEntrada(true);
 		areaSalida.append("Seleccione una opcion:\n");
 		areaSalida.append("1 - Ver Lista de Jugadores\n");
 		areaSalida.append("2 - Comenzar Juego\n");
@@ -750,6 +777,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		for (Jugador j : jugadores) {
 			areaSalida.append("- Nombre - " + j.getNombre() + " - Fondos - " + j.getFondo() + "\n");
 		}
+		areaSalida.append("\n");
 	}
 
 	@Override
@@ -809,7 +837,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	@Override
 	public void mostrarMenuPrincipal() {
-		this.mostrarMenuApuestas();
+		this.mostrarOpcionesMenu();
 	}
 
 	@Override

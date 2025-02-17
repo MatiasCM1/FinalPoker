@@ -225,6 +225,7 @@ public class Controlador implements IControladorRemoto {
 			if (!this.estoyEnVistaLogin) {
 				mesa.marcarComoNoListoParaIniciar(this.jugadorActual);
 				vista.actualizarTablaJugadores(this.getJugadoresMesa());
+				vista.mostrarMenuPrincipal();
 			}
 			break;
 		case JUGADOR_SE_RETIRA_EN_PARTIDA:
