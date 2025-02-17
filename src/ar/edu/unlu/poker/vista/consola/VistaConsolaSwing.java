@@ -183,18 +183,23 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	public void solicitarFondo(String input) {
 		if (esperandoEntrada) {
-			if (controlador.validarTextoFondos(input)) {
-				jugadorActual = new Jugador(this.nombreJugadorActual, Integer.parseInt(input));
-				controlador.agregarJugador(jugadorActual);
-				controlador.setJugadorActual(jugadorActual);
-				setTitle("Poker");
-				areaSalida.append("Bienvenido, " + this.nombreJugadorActual + "!\n");
-				esperandoEntrada = false;
-				mostrarOpcionesMenu();
+			if (!this.comprobarPartidaComenzada()){
+				if (controlador.validarTextoFondos(input)) {
+					jugadorActual = new Jugador(this.nombreJugadorActual, Integer.parseInt(input));
+					controlador.agregarJugador(jugadorActual);
+					controlador.setJugadorActual(jugadorActual);
+					setTitle("Poker");
+					areaSalida.append("Bienvenido, " + this.nombreJugadorActual + "!\n");
+					esperandoEntrada = false;
+					mostrarOpcionesMenu();
+				} else {
+					areaSalida.append("¡Numero no valido! ¡Ingrese un numero entero!\n");
+					areaSalida.append("Ingrese el fondo que desea\n");
+					this.estadoFlujo = Estados.SOLICITAR_FONDO_JUGADOR;
+				}
 			} else {
-				areaSalida.append("¡Numero no valido! ¡Ingrese un numero entero!\n");
-				areaSalida.append("Ingrese el fondo que desea\n");
-				this.estadoFlujo = Estados.SOLICITAR_FONDO_JUGADOR;
+				areaSalida.append("Error, la partida ya comenzo.\n");
+				this.estadoFlujo = Estados.SOLICITAR_NOMBRE_JUGADOR;
 			}
 		}
 
