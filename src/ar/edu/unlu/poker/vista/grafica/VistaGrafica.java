@@ -93,7 +93,7 @@ public class VistaGrafica implements IVista {
 		
 		this.vistaMenuPrincipal.setVisible(false);
 		this.vistaLogin.setVisible(true);
-
+		
 		controlador.jugadorCierraSesion(this.jugadorActual);
 		
 		controlador.iniciarSiEstaListo();
@@ -115,6 +115,10 @@ public class VistaGrafica implements IVista {
 	
 	@Override
 	public void mostrarMenuPrincipal() {
+		
+		if (this.jugadorActual == null || !controlador.getJugadoresMesa().contains(this.jugadorActual)) {
+			return;
+		}
 		
 		if (this.vistaJuegoCartas != null) {
 			this.vistaJuegoCartas.setVisible(false);

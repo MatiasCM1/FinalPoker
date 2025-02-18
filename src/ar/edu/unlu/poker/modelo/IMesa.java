@@ -17,8 +17,6 @@ public interface IMesa extends IObservableRemoto {
 
 	List<Jugador> getJugadoresMesa() throws RemoteException;
 
-	// List<Jugador> devolverGanador() throws RemoteException;
-
 	Jugador devolverGanador() throws RemoteException;
 
 	Jugador getJugadorMano() throws RemoteException;
