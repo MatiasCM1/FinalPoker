@@ -49,11 +49,59 @@ public class Test {
 						e.printStackTrace();
 					}
 				});
+				
+				// Inicia el cuarto cliente en otro hilo separado
+				Thread cliente4Thread = new Thread(() -> {
+					try {
+						primerClienteIniciado.await(); // Espera a que el primer cliente esté listo
+						AppCliente.main(new String[] {});
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				});
+				
+				
+				// Inicia el quinto cliente en otro hilo separado
+				Thread cliente5Thread = new Thread(() -> {
+					try {
+						primerClienteIniciado.await(); // Espera a que el primer cliente esté listo
+						AppCliente.main(new String[] {});
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				});
+				
+				
+				// Inicia el sexto cliente en otro hilo separado
+				Thread cliente6Thread = new Thread(() -> {
+					try {
+						primerClienteIniciado.await(); // Espera a que el primer cliente esté listo
+						AppCliente.main(new String[] {});
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				});
+				
+				// Inicia el septimo cliente en otro hilo separado
+				/*Thread cliente7Thread = new Thread(() -> {
+					try {
+						primerClienteIniciado.await(); // Espera a que el primer cliente esté listo
+						AppCliente.main(new String[] {});
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				});*/
+				
+				
 
 		// Arranca los hilos
 		servidorThread.start();
 		cliente1Thread.start();
 		cliente2Thread.start();
 		cliente3Thread.start();
+		cliente4Thread.start();
+		cliente5Thread.start();
+		cliente6Thread.start();
+		//cliente7Thread.start();
 	}
 }

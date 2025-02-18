@@ -302,6 +302,7 @@ public class Controlador implements IControladorRemoto {
 			vista.informarCantJugadoresExcedidos();
 		}
 	}
+	
 
 	public List<Jugador> getJugadoresMesa() {
 		try {
