@@ -47,13 +47,15 @@ public class VistaGrafica implements IVista {
 
 	public void pasarVistaMenu() {
 		
-		this.controlador.setEstoyEnVistaLogin(false);
+		if (!controlador.agregarJugador(jugadorActual)) {
+			return;
+		}
 		
+		this.controlador.setEstoyEnVistaLogin(false);
 		this.vistaLogin.setVisible(false);
 		this.vistaMenuPrincipal = new VistaMenuPrincipal();
 		this.vistaMenuPrincipal.setVisible(true);
 
-		controlador.agregarJugador(jugadorActual);
 		controlador.setJugadorActual(jugadorActual);
 
 		this.actualizarTablaJugadores(getJugadoresMesa());
@@ -62,7 +64,9 @@ public class VistaGrafica implements IVista {
 	
 	@Override
 	public void informarCantJugadoresExcedidos() {
-		this.vistaMenuPrincipal.setVisible(false);
+		if (this.vistaMenuPrincipal != null) {
+			this.vistaMenuPrincipal.setVisible(false);
+		}
 		this.vistaLogin.setVisible(true);
 		this.vistaLogin.mostrarErrorCantidadMaximaJugadores();
 	}

@@ -186,22 +186,16 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 			if (!this.comprobarPartidaComenzada()){
 				if (controlador.validarTextoFondos(input)) {
 					jugadorActual = new Jugador(this.nombreJugadorActual, Integer.parseInt(input));
-					
-					int cantidadJugadoresAntes = controlador.getJugadoresMesa().size(); //Calculo la cnatidad de jugadores antes de intentar agregar
-					
-					controlador.agregarJugador(jugadorActual); //Intento agregar jugador
-					
-					int cantidadJugadoresDespues = controlador.getJugadoresMesa().size(); //Calculo la cantidad de jugadores despues de intentar agregar
-					
-					if (cantidadJugadoresAntes == cantidadJugadoresDespues) { //Si son iguales quiere decir que no se pudo agregar la jugador
-						return; //Corto la ejecucion
+				
+					if (!controlador.agregarJugador(jugadorActual)) { 
+						return;	
 					}
-					
 					controlador.setJugadorActual(jugadorActual);
 					setTitle("Poker");
 					areaSalida.append("Bienvenido, " + this.nombreJugadorActual + "!\n");
 					esperandoEntrada = false;
 					mostrarOpcionesMenu();
+					
 				} else {
 					areaSalida.append("¡Numero no valido! ¡Ingrese un numero entero!\n");
 					areaSalida.append("Ingrese el fondo que desea\n");
@@ -679,7 +673,6 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	public void informarCantJugadoresExcedidos() {
 		areaSalida.append("La cantidad de jugadores excede el limite permitido.\n");
 		areaSalida.append("Ingrese su nombre\n");
-		//JOptionPane.showMessageDialog(null, "No se pueden agregar más jugadores. Límite alcanzado.", "Error", JOptionPane.ERROR_MESSAGE);
 		this.estadoFlujo = Estados.SOLICITAR_NOMBRE_JUGADOR;
 	}
 
