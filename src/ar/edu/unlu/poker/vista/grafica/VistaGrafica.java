@@ -1,15 +1,12 @@
 package ar.edu.unlu.poker.vista.grafica;
 
-import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.JTextField;
 
 import ar.edu.unlu.poker.controlador.Controlador;
 import ar.edu.unlu.poker.modelo.Jugador;
 import ar.edu.unlu.poker.vista.IVista;
-import ar.edu.unlu.poker.vista.consola.Estados;
 
 public class VistaGrafica implements IVista {
 
@@ -50,13 +47,15 @@ public class VistaGrafica implements IVista {
 
 	public void pasarVistaMenu() {
 		
-		this.controlador.setEstoyEnVistaLogin(false);
+		if (!controlador.agregarJugador(jugadorActual)) {
+			return;
+		}
 		
+		this.controlador.setEstoyEnVistaLogin(false);
 		this.vistaLogin.setVisible(false);
 		this.vistaMenuPrincipal = new VistaMenuPrincipal();
 		this.vistaMenuPrincipal.setVisible(true);
 
-		controlador.agregarJugador(jugadorActual);
 		controlador.setJugadorActual(jugadorActual);
 
 		this.actualizarTablaJugadores(getJugadoresMesa());
@@ -65,7 +64,9 @@ public class VistaGrafica implements IVista {
 	
 	@Override
 	public void informarCantJugadoresExcedidos() {
-		this.vistaMenuPrincipal.setVisible(false);
+		if (this.vistaMenuPrincipal != null) {
+			this.vistaMenuPrincipal.setVisible(false);
+		}
 		this.vistaLogin.setVisible(true);
 		this.vistaLogin.mostrarErrorCantidadMaximaJugadores();
 	}
@@ -96,7 +97,7 @@ public class VistaGrafica implements IVista {
 		
 		this.vistaMenuPrincipal.setVisible(false);
 		this.vistaLogin.setVisible(true);
-
+		
 		controlador.jugadorCierraSesion(this.jugadorActual);
 		
 		controlador.iniciarSiEstaListo();
@@ -112,12 +113,16 @@ public class VistaGrafica implements IVista {
 		if (!this.comprobarPartidaComenzada()) {
 			controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
 		} else {
-			controlador.jugadorSeRetiraEnJuego(this.jugadorActual);
+			controlador.jugadorSeRetiraConJuegoComenzado(this.jugadorActual);
 		}
 	}
 	
 	@Override
 	public void mostrarMenuPrincipal() {
+		
+		if (this.jugadorActual == null || !controlador.getJugadoresMesa().contains(this.jugadorActual)) {
+			return;
+		}
 		
 		if (this.vistaJuegoCartas != null) {
 			this.vistaJuegoCartas.setVisible(false);
@@ -134,7 +139,12 @@ public class VistaGrafica implements IVista {
 			this.vistaApuestas2 = new VistaApuestas2();
 		}
 		
-			this.vistaMenuPrincipal.setVisible(true);
+		if (this.vistaTop != null) {
+			this.vistaTop.setVisible(false);
+			this.vistaTop = new VistaTop();
+		}
+		
+		this.vistaMenuPrincipal.setVisible(true);
 
 		
 	}
@@ -240,7 +250,7 @@ public class VistaGrafica implements IVista {
 
 		if (this.vistaJuegoCartas != null) {
 			for (Jugador jugador : jugadores) {
-				if (jugador.equals(jugadorActual)) { // Mostrar solo cartas del jugador actual
+				if (jugador.equals(jugadorActual)) {
 					this.jugadorActual.setListaCartas(jugador.getCartas());
 					this.vistaJuegoCartas.mostrarCartas(jugador.getCartas());
 				}
@@ -260,7 +270,6 @@ public class VistaGrafica implements IVista {
 
 		this.vistaApuestas.setVisible(true);
 
-		// ESTO SE PUEDE SACAR?
 		this.vistaApuestas.informarJugadorMano(this.nombreJugadorMano);
 
 		this.mostrarNombreDelJugadorVentanaApuestas();
@@ -593,14 +602,8 @@ public class VistaGrafica implements IVista {
 	}
 	
 	@Override
-	public void notificarEnviteRealizado() {
-
-	}
-
-	@Override
-	public void informarNoTurno() {
-		// TODO Auto-generated method stub
-
+	public void notificarCartaDescartadaConExito() {
+		this.vistaJuegoCartas.escribirNotificacion("Descarte exitoso");
 	}
 
 	@Override
@@ -610,26 +613,7 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void notificarErrorIntentarDescarteEnUnaCartaYaDescartada() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void notificarCartaDescartadaConExito() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setEnableCampoEntrada(boolean h) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mostrarOpcionesMenu() {
-		// TODO Auto-generated method stub
-
+		this.vistaJuegoCartas.escribirNotificacion("No se puede descartas una carta ya descartada");
 	}
 
 	public void jugadorNoListo() {

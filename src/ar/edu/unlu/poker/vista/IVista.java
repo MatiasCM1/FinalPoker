@@ -1,8 +1,5 @@
 package ar.edu.unlu.poker.vista;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
 import java.util.List;
 
 import ar.edu.unlu.poker.controlador.Controlador;
@@ -28,11 +25,7 @@ public interface IVista {
 
 	void informarFondosInsuficientes();
 
-	void notificarEnviteRealizado();
-
 	void informarApuestaRealizada(String nombre, int apuestaJugador);
-
-	void informarNoTurno();
 
 	void informarTurnoApuestaOtroJugador(String nombreJugador);
 
@@ -67,10 +60,6 @@ public interface IVista {
 	void notificarErrorIngreseUnEntero();
 
 	void mostrarOpcionesMenuEmpezarOtraRonda();
-
-	void setEnableCampoEntrada(boolean h);
-
-	void mostrarOpcionesMenu();
 
 	void actualizarTablaJugadores(List<Jugador> jugadores);
 

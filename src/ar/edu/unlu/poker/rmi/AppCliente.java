@@ -31,6 +31,7 @@ public class AppCliente {
 				null, null, 8888);
 
 		IVista vista = VistaGrafica.getInstance();
+		//IVista vista = new VistaConsolaSwing();
 
 		Controlador controlador = new Controlador(vista);
 		vista.setControlador(controlador);

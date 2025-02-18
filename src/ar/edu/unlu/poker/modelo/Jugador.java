@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class Jugador implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private LinkedList<Carta> cartas = new LinkedList<Carta>();
 	private String nombre;
 	private Resultado resultadoValoresCartas;
