@@ -29,6 +29,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
 
 import java.awt.Cursor;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VistaApuestas extends JFrame {
 
@@ -369,6 +371,14 @@ public class VistaApuestas extends JFrame {
 		panelRealizarEnvite.add(lblFondoMaderaBtnAceptar);
 
 		txtFieldCantidadApuesta = new JTextField();
+		txtFieldCantidadApuesta.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (txtFieldCantidadApuesta.getText().length() >= 6) {
+                    e.consume();
+                }
+			}
+		});
 		txtFieldCantidadApuesta.setBounds(53, 60, 214, 20);
 		panelRealizarEnvite.add(txtFieldCantidadApuesta);
 		txtFieldCantidadApuesta.setColumns(10);

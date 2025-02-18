@@ -866,5 +866,10 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		areaSalida.append("Error, jugador sale de la partida.\n");
 	}
 
+	@Override
+	public void notificarErrorMaximaLongitudFondos() {
+		areaSalida.append("Error, los fondos del jugador no pueden superar los seis digitos.\n");
+	}
+
 
 }

@@ -89,4 +89,6 @@ public interface IVista {
 
 	void mostrarErrorSalidaJugador();
 
+	void notificarErrorMaximaLongitudFondos();
+
 }

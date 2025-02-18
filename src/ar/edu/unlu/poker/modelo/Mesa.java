@@ -764,4 +764,14 @@ public class Mesa extends ObservableRemoto implements IMesa {
 		return this.mapa.containsKey(jugador);
 	}
 
+	@Override
+	public int getfondosJugador(Jugador jugador) throws RemoteException{
+		for (Jugador j : this.jugadoresMesa) {
+			if (j.getNombre().equals(jugador.getNombre())) {
+				return j.getFondo();
+			}
+		}
+		return 0;
+	}
+
 }

@@ -609,13 +609,20 @@ public class Controlador implements IControladorRemoto {
 		return 0;
 	}
 
-	public void incrementarFondos(Jugador jugador, String input) {
-		if (this.validarEnteroPositivo(input)) {
-			int fondoAgregar = Integer.parseInt(input);
+	public void incrementarFondos(Jugador jugador, String fondosAIncrementar) {
+		if (this.validarEnteroPositivo(fondosAIncrementar)) {
+			int fondoAgregar = Integer.parseInt(fondosAIncrementar);
 			try {
-				mesa.agregarNuevosFondos(jugador, fondoAgregar);
+				if (validarLongitudNumero(mesa.getfondosJugador(jugador) + fondoAgregar)) {
+					try {
+						mesa.agregarNuevosFondos(jugador, fondoAgregar);
+					} catch (RemoteException e) {
+						e.printStackTrace();
+					}
+				} else {
+					vista.notificarErrorMaximaLongitudFondos();
+				}
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
@@ -623,18 +630,29 @@ public class Controlador implements IControladorRemoto {
 		}
 	}
 
-	public void incrementarFondos2(Jugador jugador, String input) {
-		if (this.validarEnteroPositivo(input)) {
-			int fondoAgregar = Integer.parseInt(input);
+	public void incrementarFondos2(Jugador jugador, String fondosAIncrementar) {
+		if (this.validarEnteroPositivo(fondosAIncrementar)) {
+			int fondoAgregar = Integer.parseInt(fondosAIncrementar);
 			try {
-				mesa.agregarNuevosFondos(jugador, fondoAgregar);
+				if (validarLongitudNumero(mesa.getfondosJugador(jugador) + fondoAgregar)) {
+					try {
+						mesa.agregarNuevosFondos(jugador, fondoAgregar);
+					} catch (RemoteException e) {
+						e.printStackTrace();
+					}
+				} else {
+					vista.notificarErrorMaximaLongitudFondos();
+				}
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
 			vista.notificarErrorIngreseUnEnteroAgregandoNuevosFondos();
 		}
+	}
+
+	private boolean validarLongitudNumero(int fondosAIncrementar) {
+		return ((String.valueOf(fondosAIncrementar)).length() <= 6);
 	}
 
 	// ---------------------------------
