@@ -217,10 +217,20 @@ public class VistaGrafica implements IVista {
 	@Override
 	public void actualizarTablaJugadores(List<Jugador> jugadores) {
 		if (controlador.verificarCantidadDeJugadores()) {
+			this.actualizarJugadorActual(jugadores);
 			List<Jugador> jugardoresSinActual = this.listaSinJugadorActualizarTabla(jugadores);
 			this.vistaMenuPrincipal.actualizarTabla(jugardoresSinActual);
 		} else {
 			this.vistaMenuPrincipal.limpiarTablaJugadores();
+			this.actualizarJugadorActual(jugadores);
+		}
+	}
+
+	private void actualizarJugadorActual(List<Jugador> jugadores) {
+		for (Jugador j : jugadores) {
+			if (j.getNombre().equals(this.jugadorActual.getNombre())) {
+				this.vistaMenuPrincipal.actualizarJugadorVista(j);
+			}
 		}
 	}
 
@@ -229,8 +239,6 @@ public class VistaGrafica implements IVista {
 		for (Jugador j : jugadores) {
 			if (!j.getNombre().equals(this.jugadorActual.getNombre())) {
 				listaResultado.add(j);
-			} else {
-				this.vistaMenuPrincipal.actualizarJugadorVista(j);
 			}
 		}
 		return listaResultado;
