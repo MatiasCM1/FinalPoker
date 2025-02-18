@@ -26,6 +26,8 @@ import ar.edu.unlu.poker.vista.consola.Estados;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VistaLogin extends JFrame {
 
@@ -287,6 +289,14 @@ public class VistaLogin extends JFrame {
 		contentPane.add(separator_fondos);
 
 		txtFondos = new JTextField();
+		txtFondos.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (txtFondos.getText().length() >= 6) {
+                    e.consume();
+                }
+			}
+		});
 		txtFondos.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 11));
 		txtFondos.addMouseListener(new MouseAdapter() {
 			@Override
@@ -319,6 +329,14 @@ public class VistaLogin extends JFrame {
 		contentPane.add(separator_nombre);
 
 		txtNombre = new JTextField();
+		txtNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (txtNombre.getText().length() >= 6) {
+                    e.consume();
+                }
+			}
+		});
 		txtNombre.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 11));
 		txtNombre.addMouseListener(new MouseAdapter() {
 			@Override

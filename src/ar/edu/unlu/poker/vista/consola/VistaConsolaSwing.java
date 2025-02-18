@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,6 +61,15 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 					e1.printStackTrace();
 				}
 				campoEntrada.setText("");
+			}
+		});
+		
+		campoEntrada.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (campoEntrada.getText().length() >= 6) {
+                    e.consume();
+                }
 			}
 		});
 		add(scrollPane, BorderLayout.CENTER);

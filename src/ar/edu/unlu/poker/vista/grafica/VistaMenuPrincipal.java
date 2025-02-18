@@ -25,6 +25,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VistaMenuPrincipal extends JFrame {
 
@@ -285,6 +287,14 @@ public class VistaMenuPrincipal extends JFrame {
 		panelIngresoNuevosFondos.add(lblFondoMaderaBtnAceptar);
 
 		txtNuevosFondos = new JTextField();
+		txtNuevosFondos.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (txtNuevosFondos.getText().length() >= 6) {
+                    e.consume();
+                }
+			}
+		});
 		txtNuevosFondos.setColumns(10);
 		txtNuevosFondos.setBounds(71, 72, 214, 20);
 		panelIngresoNuevosFondos.add(txtNuevosFondos);
