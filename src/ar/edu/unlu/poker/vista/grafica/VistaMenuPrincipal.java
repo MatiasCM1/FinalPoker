@@ -59,6 +59,7 @@ public class VistaMenuPrincipal extends JFrame {
 	private JLabel lblMensajeErrorJugadorSalePartida;
 	private JPanel panelMostrarJugadores;
 	private JPanel panelTop10;
+	private JLabel lblMensajeErrorFondosExcedenNumeroMax;
 
 	/*public static void main(String[] args) { EventQueue.invokeLater(new
 			  Runnable() { public void run() { try { VistaMenuPrincipal frame = new
@@ -148,6 +149,7 @@ public class VistaMenuPrincipal extends JFrame {
 				lblMensajeErrorFondosInsuficientes.setVisible(false);
 				lblMensajeErrorJugadoresInsuficientes.setVisible(false);
 				lblMensajeErrorJugadorSalePartida.setVisible(false);
+				lblMensajeErrorFondosExcedenNumeroMax.setVisible(false);
 				panelMostrarJugadores.setVisible(true);
 				panelTop10.setVisible(true);
 				VistaGrafica.getInstance().jugadorNoListo();
@@ -172,6 +174,14 @@ public class VistaMenuPrincipal extends JFrame {
 		lblMensajeErrorJugadorSalePartida.setForeground(new Color(255, 0, 0));
 		lblMensajeErrorJugadorSalePartida.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMensajeErrorJugadorSalePartida.setVisible(false);
+		
+		lblMensajeErrorFondosExcedenNumeroMax = new JLabel("El fondo no puede superar los seis digitos");
+		lblMensajeErrorFondosExcedenNumeroMax.setVisible(false);
+		lblMensajeErrorFondosExcedenNumeroMax.setForeground(new Color(255, 0, 0));
+		lblMensajeErrorFondosExcedenNumeroMax.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMensajeErrorFondosExcedenNumeroMax.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
+		lblMensajeErrorFondosExcedenNumeroMax.setBounds(50, 110, 365, 38);
+		panelErrores.add(lblMensajeErrorFondosExcedenNumeroMax);
 		lblMensajeErrorJugadorSalePartida.setBounds(50, 110, 365, 39);
 		panelErrores.add(lblMensajeErrorJugadorSalePartida);
 		lblMensajeErrorJugadoresInsuficientes.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
@@ -807,5 +817,16 @@ public class VistaMenuPrincipal extends JFrame {
 		this.panelTop10.setVisible(false);
 		this.panelErrores.setVisible(true);
 		this.lblMensajeErrorJugadorSalePartida.setVisible(true);
+	}
+
+	public void mostrarErrorMaximaLogitudNumeroFondos() {
+		this.panelBotones.setVisible(false);
+		
+		this.panelMostrarJugadores.setVisible(false);
+		
+		this.panelTop10.setVisible(false);
+		
+		this.panelErrores.setVisible(true);
+		this.lblMensajeErrorFondosExcedenNumeroMax.setVisible(true);
 	}
 }

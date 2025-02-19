@@ -334,6 +334,11 @@ public class VistaGrafica implements IVista {
 	public void notificarErrorIngreseUnEnteroAgregandoNuevosFondos() {
 		this.vistaMenuPrincipal.mostrarErrorNumeroInvalido();
 	}
+	
+	@Override
+	public void notificarErrorMaximaLongitudFondos() {
+		this.vistaMenuPrincipal.mostrarErrorMaximaLogitudNumeroFondos();	
+	}
 
 	@Override
 	public void notificarApuestaMenorALaAnterior() {
@@ -522,8 +527,7 @@ public class VistaGrafica implements IVista {
 			this.vistaApuestas2.setVisible(false);
 		}
 		this.vistaJuegoCartas.setVisible(true);
-		this.vistaJuegoCartas.escribirNotificacion(
-				"Ganador: " + ganador.getNombre() + " con " + ganador.getResultadoValoresCartas());
+		this.vistaJuegoCartas.escribirNotificacion("Ganador: " + ganador.getNombre() + " con " + ganador.getResultadoValoresCartas());
 	}
 
 	@Override
@@ -626,6 +630,13 @@ public class VistaGrafica implements IVista {
 
 	public void jugadorNoListo() {
 		this.controlador.establecerJugadorComoNoListo(this.jugadorActual);
+	}
+
+	@Override
+	public void mostrarCartasJugadorAntGanador(List<Jugador> finalistas) {
+		if (this.vistaJuegoCartas != null) {
+			this.vistaJuegoCartas.mostrarCartasFinalistasRonda(finalistas);
+		}
 	}
 
 }

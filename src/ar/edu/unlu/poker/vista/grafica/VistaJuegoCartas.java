@@ -8,6 +8,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import ar.edu.unlu.poker.modelo.Carta;
+import ar.edu.unlu.poker.modelo.Jugador;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -672,5 +673,14 @@ public class VistaJuegoCartas extends JFrame {
 		this.panelOpcionesSiguienteRondaJuego.setVisible(false);
 		this.lblErrorJugadoresInsuficientes.setVisible(true);
 		this.panelErrores.setVisible(true);
+	}
+
+	public void mostrarCartasFinalistasRonda(List<Jugador> finalistas) {
+		for (Jugador j : finalistas) {
+			this.escribirNotificacion(j.getNombre() + ", Cartas: ");
+			for (Carta c : j.getCartas()) {
+				this.escribirNotificacion("       " + c.toString());
+			}
+		}
 	}
 }

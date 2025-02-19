@@ -89,4 +89,8 @@ public interface IVista {
 
 	void mostrarErrorSalidaJugador();
 
+	void notificarErrorMaximaLongitudFondos();
+
+	void mostrarCartasJugadorAntGanador(List<Jugador> rondaApuestaAux);
+
 }

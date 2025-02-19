@@ -7,8 +7,6 @@ import java.util.LinkedList;
 
 public class ResultadoJugadaJugador {
 
-	// SPLASH
-
 	private static final HashMap<String, Integer> valorCarta = new HashMap<String, Integer>();
 
 	public ResultadoJugadaJugador() {

@@ -85,4 +85,6 @@ public interface IMesa extends IObservableRemoto {
 
 	void setearJugadoresMezclados(List<Jugador> jugadoresMezclados) throws RemoteException;
 
+	int getfondosJugador(Jugador jugador) throws RemoteException;
+
 }

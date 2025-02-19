@@ -363,8 +363,7 @@ public class Mesa extends ObservableRemoto implements IMesa {
 		
 		if (esJugadorTurno(jugador)) {
 
-			// TENGO QUE HACER ESTO, PQ EL JUGADOR QUE VIENE DE LA VISTA NO TIENE LAS
-			// CARTAS, ENTONCES SE LAS TENGO QUE SETEAR
+			// TENGO QUE HACER ESTO, PQ EL JUGADOR QUE VIENE DE LA VISTA NO TIENE LAS CARTAS, ENTONCES SE LAS TENGO QUE SETEAR
 			jugador.setListaCartas(buscarCartasCorrespondeJugador(jugador)); // BUSCAR OTRA MANERA NO ME GUSTA
 
 			this.descartarCartas(jugador);
@@ -762,6 +761,16 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	
 	private boolean estaEnElMapa(Jugador jugador) {
 		return this.mapa.containsKey(jugador);
+	}
+
+	@Override
+	public int getfondosJugador(Jugador jugador) throws RemoteException{
+		for (Jugador j : this.jugadoresMesa) {
+			if (j.getNombre().equals(jugador.getNombre())) {
+				return j.getFondo();
+			}
+		}
+		return 0;
 	}
 
 }
