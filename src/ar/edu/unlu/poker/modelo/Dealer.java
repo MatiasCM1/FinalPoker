@@ -110,7 +110,7 @@ public class Dealer {
 		Resultado resultadoGanador = ganadores.peek().getResultadoValoresCartas();
 
 		//Si el resultado empatado es carta mayor, color, escalera o escalera a color se busca la carta mayor
-		if (ResultadoEsCartaMayorColorEscaleraEscaleraColor(resultadoGanador)) { 
+		if (resultadoEsCartaMayorColorEscaleraEscaleraColor(resultadoGanador)) { 
 			
 			return buscarJugadorCartaMayor(ganadores);
 
@@ -141,7 +141,7 @@ public class Dealer {
 	}
 	
 	
-	private boolean ResultadoEsCartaMayorColorEscaleraEscaleraColor(Resultado resultadoGanador) {
+	private boolean resultadoEsCartaMayorColorEscaleraEscaleraColor(Resultado resultadoGanador) {
 		return resultadoGanador.equals(Resultado.CARTA_MAYOR) || resultadoGanador.equals(Resultado.COLOR)
 				|| resultadoGanador.equals(Resultado.ESCALERA) || resultadoGanador.equals(Resultado.ESCALERA_COLOR);
 	}
