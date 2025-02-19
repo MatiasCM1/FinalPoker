@@ -64,6 +64,8 @@ public class Controlador implements IControladorRemoto {
 				
 				mesa.setComenzoPartida(false);
 				
+				vista.mostrarCartasJugadorAntGanador(mesa.getRondaApuestaAux());
+				
 				vista.mostrarGanador(ganador);
 				vista.mostrarOpcionesMenuEmpezarOtraRonda();
 			}

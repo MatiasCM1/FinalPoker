@@ -871,5 +871,15 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		areaSalida.append("Error, los fondos del jugador no pueden superar los seis digitos.\n");
 	}
 
+	@Override
+	public void mostrarCartasJugadorAntGanador(List<Jugador> finalistas) {
+		for (Jugador j : finalistas) {
+			areaSalida.append(j.getNombre() + ", Cartas: \n");
+			for (Carta c : j.getCartas()) {
+				areaSalida.append("       " + c.toString() + "\n");
+			}
+		}
+	}
+
 
 }
