@@ -208,8 +208,8 @@ public class Dealer {
 		ResultadoJugadaJugador ordenadorResultados = new ResultadoJugadaJugador();
 
 		//Paso una lista con las cartas que son iguales de cada jugador, esta lista se ordena de menor a mayor y tomo la ultima, ya que esta seria la mayor
-		Carta cartaMayor1 = (ordenadorResultados.ordenarCartas(ganadorActual.determinarCartasIguales())).getLast();
-		Carta cartaMayor2 = (ordenadorResultados.ordenarCartas(candidadatoAGanador.determinarCartasIguales())).getLast();
+		Carta cartaMayor1 = (ganadorActual.ordenarCartas(ganadorActual.determinarCartasIguales())).getLast();
+		Carta cartaMayor2 = (candidadatoAGanador.ordenarCartas(candidadatoAGanador.determinarCartasIguales())).getLast();
 
 		// Devuelve true si la carta (que forma parte del resultado de cartas igualadas) de candidatoAGanador es mayor a la del ganadorActual
 		return cartaMayor2.compareTo(cartaMayor1) >= 0;

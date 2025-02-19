@@ -2,6 +2,7 @@ package ar.edu.unlu.poker.modelo;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -105,13 +106,31 @@ public class Jugador implements Serializable {
 
 	public void calcularValorCartas() throws RemoteException {
 		ResultadoJugadaJugador jugada = new ResultadoJugadaJugador();
-		this.resultadoValoresCartas = jugada.devolverValor(new LinkedList<Carta>(this.cartas));
+		this.resultadoValoresCartas = jugada.devolverValor(new LinkedList<Carta>(this.ordenarCartas(this.cartas)));
 	}
 
-	public LinkedList<Carta> getCartasOrdenadas() throws RemoteException {
-		ResultadoJugadaJugador r = new ResultadoJugadaJugador();
-		return r.ordenarCartas(new LinkedList<Carta>(this.cartas));
+	
+	
+	public LinkedList<Carta> ordenarCartas(LinkedList<Carta> cartas) {
+		LinkedList<Carta> cartasOrdenadas = new LinkedList<Carta>(cartas);
+		cartasOrdenadas.sort(Comparator.comparing(carta -> {
+			try {
+				return ResultadoJugadaJugador.getValorcarta().get(carta.getValor());
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}));
+		return cartasOrdenadas;
 	}
+	
+	
+	
+
+	public LinkedList<Carta> getCartasOrdenadas() throws RemoteException {
+		return this.ordenarCartas(new LinkedList<Carta>(this.cartas));
+	}
+	
 
 	public Resultado getResultadoValoresCartas() {
 		return resultadoValoresCartas;

@@ -25,20 +25,6 @@ public class ResultadoJugadaJugador {
 		valorCarta.put("AS", 14);
 	}
 
-	public LinkedList<Carta> ordenarCartas(LinkedList<Carta> cartas) {
-		LinkedList<Carta> cartasOrdenadas = new LinkedList<Carta>(cartas);
-		cartasOrdenadas.sort(Comparator.comparing(carta -> {
-			try {
-				return valorCarta.get(carta.getValor());
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}));
-		return cartasOrdenadas;
-	}
-
 	public Resultado devolverValor(LinkedList<Carta> cartas) throws RemoteException {
 		if (escaleraColor(cartas)) {
 			return Resultado.ESCALERA_COLOR;
@@ -61,11 +47,11 @@ public class ResultadoJugadaJugador {
 		}
 	}
 
-	public boolean escaleraColor(LinkedList<Carta> cartas) throws RemoteException {
+	private boolean escaleraColor(LinkedList<Carta> cartas) throws RemoteException {
 		return ((escalera(cartas)) && (color(cartas)));
 	}
 
-	public boolean color(LinkedList<Carta> cartas) throws RemoteException {
+	private boolean color(LinkedList<Carta> cartas) throws RemoteException {
 		String paloCarta = cartas.getFirst().getPalo();
 		for (Carta c : cartas) {
 			if (!(c.getPalo().equals(paloCarta))) {
@@ -75,12 +61,11 @@ public class ResultadoJugadaJugador {
 		return true;
 	}
 
-	public boolean escalera(LinkedList<Carta> cartas) throws RemoteException {
-		LinkedList<Carta> cartasOrdenadas = this.ordenarCartas(cartas);
-		boolean flagAS = cartasOrdenadas.getLast().getValor().equals("AS");
-		int cartaAnt = valorCarta.get(cartasOrdenadas.getFirst().getValor());
-		for (int i = 1; i < cartasOrdenadas.size(); i++) {
-			int cartaActual = valorCarta.get(cartasOrdenadas.get(i).getValor());
+	private boolean escalera(LinkedList<Carta> cartas) throws RemoteException {
+		boolean flagAS = cartas.getLast().getValor().equals("AS");
+		int cartaAnt = valorCarta.get(cartas.getFirst().getValor());
+		for (int i = 1; i < cartas.size(); i++) {
+			int cartaActual = valorCarta.get(cartas.get(i).getValor());
 			if (cartaActual != cartaAnt + 1) {
 				if (flagAS && cartaAnt == 5 && cartaActual == 14) { // Verifica escalera minima donde el AS es 1
 					continue;
@@ -92,7 +77,7 @@ public class ResultadoJugadaJugador {
 		return true;
 	}
 
-	public int contarRepeticiones(LinkedList<Carta> cartas, Carta carta) {
+	private int contarRepeticiones(LinkedList<Carta> cartas, Carta carta) {
 		return (int) cartas.stream().filter(c -> {
 			try {
 				return c.getValor().equals(carta.getValor());
@@ -104,61 +89,57 @@ public class ResultadoJugadaJugador {
 		}).count();
 	}
 
-	public boolean par(LinkedList<Carta> cartas) {
+	private boolean par(LinkedList<Carta> cartas) {
 		return cartas.stream().anyMatch(c -> contarRepeticiones(cartas, c) == 2);
 	}
 
-	public boolean trio(LinkedList<Carta> cartas) {
+	private boolean trio(LinkedList<Carta> cartas) {
 		return cartas.stream().anyMatch(c -> contarRepeticiones(cartas, c) == 3);
 	}
 
-	public boolean poker(LinkedList<Carta> cartas) {
+	private boolean poker(LinkedList<Carta> cartas) {
 		return cartas.stream().anyMatch(c -> contarRepeticiones(cartas, c) == 4);
 	}
 
-	public Carta mayorDeDosCartas(Carta c1, Carta c2) throws RemoteException {
+	private Carta mayorDeDosCartas(Carta c1, Carta c2) throws RemoteException {
 		int valorC1 = valorCarta.get(c1.getValor());
 		int valorC2 = valorCarta.get(c2.getValor());
 		return (valorC1 > valorC2) ? c1 : (valorC1 < valorC2) ? c2 : null;
 	}
 
-	public Carta cartaMasAlta(LinkedList<Carta> cartas) {
-		LinkedList<Carta> cartasOrdenadas = this.ordenarCartas(cartas);
-		return cartasOrdenadas.getLast();
+	private Carta cartaMasAlta(LinkedList<Carta> cartas) {
+		return cartas.getLast();
 	}
 
-	public boolean doblePar(LinkedList<Carta> cartas) {
+	private boolean doblePar(LinkedList<Carta> cartas) {
 		LinkedList<Carta> cartasRestantes = new LinkedList<Carta>(cartas);
 		// Buscar el primer par
-		Carta primerPar = cartasRestantes.stream().filter(c -> contarRepeticiones(cartasRestantes, c) == 2).findFirst()
-				.orElse(null);
+		Carta primerPar = cartasRestantes.stream().filter(c -> contarRepeticiones(cartasRestantes, c) == 2).findFirst().orElse(null);
+		
 		if (primerPar != null) {
 			// Eliminar las cartas del primer par
 			cartasRestantes.removeIf(c -> {
 				try {
 					return c.getValor().equals(primerPar.getValor());
 				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return false;
 			});
 			// Buscar el segundo par
-			Carta segundoPar = cartasRestantes.stream().filter(c -> contarRepeticiones(cartasRestantes, c) == 2)
-					.findFirst().orElse(null);
+			Carta segundoPar = cartasRestantes.stream().filter(c -> contarRepeticiones(cartasRestantes, c) == 2).findFirst().orElse(null);
+			
 			return segundoPar != null;
 		}
 		return false;
 	}
 
-	public boolean full(LinkedList<Carta> cartas) {
-		LinkedList<Carta> cartasOrdenadas = ordenarCartas(cartas);
+	private boolean full(LinkedList<Carta> cartas) {
 		// Verificar si hay trio
-		Carta cartaTrio = cartasOrdenadas.stream().filter(c -> contarRepeticiones(cartas, c) == 3).findFirst()
+		Carta cartaTrio = cartas.stream().filter(c -> contarRepeticiones(cartas, c) == 3).findFirst()
 				.orElse(null);
-		if (cartaTrio != null) { // Elimino las cartas del trio para verificar que las cartas del par sean
-									// distintas que las del trio
-			LinkedList<Carta> cartasRestantes = new LinkedList<Carta>(cartasOrdenadas);
+		if (cartaTrio != null) { // Elimino las cartas del trio para verificar que las cartas del par sean distintas que las del trio
+			LinkedList<Carta> cartasRestantes = new LinkedList<Carta>(cartas);
 			cartasRestantes.removeIf(c -> {
 				try {
 					return c.getValor().equals(cartaTrio.getValor());
@@ -173,6 +154,10 @@ public class ResultadoJugadaJugador {
 			return hayPar;
 		}
 		return false;
+	}
+	
+	public static HashMap<String, Integer> getValorcarta() {
+		return valorCarta;
 	}
 
 }
