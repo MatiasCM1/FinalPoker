@@ -5,14 +5,19 @@ import java.rmi.RemoteException;
 
 public class Carta implements Serializable, Comparable<Carta> {
 
+	
+	private static final long serialVersionUID = 1L;
 	private String valor;
 	private String palo;
-	private String[] ordenCartas = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "AS" };
-	private String[] palosValidos = { "PICA", "CORAZON", "TREBOL", "DIAMANTE" };
+	private static final String[] ordenCartas = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "AS" };
 
 	public Carta(String valor, String palo) {
 		this.setPalo(palo);
 		this.setValor(valor);
+	}
+
+	private void setPalo(String paloo) {
+		this.palo = paloo;
 	}
 
 	public String getValor() throws RemoteException {
@@ -27,25 +32,8 @@ public class Carta implements Serializable, Comparable<Carta> {
 		return palo;
 	}
 
-	private void setPalo(String palo) {
-		if (!verificarPaloValido(palo)) {
-			throw new IllegalArgumentException("Palo inv�lido:" + palo);
-		} else {
-			this.palo = palo;
-		}
-	}
-
 	public String[] getOrdenCartas() throws RemoteException {
 		return ordenCartas;
-	}
-
-	private boolean verificarPaloValido(String palo) {
-		for (String p : palosValidos) {
-			if (p.equals(palo)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	@Override
