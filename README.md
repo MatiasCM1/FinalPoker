@@ -71,6 +71,6 @@ A continuación, se muestra el diagrama de clases del proyecto:
 
      ![Image](https://github.com/AlumnoProgAux/imagenes/blob/main/SeleccionPuertoServidorCliente.png)
   
-### Notas adicionales
-   * El proceso de ejecución de AppCliente debe repetirse por cada jugador que desee que participar en el juego, hasta un maximo de 7 jugadores.
-   * Como el juego se ejecuta de manera local, cada cliente debe usar un puerto diferente para evitar conflictos.
+   ### Notas adicionales
+      * El proceso de ejecución de AppCliente debe repetirse por cada jugador que desee que participar en el juego, hasta un maximo de 7 jugadores.
+      * Como el juego se ejecuta de manera local, cada cliente debe usar un puerto diferente para evitar conflictos.
