@@ -28,4 +28,35 @@ Este proyecto es el trabajo práctico final para la asignatura Programación Ori
      Para interfaz consola comentar la linea IVista vista = VistaGrafica.getInstance();
 
    ![Image](https://github.com/AlumnoProgAux/imagenes/blob/main/SeleccionInterfazConsola.png)
+
         
+2. Ejecutar la clase AppServidor
+   
+     * Seleccionar dirección IP
+       
+       [Imagen direcccion ip]
+       
+     * Seleccionar puerto del servidor
+       
+       [Imagen puerto servidor]
+       
+
+3. Ejecutar la clase cliente
+
+   * Seleccionar dirección IP
+
+      [Imagen]
+  
+   * Seleccione el puerto para ese cliente
+
+     [Imagen]
+  
+   * Seleccione la IP del servidor o presione directamente aceptar
+
+     [imagen]
+  
+   * Seleccione el puerto donde corre el servdor
+
+     [Imagen]
+  
+Este proceso de ejecución debe repetirse por cada jugador que desee que participe en el juego, hasta un maximo de 7 jugadores. Como el juego se corre de manera local hay que asegurarse de que cada cliente escuche en un puerto diferente
