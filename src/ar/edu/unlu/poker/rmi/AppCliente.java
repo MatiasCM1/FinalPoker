@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import ar.edu.unlu.poker.controlador.Controlador;
 import ar.edu.unlu.poker.vista.IVista;
+import ar.edu.unlu.poker.vista.consola.VistaConsolaSwing;
 import ar.edu.unlu.poker.vista.grafica.VistaGrafica;
 import ar.edu.unlu.rmimvc.RMIMVCException;
 import ar.edu.unlu.rmimvc.Util;
@@ -28,8 +29,8 @@ public class AppCliente {
 				"Seleccione el puerto en el que corre el servidor", "Puerto del servidor", JOptionPane.QUESTION_MESSAGE,
 				null, null, 8888);
 
-		IVista vista = VistaGrafica.getInstance();
-		// IVista vista = new VistaConsolaSwing();
+		//IVista vista = VistaGrafica.getInstance();
+		IVista vista = new VistaConsolaSwing();
 
 		Controlador controlador = new Controlador(vista);
 		vista.setControlador(controlador);
