@@ -20,9 +20,16 @@ A continuación, se muestra el diagrama de clases del proyecto:
 
 ## Uso
 
-1. Elegir el tipo de interfaz:
+1. Seleccionar el tipo de interfaz:
 
-   Para interfaz grafica comentar la linea IVista vista = new VistaConsolaSwing();
+   Para elegir la interfaz gráfica o de consola, modifica la siguiente linea de codigo:
+
+   **Interfaz gráfica**
+
+   ```java
+         IVista vista = VistaGrafica.getInstance();
+      ```
+
 
    ![Image](https://github.com/AlumnoProgAux/imagenes/blob/main/SeleccionInterfazGrafica.png)
 
@@ -31,7 +38,7 @@ A continuación, se muestra el diagrama de clases del proyecto:
    ![Image](https://github.com/AlumnoProgAux/imagenes/blob/main/SeleccionInterfazConsola.png)
 
         
-2. Ejecutar la clase AppServidor
+3. Ejecutar la clase AppServidor
    
      * Seleccionar dirección IP
        
@@ -42,7 +49,7 @@ A continuación, se muestra el diagrama de clases del proyecto:
        ![Image](https://github.com/AlumnoProgAux/imagenes/blob/main/SeleccionPuertoServidor.png)
        
 
-3. Ejecutar la clase cliente
+4. Ejecutar la clase cliente
 
    * Seleccionar dirección IP
 
