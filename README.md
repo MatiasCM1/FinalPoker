@@ -10,7 +10,7 @@ Este proyecto es el trabajo práctico final de la asignatura Programación Orien
 - **Entorno de desarrollo:** Eclipse (IDE)
 - **Patrones de diseño:** MVC, Observer
 - **Persistencia:** Serialización
-- **Librería utilizada:** [RMIMVC](https://github.com/federicoradeljak/libreria-rmimvc) (provista por el equipo docente)
+- **Librería RMI utilizada:** [RMIMVC](https://github.com/federicoradeljak/libreria-rmimvc) (provista por el equipo docente)
 
 ## Requisitos previos
 
