@@ -24,7 +24,7 @@ A continuación, se muestra el diagrama de clases del proyecto:
 
    Para elegir la interfaz gráfica o de consola, modifica la siguiente linea de codigo:
 
-   **Interfaz gráfica**
+   **Interfaz gráfica**, usa:
 
    ```java
          IVista vista = VistaGrafica.getInstance();
@@ -33,12 +33,16 @@ A continuación, se muestra el diagrama de clases del proyecto:
 
    ![Image](https://github.com/AlumnoProgAux/imagenes/blob/main/SeleccionInterfazGrafica.png)
 
-     Para interfaz consola comentar la linea IVista vista = VistaGrafica.getInstance();
+     **Interfaz de consola**, usa:
+
+      ```java
+         IVista vista = new VistaConsolaSwing();
+      ```
 
    ![Image](https://github.com/AlumnoProgAux/imagenes/blob/main/SeleccionInterfazConsola.png)
 
         
-3. Ejecutar la clase AppServidor
+2. Ejecutar la clase AppServidor
    
      * Seleccionar dirección IP
        
@@ -49,7 +53,7 @@ A continuación, se muestra el diagrama de clases del proyecto:
        ![Image](https://github.com/AlumnoProgAux/imagenes/blob/main/SeleccionPuertoServidor.png)
        
 
-4. Ejecutar la clase cliente
+3. Ejecutar la clase AppCliente
 
    * Seleccionar dirección IP
 
@@ -67,4 +71,6 @@ A continuación, se muestra el diagrama de clases del proyecto:
 
      ![Image](https://github.com/AlumnoProgAux/imagenes/blob/main/SeleccionPuertoServidorCliente.png)
   
-Este proceso de ejecución debe repetirse por cada jugador que desee que participe en el juego, hasta un maximo de 7 jugadores. Como el juego se corre de manera local hay que asegurarse de que cada cliente escuche en un puerto diferente
+###Notas adicionales
+   * El proceso de ejecución de AppCliente debe repetirse por cada jugador que desee que participar en el juego, hasta un maximo de 7 jugadores.
+   * Como el juego se ejecuta de manera local, cada cliente debe usar un puerto diferente para evitar conflictos.
