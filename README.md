@@ -34,29 +34,29 @@ Este proyecto es el trabajo práctico final para la asignatura Programación Ori
    
      * Seleccionar dirección IP
        
-       [Imagen direcccion ip]
+       ![Image](https://github.com/AlumnoProgAux/imagenes/blob/main/SeleccionIPServidor.png)
        
      * Seleccionar puerto del servidor
        
-       [Imagen puerto servidor]
+       ![Image](https://github.com/AlumnoProgAux/imagenes/blob/main/SeleccionPuertoServidor.png)
        
 
 3. Ejecutar la clase cliente
 
    * Seleccionar dirección IP
 
-      [Imagen]
+      ![Image](https://github.com/AlumnoProgAux/imagenes/blob/main/SeleccionIPCliente.png)
   
    * Seleccione el puerto para ese cliente
 
-     [Imagen]
+     ![Image](https://github.com/AlumnoProgAux/imagenes/blob/main/SeleccionPuertoCliente.png)
   
    * Seleccione la IP del servidor o presione directamente aceptar
 
-     [imagen]
+     ![Image](https://github.com/AlumnoProgAux/imagenes/blob/main/SeleccionIPServidorCliente.png)
   
    * Seleccione el puerto donde corre el servdor
 
-     [Imagen]
+     ![Image](https://github.com/AlumnoProgAux/imagenes/blob/main/SeleccionPuertoServidorCliente.png)
   
 Este proceso de ejecución debe repetirse por cada jugador que desee que participe en el juego, hasta un maximo de 7 jugadores. Como el juego se corre de manera local hay que asegurarse de que cada cliente escuche en un puerto diferente
