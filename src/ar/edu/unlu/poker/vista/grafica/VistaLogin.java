@@ -2,14 +2,17 @@ package ar.edu.unlu.poker.vista.grafica;
 
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,15 +22,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import ar.edu.unlu.poker.controlador.Controlador;
-import ar.edu.unlu.poker.modelo.Jugador;
-import ar.edu.unlu.poker.vista.IVista;
-import ar.edu.unlu.poker.vista.consola.Estados;
-
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class VistaLogin extends JFrame {
 
@@ -44,13 +38,13 @@ public class VistaLogin extends JFrame {
 	private JLabel lblMsgErrorPartidaComenzada;
 	private JLabel lblErrorCantidadJugadoresMaxima;
 
-	
-	/*public static void main(String[] args) { EventQueue.invokeLater(new
-			  Runnable() { public void run() { try { VistaLogin frame = new
-			  VistaLogin(); frame.setVisible(true);
-			  
-			  } catch (Exception e) { e.printStackTrace(); } } }); }*/
-	 
+	/*
+	 * public static void main(String[] args) { EventQueue.invokeLater(new
+	 * Runnable() { public void run() { try { VistaLogin frame = new VistaLogin();
+	 * frame.setVisible(true);
+	 * 
+	 * } catch (Exception e) { e.printStackTrace(); } } }); }
+	 */
 
 	public VistaLogin(Controlador controlador) {
 		setUndecorated(true);
@@ -89,23 +83,25 @@ public class VistaLogin extends JFrame {
 
 		JLabel lblMensajeErrorFondos = new JLabel("Error, ingrese los fondos correctamente");
 		lblMensajeErrorFondos.setVisible(false);
-		
+
 		panelErrores = new JPanel();
 		panelErrores.setVisible(false);
 		panelErrores.setBounds(307, 163, 481, 268);
 		contentPane.add(panelErrores);
 		panelErrores.setLayout(null);
-		
+
 		JButton btnCerrarPanelErrores = new JButton("X");
 		btnCerrarPanelErrores.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnCerrarPanelErrores.setForeground(Color.red);
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnCerrarPanelErrores.setForeground(Color.white);
 			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				btnIngresar.setVisible(true);
@@ -115,10 +111,10 @@ public class VistaLogin extends JFrame {
 				panelErrores.setVisible(false);
 			}
 		});
-		
+
 		lblMsgErrorPartidaComenzada = new JLabel("La partida ya ha comenzado");
 		lblMsgErrorPartidaComenzada.setVisible(false);
-		
+
 		lblErrorCantidadJugadoresMaxima = new JLabel("Cantidad de jugadores maxima");
 		lblErrorCantidadJugadoresMaxima.setVisible(false);
 		lblErrorCantidadJugadoresMaxima.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
@@ -131,7 +127,7 @@ public class VistaLogin extends JFrame {
 		lblMsgErrorPartidaComenzada.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMsgErrorPartidaComenzada.setBounds(10, 113, 461, 34);
 		panelErrores.add(lblMsgErrorPartidaComenzada);
-		
+
 		JLabel lblFondoNegroErrores = new JLabel("New label");
 		lblFondoNegroErrores.setIcon(new ImageIcon(getClass().getResource("/fondoNegro.jpg")));
 		lblFondoNegroErrores.setBounds(10, 113, 461, 34);
@@ -142,14 +138,14 @@ public class VistaLogin extends JFrame {
 		btnCerrarPanelErrores.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
 		btnCerrarPanelErrores.setBounds(436, 0, 45, 34);
 		panelErrores.add(btnCerrarPanelErrores);
-		
+
 		JLabel lblTituloErrores = new JLabel("Error");
 		lblTituloErrores.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
 		lblTituloErrores.setForeground(new Color(255, 255, 255));
 		lblTituloErrores.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTituloErrores.setBounds(10, 11, 461, 45);
 		panelErrores.add(lblTituloErrores);
-		
+
 		JLabel lblFondoMaderaErrores = new JLabel("New label");
 		lblFondoMaderaErrores.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondoMaderaErrores.setBounds(0, 0, 481, 268);
@@ -238,8 +234,7 @@ public class VistaLogin extends JFrame {
 				boolean flag = false;
 
 				if (!VistaGrafica.getInstance().comprobarPartidaComenzada()) {
-					
-				
+
 					if (!controlador.validarTextoNombre(txtNombre.getText())) {
 						lblMensajeErrorNombre.setVisible(true);
 						flag = true;
@@ -249,11 +244,10 @@ public class VistaLogin extends JFrame {
 						lblMensajeErrorFondos.setVisible(true);
 						flag = true;
 					}
-				
-				
 
 					if (!flag) {
-						VistaGrafica.getInstance().setJugador(txtNombre.getText(), Integer.parseInt(txtFondos.getText()));
+						VistaGrafica.getInstance().setJugador(txtNombre.getText(),
+								Integer.parseInt(txtFondos.getText()));
 
 						VistaGrafica.getInstance().pasarVistaMenu();
 					}
@@ -293,8 +287,8 @@ public class VistaLogin extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if (txtFondos.getText().length() >= 6) {
-                    e.consume();
-                }
+					e.consume();
+				}
 			}
 		});
 		txtFondos.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 11));
@@ -333,8 +327,8 @@ public class VistaLogin extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if (txtNombre.getText().length() >= 6) {
-                    e.consume();
-                }
+					e.consume();
+				}
 			}
 		});
 		txtNombre.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 11));
@@ -407,14 +401,14 @@ public class VistaLogin extends JFrame {
 	private void setControlador(Controlador controlador2) {
 		this.controlador = controlador2;
 	}
-	
+
 	public void mostrarErrorPartidaComenzada() {
 		this.btnIngresar.setVisible(false);
 		this.lblBtnIngresar.setVisible(false);
 		this.lblMsgErrorPartidaComenzada.setVisible(true);
 		this.panelErrores.setVisible(true);
 	}
-	
+
 	public void mostrarErrorCantidadMaximaJugadores() {
 		this.btnIngresar.setVisible(false);
 		this.lblBtnIngresar.setVisible(false);

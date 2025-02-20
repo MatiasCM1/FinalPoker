@@ -61,11 +61,11 @@ public class Controlador implements IControladorRemoto {
 					this.registrarVictoria(ganador);
 					mesa.darFondosGanador(ganador);
 				}
-				
+
 				mesa.setComenzoPartida(false);
-				
+
 				vista.mostrarCartasJugadorAntGanador(mesa.getRondaApuestaAux());
-				
+
 				vista.mostrarGanador(ganador);
 				vista.mostrarOpcionesMenuEmpezarOtraRonda();
 			}
@@ -97,12 +97,16 @@ public class Controlador implements IControladorRemoto {
 			break;
 		case APUESTA_REALIZADA:
 			if (!this.estoyEnVistaLogin) {
-				vista.informarApuestaRealizada(this.getJugadorTurno().getNombre(), getJugadorTurnoJugadoresMesa().getApuesta());
+				vista.informarApuestaRealizada(this.getJugadorTurno().getNombre(),
+						getJugadorTurnoJugadoresMesa().getApuesta());
 			}
 			break;
 		case APUESTAS_DESIGUALES:
 			if (!this.estoyEnVistaLogin) {
-				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { // Comprueba que el nombre del jugadorActual forme parte de la cola de jugadores con apuesta menor a la mayor
+				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { // Comprueba que el nombre del
+																				// jugadorActual forme parte de la cola
+																				// de jugadores con apuesta menor a la
+																				// mayor
 					vista.notificarApuestasDesiguales();
 				} else {
 					vista.notificarEsperarJugadorIgualeApuesta();
@@ -111,7 +115,10 @@ public class Controlador implements IControladorRemoto {
 			break;
 		case APUESTAS_DESIGUALES_SEGUNDA_RONDA:
 			if (!this.estoyEnVistaLogin) {
-				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { // Comprueba que el nombre del jugadorActual forme parte de la cola de jugadores con apuesta menor a la mayor
+				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { // Comprueba que el nombre del
+																				// jugadorActual forme parte de la cola
+																				// de jugadores con apuesta menor a la
+																				// mayor
 					vista.notificarApuestasDesigualesSegundaRonda();
 				} else {
 					vista.notificarEsperarJugadorIgualeApuesta();
@@ -151,13 +158,12 @@ public class Controlador implements IControladorRemoto {
 						this.registrarVictoria(ganador);
 						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
 					}
-					
+
 					mesa.setComenzoPartida(false);
 
 					vista.actualizarTablaJugadores(this.getJugadoresMesa());
 
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
-				
 
 				} else if (this.isJugadorTurno()) {
 					vista.notificarRondaApuestaFinalizada();
@@ -174,15 +180,15 @@ public class Controlador implements IControladorRemoto {
 						this.registrarVictoria(ganador);
 						mesa.darFondosGanador(ganador);
 					}
-					
+
 					mesa.setComenzoPartida(false);
-					
+
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
 				} else if (this.isJugadorTurno()) {
 					vista.notificarRondaApuestaFinalizada();
 					mesa.mirarSiDevolverResultados();
 				}
-			}	
+			}
 			break;
 		case CARTA_DESCARTADA:
 			if (!this.estoyEnVistaLogin) {
@@ -206,12 +212,12 @@ public class Controlador implements IControladorRemoto {
 					if (this.isJugadorTurno()) {
 						this.registrarVictoria(ganador);
 						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
-					}	
-					
+					}
+
 					mesa.setComenzoPartida(false);
-					
+
 					vista.mostrarOpcionesMenuEmpezarOtraRonda();
-				
+
 				} else {
 					if (this.jugadorSigueEnJuego(this.jugadorActual)) {
 						if (this.isJugadorTurno()) {
@@ -307,7 +313,6 @@ public class Controlador implements IControladorRemoto {
 			return false;
 		}
 	}
-	
 
 	public List<Jugador> getJugadoresMesa() {
 		try {
@@ -370,19 +375,18 @@ public class Controlador implements IControladorRemoto {
 	}
 
 	public void jugadorSeRetiraDelJuego(Jugador jugador) {
-		
+
 		try {
 			mesa.removerObservador(this);
 
 			mesa.removerJugadores(jugador);
-			
 
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void jugadorSeRetiraConJuegoComenzado(Jugador jugador) {
 		try {
 			mesa.removerObservador(this);
@@ -391,7 +395,7 @@ public class Controlador implements IControladorRemoto {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public Jugador getJugadorTurno() {
@@ -408,7 +412,8 @@ public class Controlador implements IControladorRemoto {
 		try {
 			if (this.validarEnteroPositivo(input)) {
 				int apuesta = Integer.parseInt(input);
-				if (this.jugadorManoEnvita(jugador, apuesta)) {// OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA, IMPIDIENDO QUE FICHE O PASE
+				if (this.jugadorManoEnvita(jugador, apuesta)) {// OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA,
+																// IMPIDIENDO QUE FICHE O PASE
 					if (apuesta >= mesa.getApuestaMayor()) {
 						mesa.realizarApuesta(jugador, apuesta);
 					} else {
@@ -430,7 +435,8 @@ public class Controlador implements IControladorRemoto {
 	}
 
 	private boolean jugadorManoEnvita(Jugador jugador, int apuesta) throws RemoteException {
-		if (jugador.equals(mesa.getJugadorMano()) && apuesta == 0) {// OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA, IMPIDIENDO QUE FICHE O PASE
+		if (jugador.equals(mesa.getJugadorMano()) && apuesta == 0) {// OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA,
+																	// IMPIDIENDO QUE FICHE O PASE
 			return false;
 		}
 		return true;
@@ -438,7 +444,8 @@ public class Controlador implements IControladorRemoto {
 
 	public void realizarLasApuestas(Jugador jugador) {
 		try {
-			if (this.jugadorManoEnvita(jugador, mesa.getApuestaMayor())) {// OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA, IMPIDIENDO QUE FICHE O PASE
+			if (this.jugadorManoEnvita(jugador, mesa.getApuestaMayor())) {// OBLIGA AL JUGADOR MANO A REALIZAR UNA
+																			// APUESTA, IMPIDIENDO QUE FICHE O PASE
 				mesa.realizarApuesta(jugador, mesa.getApuestaMayor());
 			} else {
 				vista.notificarJugadorManoDebeApostar();
@@ -675,7 +682,7 @@ public class Controlador implements IControladorRemoto {
 	}
 
 	public void iniciarSiEstaListo(Jugador jugadorActual) {
-		
+
 		if (this.comprobarJugadoresSuficientes()) {
 			if (this.tieneFondosSuficientes(jugadorActual)) {
 				try {
@@ -696,7 +703,7 @@ public class Controlador implements IControladorRemoto {
 					} catch (RemoteException e) {
 						e.printStackTrace();
 					}
-				} 
+				}
 			} else {
 				vista.mostrarFondosInsuficientesParaComenzar();
 			}
@@ -704,9 +711,9 @@ public class Controlador implements IControladorRemoto {
 			vista.informarJugadoresInsuficientes();
 		}
 	}
-	
+
 	public void iniciarSiEstaListo() {
-		
+
 		if (todosListo()) {
 			try {
 				if (!mesa.getPrimeraRonda()) {
@@ -719,9 +726,9 @@ public class Controlador implements IControladorRemoto {
 			}
 		}
 	}
-	
+
 	public void iniciarSiEstaListoPostPrimeraRonda() {
-		
+
 		if (todosListo()) {
 			try {
 				if (!mesa.getPrimeraRonda()) {
@@ -732,12 +739,12 @@ public class Controlador implements IControladorRemoto {
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
-		} 
-		
+		}
+
 	}
-	
+
 	public void iniciarSiEstaListoPostPrimeraRonda(Jugador jugadorActual) {
-		
+
 		if (this.comprobarJugadoresSuficientes()) {
 			if (this.tieneFondosSuficientes(jugadorActual)) {
 				try {
@@ -758,7 +765,7 @@ public class Controlador implements IControladorRemoto {
 					} catch (RemoteException e) {
 						e.printStackTrace();
 					}
-				} 
+				}
 			} else {
 				vista.mostrarFondosInsuficientesParaComenzarPostPrimerPartido();
 			}
@@ -766,7 +773,7 @@ public class Controlador implements IControladorRemoto {
 			vista.informarJugadoresInsuficientesPostPrimerPartido();
 		}
 	}
-	
+
 	private boolean comprobarJugadoresSuficientes() {
 		return this.getJugadoresMesa().size() > 1;
 	}
@@ -787,7 +794,7 @@ public class Controlador implements IControladorRemoto {
 		}
 		return flag;
 	}
-	
+
 	public boolean comenzoPartida() {
 		try {
 			return mesa.getComenzoPartida();
@@ -828,13 +835,13 @@ public class Controlador implements IControladorRemoto {
 	public void setEstoyEnVistaLogin(boolean estoyEnVistaLogin) {
 		this.estoyEnVistaLogin = estoyEnVistaLogin;
 	}
-	
+
 	public void registrarVictoria(Jugador jugadorGanador) {
-		
-		//Cargo estadisticas anteriores
+
+		// Cargo estadisticas anteriores
 		List<EstadisticasJugador> jugadores = Serializador.cargarEstadisticas();
-		
-		//Incremento o creo una estadistica para el ganador
+
+		// Incremento o creo una estadistica para el ganador
 		boolean flag = false;
 		for (EstadisticasJugador j : jugadores) {
 			if (j.getNombreJugador().equals(jugadorGanador.getNombre())) {
@@ -843,27 +850,27 @@ public class Controlador implements IControladorRemoto {
 				break;
 			}
 		}
-		//Si no se encuentra al jugador, creo una nueva estadisticas para este jugador
+		// Si no se encuentra al jugador, creo una nueva estadisticas para este jugador
 		if (!flag) {
 			EstadisticasJugador nuevoJugador = new EstadisticasJugador(jugadorGanador.getNombre());
 			nuevoJugador.incrementarCantidadPartidasGanadas();
 			jugadores.add(nuevoJugador);
 		}
-		
-		//Persistir los cambios
+
+		// Persistir los cambios
 		Serializador.guardarEstadisticas(jugadores);
-		
+
 	}
-	
-	public List<EstadisticasJugador> obtenerTopJugadores(){
-		
+
+	public List<EstadisticasJugador> obtenerTopJugadores() {
+
 		List<EstadisticasJugador> jugadores = Serializador.cargarEstadisticas();
-		
-		//Ordenar lista
+
+		// Ordenar lista
 		jugadores.sort((a, b) -> Integer.compare(b.getCantPartidasGanadas(), a.getCantPartidasGanadas()));
-		
+
 		return jugadores.subList(0, Math.min(jugadores.size(), 10));
-		
+
 	}
 
 }

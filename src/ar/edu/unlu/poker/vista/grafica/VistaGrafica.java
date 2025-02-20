@@ -3,7 +3,6 @@ package ar.edu.unlu.poker.vista.grafica;
 import java.util.LinkedList;
 import java.util.List;
 
-
 import ar.edu.unlu.poker.controlador.Controlador;
 import ar.edu.unlu.poker.modelo.Jugador;
 import ar.edu.unlu.poker.vista.IVista;
@@ -46,11 +45,11 @@ public class VistaGrafica implements IVista {
 	}
 
 	public void pasarVistaMenu() {
-		
+
 		if (!controlador.agregarJugador(jugadorActual)) {
 			return;
 		}
-		
+
 		this.controlador.setEstoyEnVistaLogin(false);
 		this.vistaLogin.setVisible(false);
 		this.vistaMenuPrincipal = new VistaMenuPrincipal();
@@ -61,7 +60,7 @@ public class VistaGrafica implements IVista {
 		this.actualizarTablaJugadores(getJugadoresMesa());
 
 	}
-	
+
 	@Override
 	public void informarCantJugadoresExcedidos() {
 		if (this.vistaMenuPrincipal != null) {
@@ -70,36 +69,36 @@ public class VistaGrafica implements IVista {
 		this.vistaLogin.setVisible(true);
 		this.vistaLogin.mostrarErrorCantidadMaximaJugadores();
 	}
-	
+
 	@Override
 	public void mostrarErrorJugadoresInsuficientes() {
 		if (this.vistaJuegoCartas != null) {
 			this.vistaJuegoCartas.setVisible(false);
 		}
-		
+
 		if (this.vistaApuestas != null) {
 			this.vistaApuestas.setVisible(false);
 		}
-		
+
 		if (this.vistaApuestas2 != null) {
 			this.vistaApuestas2.setVisible(false);
 		}
-		
+
 		this.vistaMenuPrincipal.setVisible(true);
-		
+
 		this.vistaMenuPrincipal.mostrarErrorJugadoresInsuficientes();
-		
+
 	}
 
 	public void volverPantallaLogin() {
-		
+
 		this.controlador.setEstoyEnVistaLogin(true);
-		
+
 		this.vistaMenuPrincipal.setVisible(false);
 		this.vistaLogin.setVisible(true);
-		
+
 		controlador.jugadorCierraSesion(this.jugadorActual);
-		
+
 		controlador.iniciarSiEstaListo();
 
 	}
@@ -108,7 +107,7 @@ public class VistaGrafica implements IVista {
 		controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
 		controlador.iniciarSiEstaListo();
 	}
-	
+
 	public void jugadorSaleDelJuegoPostPrimeraPartida() {
 		if (!this.comprobarPartidaComenzada()) {
 			controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
@@ -116,39 +115,38 @@ public class VistaGrafica implements IVista {
 			controlador.jugadorSeRetiraConJuegoComenzado(this.jugadorActual);
 		}
 	}
-	
+
 	@Override
 	public void mostrarMenuPrincipal() {
-		
+
 		if (this.jugadorActual == null || !controlador.getJugadoresMesa().contains(this.jugadorActual)) {
 			return;
 		}
-		
+
 		if (this.vistaJuegoCartas != null) {
 			this.vistaJuegoCartas.setVisible(false);
 			this.vistaJuegoCartas = new VistaJuegoCartas();
 		}
-		
+
 		if (this.vistaApuestas != null) {
 			this.vistaApuestas.setVisible(false);
 			this.vistaApuestas = new VistaApuestas();
 		}
-		
+
 		if (this.vistaApuestas2 != null) {
 			this.vistaApuestas2.setVisible(false);
 			this.vistaApuestas2 = new VistaApuestas2();
 		}
-		
+
 		if (this.vistaTop != null) {
 			this.vistaTop.setVisible(false);
 			this.vistaTop = new VistaTop();
 		}
-		
+
 		this.vistaMenuPrincipal.setVisible(true);
 
-		
 	}
-	
+
 	@Override
 	public void mostrarErrorSalidaJugador() {
 		this.vistaMenuPrincipal.mostrarErrorJugadorSaleDeLaJuego();
@@ -159,15 +157,15 @@ public class VistaGrafica implements IVista {
 		this.vistaMenuPrincipal.setVisible(false);
 
 		if (this.vistaJuegoCartas == null) {
-				this.vistaJuegoCartas = new VistaJuegoCartas();
+			this.vistaJuegoCartas = new VistaJuegoCartas();
 		}
-		
+
 		this.vistaJuegoCartas.setVisible(true);
 
 		controlador.iniciarSiEstaListo(this.jugadorActual);
-		
+
 	}
-	
+
 	@Override
 	public void mostrarFondosInsuficientesParaComenzar() {
 		if (this.vistaMenuPrincipal != null) {
@@ -177,9 +175,9 @@ public class VistaGrafica implements IVista {
 			}
 			this.vistaMenuPrincipal.mostrarErrorFondosInsuficientesParaComenzar();
 		}
-		
+
 	}
-	
+
 	public void listoParaIniciarJuegoPostPrimerPartido() {
 
 		this.vistaMenuPrincipal.setVisible(false);
@@ -302,17 +300,17 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void informarApuestaRealizada(String nombreJugadorAposto, int apuestaJugador) {
-	    
-		
+
 		if (this.jugadorActual.getNombre().equals(nombreJugadorAposto)) {
 			this.vistaApuestas.setVisible(false);
 			if (this.vistaApuestas2 != null) {
 				this.vistaApuestas2.setVisible(false);
 			}
 			this.vistaJuegoCartas.setVisible(true);
-			
+
 		}
-		this.vistaJuegoCartas.escribirNotificacion(nombreJugadorAposto + " realizo una apuesta de " + String.valueOf(apuestaJugador));
+		this.vistaJuegoCartas.escribirNotificacion(
+				nombreJugadorAposto + " realizo una apuesta de " + String.valueOf(apuestaJugador));
 	}
 
 	@Override
@@ -334,10 +332,10 @@ public class VistaGrafica implements IVista {
 	public void notificarErrorIngreseUnEnteroAgregandoNuevosFondos() {
 		this.vistaMenuPrincipal.mostrarErrorNumeroInvalido();
 	}
-	
+
 	@Override
 	public void notificarErrorMaximaLongitudFondos() {
-		this.vistaMenuPrincipal.mostrarErrorMaximaLogitudNumeroFondos();	
+		this.vistaMenuPrincipal.mostrarErrorMaximaLogitudNumeroFondos();
 	}
 
 	@Override
@@ -357,7 +355,8 @@ public class VistaGrafica implements IVista {
 	@Override
 	public void notificarApuestasDesiguales() {
 
-		this.vistaJuegoCartas.escribirNotificacion("Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima");
+		this.vistaJuegoCartas.escribirNotificacion(
+				"Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima");
 
 		this.vistaJuegoCartas.setVisible(false);
 
@@ -444,14 +443,14 @@ public class VistaGrafica implements IVista {
 		if (this.vistaJuegoCartas != null) {
 			this.vistaJuegoCartas.setVisible(false);
 		}
-		
+
 		if (this.vistaTop != null) {
 			this.vistaTop.setVisible(false);
 		}
-		
+
 		controlador.establecerJugadorComoNoListo(this.jugadorActual);
 		this.actualizarTablaJugadores(getJugadoresMesa());
-		
+
 		this.vistaMenuPrincipal.setVisible(true);
 
 	}
@@ -471,7 +470,8 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void notificarEsperarDescartes(String nombreJugadorTurnoDescarte) {
-		this.vistaJuegoCartas.escribirNotificacion("Esperando a que " + nombreJugadorTurnoDescarte + " realice los descartes");
+		this.vistaJuegoCartas
+				.escribirNotificacion("Esperando a que " + nombreJugadorTurnoDescarte + " realice los descartes");
 	}
 
 	public void cartaADescartarSeleccionada(int posicionCarta) {
@@ -527,7 +527,8 @@ public class VistaGrafica implements IVista {
 			this.vistaApuestas2.setVisible(false);
 		}
 		this.vistaJuegoCartas.setVisible(true);
-		this.vistaJuegoCartas.escribirNotificacion("Ganador: " + ganador.getNombre() + " con " + ganador.getResultadoValoresCartas());
+		this.vistaJuegoCartas.escribirNotificacion(
+				"Ganador: " + ganador.getNombre() + " con " + ganador.getResultadoValoresCartas());
 	}
 
 	@Override
@@ -544,7 +545,7 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void informarFondosInsuficientesSegundaRonda() {
-		
+
 		this.vistaApuestas2.setVisible(true);
 		this.vistaApuestas2.mostrarErrorFondosInsuficientes();
 
@@ -552,9 +553,9 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void notificarApuestasDesigualesSegundaRonda() {
-		
 
-		this.vistaJuegoCartas.escribirNotificacion("Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima");
+		this.vistaJuegoCartas.escribirNotificacion(
+				"Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima");
 
 		this.vistaJuegoCartas.setVisible(false);
 
@@ -577,42 +578,42 @@ public class VistaGrafica implements IVista {
 	public void agregarNuevosFondos(String nuevosFondos) {
 		this.controlador.incrementarFondos2(this.jugadorActual, nuevosFondos);
 	}
-	
+
 	public boolean comprobarPartidaComenzada() {
 		return this.controlador.comenzoPartida();
 	}
-	
+
 	@Override
 	public void informarJugadoresInsuficientes() {
-		if (this.vistaJuegoCartas!= null) {
+		if (this.vistaJuegoCartas != null) {
 			this.vistaJuegoCartas.setVisible(false);
 		}
-		
+
 		this.vistaMenuPrincipal.setVisible(true);
-		
+
 		this.vistaMenuPrincipal.mostrarErrorJugadoresInsuficientes();
 	}
-	
+
 	@Override
 	public void informarJugadoresInsuficientesPostPrimerPartido() {
-		if (this.vistaJuegoCartas!= null) {
+		if (this.vistaJuegoCartas != null) {
 			this.vistaJuegoCartas.setVisible(true);
-		}	
-		
+		}
+
 		this.vistaJuegoCartas.mostrarErrorJugadoresInsuficientes();
 	}
-	
+
 	public void pasarVistaTop() {
 		this.vistaMenuPrincipal.setVisible(false);
 		if (this.vistaTop == null) {
 			this.vistaTop = new VistaTop();
 		}
-		
+
 		this.vistaTop.actualizarTabla(this.controlador.obtenerTopJugadores());
-		
+
 		this.vistaTop.setVisible(true);
 	}
-	
+
 	@Override
 	public void notificarCartaDescartadaConExito() {
 		this.vistaJuegoCartas.escribirNotificacion("Descarte exitoso");

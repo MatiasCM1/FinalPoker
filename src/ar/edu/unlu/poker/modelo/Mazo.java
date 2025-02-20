@@ -3,7 +3,6 @@ package ar.edu.unlu.poker.modelo;
 import java.rmi.RemoteException;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 

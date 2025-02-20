@@ -1,7 +1,5 @@
 package ar.edu.unlu.poker.vista.grafica;
 
-import java.io.File;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
