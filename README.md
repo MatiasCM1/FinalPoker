@@ -1,21 +1,30 @@
 # FinalPoker
 
-Este proyecto es el trabajo práctico final para la asignatura Programación Orientada a Objetos de la Universidad Nacional de Luján. Su objetivo es desarrollar un juego de póker que permita una partida con múltiples usuarios en tiempo real, utilizando los patrones MVC y Observer, con persistencia por serialización.
+Este proyecto es el trabajo práctico final de la asignatura Programación Orientada a Objetos en la Universidad Nacional de Luján. Su objetivo es desarrollar un juego de póker multijugador en tiempo real, utilizando los patrones MVC y Observer, con persistencia mediante serialización.
 
 ## Tecnologías y patrones utilizados
 
-* Java (JDK)
-* Java Swing 
-* Git
-* Eclipse (IDE)
-* Librería [RMIMVC](https://github.com/federicoradeljak/libreria-rmimvc) provista por el equipo docente
-* MVC
-* Observer
-* Serialización
+- **Lenguaje:** Java (JDK)
+- **Interfaz gráfica:** Java Swing
+- **Control de versiones:** Git
+- **Entorno de desarrollo:** Eclipse (IDE)
+- **Patrones de diseño:** MVC, Observer
+- **Persistencia:** Serialización
+- **Librería utilizada:** [RMIMVC](https://github.com/federicoradeljak/libreria-rmimvc) (provista por el equipo docente)
+
+## Requisitos previos
+
+Antes de ejecutar el proyecto, asegúrate de tener instalado:
+
+- JDK 8 o superior
+- Eclipse o cualquier otro IDE compatible con Java
+- Git (opcional, pero recomendado)
 
 ## Diagrama de clases
 
-![Image](Diagrama.jpg)
+A continuación, se muestra el diagrama de clases del proyecto:
+
+![Diagrama de Clases](Diagrama.jpg)
 
 ## Uso
 
