@@ -140,7 +140,7 @@ public class VistaJuegoCartas extends JFrame {
 
 		JLabel lblFondoNegroMensajeError = new JLabel("");
 		lblFondoNegroMensajeError
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\fondoNegro.jpg"));
+				.setIcon(new ImageIcon(getClass().getResource("/fondoNegro.jpg")));
 		lblFondoNegroMensajeError.setBounds(10, 106, 439, 40);
 		panelErrores.add(lblFondoNegroMensajeError);
 		btnSalirPanelErrores.setForeground(new Color(255, 255, 255));
