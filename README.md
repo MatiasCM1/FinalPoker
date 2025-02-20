@@ -12,14 +12,6 @@ Este proyecto es el trabajo práctico final de la asignatura Programación Orien
 - **Persistencia:** Serialización
 - **Librería RMI utilizada:** [RMIMVC](https://github.com/federicoradeljak/libreria-rmimvc) (provista por el equipo docente)
 
-## Requisitos previos
-
-Antes de ejecutar el proyecto, asegúrate de tener instalado:
-
-- JDK 8 o superior
-- Eclipse o cualquier otro IDE compatible con Java
-- Git (opcional, pero recomendado)
-
 ## Diagrama de clases
 
 A continuación, se muestra el diagrama de clases del proyecto:
