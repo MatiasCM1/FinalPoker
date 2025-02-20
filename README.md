@@ -15,6 +15,6 @@ Este proyecto es el trabajo práctico final para la asignatura Programación Ori
 
 ##Diagrama de clases
 
-![image](diagrama.jpg)
+![Image](diagrama.jpg)
 
 ##Uso
