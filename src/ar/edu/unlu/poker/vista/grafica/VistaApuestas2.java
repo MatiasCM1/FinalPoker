@@ -272,7 +272,7 @@ public class VistaApuestas2 extends JFrame {
 
 		JLabel lblFondoMaderaApuestasDesiguales = new JLabel("");
 		lblFondoMaderaApuestasDesiguales
-				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\imagenMadera.jpg"));
+				.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondoMaderaApuestasDesiguales.setBounds(0, 0, 309, 147);
 		panelApuestasDesiguales.add(lblFondoMaderaApuestasDesiguales);
 		panelRealizarEnvite.setBounds(298, 181, 309, 147);
