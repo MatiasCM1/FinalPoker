@@ -20,7 +20,8 @@ Este proyecto es el trabajo práctico final para la asignatura Programación Ori
 ## Uso
 
 1. Elegir el tipo de interfaz:
-     Para interfaz grafica comentar la linea IVista vista = new VistaConsolaSwing();
+
+   Para interfaz grafica comentar la linea IVista vista = new VistaConsolaSwing();
 
    ![Image](https://github.com/AlumnoProgAux/imagenes/blob/main/SeleccionInterfazGrafica.png)
 
