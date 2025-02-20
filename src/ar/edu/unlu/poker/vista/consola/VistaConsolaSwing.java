@@ -1,7 +1,7 @@
 package ar.edu.unlu.poker.vista.consola;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -9,6 +9,12 @@ import java.awt.event.KeyEvent;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 import ar.edu.unlu.poker.controlador.Controlador;
 import ar.edu.unlu.poker.modelo.Carta;
 import ar.edu.unlu.poker.modelo.Jugador;
@@ -30,19 +36,17 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		this.estadoFlujo = Estados.SOLICITAR_NOMBRE_JUGADOR;
 		setTitle("Poker");
 		setSize(800, 600);
-		
-		
+
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		
+
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
-		    public void windowClosing(java.awt.event.WindowEvent e) {
-		        jugadorSaleDelJuegoPostPrimeraPartida();
-		        System.exit(0);
-		    }
+			public void windowClosing(java.awt.event.WindowEvent e) {
+				jugadorSaleDelJuegoPostPrimeraPartida();
+				System.exit(0);
+			}
 		});
-		
-		
+
 		setLayout(new BorderLayout());
 		areaSalida = new JTextArea();
 		areaSalida.setEditable(false);
@@ -63,13 +67,13 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 				campoEntrada.setText("");
 			}
 		});
-		
+
 		campoEntrada.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if (campoEntrada.getText().length() >= 6) {
-                    e.consume();
-                }
+					e.consume();
+				}
 			}
 		});
 		add(scrollPane, BorderLayout.CENTER);
@@ -80,15 +84,15 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	}
 
 	private void jugadorSaleDelJuegoPostPrimeraPartida() {
-		
+
 		if (!this.comprobarPartidaComenzada()) {
 			controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
 		} else {
 			controlador.jugadorSeRetiraConJuegoComenzado(this.jugadorActual);
 		}
-		
+
 	}
-	
+
 	private boolean comprobarPartidaComenzada() {
 		return this.controlador.comenzoPartida();
 	}
@@ -194,19 +198,19 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	public void solicitarFondo(String input) {
 		if (esperandoEntrada) {
-			if (!this.comprobarPartidaComenzada()){
+			if (!this.comprobarPartidaComenzada()) {
 				if (controlador.validarTextoFondos(input)) {
 					jugadorActual = new Jugador(this.nombreJugadorActual, Integer.parseInt(input));
-				
-					if (!controlador.agregarJugador(jugadorActual)) { 
-						return;	
+
+					if (!controlador.agregarJugador(jugadorActual)) {
+						return;
 					}
 					controlador.setJugadorActual(jugadorActual);
 					setTitle("Poker");
 					areaSalida.append("Bienvenido, " + this.nombreJugadorActual + "!\n");
 					esperandoEntrada = false;
 					mostrarOpcionesMenu();
-					
+
 				} else {
 					areaSalida.append("¡Numero no valido! ¡Ingrese un numero entero!\n");
 					areaSalida.append("Ingrese el fondo que desea\n");
@@ -254,15 +258,16 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 			}
 		}
 	}
-	
+
 	private void mostrarTopJugadores(List<EstadisticasJugador> listaTopJugadores) {
-		
+
 		int posicion = 1;
 		for (EstadisticasJugador j : listaTopJugadores) {
-			areaSalida.append(posicion + " - Nombre: " + j.getNombreJugador() + "             Partidas ganadas: " + j.getCantPartidasGanadas() + ".\n");
+			areaSalida.append(posicion + " - Nombre: " + j.getNombreJugador() + "             Partidas ganadas: "
+					+ j.getCantPartidasGanadas() + ".\n");
 			posicion++;
 		}
-		
+
 		this.mostrarOpcionesMenu();
 	}
 
@@ -373,15 +378,16 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 			}
 		}
 	}
-	
+
 	private void mostrarTopJugadoresPostRonda(List<EstadisticasJugador> listaTopJugadores) {
-		
+
 		int posicion = 1;
 		for (EstadisticasJugador j : listaTopJugadores) {
-			areaSalida.append(posicion + " - Nombre: " + j.getNombreJugador() + "             Partidas ganadas: " + j.getCantPartidasGanadas() + ".\n");
+			areaSalida.append(posicion + " - Nombre: " + j.getNombreJugador() + "             Partidas ganadas: "
+					+ j.getCantPartidasGanadas() + ".\n");
 			posicion++;
 		}
-		
+
 		this.mostrarOpcionesMenuEmpezarOtraRonda();
 	}
 
@@ -415,9 +421,9 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	@Override
 	public void mostrarMenuApuestas() {
-		
+
 		this.setEnableCampoEntrada(true);
-		
+
 		areaSalida.append("Seleccione una opcion:\n");
 		areaSalida.append("1 - Envitar\n");
 		areaSalida.append("2 - Fichar\n");
@@ -880,6 +886,5 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 			}
 		}
 	}
-
 
 }

@@ -109,8 +109,6 @@ public class Jugador implements Serializable {
 		this.resultadoValoresCartas = jugada.devolverValor(new LinkedList<Carta>(this.ordenarCartas(this.cartas)));
 	}
 
-	
-	
 	public LinkedList<Carta> ordenarCartas(LinkedList<Carta> cartas) {
 		LinkedList<Carta> cartasOrdenadas = new LinkedList<Carta>(cartas);
 		cartasOrdenadas.sort(Comparator.comparing(carta -> {
@@ -123,14 +121,10 @@ public class Jugador implements Serializable {
 		}));
 		return cartasOrdenadas;
 	}
-	
-	
-	
 
 	public LinkedList<Carta> getCartasOrdenadas() throws RemoteException {
 		return this.ordenarCartas(new LinkedList<Carta>(this.cartas));
 	}
-	
 
 	public Resultado getResultadoValoresCartas() {
 		return resultadoValoresCartas;

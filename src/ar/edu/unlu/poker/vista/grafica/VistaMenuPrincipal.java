@@ -1,32 +1,28 @@
 package ar.edu.unlu.poker.vista.grafica;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import ar.edu.unlu.poker.modelo.Jugador;
-
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import java.awt.Font;
 import java.awt.Color;
-import javax.swing.JButton;
 import java.awt.Cursor;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-import javax.swing.JTextArea;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.List;
-import java.awt.Dimension;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import ar.edu.unlu.poker.modelo.Jugador;
 
 public class VistaMenuPrincipal extends JFrame {
 
@@ -61,11 +57,13 @@ public class VistaMenuPrincipal extends JFrame {
 	private JPanel panelTop10;
 	private JLabel lblMensajeErrorFondosExcedenNumeroMax;
 
-	/*public static void main(String[] args) { EventQueue.invokeLater(new
-			  Runnable() { public void run() { try { VistaMenuPrincipal frame = new
-			  VistaMenuPrincipal(); frame.setVisible(true);
-			  
-			  } catch (Exception e) { e.printStackTrace(); } } }); }*/
+	/*
+	 * public static void main(String[] args) { EventQueue.invokeLater(new
+	 * Runnable() { public void run() { try { VistaMenuPrincipal frame = new
+	 * VistaMenuPrincipal(); frame.setVisible(true);
+	 * 
+	 * } catch (Exception e) { e.printStackTrace(); } } }); }
+	 */
 
 	public VistaMenuPrincipal() {
 		setUndecorated(true);
@@ -102,12 +100,12 @@ public class VistaMenuPrincipal extends JFrame {
 		panelErrores = new JPanel();
 		panelErrores.setOpaque(false);
 		panelErrores.setVisible(false);
-		
+
 		panelTop10 = new JPanel();
 		panelTop10.setBounds(1035, 558, 48, 43);
 		contentPane.add(panelTop10);
 		panelTop10.setLayout(null);
-		
+
 		JButton btnTop10 = new JButton("");
 		btnTop10.addMouseListener(new MouseAdapter() {
 			@Override
@@ -119,14 +117,14 @@ public class VistaMenuPrincipal extends JFrame {
 		btnTop10.setContentAreaFilled(false);
 		btnTop10.setBounds(0, 0, 48, 43);
 		panelTop10.add(btnTop10);
-		
+
 		JLabel lblIconoTop10 = new JLabel("");
 
 		lblIconoTop10.setIcon(new ImageIcon(getClass().getResource("/logoTop.png")));
 		lblIconoTop10.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIconoTop10.setBounds(5, 5, 38, 33);
 		panelTop10.add(lblIconoTop10);
-		
+
 		JLabel lblFondoMaderaBtnTop = new JLabel("");
 		lblFondoMaderaBtnTop.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondoMaderaBtnTop.setBounds(0, 0, 48, 43);
@@ -161,20 +159,20 @@ public class VistaMenuPrincipal extends JFrame {
 				btnCerrrarPanelErrores.setForeground(Color.white);
 			}
 		});
-		
+
 		lblMensajeErrorFondosInsuficientes = new JLabel("Fondos insuficientes");
 		lblMensajeErrorFondosInsuficientes.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		lblMensajeErrorFondosInsuficientes.setVisible(false);
-		
+
 		lblMensajeErrorJugadoresInsuficientes = new JLabel("Cantidad de jugadores insuficientes");
 		lblMensajeErrorJugadoresInsuficientes.setVisible(false);
-		
+
 		lblMensajeErrorJugadorSalePartida = new JLabel("Un jugador salio de la partida");
 		lblMensajeErrorJugadorSalePartida.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		lblMensajeErrorJugadorSalePartida.setForeground(new Color(255, 0, 0));
 		lblMensajeErrorJugadorSalePartida.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMensajeErrorJugadorSalePartida.setVisible(false);
-		
+
 		lblMensajeErrorFondosExcedenNumeroMax = new JLabel("El fondo no puede superar los seis digitos");
 		lblMensajeErrorFondosExcedenNumeroMax.setVisible(false);
 		lblMensajeErrorFondosExcedenNumeroMax.setForeground(new Color(255, 0, 0));
@@ -208,8 +206,7 @@ public class VistaMenuPrincipal extends JFrame {
 		panelErrores.add(lblMensajeErrorNumeroEntero);
 
 		JLabel lblFondoNegroError = new JLabel("New label");
-		lblFondoNegroError
-				.setIcon(new ImageIcon(getClass().getResource("/fondoNegro.jpg")));
+		lblFondoNegroError.setIcon(new ImageIcon(getClass().getResource("/fondoNegro.jpg")));
 		lblFondoNegroError.setBounds(50, 110, 365, 39);
 		panelErrores.add(lblFondoNegroError);
 
@@ -221,8 +218,7 @@ public class VistaMenuPrincipal extends JFrame {
 		panelErrores.add(lblTituloPanelErrores);
 
 		JLabel lblFondoMaderaErrores = new JLabel("New label");
-		lblFondoMaderaErrores
-				.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
+		lblFondoMaderaErrores.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondoMaderaErrores.setBounds(0, 0, 472, 228);
 		panelErrores.add(lblFondoMaderaErrores);
 		panelIngresoNuevosFondos.setBounds(394, 179, 350, 179);
@@ -256,8 +252,7 @@ public class VistaMenuPrincipal extends JFrame {
 		panelIngresoNuevosFondos.add(btnCancelarAgregarFondos);
 
 		JLabel lblFondoMaderaBtnCancelar = new JLabel("");
-		lblFondoMaderaBtnCancelar
-				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera4.png")));
+		lblFondoMaderaBtnCancelar.setIcon(new ImageIcon(getClass().getResource("/cartelMadera4.png")));
 		lblFondoMaderaBtnCancelar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoMaderaBtnCancelar.setBounds(32, 115, 132, 35);
 		panelIngresoNuevosFondos.add(lblFondoMaderaBtnCancelar);
@@ -290,8 +285,7 @@ public class VistaMenuPrincipal extends JFrame {
 		panelIngresoNuevosFondos.add(btnAceptarAgregarFondos);
 
 		JLabel lblFondoMaderaBtnAceptar = new JLabel("");
-		lblFondoMaderaBtnAceptar
-				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera4.png")));
+		lblFondoMaderaBtnAceptar.setIcon(new ImageIcon(getClass().getResource("/cartelMadera4.png")));
 		lblFondoMaderaBtnAceptar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoMaderaBtnAceptar.setBounds(190, 115, 132, 35);
 		panelIngresoNuevosFondos.add(lblFondoMaderaBtnAceptar);
@@ -301,8 +295,8 @@ public class VistaMenuPrincipal extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if (txtNuevosFondos.getText().length() >= 6) {
-                    e.consume();
-                }
+					e.consume();
+				}
 			}
 		});
 		txtNuevosFondos.setColumns(10);
@@ -317,8 +311,7 @@ public class VistaMenuPrincipal extends JFrame {
 		panelIngresoNuevosFondos.add(lblAgregarFondos);
 
 		JLabel lblFondoManderaAgregarFondos = new JLabel("");
-		lblFondoManderaAgregarFondos
-				.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
+		lblFondoManderaAgregarFondos.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondoManderaAgregarFondos.setBounds(0, 0, 350, 179);
 		panelIngresoNuevosFondos.add(lblFondoManderaAgregarFondos);
 
@@ -392,8 +385,7 @@ public class VistaMenuPrincipal extends JFrame {
 		JLabel lblFondoMaderaBtnAgregarFondos = new JLabel("");
 		lblFondoMaderaBtnAgregarFondos.setBounds(10, 157, 374, 75);
 		panelBotones.add(lblFondoMaderaBtnAgregarFondos);
-		lblFondoMaderaBtnAgregarFondos
-				.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
+		lblFondoMaderaBtnAgregarFondos.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 
 		JButton btnSalirGrande = new JButton("Salir");
 		btnSalirGrande.setBounds(10, 285, 374, 75);
@@ -780,13 +772,13 @@ public class VistaMenuPrincipal extends JFrame {
 	}
 
 	public void mostrarErrorNumeroInvalido() {
-		
+
 		this.panelBotones.setVisible(false);
-		
+
 		this.panelMostrarJugadores.setVisible(false);
-		
+
 		this.panelTop10.setVisible(false);
-		
+
 		this.panelErrores.setVisible(true);
 		this.lblMensajeErrorNumeroEntero.setVisible(true);
 	}
@@ -802,7 +794,7 @@ public class VistaMenuPrincipal extends JFrame {
 		this.panelErrores.setVisible(true);
 		this.lblMensajeErrorFondosInsuficientes.setVisible(true);
 	}
-	
+
 	public void mostrarErrorJugadoresInsuficientes() {
 		this.panelBotones.setVisible(false);
 		this.panelMostrarJugadores.setVisible(false);
@@ -821,11 +813,11 @@ public class VistaMenuPrincipal extends JFrame {
 
 	public void mostrarErrorMaximaLogitudNumeroFondos() {
 		this.panelBotones.setVisible(false);
-		
+
 		this.panelMostrarJugadores.setVisible(false);
-		
+
 		this.panelTop10.setVisible(false);
-		
+
 		this.panelErrores.setVisible(true);
 		this.lblMensajeErrorFondosExcedenNumeroMax.setVisible(true);
 	}

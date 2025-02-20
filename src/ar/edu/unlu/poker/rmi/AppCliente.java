@@ -7,9 +7,7 @@ import javax.swing.JOptionPane;
 
 import ar.edu.unlu.poker.controlador.Controlador;
 import ar.edu.unlu.poker.vista.IVista;
-import ar.edu.unlu.poker.vista.consola.VistaConsolaSwing;
 import ar.edu.unlu.poker.vista.grafica.VistaGrafica;
-import ar.edu.unlu.poker.vista.grafica.VistaLogin;
 import ar.edu.unlu.rmimvc.RMIMVCException;
 import ar.edu.unlu.rmimvc.Util;
 import ar.edu.unlu.rmimvc.cliente.Cliente;
@@ -31,7 +29,7 @@ public class AppCliente {
 				null, null, 8888);
 
 		IVista vista = VistaGrafica.getInstance();
-		//IVista vista = new VistaConsolaSwing();
+		// IVista vista = new VistaConsolaSwing();
 
 		Controlador controlador = new Controlador(vista);
 		vista.setControlador(controlador);

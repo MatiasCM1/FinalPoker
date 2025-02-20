@@ -1,7 +1,6 @@
 package ar.edu.unlu.poker.modelo;
 
 import java.rmi.RemoteException;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -114,8 +113,9 @@ public class ResultadoJugadaJugador {
 	private boolean doblePar(LinkedList<Carta> cartas) {
 		LinkedList<Carta> cartasRestantes = new LinkedList<Carta>(cartas);
 		// Buscar el primer par
-		Carta primerPar = cartasRestantes.stream().filter(c -> contarRepeticiones(cartasRestantes, c) == 2).findFirst().orElse(null);
-		
+		Carta primerPar = cartasRestantes.stream().filter(c -> contarRepeticiones(cartasRestantes, c) == 2).findFirst()
+				.orElse(null);
+
 		if (primerPar != null) {
 			// Eliminar las cartas del primer par
 			cartasRestantes.removeIf(c -> {
@@ -127,8 +127,9 @@ public class ResultadoJugadaJugador {
 				return false;
 			});
 			// Buscar el segundo par
-			Carta segundoPar = cartasRestantes.stream().filter(c -> contarRepeticiones(cartasRestantes, c) == 2).findFirst().orElse(null);
-			
+			Carta segundoPar = cartasRestantes.stream().filter(c -> contarRepeticiones(cartasRestantes, c) == 2)
+					.findFirst().orElse(null);
+
 			return segundoPar != null;
 		}
 		return false;
@@ -136,9 +137,9 @@ public class ResultadoJugadaJugador {
 
 	private boolean full(LinkedList<Carta> cartas) {
 		// Verificar si hay trio
-		Carta cartaTrio = cartas.stream().filter(c -> contarRepeticiones(cartas, c) == 3).findFirst()
-				.orElse(null);
-		if (cartaTrio != null) { // Elimino las cartas del trio para verificar que las cartas del par sean distintas que las del trio
+		Carta cartaTrio = cartas.stream().filter(c -> contarRepeticiones(cartas, c) == 3).findFirst().orElse(null);
+		if (cartaTrio != null) { // Elimino las cartas del trio para verificar que las cartas del par sean
+									// distintas que las del trio
 			LinkedList<Carta> cartasRestantes = new LinkedList<Carta>(cartas);
 			cartasRestantes.removeIf(c -> {
 				try {
@@ -155,7 +156,7 @@ public class ResultadoJugadaJugador {
 		}
 		return false;
 	}
-	
+
 	public static HashMap<String, Integer> getValorcarta() {
 		return valorCarta;
 	}

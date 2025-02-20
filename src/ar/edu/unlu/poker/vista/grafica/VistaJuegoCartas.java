@@ -1,29 +1,26 @@
 package ar.edu.unlu.poker.vista.grafica;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.border.EmptyBorder;
-
-import ar.edu.unlu.poker.modelo.Carta;
-import ar.edu.unlu.poker.modelo.Jugador;
-
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import java.awt.Font;
 import java.awt.Color;
-import javax.swing.SwingConstants;
-import javax.swing.JTextArea;
-import java.awt.Toolkit;
-import javax.swing.JButton;
+import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.List;
-import java.awt.Cursor;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import ar.edu.unlu.poker.modelo.Carta;
+import ar.edu.unlu.poker.modelo.Jugador;
 
 public class VistaJuegoCartas extends JFrame {
 
@@ -55,11 +52,11 @@ public class VistaJuegoCartas extends JFrame {
 	private JLabel lblErrorJugadoresInsuficientes;
 
 	/*
-	 public static void main(String[] args) { EventQueue.invokeLater(new
-	  Runnable() { public void run() { try { VistaJuegoCartas frame = new
-	  VistaJuegoCartas(); frame.setVisible(true);
-	  
-	  } catch (Exception e) { e.printStackTrace(); } } }); }
+	 * public static void main(String[] args) { EventQueue.invokeLater(new
+	 * Runnable() { public void run() { try { VistaJuegoCartas frame = new
+	 * VistaJuegoCartas(); frame.setVisible(true);
+	 * 
+	 * } catch (Exception e) { e.printStackTrace(); } } }); }
 	 */
 
 	public VistaJuegoCartas() {
@@ -97,23 +94,25 @@ public class VistaJuegoCartas extends JFrame {
 
 		panelDescartarCartas = new JPanel();
 		panelDescartarCartas.setVisible(false);
-		
+
 		panelErrores = new JPanel();
 		panelErrores.setVisible(false);
 		panelErrores.setBounds(143, 46, 459, 222);
 		contentPane.add(panelErrores);
 		panelErrores.setLayout(null);
-		
+
 		JButton btnSalirPanelErrores = new JButton("X");
 		btnSalirPanelErrores.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				btnSalirPanelErrores.setForeground(Color.red);
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnSalirPanelErrores.setForeground(Color.white);
 			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				panelOpcionesSiguienteRondaJuego.setVisible(true);
@@ -122,10 +121,10 @@ public class VistaJuegoCartas extends JFrame {
 				panelErrores.setVisible(false);
 			}
 		});
-		
+
 		lblErrorFondosInsuficientes = new JLabel("Fondos insuficientes");
 		lblErrorFondosInsuficientes.setVisible(false);
-		
+
 		lblErrorJugadoresInsuficientes = new JLabel("Jugadores insuficientes");
 		lblErrorJugadoresInsuficientes.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		lblErrorJugadoresInsuficientes.setForeground(new Color(255, 0, 0));
@@ -138,9 +137,10 @@ public class VistaJuegoCartas extends JFrame {
 		lblErrorFondosInsuficientes.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		lblErrorFondosInsuficientes.setBounds(10, 106, 439, 40);
 		panelErrores.add(lblErrorFondosInsuficientes);
-		
+
 		JLabel lblFondoNegroMensajeError = new JLabel("");
-		lblFondoNegroMensajeError.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\fondoNegro.jpg"));
+		lblFondoNegroMensajeError
+				.setIcon(new ImageIcon("C:\\Users\\Colo\\eclipse-workspace\\FinalPoker\\resources\\fondoNegro.jpg"));
 		lblFondoNegroMensajeError.setBounds(10, 106, 439, 40);
 		panelErrores.add(lblFondoNegroMensajeError);
 		btnSalirPanelErrores.setForeground(new Color(255, 255, 255));
@@ -149,14 +149,14 @@ public class VistaJuegoCartas extends JFrame {
 		btnSalirPanelErrores.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
 		btnSalirPanelErrores.setBounds(410, 0, 49, 40);
 		panelErrores.add(btnSalirPanelErrores);
-		
+
 		JLabel lblErroresTitulo = new JLabel("Error");
 		lblErroresTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblErroresTitulo.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
 		lblErroresTitulo.setForeground(new Color(255, 255, 255));
 		lblErroresTitulo.setBounds(10, 11, 439, 47);
 		panelErrores.add(lblErroresTitulo);
-		
+
 		JLabel lblFondoMaderaErrores = new JLabel("");
 		lblFondoMaderaErrores.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondoMaderaErrores.setBounds(0, 0, 459, 223);
@@ -273,8 +273,7 @@ public class VistaJuegoCartas extends JFrame {
 		panelDescartarCartas.add(btnDescartarCarta5);
 
 		lblFondoDescartarBtnC5 = new JLabel("");
-		lblFondoDescartarBtnC5
-				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera3.png")));
+		lblFondoDescartarBtnC5.setIcon(new ImageIcon(getClass().getResource("/cartelMadera3.png")));
 		lblFondoDescartarBtnC5.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoDescartarBtnC5.setBounds(534, 123, 89, 23);
 		panelDescartarCartas.add(lblFondoDescartarBtnC5);
@@ -286,8 +285,7 @@ public class VistaJuegoCartas extends JFrame {
 		panelDescartarCartas.add(btnDescartarCarta4);
 
 		lblFondoDescartarBtnC4 = new JLabel("");
-		lblFondoDescartarBtnC4
-				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera3.png")));
+		lblFondoDescartarBtnC4.setIcon(new ImageIcon(getClass().getResource("/cartelMadera3.png")));
 		lblFondoDescartarBtnC4.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoDescartarBtnC4.setBounds(413, 123, 89, 23);
 		panelDescartarCartas.add(lblFondoDescartarBtnC4);
@@ -299,8 +297,7 @@ public class VistaJuegoCartas extends JFrame {
 		panelDescartarCartas.add(btnDescartarCarta3);
 
 		lblFondoDescartarBtnC3 = new JLabel("");
-		lblFondoDescartarBtnC3
-				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera3.png")));
+		lblFondoDescartarBtnC3.setIcon(new ImageIcon(getClass().getResource("/cartelMadera3.png")));
 		lblFondoDescartarBtnC3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoDescartarBtnC3.setBounds(284, 123, 89, 23);
 		panelDescartarCartas.add(lblFondoDescartarBtnC3);
@@ -312,8 +309,7 @@ public class VistaJuegoCartas extends JFrame {
 		btnDescartarCarta2.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 13));
 
 		lblFondoDescartarBtnC2 = new JLabel("");
-		lblFondoDescartarBtnC2
-				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera3.png")));
+		lblFondoDescartarBtnC2.setIcon(new ImageIcon(getClass().getResource("/cartelMadera3.png")));
 		lblFondoDescartarBtnC2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoDescartarBtnC2.setBounds(154, 123, 89, 23);
 		panelDescartarCartas.add(lblFondoDescartarBtnC2);
@@ -325,8 +321,7 @@ public class VistaJuegoCartas extends JFrame {
 		panelDescartarCartas.add(btnDescartarCarta1);
 
 		lblFondoDescartarBtnC1 = new JLabel("");
-		lblFondoDescartarBtnC1
-				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera3.png")));
+		lblFondoDescartarBtnC1.setIcon(new ImageIcon(getClass().getResource("/cartelMadera3.png")));
 		lblFondoDescartarBtnC1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoDescartarBtnC1.setBounds(25, 123, 89, 23);
 		panelDescartarCartas.add(lblFondoDescartarBtnC1);
@@ -357,14 +352,12 @@ public class VistaJuegoCartas extends JFrame {
 		panelDescartarCartas.add(btnTerminarDescartes);
 
 		JLabel lblFondoMaderaBtnDescartes = new JLabel("New label");
-		lblFondoMaderaBtnDescartes
-				.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
+		lblFondoMaderaBtnDescartes.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondoMaderaBtnDescartes.setBounds(0, 115, 664, 39);
 		panelDescartarCartas.add(lblFondoMaderaBtnDescartes);
 
 		JLabel lblFondoMaderaBtnTerminarDescartes = new JLabel("New label");
-		lblFondoMaderaBtnTerminarDescartes
-				.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
+		lblFondoMaderaBtnTerminarDescartes.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondoMaderaBtnTerminarDescartes.setBounds(697, -2, 333, 60);
 		panelDescartarCartas.add(lblFondoMaderaBtnTerminarDescartes);
 		panelOpcionesSiguienteRondaJuego.setBounds(63, 67, 518, 200);
@@ -442,8 +435,7 @@ public class VistaJuegoCartas extends JFrame {
 
 		JLabel lblBtnFondoMaderaMenuPrincipal = new JLabel("");
 		lblBtnFondoMaderaMenuPrincipal.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBtnFondoMaderaMenuPrincipal
-				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera.png")));
+		lblBtnFondoMaderaMenuPrincipal.setIcon(new ImageIcon(getClass().getResource("/cartelMadera.png")));
 		lblBtnFondoMaderaMenuPrincipal.setBounds(182, 114, 156, 59);
 		panelOpcionesSiguienteRondaJuego.add(lblBtnFondoMaderaMenuPrincipal);
 		btnSeguirJugadorNuevaRonda.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
@@ -453,8 +445,7 @@ public class VistaJuegoCartas extends JFrame {
 		panelOpcionesSiguienteRondaJuego.add(btnSeguirJugadorNuevaRonda);
 
 		JLabel lblFondoMaderaBotonSeguirJugando = new JLabel("");
-		lblFondoMaderaBotonSeguirJugando
-				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera.png")));
+		lblFondoMaderaBotonSeguirJugando.setIcon(new ImageIcon(getClass().getResource("/cartelMadera.png")));
 		lblFondoMaderaBotonSeguirJugando.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondoMaderaBotonSeguirJugando.setBounds(346, 114, 156, 59);
 		panelOpcionesSiguienteRondaJuego.add(lblFondoMaderaBotonSeguirJugando);
@@ -467,8 +458,7 @@ public class VistaJuegoCartas extends JFrame {
 
 		JLabel lblBtnFondoMaderaClaraSalir = new JLabel("");
 		lblBtnFondoMaderaClaraSalir.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBtnFondoMaderaClaraSalir
-				.setIcon(new ImageIcon(getClass().getResource("/cartelMadera.png")));
+		lblBtnFondoMaderaClaraSalir.setIcon(new ImageIcon(getClass().getResource("/cartelMadera.png")));
 		lblBtnFondoMaderaClaraSalir.setBounds(10, 114, 156, 59);
 		panelOpcionesSiguienteRondaJuego.add(lblBtnFondoMaderaClaraSalir);
 
@@ -480,8 +470,7 @@ public class VistaJuegoCartas extends JFrame {
 		panelOpcionesSiguienteRondaJuego.add(lblRondaTerminada);
 
 		JLabel lblFondoMaderaSigRonda = new JLabel("");
-		lblFondoMaderaSigRonda
-				.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
+		lblFondoMaderaSigRonda.setIcon(new ImageIcon(getClass().getResource("/imagenMadera.jpg")));
 		lblFondoMaderaSigRonda.setBounds(0, 0, 518, 199);
 		panelOpcionesSiguienteRondaJuego.add(lblFondoMaderaSigRonda);
 		panelBarraSuperior.setLayout(null);

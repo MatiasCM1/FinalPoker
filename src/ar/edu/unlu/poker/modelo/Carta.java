@@ -5,7 +5,6 @@ import java.rmi.RemoteException;
 
 public class Carta implements Serializable, Comparable<Carta> {
 
-	
 	private static final long serialVersionUID = 1L;
 	private String valor;
 	private String palo;
