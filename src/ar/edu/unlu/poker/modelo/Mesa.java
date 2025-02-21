@@ -147,7 +147,7 @@ public class Mesa extends ObservableRemoto implements IMesa {
 
 				// TENGO QUE HACER ESTO, PQ EL JUGADOR QUE VIENE DE LA VISTA NO TIENE LAS
 				// CARTAS, ENTONCES SE LAS TENGO QUE SETEAR
-				jugador.setListaCartas(buscarCartasCorrespondeJugador(jugador)); // BUSCAR OTRA MANERA NO ME GUSTA
+				jugador.setListaCartas(buscarCartasCorrespondeJugador(jugador));
 
 				this.rondaApuesta.add(jugador);
 				this.mapa.put(jugador, apuesta);
@@ -363,7 +363,7 @@ public class Mesa extends ObservableRemoto implements IMesa {
 
 			// TENGO QUE HACER ESTO, PQ EL JUGADOR QUE VIENE DE LA VISTA NO TIENE LAS
 			// CARTAS, ENTONCES SE LAS TENGO QUE SETEAR
-			jugador.setListaCartas(buscarCartasCorrespondeJugador(jugador)); // BUSCAR OTRA MANERA NO ME GUSTA
+			jugador.setListaCartas(buscarCartasCorrespondeJugador(jugador)); 
 
 			this.descartarCartas(jugador);
 

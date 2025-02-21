@@ -51,14 +51,6 @@ public class VistaJuegoCartas extends JFrame {
 	private JLabel lblErrorFondosInsuficientes;
 	private JLabel lblErrorJugadoresInsuficientes;
 
-	/*
-	 * public static void main(String[] args) { EventQueue.invokeLater(new
-	 * Runnable() { public void run() { try { VistaJuegoCartas frame = new
-	 * VistaJuegoCartas(); frame.setVisible(true);
-	 * 
-	 * } catch (Exception e) { e.printStackTrace(); } } }); }
-	 */
-
 	public VistaJuegoCartas() {
 		setUndecorated(true);
 		setForeground(new Color(255, 255, 255));

@@ -38,14 +38,6 @@ public class VistaLogin extends JFrame {
 	private JLabel lblMsgErrorPartidaComenzada;
 	private JLabel lblErrorCantidadJugadoresMaxima;
 
-	/*
-	 * public static void main(String[] args) { EventQueue.invokeLater(new
-	 * Runnable() { public void run() { try { VistaLogin frame = new VistaLogin();
-	 * frame.setVisible(true);
-	 * 
-	 * } catch (Exception e) { e.printStackTrace(); } } }); }
-	 */
-
 	public VistaLogin(Controlador controlador) {
 		setUndecorated(true);
 		setLocationByPlatform(true);
