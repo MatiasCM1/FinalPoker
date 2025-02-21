@@ -207,7 +207,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 					}
 					controlador.setJugadorActual(jugadorActual);
 					setTitle("Poker");
-					areaSalida.append("Bienvenido, " + this.nombreJugadorActual + "!\n");
+					areaSalida.append("¡Bienvenido, " + this.nombreJugadorActual + "!\n");
 					esperandoEntrada = false;
 					mostrarOpcionesMenu();
 
@@ -616,7 +616,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		LinkedList<Carta> cartasJugador = controlador.obtenerCartasJugador(this.jugadorActual);
 		areaSalida.append("Seleccione las cartas a descartar.\n");
 		int contador = 1;
-		for (Carta c : cartasJugador) { // UNA FORMA DE MOSTRAR EL MENU CON LAS CARTAS QUE TIENE EL JUGADOR
+		for (Carta c : cartasJugador) { 
 			areaSalida.append(contador + "- " + c.getValor() + " de " + c.getPalo() + "\n");
 			contador = contador + 1;
 		}
@@ -666,7 +666,6 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 				break;
 			case "6":
 				// CONTINUAR EL JUEGO
-				// ordenar al controlador que inicie el descarte
 				controlador.continuarJuegoPostDescarte(this.jugadorActual);
 				this.esperandoEntrada = false;
 				break;
@@ -800,6 +799,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	@Override
 	public void actualizarTablaJugadores(List<Jugador> jugadores) {
+		areaSalida.append("\n");
 		areaSalida.append("Lista de jugadores y fondos actualizados: \n");
 		for (Jugador j : jugadores) {
 			areaSalida.append("- Nombre - " + j.getNombre() + " - Fondos - " + j.getFondo() + "\n");

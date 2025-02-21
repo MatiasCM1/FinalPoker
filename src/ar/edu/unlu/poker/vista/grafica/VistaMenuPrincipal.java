@@ -57,14 +57,6 @@ public class VistaMenuPrincipal extends JFrame {
 	private JPanel panelTop10;
 	private JLabel lblMensajeErrorFondosExcedenNumeroMax;
 
-	/*
-	 * public static void main(String[] args) { EventQueue.invokeLater(new
-	 * Runnable() { public void run() { try { VistaMenuPrincipal frame = new
-	 * VistaMenuPrincipal(); frame.setVisible(true);
-	 * 
-	 * } catch (Exception e) { e.printStackTrace(); } } }); }
-	 */
-
 	public VistaMenuPrincipal() {
 		setUndecorated(true);
 		setResizable(false);
@@ -409,7 +401,7 @@ public class VistaMenuPrincipal extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 
 				setearLabelsTablaJugadores();
-				// CUANDO SE APRIETA EL BOTON, TENGO QUE VOLVER A LA PANTALLA DE LOGIN
+				
 				VistaGrafica.getInstance().volverPantallaLogin();
 			}
 		});

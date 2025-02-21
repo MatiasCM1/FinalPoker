@@ -15,7 +15,7 @@ public class Serializador {
 
 	private static final String ARCHIVO = "estadisticasJugadores.dat";
 
-	public static void guardarEstadisticas(List<EstadisticasJugador> jugadores) {
+	public static void guardarEstadisticas(List<EstadisticasJugador> jugadores) { //Recibe una lista con los datos y lo guarda en el archivo
 
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO))) {
 			oos.writeObject(jugadores);
@@ -26,17 +26,17 @@ public class Serializador {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<EstadisticasJugador> cargarEstadisticas() {
+	public static List<EstadisticasJugador> cargarEstadisticas() { //Devuelve la lista que esta guardada en el archivo
 
 		File archivo = new File(ARCHIVO);
 		if (!archivo.exists()) {
-			return new ArrayList<>(); // Si el archivo no existe, devolvemos una lista vacía
+			return new ArrayList<>(); // Si el archivo no existe, devuelve una lista vacia
 		}
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ARCHIVO))) {
 			return (List<EstadisticasJugador>) ois.readObject();
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
-			return new ArrayList<>(); // Si hay un error, devolvemos una lista vacía
+			return new ArrayList<>(); // Si hay un error, devuelve una lista vacia
 		}
 
 	}
