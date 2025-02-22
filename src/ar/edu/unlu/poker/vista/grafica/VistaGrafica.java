@@ -43,19 +43,20 @@ public class VistaGrafica implements IVista {
 	public void setJugador(String nombre, int fondos) {
 		this.jugadorActual = new Jugador(nombre, fondos);
 	}
+	
+	public void agregarJugador() {
+		this.controlador.setJugadorActual(jugadorActual);
+		System.out.println("Mando a agregar el jugador actual");
+		this.controlador.agregarJugador(jugadorActual);
+	}
 
+	@Override
 	public void pasarVistaMenu() {
-
-		if (!controlador.agregarJugador(jugadorActual)) {
-			return;
-		}
 
 		this.controlador.setEstoyEnVistaLogin(false);
 		this.vistaLogin.setVisible(false);
 		this.vistaMenuPrincipal = new VistaMenuPrincipal();
 		this.vistaMenuPrincipal.setVisible(true);
-
-		controlador.setJugadorActual(jugadorActual);
 
 		this.actualizarTablaJugadores(getJugadoresMesa());
 
@@ -109,11 +110,11 @@ public class VistaGrafica implements IVista {
 	}
 
 	public void jugadorSaleDelJuegoPostPrimeraPartida() {
-		if (!this.comprobarPartidaComenzada()) {
+		//if (!this.comprobarPartidaComenzada()) {
 			controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
-		} else {
+		//} else {
 			controlador.jugadorSeRetiraConJuegoComenzado(this.jugadorActual);
-		}
+		//}
 	}
 
 	@Override
@@ -579,9 +580,9 @@ public class VistaGrafica implements IVista {
 		this.controlador.incrementarFondos2(this.jugadorActual, nuevosFondos);
 	}
 
-	public boolean comprobarPartidaComenzada() {
+	/*public boolean comprobarPartidaComenzada() {
 		return this.controlador.comenzoPartida();
-	}
+	}*/
 
 	@Override
 	public void informarJugadoresInsuficientes() {
@@ -637,6 +638,14 @@ public class VistaGrafica implements IVista {
 	public void mostrarCartasJugadorAntGanador(List<Jugador> finalistas) {
 		if (this.vistaJuegoCartas != null) {
 			this.vistaJuegoCartas.mostrarCartasFinalistasRonda(finalistas);
+		}
+	}
+
+	@Override
+	public void notificarPartidaComenzada() {
+		if (this.vistaLogin != null) {
+			this.vistaLogin.setVisible(true);
+			this.vistaLogin.mostrarErrorPartidaComenzada();
 		}
 	}
 

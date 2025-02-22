@@ -42,7 +42,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent e) {
-				jugadorSaleDelJuegoPostPrimeraPartida();
+				//jugadorSaleDelJuegoPostPrimeraPartida();
 				System.exit(0);
 			}
 		});
@@ -83,7 +83,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		areaSalida.append("Ingrese su nombre\n");
 	}
 
-	private void jugadorSaleDelJuegoPostPrimeraPartida() {
+	/*private void jugadorSaleDelJuegoPostPrimeraPartida() {
 
 		if (!this.comprobarPartidaComenzada()) {
 			controlador.jugadorSeRetiraDelJuego(this.jugadorActual);
@@ -95,7 +95,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	private boolean comprobarPartidaComenzada() {
 		return this.controlador.comenzoPartida();
-	}
+	}*/
 
 	@Override
 	public void setControlador(Controlador controlador) {
@@ -179,7 +179,6 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	public void solicitarNombre(String input) {
 		if (esperandoEntrada) {
-			if (!this.comprobarPartidaComenzada()) {
 				if (controlador.validarTextoNombre(input)) {
 					nombreJugadorActual = input.trim();
 					areaSalida.append("Ingrese el fondo que desea\n");
@@ -189,37 +188,34 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 					this.estadoFlujo = Estados.SOLICITAR_NOMBRE_JUGADOR;
 				}
 				return;
-			} else {
-				areaSalida.append("Error, la partida ya comenzo.\n");
-				this.estadoFlujo = Estados.SOLICITAR_NOMBRE_JUGADOR;
-			}
 		}
 	}
+	
+
 
 	public void solicitarFondo(String input) {
 		if (esperandoEntrada) {
-			if (!this.comprobarPartidaComenzada()) {
+			//if (!this.comprobarPartidaComenzada()) {
 				if (controlador.validarTextoFondos(input)) {
 					jugadorActual = new Jugador(this.nombreJugadorActual, Integer.parseInt(input));
 
-					if (!controlador.agregarJugador(jugadorActual)) {
+					controlador.setJugadorActual(jugadorActual);
+					controlador.agregarJugador(jugadorActual);
+					
+					/*if (!controlador.agregarJugador(jugadorActual)) {
 						return;
 					}
-					controlador.setJugadorActual(jugadorActual);
-					setTitle("Poker");
-					areaSalida.append("¡Bienvenido, " + this.nombreJugadorActual + "!\n");
-					esperandoEntrada = false;
-					mostrarOpcionesMenu();
+					controlador.setJugadorActual(jugadorActual);*/
 
 				} else {
 					areaSalida.append("¡Numero no valido! ¡Ingrese un numero entero!\n");
 					areaSalida.append("Ingrese el fondo que desea\n");
 					this.estadoFlujo = Estados.SOLICITAR_FONDO_JUGADOR;
 				}
-			} else {
-				areaSalida.append("Error, la partida ya comenzo.\n");
-				this.estadoFlujo = Estados.SOLICITAR_NOMBRE_JUGADOR;
-			}
+			//} else {
+				//areaSalida.append("Error, la partida ya comenzo.\n");
+			//	this.estadoFlujo = Estados.SOLICITAR_NOMBRE_JUGADOR;
+		//	}
 		}
 
 	}
@@ -885,6 +881,21 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 				areaSalida.append("       " + c.toString() + "\n");
 			}
 		}
+	}
+
+	@Override
+	public void notificarPartidaComenzada() {
+		areaSalida.append("Error, partida ya comenzada\n");
+		areaSalida.append("Ingrese su nombre\n");
+		this.estadoFlujo = Estados.SOLICITAR_NOMBRE_JUGADOR;
+	}
+
+	@Override
+	public void pasarVistaMenu() {
+		setTitle("Poker");
+		areaSalida.append("¡Bienvenido, " + this.nombreJugadorActual + "!\n");
+		esperandoEntrada = false;
+		mostrarOpcionesMenu();
 	}
 
 }

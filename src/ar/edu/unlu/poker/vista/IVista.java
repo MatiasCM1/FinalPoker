@@ -93,4 +93,8 @@ public interface IVista {
 
 	void mostrarCartasJugadorAntGanador(List<Jugador> rondaApuestaAux);
 
+	void notificarPartidaComenzada();
+
+	void pasarVistaMenu();
+
 }

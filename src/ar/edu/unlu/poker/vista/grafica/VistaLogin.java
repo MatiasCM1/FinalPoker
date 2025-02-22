@@ -225,26 +225,20 @@ public class VistaLogin extends JFrame {
 
 				boolean flag = false;
 
-				if (!VistaGrafica.getInstance().comprobarPartidaComenzada()) {
 
-					if (!controlador.validarTextoNombre(txtNombre.getText())) {
-						lblMensajeErrorNombre.setVisible(true);
-						flag = true;
-					}
+				if (!controlador.validarTextoNombre(txtNombre.getText())) {
+					lblMensajeErrorNombre.setVisible(true);
+					flag = true;
+				}
 
-					if (!controlador.validarTextoFondos(txtFondos.getText())) {
-						lblMensajeErrorFondos.setVisible(true);
-						flag = true;
-					}
+				if (!controlador.validarTextoFondos(txtFondos.getText())) {
+					lblMensajeErrorFondos.setVisible(true);
+					flag = true;
+				}
 
-					if (!flag) {
-						VistaGrafica.getInstance().setJugador(txtNombre.getText(),
-								Integer.parseInt(txtFondos.getText()));
-
-						VistaGrafica.getInstance().pasarVistaMenu();
-					}
-				} else {
-					mostrarErrorPartidaComenzada();
+				if (!flag) {
+					VistaGrafica.getInstance().setJugador(txtNombre.getText(), Integer.parseInt(txtFondos.getText()));
+					VistaGrafica.getInstance().agregarJugador();
 				}
 
 			}

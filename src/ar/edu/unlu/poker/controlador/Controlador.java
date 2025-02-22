@@ -25,8 +25,20 @@ public class Controlador implements IControladorRemoto {
 	public void actualizar(IObservableRemoto modelo, Object cambio) throws RemoteException {
 		switch ((Informe) cambio) {
 		case JUGADOR_NUEVO_AGREGADO:
+			
 			if (this.jugadorActual != null) {
+
+				if (ultimoJugadorAgregado()) {
+					vista.pasarVistaMenu();
+				}
+			
 				vista.actualizarTablaJugadores(this.getJugadoresMesa());
+			}
+			
+			break;
+		case PARTIDA_COMENZADA:
+			if (jugadorActualEsJugadorIntentoLogeo()) {
+				vista.notificarPartidaComenzada();
 			}
 			break;
 		case ESTABLECER_NOMBRE_VENTANA_JUGADOR:
@@ -251,6 +263,16 @@ public class Controlador implements IControladorRemoto {
 			break;
 		}
 
+	}
+
+	private boolean ultimoJugadorAgregado() throws RemoteException {
+		
+		return this.jugadorActual.getNombre().equals(mesa.getUltimoJugadorIntentaAgregar());
+		
+	}
+
+	private boolean jugadorActualEsJugadorIntentoLogeo() throws RemoteException {
+		return this.jugadorActual.getNombre().equals(mesa.getUltimoJugadorIntentaAgregar());
 	}
 
 	private boolean jugadorSigueEnJuego(Jugador jugador) {
@@ -795,7 +817,7 @@ public class Controlador implements IControladorRemoto {
 		return flag;
 	}
 
-	public boolean comenzoPartida() {
+	/*public boolean comenzoPartida() {
 		try {
 			return mesa.getComenzoPartida();
 		} catch (RemoteException e) {
@@ -803,7 +825,7 @@ public class Controlador implements IControladorRemoto {
 			e.printStackTrace();
 		}
 		return false;
-	}
+	}*/
 
 	public boolean verificarCantidadDeJugadores() {
 		if (this.getJugadoresMesa().size() > 1) {
