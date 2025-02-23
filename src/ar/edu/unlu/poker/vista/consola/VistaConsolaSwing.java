@@ -179,15 +179,15 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	public void solicitarNombre(String input) {
 		if (esperandoEntrada) {
-				/*if (controlador.validarTextoNombre(input)) {*/
+				if (this.validarTextoNombre(input)) {
 					nombreJugadorActual = input.trim();
 					areaSalida.append("Ingrese el fondo que desea\n");
 					this.estadoFlujo = Estados.SOLICITAR_FONDO_JUGADOR;
-				/*} else {
+				} else {
 					areaSalida.append("¡Nombre no valido! Por favor, ingrese un nombre para comenzar:\n");
 					this.estadoFlujo = Estados.SOLICITAR_NOMBRE_JUGADOR;
 				}
-				return;*/
+				return;
 		}
 	}
 	
@@ -195,29 +195,46 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	public void solicitarFondo(String input) {
 		if (esperandoEntrada) {
-			//if (!this.comprobarPartidaComenzada()) {
-				/*if (controlador.validarTextoFondos(input)) {*/
-					jugadorActual = new Jugador(this.nombreJugadorActual, Integer.parseInt(input));
+			if (this.validarTextoFondos(input)) {
+				jugadorActual = new Jugador(this.nombreJugadorActual, Integer.parseInt(input));
 
-					controlador.setJugadorActual(jugadorActual);
-					controlador.agregarJugador(jugadorActual);
-					
-					/*if (!controlador.agregarJugador(jugadorActual)) {
-						return;
-					}
-					controlador.setJugadorActual(jugadorActual);*/
+				controlador.setJugadorActual(jugadorActual);
+				controlador.agregarJugador(jugadorActual);
 
-				/*} else {
-					areaSalida.append("¡Numero no valido! ¡Ingrese un numero entero!\n");
-					areaSalida.append("Ingrese el fondo que desea\n");
-					this.estadoFlujo = Estados.SOLICITAR_FONDO_JUGADOR;
-				}*/
-			//} else {
-				//areaSalida.append("Error, la partida ya comenzo.\n");
-			//	this.estadoFlujo = Estados.SOLICITAR_NOMBRE_JUGADOR;
-		//	}
+			} else {
+				areaSalida.append("¡Numero no valido! ¡Ingrese un numero entero!\n");
+				areaSalida.append("Ingrese el fondo que desea\n");
+				this.estadoFlujo = Estados.SOLICITAR_FONDO_JUGADOR;
+			}
 		}
 
+	}
+	
+	public boolean validarTextoNombre(String textoNombre) {
+		if (textoNombre.equals("Ingrese su nombre de usuario") || textoNombre.trim().isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean validarTextoFondos(String textoFondos) {
+		if (!validarEnteroPositivo(textoFondos)) {
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean validarEnteroPositivo(String input) {
+		try {
+			Integer.parseInt(input);
+			if (Integer.parseInt(input) > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (NumberFormatException e) {
+			return false;
+		}
 	}
 
 	public void menu(String input) {
@@ -900,8 +917,9 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	@Override
 	public void notificarErrorNombre() {
-		// TODO Auto-generated method stub
-		
+		areaSalida.append("Error, nombre de usuario ocupado\n");
+		areaSalida.append("Ingrese su nombre\n");
+		this.estadoFlujo = Estados.SOLICITAR_NOMBRE_JUGADOR;
 	}
 
 }
