@@ -53,14 +53,25 @@ public class Mesa extends ObservableRemoto implements IMesa {
 		} else {
 			this.notificarObservadores(Informe.CANT_JUGADORES_EXCEDIDOS);
 		}*/
+		jugador.setID();
 		this.ultimoJugadorIntentaAgregar =  new Jugador("");
 		this.ultimoJugadorIntentaAgregar = jugador;
+		this.notificarObservadores(Informe.ID_ESTABLECIDO);
+		
 		if (!this.comenzoPartida) {
-			this.jugadoresMesa.add(jugador);
-			this.notificarObservadores(Informe.JUGADOR_NUEVO_AGREGADO);
+			if (!this.nombreRepetido(jugador)) {
+				this.jugadoresMesa.add(jugador);
+				this.notificarObservadores(Informe.JUGADOR_NUEVO_AGREGADO);
+			} else {
+				this.notificarObservadores(Informe.NOMBRE_REPETIDO);
+			}
 		} else {
 			this.notificarObservadores(Informe.PARTIDA_COMENZADA);
 		}
+	}
+	
+	private boolean nombreRepetido(Jugador jugador) {
+		return jugadoresMesa.stream().anyMatch(j -> j.getNombre().equals(jugador.getNombre()));
 	}
 
 	@Override
@@ -795,8 +806,13 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	}
 
 	@Override
-	public String getUltimoJugadorIntentaAgregar() throws RemoteException{
+	public String getNombreUltimoJugadorIntentaAgregar() throws RemoteException{
 		return ultimoJugadorIntentaAgregar.getNombre();
+	}
+	
+	@Override 
+	public int getIDUltimoJugadorIntentaAgregar() throws RemoteException{
+		return ultimoJugadorIntentaAgregar.getID();
 	}
 
 }

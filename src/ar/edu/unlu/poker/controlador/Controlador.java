@@ -36,6 +36,17 @@ public class Controlador implements IControladorRemoto {
 			}
 			
 			break;
+			
+		case ID_ESTABLECIDO:
+			if (esJugadorRecienAgregado()) {
+				this.jugadorActual.setID(mesa.getIDUltimoJugadorIntentaAgregar());
+			}
+			break;
+		case NOMBRE_REPETIDO: 
+			if (jugadorActualEsJugadorNombreRepetido()) {
+				vista.notificarErrorNombre();
+			}
+			break;
 		case PARTIDA_COMENZADA:
 			if (jugadorActualEsJugadorIntentoLogeo()) {
 				vista.notificarPartidaComenzada();
@@ -265,14 +276,22 @@ public class Controlador implements IControladorRemoto {
 
 	}
 
+	private boolean esJugadorRecienAgregado() throws RemoteException {
+		return this.jugadorActual.getNombre().equals(mesa.getNombreUltimoJugadorIntentaAgregar()) && this.jugadorActual.getID() == -1;
+	}
+
 	private boolean ultimoJugadorAgregado() throws RemoteException {
 		
-		return this.jugadorActual.getNombre().equals(mesa.getUltimoJugadorIntentaAgregar());
+		return this.jugadorActual.getNombre().equals(mesa.getNombreUltimoJugadorIntentaAgregar());
 		
 	}
 
 	private boolean jugadorActualEsJugadorIntentoLogeo() throws RemoteException {
-		return this.jugadorActual.getNombre().equals(mesa.getUltimoJugadorIntentaAgregar());
+		return this.jugadorActual.getNombre().equals(mesa.getNombreUltimoJugadorIntentaAgregar());
+	}
+	
+	private boolean jugadorActualEsJugadorNombreRepetido() throws RemoteException {
+		return this.jugadorActual.getID() == mesa.getIDUltimoJugadorIntentaAgregar();
 	}
 
 	private boolean jugadorSigueEnJuego(Jugador jugador) {
@@ -622,14 +641,14 @@ public class Controlador implements IControladorRemoto {
 		}
 	}
 
-	public boolean validarNombreNoRepetido(String input) {
+	/*public boolean validarNombreNoRepetido(String input) {
 		for (Jugador j : this.getJugadoresMesa()) {
 			if (j.getNombre().equals(input)) {
 				return false;
 			}
 		}
 		return true;
-	}
+	}*/
 
 	public int getFondosJugador(Jugador jugador) {
 		for (Jugador j : this.getJugadoresMesa()) {
@@ -688,7 +707,7 @@ public class Controlador implements IControladorRemoto {
 
 	// ---------------------------------
 
-	public boolean validarTextoNombre(String textoNombre) {
+	/*public boolean validarTextoNombre(String textoNombre) {
 		if (textoNombre.equals("Ingrese su nombre de usuario") || textoNombre.trim().isEmpty()
 				|| !validarNombreNoRepetido(textoNombre)) {
 			return false;
@@ -701,7 +720,7 @@ public class Controlador implements IControladorRemoto {
 			return false;
 		}
 		return true;
-	}
+	}*/
 
 	public void iniciarSiEstaListo(Jugador jugadorActual) {
 

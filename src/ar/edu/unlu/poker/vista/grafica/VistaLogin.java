@@ -37,6 +37,7 @@ public class VistaLogin extends JFrame {
 	private JLabel lblBtnIngresar;
 	private JLabel lblMsgErrorPartidaComenzada;
 	private JLabel lblErrorCantidadJugadoresMaxima;
+	private JLabel lblMensajeErrorNombre;
 
 	public VistaLogin(Controlador controlador) {
 		setUndecorated(true);
@@ -70,7 +71,7 @@ public class VistaLogin extends JFrame {
 			}
 		});
 
-		JLabel lblMensajeErrorNombre = new JLabel("Error, ingrese un nombre de usuario");
+		lblMensajeErrorNombre = new JLabel("Error, ingrese un nombre de usuario");
 		lblMensajeErrorNombre.setVisible(false);
 
 		JLabel lblMensajeErrorFondos = new JLabel("Error, ingrese los fondos correctamente");
@@ -226,12 +227,12 @@ public class VistaLogin extends JFrame {
 				boolean flag = false;
 
 
-				if (!controlador.validarTextoNombre(txtNombre.getText())) {
+				if (!VistaGrafica.getInstance().validarTextoNombre(txtNombre.getText())) {
 					lblMensajeErrorNombre.setVisible(true);
 					flag = true;
 				}
 
-				if (!controlador.validarTextoFondos(txtFondos.getText())) {
+				if (!VistaGrafica.getInstance().validarTextoFondos(txtFondos.getText())) {
 					lblMensajeErrorFondos.setVisible(true);
 					flag = true;
 				}
@@ -361,7 +362,6 @@ public class VistaLogin extends JFrame {
 		lblNombreJuegoPoker.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// blNombreJuegoPoker.setText("P O K E R");
 				lblNombreJuegoPoker.setText("P   KER");
 				lblImgCartasTitulo.setVisible(true);
 			}
@@ -400,5 +400,9 @@ public class VistaLogin extends JFrame {
 		this.lblBtnIngresar.setVisible(false);
 		this.lblErrorCantidadJugadoresMaxima.setVisible(true);
 		this.panelErrores.setVisible(true);
+	}
+	
+	public void mostrarErrorNombre() {
+		this.lblMensajeErrorNombre.setVisible(true);
 	}
 }

@@ -97,4 +97,6 @@ public interface IVista {
 
 	void pasarVistaMenu();
 
+	void notificarErrorNombre();
+
 }

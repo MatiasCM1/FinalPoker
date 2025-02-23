@@ -46,8 +46,34 @@ public class VistaGrafica implements IVista {
 	
 	public void agregarJugador() {
 		this.controlador.setJugadorActual(jugadorActual);
-		System.out.println("Mando a agregar el jugador actual");
 		this.controlador.agregarJugador(jugadorActual);
+	}
+	
+	public boolean validarTextoNombre(String textoNombre) {
+		if (textoNombre.equals("Ingrese su nombre de usuario") || textoNombre.trim().isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean validarTextoFondos(String textoFondos) {
+		if (!validarEnteroPositivo(textoFondos)) {
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean validarEnteroPositivo(String input) {
+		try {
+			Integer.parseInt(input);
+			if (Integer.parseInt(input) > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (NumberFormatException e) {
+			return false;
+		}
 	}
 
 	@Override
@@ -647,6 +673,11 @@ public class VistaGrafica implements IVista {
 			this.vistaLogin.setVisible(true);
 			this.vistaLogin.mostrarErrorPartidaComenzada();
 		}
+	}
+	
+	@Override
+	public void notificarErrorNombre() {
+		this.vistaLogin.mostrarErrorNombre();
 	}
 
 }

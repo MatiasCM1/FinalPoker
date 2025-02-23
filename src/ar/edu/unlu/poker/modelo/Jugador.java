@@ -19,10 +19,12 @@ public class Jugador implements Serializable {
 	private boolean enJuego;// Indica si el jugador sigue en juego o ha pasado
 	private boolean haApostado;
 	private boolean listoParaIniciar;
+	private int id;
 
 	public Jugador(String nombre) {
 		this.nombre = nombre;
 		this.apuesta = 0;
+		this.id = -1;
 		this.fondo = 1000;// Fondo inicial por el momento
 		this.listoParaIniciar = false;
 		this.setEnJuego(true);
@@ -31,6 +33,7 @@ public class Jugador implements Serializable {
 	public Jugador(String nombre, int fondo) {
 		this.nombre = nombre;
 		this.fondo = fondo;
+		this.id = -1;
 		this.apuesta = 0;
 		this.listoParaIniciar = false;
 		this.setEnJuego(true);
@@ -169,6 +172,18 @@ public class Jugador implements Serializable {
 
 	public void setListoParaIniciar(boolean listoParaIniciar) {
 		this.listoParaIniciar = listoParaIniciar;
+	}
+
+	public int getID() {
+		return id;
+	}
+
+	public void setID() {
+		this.id = IDGenerator.getInstance().getSiguienteID();
+	}
+	
+	public void setID(int id) {
+		this.id = id;
 	}
 
 }

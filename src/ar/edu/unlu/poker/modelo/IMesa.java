@@ -87,6 +87,8 @@ public interface IMesa extends IObservableRemoto {
 
 	int getfondosJugador(Jugador jugador) throws RemoteException;
 
-	String getUltimoJugadorIntentaAgregar() throws RemoteException;
+	String getNombreUltimoJugadorIntentaAgregar() throws RemoteException;
+
+	int getIDUltimoJugadorIntentaAgregar() throws RemoteException;
 
 }
