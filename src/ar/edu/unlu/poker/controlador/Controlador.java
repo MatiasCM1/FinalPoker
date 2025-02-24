@@ -28,7 +28,7 @@ public class Controlador implements IControladorRemoto {
 			
 			if (this.jugadorActual != null) {
 
-				if (ultimoJugadorAgregado()) {
+				if (esUltimoJugadorIntentoAgregar()) {
 					vista.pasarVistaMenu();
 				}
 			
@@ -39,21 +39,21 @@ public class Controlador implements IControladorRemoto {
 			
 		case ID_ESTABLECIDO:
 			if (this.jugadorActual != null) {
-				if (esJugadorRecienAgregado()) {
+				if (esJugadorRecienAgregadoSinIDEstablecido()) {
 					this.jugadorActual.setID(mesa.getIDUltimoJugadorIntentaAgregar());
 				}
 			}
 			break;
 		case NOMBRE_REPETIDO: 
 			if (this.jugadorActual != null) {
-				if (jugadorActualEsJugadorNombreRepetido()) {
+				if (esUltimoJugadorIntentoAgregar()) {
 					vista.notificarErrorNombre();
 				}
 			}
 			break;
 		case PARTIDA_COMENZADA:
 			if (this.jugadorActual != null) {
-				if (jugadorActualEsJugadorIntentoLogeo()) {
+				if (esUltimoJugadorIntentoAgregar()) {
 					vista.notificarPartidaComenzada();
 				}
 			}
@@ -293,21 +293,11 @@ public class Controlador implements IControladorRemoto {
 		return this.jugadorActual.getID() == mesa.getIDJugadorIntentaIncrementarFondos();
 	}
 
-	private boolean esJugadorRecienAgregado() throws RemoteException {
+	private boolean esJugadorRecienAgregadoSinIDEstablecido() throws RemoteException {
 		return this.jugadorActual.getNombre().equals(mesa.getNombreUltimoJugadorIntentaAgregar()) && this.jugadorActual.getID() == -1;
 	}
-
-	private boolean ultimoJugadorAgregado() throws RemoteException {
-		
-		return this.jugadorActual.getNombre().equals(mesa.getNombreUltimoJugadorIntentaAgregar());
-		
-	}
-
-	private boolean jugadorActualEsJugadorIntentoLogeo() throws RemoteException {
-		return this.jugadorActual.getNombre().equals(mesa.getNombreUltimoJugadorIntentaAgregar());
-	}
 	
-	private boolean jugadorActualEsJugadorNombreRepetido() throws RemoteException {
+	private boolean esUltimoJugadorIntentoAgregar() throws RemoteException {
 		return this.jugadorActual.getID() == mesa.getIDUltimoJugadorIntentaAgregar();
 	}
 
