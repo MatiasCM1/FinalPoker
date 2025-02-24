@@ -12,6 +12,7 @@ public class Dealer {
 
 	private IMesa mesa;
 	private Queue<Jugador> rondaApuestaAux;
+	private Mazo mazo;
 
 	public Dealer(IMesa mesa) {
 		this.mesa = mesa;
@@ -274,6 +275,19 @@ public class Dealer {
 			return false;
 		}).findFirst().orElse(null);
 
+	}
+
+	public void repartirCartasParaLaRonda(Queue<Jugador> jugadoresMesa) throws RemoteException {
+		this.mazo.repartirCartasRonda(jugadoresMesa);
+	}
+
+	public void resetearMazo() throws RemoteException {
+		mazo = new Mazo();
+		mazo.setearCartasRonda();
+	}
+
+	public void repartirCartasDespuesDelDescarte(Queue<Jugador> rondaApuesta) {
+		this.mazo.repartirCartasPostDescarte(rondaApuesta);
 	}
 
 }

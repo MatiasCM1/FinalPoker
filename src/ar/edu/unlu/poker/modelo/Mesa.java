@@ -21,7 +21,7 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	private int apuestaMayor;
 	private Jugador jugadorMano;
 	private Jugador jugadorTurno;
-	private Mazo mazo;
+	//private Mazo mazo;
 	private int pozo;
 	private boolean primeraRonda;
 	private Jugador jugadorQuePaso = new Jugador("");
@@ -99,7 +99,7 @@ public class Mesa extends ObservableRemoto implements IMesa {
 
 		this.notificarObservadores(Informe.JUGADOR_MANO);
 
-		mazo.repartirCartasRonda(this.jugadoresMesa);
+		dealer.repartirCartasParaLaRonda(this.jugadoresMesa);
 
 		this.notificarObservadores(Informe.CARTAS_REPARTIDAS);
 
@@ -148,8 +148,7 @@ public class Mesa extends ObservableRemoto implements IMesa {
 
 		this.apuestaMayor = 0;
 
-		mazo = new Mazo();
-		mazo.setearCartasRonda();
+		dealer.resetearMazo();
 
 	}
 
@@ -441,7 +440,7 @@ public class Mesa extends ObservableRemoto implements IMesa {
 		}
 
 		// REPONER CON NUEVAS CARTAS
-		this.mazo.repartirCartasPostDescarte(this.rondaApuesta);
+		this.dealer.repartirCartasDespuesDelDescarte(this.rondaApuesta);
 
 	}
 
