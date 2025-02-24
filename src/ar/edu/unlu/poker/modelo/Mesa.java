@@ -21,7 +21,6 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	private int apuestaMayor;
 	private Jugador jugadorMano;
 	private Jugador jugadorTurno;
-	//private Mazo mazo;
 	private int pozo;
 	private boolean primeraRonda;
 	private Jugador jugadorQuePaso = new Jugador("");
