@@ -48,27 +48,31 @@ public class Mesa extends ObservableRemoto implements IMesa {
 
 	@Override
 	public void agregarJugador(Jugador jugador) throws RemoteException {
-		/*if (this.jugadoresMesa.size() < 7) {
-			this.jugadoresMesa.add(jugador);
-			this.notificarObservadores(Informe.JUGADOR_NUEVO_AGREGADO);
-		} else {
-			this.notificarObservadores(Informe.CANT_JUGADORES_EXCEDIDOS);
-		}*/
+
 		jugador.setID();
 		this.ultimoJugadorIntentaAgregar =  new Jugador("");
 		this.ultimoJugadorIntentaAgregar = jugador;
 		this.notificarObservadores(Informe.ID_ESTABLECIDO);
 		
-		if (!this.comenzoPartida) {
-			if (!this.nombreRepetido(jugador)) {
-				this.jugadoresMesa.add(jugador);
-				this.notificarObservadores(Informe.JUGADOR_NUEVO_AGREGADO);
+		if (this.cantidadJugadoresExcedidos()) {
+			if (!this.comenzoPartida) {
+				if (!this.nombreRepetido(jugador)) {
+					this.jugadoresMesa.add(jugador);
+					this.notificarObservadores(Informe.JUGADOR_NUEVO_AGREGADO);
+				} else {
+					this.notificarObservadores(Informe.NOMBRE_REPETIDO);
+				}
 			} else {
-				this.notificarObservadores(Informe.NOMBRE_REPETIDO);
+				this.notificarObservadores(Informe.PARTIDA_COMENZADA);
 			}
 		} else {
-			this.notificarObservadores(Informe.PARTIDA_COMENZADA);
+			this.notificarObservadores(Informe.CANT_JUGADORES_EXCEDIDOS);
 		}
+		
+	}
+	
+	private boolean cantidadJugadoresExcedidos() {
+		return this.jugadoresMesa.size() < 7;
 	}
 	
 	private boolean nombreRepetido(Jugador jugador) {

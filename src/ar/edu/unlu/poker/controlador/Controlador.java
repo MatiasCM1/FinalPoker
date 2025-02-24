@@ -79,9 +79,9 @@ public class Controlador implements IControladorRemoto {
 			}
 			break;
 		case CANT_JUGADORES_EXCEDIDOS:
-			if (!this.estoyEnVistaLogin) {
-				vista.informarCantJugadoresExcedidos();
-			}
+				if (esUltimoJugadorIntentoAgregar()) {
+					vista.informarCantJugadoresExcedidos();
+				}
 			break;
 		case DEVOLVER_GANADOR:
 			if (!this.estoyEnVistaLogin) {
@@ -366,7 +366,7 @@ public class Controlador implements IControladorRemoto {
 	}
 
 	public boolean agregarJugador(Jugador j) {
-		if (this.getJugadoresMesa().size() < 7) {
+		//if (this.getJugadoresMesa().size() < 7) {
 			try {
 				mesa.agregarJugador(j);
 				return true;
@@ -374,10 +374,10 @@ public class Controlador implements IControladorRemoto {
 				e.printStackTrace();
 				return false;
 			}
-		} else {
-			vista.informarCantJugadoresExcedidos();
-			return false;
-		}
+		//} else {
+			//vista.informarCantJugadoresExcedidos();
+			//return false;
+		//}
 	}
 
 	public List<Jugador> getJugadoresMesa() {
