@@ -356,11 +356,6 @@ public class VistaGrafica implements IVista {
 	}
 
 	@Override
-	public void notificarErrorIngreseUnEnteroAgregandoNuevosFondos() {
-		this.vistaMenuPrincipal.mostrarErrorNumeroInvalido();
-	}
-
-	@Override
 	public void notificarErrorMaximaLongitudFondos() {
 		this.vistaMenuPrincipal.mostrarErrorMaximaLogitudNumeroFondos();
 	}

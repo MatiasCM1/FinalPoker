@@ -91,4 +91,6 @@ public interface IMesa extends IObservableRemoto {
 
 	int getIDUltimoJugadorIntentaAgregar() throws RemoteException;
 
+	int getIDJugadorIntentaIncrementarFondos() throws RemoteException;
+
 }

@@ -73,8 +73,6 @@ public interface IVista {
 
 	void informarFondosInsuficientesSegundaRonda();
 
-	void notificarErrorIngreseUnEnteroAgregandoNuevosFondos();
-
 	void jugadorPasaQuedaFuera();
 
 	void mostrarFondosInsuficientesParaComenzar();

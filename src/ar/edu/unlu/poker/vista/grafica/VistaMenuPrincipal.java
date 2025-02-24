@@ -255,7 +255,11 @@ public class VistaMenuPrincipal extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				panelBotones.setVisible(true);
 				panelIngresoNuevosFondos.setVisible(false);
-				VistaGrafica.getInstance().agregarNuevosFondos(txtNuevosFondos.getText());
+				if (VistaGrafica.getInstance().validarEnteroPositivo(txtNuevosFondos.getText())) {
+					VistaGrafica.getInstance().agregarNuevosFondos(txtNuevosFondos.getText());
+				} else {
+					mostrarErrorNumeroInvalido();
+				}
 			}
 
 			@Override

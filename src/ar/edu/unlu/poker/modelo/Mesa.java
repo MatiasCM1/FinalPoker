@@ -28,6 +28,7 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	private boolean comenzoPartida = false;
 	private Dealer dealer;
 	private Jugador ultimoJugadorIntentaAgregar;
+	private Jugador jugadorIncrementoFondos;
 
 	static {
 		valorCarta.put("2", 2);
@@ -644,12 +645,21 @@ public class Mesa extends ObservableRemoto implements IMesa {
 
 	@Override
 	public void agregarNuevosFondos(Jugador jugador, int fondoAgregar) throws RemoteException {
+		this.jugadorIncrementoFondos = jugador;
 		for (Jugador j : this.jugadoresMesa) {
 			if (j.equals(jugador)) {
-				j.agregarFondos(fondoAgregar);
+				if (validarLongitudNumero(j.getFondo() + fondoAgregar)) {
+					j.agregarFondos(fondoAgregar);
+					this.notificarObservadores(Informe.SE_AGREGAN_FONDOS);
+				} else {
+					this.notificarObservadores(Informe.LONGITUD_MAXIMA_ALCANZADA_FONDOS);
+				}
 			}
 		}
-		this.notificarObservadores(Informe.SE_AGREGAN_FONDOS);
+	}
+	
+	private boolean validarLongitudNumero(int fondos) {
+		return ((String.valueOf(fondos)).length() <= 6);
 	}
 
 	public int getApuestaJugador(Jugador jugador) throws RemoteException {
@@ -813,6 +823,11 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	@Override 
 	public int getIDUltimoJugadorIntentaAgregar() throws RemoteException{
 		return ultimoJugadorIntentaAgregar.getID();
+	}
+	
+	@Override
+	public int getIDJugadorIntentaIncrementarFondos() throws RemoteException{
+		return this.jugadorIncrementoFondos.getID();
 	}
 
 }

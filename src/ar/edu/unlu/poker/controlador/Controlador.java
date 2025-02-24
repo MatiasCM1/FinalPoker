@@ -38,18 +38,24 @@ public class Controlador implements IControladorRemoto {
 			break;
 			
 		case ID_ESTABLECIDO:
-			if (esJugadorRecienAgregado()) {
-				this.jugadorActual.setID(mesa.getIDUltimoJugadorIntentaAgregar());
+			if (this.jugadorActual != null) {
+				if (esJugadorRecienAgregado()) {
+					this.jugadorActual.setID(mesa.getIDUltimoJugadorIntentaAgregar());
+				}
 			}
 			break;
 		case NOMBRE_REPETIDO: 
-			if (jugadorActualEsJugadorNombreRepetido()) {
-				vista.notificarErrorNombre();
+			if (this.jugadorActual != null) {
+				if (jugadorActualEsJugadorNombreRepetido()) {
+					vista.notificarErrorNombre();
+				}
 			}
 			break;
 		case PARTIDA_COMENZADA:
-			if (jugadorActualEsJugadorIntentoLogeo()) {
-				vista.notificarPartidaComenzada();
+			if (this.jugadorActual != null) {
+				if (jugadorActualEsJugadorIntentoLogeo()) {
+					vista.notificarPartidaComenzada();
+				}
 			}
 			break;
 		case ESTABLECER_NOMBRE_VENTANA_JUGADOR:
@@ -272,8 +278,19 @@ public class Controlador implements IControladorRemoto {
 				vista.actualizarTablaJugadores(this.getJugadoresMesa());
 			}
 			break;
+		case LONGITUD_MAXIMA_ALCANZADA_FONDOS:
+			if (!this.estoyEnVistaLogin) {
+				if (esElJugadorQueIntentoAgregarFondos()) {
+					vista.notificarErrorMaximaLongitudFondos();
+				}
+			}
+			break;
 		}
 
+	}
+	
+	private boolean esElJugadorQueIntentoAgregarFondos() throws RemoteException {
+		return this.jugadorActual.getID() == mesa.getIDJugadorIntentaIncrementarFondos();
 	}
 
 	private boolean esJugadorRecienAgregado() throws RemoteException {
@@ -660,67 +677,29 @@ public class Controlador implements IControladorRemoto {
 	}
 
 	public void incrementarFondos(Jugador jugador, String fondosAIncrementar) {
-		if (this.validarEnteroPositivo(fondosAIncrementar)) {
-			int fondoAgregar = Integer.parseInt(fondosAIncrementar);
-			try {
-				if (validarLongitudNumero(mesa.getfondosJugador(jugador) + fondoAgregar)) {
-					try {
-						mesa.agregarNuevosFondos(jugador, fondoAgregar);
-					} catch (RemoteException e) {
-						e.printStackTrace();
-					}
-				} else {
-					vista.notificarErrorMaximaLongitudFondos();
-				}
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		} else {
-			vista.notificarErrorIngreseUnEntero();
+		int fondoAgregar = Integer.parseInt(fondosAIncrementar);
+		try {
+			mesa.agregarNuevosFondos(jugador, fondoAgregar);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	public void incrementarFondos2(Jugador jugador, String fondosAIncrementar) {
-		if (this.validarEnteroPositivo(fondosAIncrementar)) {
-			int fondoAgregar = Integer.parseInt(fondosAIncrementar);
-			try {
-				if (validarLongitudNumero(mesa.getfondosJugador(jugador) + fondoAgregar)) {
-					try {
-						mesa.agregarNuevosFondos(jugador, fondoAgregar);
-					} catch (RemoteException e) {
-						e.printStackTrace();
-					}
-				} else {
-					vista.notificarErrorMaximaLongitudFondos();
-				}
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		} else {
-			vista.notificarErrorIngreseUnEnteroAgregandoNuevosFondos();
+		int fondoAgregar = Integer.parseInt(fondosAIncrementar);
+		try {
+			mesa.agregarNuevosFondos(jugador, fondoAgregar);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
-	private boolean validarLongitudNumero(int fondosAIncrementar) {
-		return ((String.valueOf(fondosAIncrementar)).length() <= 6);
-	}
+	
 
 	// ---------------------------------
 
-	/*public boolean validarTextoNombre(String textoNombre) {
-		if (textoNombre.equals("Ingrese su nombre de usuario") || textoNombre.trim().isEmpty()
-				|| !validarNombreNoRepetido(textoNombre)) {
-			return false;
-		}
-		return true;
-	}
-
-	public boolean validarTextoFondos(String textoFondos) {
-		if (!validarEnteroPositivo(textoFondos)) {
-			return false;
-		}
-		return true;
-	}*/
 
 	public void iniciarSiEstaListo(Jugador jugadorActual) {
 

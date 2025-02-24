@@ -290,8 +290,12 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	}
 
 	private void agregandoFondos(String input) {
-		controlador.incrementarFondos(this.jugadorActual, input);
-		this.notificarFondosAgregados();
+		if (this.validarEnteroPositivo(input)) {
+			controlador.incrementarFondos(this.jugadorActual, input);
+			this.notificarFondosAgregados();
+		} else {
+			this.notificarErrorIngreseUnEntero();
+		}
 	}
 
 	private void mostrarOpcionesMenu() {
@@ -419,8 +423,13 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	}
 
 	private void agregandoFondos2(String input) {
-		controlador.incrementarFondos2(this.jugadorActual, input);
-		this.notificarFondosAgregados2();
+		System.out.println("Incremento fondos 2");
+		if (this.validarEnteroPositivo(input)) {
+			controlador.incrementarFondos2(this.jugadorActual, input);
+			this.notificarFondosAgregados2();
+		} else {
+			this.notificarErrorIngreseUnEntero();
+		}
 	}
 
 	@Override
@@ -845,7 +854,6 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		areaSalida.append("Error, fondos insuficientes para realzar la apuesta.\n");
 	}
 
-	@Override
 	public void notificarErrorIngreseUnEnteroAgregandoNuevosFondos() {
 		areaSalida.append("¡Error, ingrese un numero entero!.\n");
 	}
