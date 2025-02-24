@@ -34,7 +34,7 @@ public class VistaGrafica implements IVista {
 	@Override
 	public void iniciar() {
 
-		this.vistaLogin = new VistaLogin(this.controlador);
+		this.vistaLogin = new VistaLogin();
 
 		this.vistaLogin.setVisible(true);
 

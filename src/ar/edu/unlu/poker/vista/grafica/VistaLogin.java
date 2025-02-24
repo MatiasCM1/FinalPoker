@@ -31,7 +31,6 @@ public class VistaLogin extends JFrame {
 	private JTextField txtFondos;
 	private int xMouse;
 	private int yMouse;
-	private Controlador controlador;
 	private JPanel panelErrores;
 	private JButton btnIngresar;
 	private JLabel lblBtnIngresar;
@@ -39,7 +38,7 @@ public class VistaLogin extends JFrame {
 	private JLabel lblErrorCantidadJugadoresMaxima;
 	private JLabel lblMensajeErrorNombre;
 
-	public VistaLogin(Controlador controlador) {
+	public VistaLogin() {
 		setUndecorated(true);
 		setLocationByPlatform(true);
 		setResizable(false);
@@ -47,8 +46,6 @@ public class VistaLogin extends JFrame {
 		setBounds(100, 100, 1121, 612);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		this.setControlador(controlador);
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -382,10 +379,6 @@ public class VistaLogin extends JFrame {
 		lblImagenFondoVerde.setIcon(new ImageIcon(getClass().getResource("/FondoVerdeInicio.jpg")));
 		lblImagenFondoVerde.setBounds(0, 0, 1121, 612);
 		contentPane.add(lblImagenFondoVerde);
-	}
-
-	private void setControlador(Controlador controlador2) {
-		this.controlador = controlador2;
 	}
 
 	public void mostrarErrorPartidaComenzada() {
