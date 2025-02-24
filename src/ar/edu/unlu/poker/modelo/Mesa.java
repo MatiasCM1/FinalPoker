@@ -758,17 +758,18 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	public void marcarComoListoParaIniciar(Jugador jugador) throws RemoteException {
 		if (this.comprobarJugadoresSuficientes()) {
 			if (this.tieneFondosSuficientesParaIniciarPartida(jugador)) {
-				for (Jugador j : this.jugadoresMesa) {
-					if (j.equals(jugador)) {
-						j.setListoParaIniciar(true);
-					}
-				}
+				jugadoresMesa.stream().filter(j -> j.equals(jugador)).findFirst().ifPresent(j -> j.setListoParaIniciar(true));
 			} else {
 				this.notificarObservadores(Informe.FONDOS_INSUFICIENTES_COMENZAR_PARTIDA);
 			}
 		} else {
 			this.notificarObservadores(Informe.CANT_JUGADORES_INSUFICIENTES);
 		}
+	}
+	
+	@Override
+	public boolean getTodosLosJugadoresEstanListosParaIniciar() throws RemoteException{
+		return jugadoresMesa.stream().allMatch(Jugador::getListoParaIniciar);
 	}
 	
 	private boolean comprobarJugadoresSuficientes() {

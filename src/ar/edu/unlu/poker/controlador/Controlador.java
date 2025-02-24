@@ -701,26 +701,31 @@ public class Controlador implements IControladorRemoto {
 
 
 	public void iniciarSiEstaListo(Jugador jugadorActual) {
+		try {
+			mesa.marcarComoListoParaIniciar(jugadorActual);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 
-				try {
-					mesa.marcarComoListoParaIniciar(jugadorActual);
-				} catch (RemoteException e) {
-					e.printStackTrace();
-				}
+		vista.limpiarNotificaciones();
 
-				vista.limpiarNotificaciones();
-
-				if (todosListo()) {
-					try {
-						if (!mesa.getPrimeraRonda()) {
-							this.iniciarGamePostPrimeraRonda();
-						} else {
-							this.iniciarGame();
-						}
-					} catch (RemoteException e) {
-						e.printStackTrace();
-					}
-				}
+		if (todosListo()) {
+			if (!this.esPrimeraRonda()) {
+				this.iniciarGamePostPrimeraRonda();
+			} else {
+				this.iniciarGame();
+			}
+		}
+	}
+	
+	private boolean esPrimeraRonda() {
+		try {
+			return mesa.getPrimeraRonda();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public void iniciarSiEstaListo() {
@@ -797,13 +802,15 @@ public class Controlador implements IControladorRemoto {
 	}
 
 	private boolean todosListo() {
-		boolean flag = true;
-		for (Jugador j : this.getJugadoresMesa()) {
-			if (!j.getListoParaIniciar()) {
-				flag = false;
-			}
+		
+		try {
+			return mesa.getTodosLosJugadoresEstanListosParaIniciar();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return flag;
+		return false;
+		
 	}
 
 	public boolean verificarCantidadDeJugadores() {
