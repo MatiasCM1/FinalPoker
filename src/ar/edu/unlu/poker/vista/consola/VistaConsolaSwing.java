@@ -705,6 +705,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	@Override
 	public void informarJugadoresInsuficientes() {
 		areaSalida.append("La cantidad de jugadores es insuficiente para iniciar el juego.\n");
+		mostrarOpcionesMenu();
 	}
 
 	@Override

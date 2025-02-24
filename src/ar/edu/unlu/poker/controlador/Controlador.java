@@ -701,13 +701,14 @@ public class Controlador implements IControladorRemoto {
 
 
 	public void iniciarSiEstaListo(Jugador jugadorActual) {
+		
+		vista.limpiarNotificaciones();
+		
 		try {
 			mesa.marcarComoListoParaIniciar(jugadorActual);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-
-		vista.limpiarNotificaciones();
 
 		if (todosListo()) {
 			if (!this.esPrimeraRonda()) {

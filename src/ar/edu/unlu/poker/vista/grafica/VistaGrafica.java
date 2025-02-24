@@ -481,7 +481,9 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void limpiarNotificaciones() {
-		this.vistaJuegoCartas.limpiarPantalla();
+		if (this.vistaJuegoCartas != null) {
+			this.vistaJuegoCartas.limpiarPantalla();
+		}
 	}
 
 	@Override
@@ -494,8 +496,7 @@ public class VistaGrafica implements IVista {
 
 	@Override
 	public void notificarEsperarDescartes(String nombreJugadorTurnoDescarte) {
-		this.vistaJuegoCartas
-				.escribirNotificacion("Esperando a que " + nombreJugadorTurnoDescarte + " realice los descartes");
+		this.vistaJuegoCartas.escribirNotificacion("Esperando a que " + nombreJugadorTurnoDescarte + " realice los descartes");
 	}
 
 	public void cartaADescartarSeleccionada(int posicionCarta) {
