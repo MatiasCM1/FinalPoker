@@ -756,12 +756,32 @@ public class Mesa extends ObservableRemoto implements IMesa {
 
 	@Override
 	public void marcarComoListoParaIniciar(Jugador jugador) throws RemoteException {
-		for (Jugador j : this.jugadoresMesa) {
-			if (j.equals(jugador)) {
-				j.setListoParaIniciar(true);
+		if (this.comprobarJugadoresSuficientes()) {
+			if (this.tieneFondosSuficientesParaIniciarPartida(jugador)) {
+				for (Jugador j : this.jugadoresMesa) {
+					if (j.equals(jugador)) {
+						j.setListoParaIniciar(true);
+					}
+				}
+			} else {
+				this.notificarObservadores(Informe.FONDOS_INSUFICIENTES_COMENZAR_PARTIDA);
 			}
+		} else {
+			this.notificarObservadores(Informe.CANT_JUGADORES_INSUFICIENTES);
 		}
-
+	}
+	
+	private boolean comprobarJugadoresSuficientes() {
+		return this.jugadoresMesa.size() > 1;
+	}
+	
+	private boolean tieneFondosSuficientesParaIniciarPartida(Jugador jugador) {
+		return jugadoresMesa.stream().anyMatch(j -> j.getNombre().equals(jugador.getNombre()) && j.getFondo() >= 1);
+	}
+	
+	@Override
+	public boolean esJugadorConFondosInsuficientesParaComenzar(Jugador jugador) throws RemoteException {
+		return !(this.tieneFondosSuficientesParaIniciarPartida(jugador));
 	}
 
 	@Override

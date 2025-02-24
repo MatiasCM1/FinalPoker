@@ -199,6 +199,8 @@ public class VistaGrafica implements IVista {
 			this.vistaMenuPrincipal.setVisible(true);
 			if (this.vistaJuegoCartas != null) {
 				this.vistaJuegoCartas.setVisible(false);
+				this.vistaJuegoCartas = new VistaJuegoCartas();
+				this.vistaJuegoCartas.setVisible(false);
 			}
 			this.vistaMenuPrincipal.mostrarErrorFondosInsuficientesParaComenzar();
 		}

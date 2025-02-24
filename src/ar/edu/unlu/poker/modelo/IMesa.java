@@ -93,4 +93,6 @@ public interface IMesa extends IObservableRemoto {
 
 	int getIDJugadorIntentaIncrementarFondos() throws RemoteException;
 
+	boolean esJugadorConFondosInsuficientesParaComenzar(Jugador jugador) throws RemoteException;
+
 }

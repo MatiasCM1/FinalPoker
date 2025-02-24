@@ -75,7 +75,7 @@ public class Controlador implements IControladorRemoto {
 			break;
 		case CANT_JUGADORES_INSUFICIENTES:
 			if (!this.estoyEnVistaLogin) {
-				vista.mostrarErrorJugadoresInsuficientes();
+				vista.informarJugadoresInsuficientes();
 			}
 			break;
 		case CANT_JUGADORES_EXCEDIDOS:
@@ -285,8 +285,26 @@ public class Controlador implements IControladorRemoto {
 				}
 			}
 			break;
+		case FONDOS_INSUFICIENTES_COMENZAR_PARTIDA:
+			if (!this.estoyEnVistaLogin) {
+				if (this.jugadorConFondosInsuficientesParaComenzar()) {
+					vista.actualizarTablaJugadores(getJugadoresMesa());
+					vista.mostrarFondosInsuficientesParaComenzar();
+				}
+			}
+			break;
 		}
 
+	}
+	
+	private boolean jugadorConFondosInsuficientesParaComenzar() {
+		try {
+			return mesa.esJugadorConFondosInsuficientesParaComenzar(this.jugadorActual);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return !estoyEnVistaLogin;
 	}
 	
 	private boolean esElJugadorQueIntentoAgregarFondos() throws RemoteException {
@@ -648,15 +666,6 @@ public class Controlador implements IControladorRemoto {
 		}
 	}
 
-	/*public boolean validarNombreNoRepetido(String input) {
-		for (Jugador j : this.getJugadoresMesa()) {
-			if (j.getNombre().equals(input)) {
-				return false;
-			}
-		}
-		return true;
-	}*/
-
 	public int getFondosJugador(Jugador jugador) {
 		for (Jugador j : this.getJugadoresMesa()) {
 			if (j.equals(jugador)) {
@@ -693,8 +702,6 @@ public class Controlador implements IControladorRemoto {
 
 	public void iniciarSiEstaListo(Jugador jugadorActual) {
 
-		if (this.comprobarJugadoresSuficientes()) {
-			if (this.tieneFondosSuficientes(jugadorActual)) {
 				try {
 					mesa.marcarComoListoParaIniciar(jugadorActual);
 				} catch (RemoteException e) {
@@ -714,12 +721,6 @@ public class Controlador implements IControladorRemoto {
 						e.printStackTrace();
 					}
 				}
-			} else {
-				vista.mostrarFondosInsuficientesParaComenzar();
-			}
-		} else {
-			vista.informarJugadoresInsuficientes();
-		}
 	}
 
 	public void iniciarSiEstaListo() {
@@ -804,16 +805,6 @@ public class Controlador implements IControladorRemoto {
 		}
 		return flag;
 	}
-
-	/*public boolean comenzoPartida() {
-		try {
-			return mesa.getComenzoPartida();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}*/
 
 	public boolean verificarCantidadDeJugadores() {
 		if (this.getJugadoresMesa().size() > 1) {
