@@ -503,8 +503,7 @@ public class Controlador implements IControladorRemoto {
 
 	public void realizarLasApuestas(Jugador jugador) {
 		try {
-			if (this.jugadorManoEnvita(jugador, mesa.getApuestaMayor())) {// OBLIGA AL JUGADOR MANO A REALIZAR UNA
-																			// APUESTA, IMPIDIENDO QUE FICHE O PASE
+			if (this.jugadorManoEnvita(jugador, mesa.getApuestaMayor())) {// OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA, IMPIDIENDO QUE FICHE O PASE
 				mesa.realizarApuesta(jugador, mesa.getApuestaMayor());
 			} else {
 				vista.notificarJugadorManoDebeApostar();
@@ -517,7 +516,7 @@ public class Controlador implements IControladorRemoto {
 
 	public void realizarLosPases(Jugador jugador) {
 		try {
-			if (!jugador.getNombre().equals(mesa.getJugadorMano())) {
+			if (!esJugadorMano(jugador)) {
 				mesa.jugadorPasa(jugador);
 			} else {
 				vista.notificarJugadorManoDebeApostar();
@@ -527,6 +526,16 @@ public class Controlador implements IControladorRemoto {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private boolean esJugadorMano(Jugador jugador) {
+		try {
+			return jugador.getNombre().equals(mesa.getJugadorMano());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public void realizarFichaPostEnvite(Jugador jugador) {

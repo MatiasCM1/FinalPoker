@@ -800,7 +800,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	@Override
 	public void notificarErrorIngreseUnEntero() {
-		areaSalida.append("¡Error, ingrese un numero entero!.\n");
+		areaSalida.append("¡Error, ingrese un numero entero (> 0)!.\n");
 		if (this.estadoFlujo.equals(Estados.ESPERANDO_ENVITE)) {
 			mostrarMenuApuestas();
 		} else {
