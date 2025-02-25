@@ -305,7 +305,11 @@ public class VistaGrafica implements IVista {
 	}
 
 	public void realizarEnvite(String apuesta) {
-		controlador.realizarLasApuestas(jugadorActual, apuesta);
+		if (this.validarEnteroPositivo(apuesta)) {
+			controlador.realizarLasApuestas(jugadorActual, apuesta);
+		} else {
+			this.notificarErrorIngreseUnEntero();
+		}
 	}
 
 	public void realizarPase() {

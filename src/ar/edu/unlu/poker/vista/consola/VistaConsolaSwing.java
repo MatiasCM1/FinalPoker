@@ -466,21 +466,25 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	}
 
 	private void realizarPase() {
-		if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno().getNombre())) {
+		if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno())) {
 			controlador.realizarLosPases(this.jugadorActual);
 			this.esperandoEntrada = false;
 		}
 	}
 
 	public void realizarEnvite(String input) {
-		if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno().getNombre())) {
-			controlador.realizarLasApuestas(this.jugadorActual, input);
-			this.esperandoEntrada = false;
+		if (this.validarEnteroPositivo(input)) {
+			if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno())) {
+				controlador.realizarLasApuestas(this.jugadorActual, input);
+				this.esperandoEntrada = false;
+			}
+		} else {
+			this.notificarErrorIngreseUnEntero();
 		}
 	}
 
 	private void realizarFiche() {
-		if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno().getNombre())) {
+		if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno())) {
 			controlador.realizarLasApuestas(this.jugadorActual);
 			this.esperandoEntrada = false;
 		}
@@ -551,7 +555,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	}
 
 	private void realizarPaseSegundaRonda() {
-		if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno().getNombre())) {
+		if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno())) {
 			controlador.realizarLosPasesSegundaRonda(this.jugadorActual);
 			this.esperandoEntrada = false;
 		}
@@ -563,7 +567,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	}
 
 	private void realizarFicheSegundaRonda() {
-		if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno().getNombre())) {
+		if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno())) {
 			controlador.realizarLasApuestasSegundaRonda(this.jugadorActual);
 			this.esperandoEntrada = false;
 		}
@@ -709,7 +713,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 
 	@Override
 	public void informarFondosInsuficientes() {
-		if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno().getNombre())) {
+		if (this.jugadorActual.getNombre().equals(controlador.getJugadorTurno())) {
 			areaSalida.append("Fondos insuficientes para realizar la apuesta.\n");
 		}
 	}

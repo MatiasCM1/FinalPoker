@@ -157,51 +157,59 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	@Override
 	public void realizarApuesta(Jugador jugador, int apuesta) throws RemoteException {
 
-		if (esJugadorTurno(jugador)) {
+		if (this.esApuestaSuficiente(apuesta)) {
+			if (esJugadorTurno(jugador)) {
+					
+				if (comprobarFondos(jugador, apuesta)) {
+					this.restarFondosAgregarApuestaJugador(this.jugadorTurno, apuesta);
+					if (apuesta > this.apuestaMayor) {
+						this.apuestaMayor = apuesta;
+					}
 
-			if (comprobarFondos(jugador, apuesta)) {
-				this.restarFondosAgregarApuestaJugador(this.jugadorTurno, apuesta);
-				if (apuesta > this.apuestaMayor) {
-					this.apuestaMayor = apuesta;
-				}
+					// AGREGO EL VALOR DE LA APUESTA AL POZO
+					this.agregarAlPozo(apuesta);
 
-				// AGREGO EL VALOR DE LA APUESTA AL POZO
-				this.agregarAlPozo(apuesta);
+					// TENGO QUE HACER ESTO, PQ EL JUGADOR QUE VIENE DE LA VISTA NO TIENE LAS
+					// CARTAS, ENTONCES SE LAS TENGO QUE SETEAR
+					jugador.setListaCartas(buscarCartasCorrespondeJugador(jugador));
+				
+					this.rondaApuesta.add(jugador);
+					this.mapa.put(jugador, apuesta);
 
-				// TENGO QUE HACER ESTO, PQ EL JUGADOR QUE VIENE DE LA VISTA NO TIENE LAS
-				// CARTAS, ENTONCES SE LAS TENGO QUE SETEAR
-				jugador.setListaCartas(buscarCartasCorrespondeJugador(jugador));
+					this.notificarObservadores(Informe.APUESTA_REALIZADA);
+					this.jugadorTurno = this.jugadoresMesa.poll();
+					this.jugadoresMesa.add(this.jugadorTurno);
 
-				this.rondaApuesta.add(jugador);
-				this.mapa.put(jugador, apuesta);
-
-				this.notificarObservadores(Informe.APUESTA_REALIZADA);
-				this.jugadorTurno = this.jugadoresMesa.poll();
-				this.jugadoresMesa.add(this.jugadorTurno);
-
-				if (this.comprobarFinalVueltaApuesta(this.jugadorTurno)) {
-					if (!comprobarIgualdad()) {
-						this.igualarApuestas(jugador);
-					} else {
-						this.jugadorTurno = this.rondaApuesta.poll();
-						this.rondaApuestaAux.add(this.jugadorTurno);
-						this.rondaApuesta.add(this.jugadorTurno);
-						if (this.rondaApuesta.size() == 1) {
-							this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA);
+					if (this.comprobarFinalVueltaApuesta(this.jugadorTurno)) {
+						if (!comprobarIgualdad()) {
+							this.igualarApuestas(jugador);
 						} else {
-							this.notificarObservadores(Informe.TURNO_DESCARTE); // LLamo al menu de descarte
-						}
+							this.jugadorTurno = this.rondaApuesta.poll();
+							this.rondaApuestaAux.add(this.jugadorTurno);
+							this.rondaApuesta.add(this.jugadorTurno);
+							if (this.rondaApuesta.size() == 1) {
+								this.notificarObservadores(Informe.RONDA_APUESTAS_TERMINADA);
+							} else {
+								this.notificarObservadores(Informe.TURNO_DESCARTE); // LLamo al menu de descarte
+							}
 
+						}
+					} else {
+						this.notificarObservadores(Informe.TURNO_APUESTA_JUGADOR);
 					}
 				} else {
+					this.notificarObservadores(Informe.FONDO_INSUFICIENTE);
 					this.notificarObservadores(Informe.TURNO_APUESTA_JUGADOR);
 				}
-			} else {
-				this.notificarObservadores(Informe.FONDO_INSUFICIENTE);
-				this.notificarObservadores(Informe.TURNO_APUESTA_JUGADOR);
 			}
+		} else {
+			this.notificarObservadores(Informe.APUESTA_INSUFICIENTE);
 		}
 
+	}
+	
+	private boolean esApuestaSuficiente(int apuesta) throws RemoteException {
+		return apuesta >= this.getApuestaMayor();
 	}
 
 	private boolean comprobarFondos(Jugador jugador, int apuesta) {
@@ -697,8 +705,8 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	}
 
 	@Override
-	public Jugador getJugadorTurno() throws RemoteException {
-		return jugadorTurno;
+	public String getJugadorTurno() throws RemoteException {
+		return jugadorTurno.getNombre();
 	}
 
 	@Override
@@ -861,6 +869,11 @@ public class Mesa extends ObservableRemoto implements IMesa {
 
 	public Jugador obtenerJugadorMano() throws RemoteException{
 		return this.jugadorMano;
+	}
+	
+	@Override
+	public boolean comprobarJugadorSigueEnJuego(Jugador jugador) throws RemoteException{
+		return jugadoresMesa.stream().filter(j -> j.getNombre().equals(jugador.getNombre())).map(Jugador::isEnJuego).findFirst().orElse(false);
 	}
 
 }
