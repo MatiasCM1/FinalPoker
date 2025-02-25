@@ -1,6 +1,7 @@
 package ar.edu.unlu.poker.modelo;
 
 import java.rmi.RemoteException;
+import java.util.LinkedList;
 import java.util.List;
 
 import ar.edu.unlu.rmimvc.observer.IObservableRemoto;
@@ -19,7 +20,7 @@ public interface IMesa extends IObservableRemoto {
 
 	Jugador devolverGanador() throws RemoteException;
 
-	Jugador getJugadorMano() throws RemoteException;
+	String getJugadorMano() throws RemoteException;
 
 	void sacarJugador(Jugador jugador) throws RemoteException;
 
@@ -96,5 +97,7 @@ public interface IMesa extends IObservableRemoto {
 	boolean esJugadorConFondosInsuficientesParaComenzar(Jugador jugador) throws RemoteException;
 
 	boolean getTodosLosJugadoresEstanListosParaIniciar() throws RemoteException;
+
+	LinkedList<Carta> getCartasJugador(Jugador jugadorActual) throws RemoteException;
 
 }

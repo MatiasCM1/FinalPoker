@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -321,24 +322,15 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 	}
 
 	@Override
-	public void mostrarJugadorMano(Jugador jugador) {
-		areaSalida.append("Jugador en mano: " + jugador.getNombre() + "\n");
+	public void mostrarJugadorMano(String jugador) {
+		areaSalida.append("Jugador en mano: " + jugador + "\n");
 	}
 
 	@Override
-	public void mostrarCartasJugador(List<Jugador> jugadores) {
-		for (Jugador jugador : jugadores) {
-			if (jugador.equals(jugadorActual)) { // Mostrar solo cartas del jugador actual
-				areaSalida.append("Tus cartas:\n");
-				jugador.getCartas().forEach(carta -> {
-					try {
-						areaSalida.append(carta.getValor() + " de " + carta.getPalo() + "\n");
-					} catch (RemoteException e) {
-						e.printStackTrace();
-					}
-				});
-			}
-		}
+	public void mostrarCartasJugador(LinkedList<Carta> cartas) {
+		areaSalida.append("Tus cartas:\n");
+		areaSalida.append(cartas.stream().map(Carta::toString).collect(Collectors.joining("\n")));
+		areaSalida.append("\n");
 	}
 
 	@Override

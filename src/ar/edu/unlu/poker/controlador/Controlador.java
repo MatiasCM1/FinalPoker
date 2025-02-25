@@ -70,7 +70,7 @@ public class Controlador implements IControladorRemoto {
 			break;
 		case CARTAS_REPARTIDAS:
 			if (!this.estoyEnVistaLogin) {
-				vista.mostrarCartasJugador(((IMesa) modelo).getJugadoresMesa());
+				vista.mostrarCartasJugador(this.getCartasJugadorActual());
 			}
 			break;
 		case CANT_JUGADORES_INSUFICIENTES:
@@ -318,6 +318,16 @@ public class Controlador implements IControladorRemoto {
 	private boolean esUltimoJugadorIntentoAgregar() throws RemoteException {
 		return this.jugadorActual.getID() == mesa.getIDUltimoJugadorIntentaAgregar();
 	}
+	
+	private LinkedList<Carta> getCartasJugadorActual(){
+		try {
+			return mesa.getCartasJugador(this.jugadorActual);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	private boolean jugadorSigueEnJuego(Jugador jugador) {
 		boolean flag = false;
@@ -415,7 +425,7 @@ public class Controlador implements IControladorRemoto {
 		this.jugadorActual = jugadorActual;
 	}
 
-	public Jugador getJugadorMano() throws RemoteException {
+	public String getJugadorMano() throws RemoteException {
 		return mesa.getJugadorMano();
 	}
 
@@ -496,7 +506,7 @@ public class Controlador implements IControladorRemoto {
 	}
 
 	private boolean jugadorManoEnvita(Jugador jugador, int apuesta) throws RemoteException {
-		if (jugador.equals(mesa.getJugadorMano()) && apuesta == 0) {// OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA,
+		if (jugador.getNombre().equals(mesa.getJugadorMano()) && apuesta == 0) {// OBLIGA AL JUGADOR MANO A REALIZAR UNA APUESTA,
 																	// IMPIDIENDO QUE FICHE O PASE
 			return false;
 		}
@@ -519,7 +529,7 @@ public class Controlador implements IControladorRemoto {
 
 	public void realizarLosPases(Jugador jugador) {
 		try {
-			if (!jugador.equals(mesa.getJugadorMano())) {
+			if (!jugador.getNombre().equals(mesa.getJugadorMano())) {
 				mesa.jugadorPasa(jugador);
 			} else {
 				vista.notificarJugadorManoDebeApostar();

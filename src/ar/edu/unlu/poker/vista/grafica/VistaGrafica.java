@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ar.edu.unlu.poker.controlador.Controlador;
+import ar.edu.unlu.poker.modelo.Carta;
 import ar.edu.unlu.poker.modelo.Jugador;
 import ar.edu.unlu.poker.vista.IVista;
 
@@ -272,27 +273,15 @@ public class VistaGrafica implements IVista {
 	}
 
 	@Override
-	public void mostrarJugadorMano(Jugador jugador) {
+	public void mostrarJugadorMano(String jugador) {
 
 		if (this.vistaJuegoCartas != null) {
-			this.vistaJuegoCartas.escribirNotificacion("Jugador mano: " + jugador.getNombre());
+			this.vistaJuegoCartas.escribirNotificacion("Jugador mano: " + jugador);
 		}
 
 	}
 
-	@Override
-	public void mostrarCartasJugador(List<Jugador> jugadores) {
-
-		if (this.vistaJuegoCartas != null) {
-			for (Jugador jugador : jugadores) {
-				if (jugador.equals(jugadorActual)) {
-					this.jugadorActual.setListaCartas(jugador.getCartas());
-					this.vistaJuegoCartas.mostrarCartas(jugador.getCartas());
-				}
-			}
-		}
-
-	}
+	
 
 	@Override
 	public void mostrarMenuApuestas() {
@@ -676,6 +665,14 @@ public class VistaGrafica implements IVista {
 	@Override
 	public void notificarErrorNombre() {
 		this.vistaLogin.mostrarErrorNombre();
+	}
+
+	@Override
+	public void mostrarCartasJugador(LinkedList<Carta> cartas) {
+		if (this.vistaJuegoCartas != null) {
+			this.jugadorActual.setListaCartas(cartas);
+			this.vistaJuegoCartas.mostrarCartas(cartas);
+		}
 	}
 
 }

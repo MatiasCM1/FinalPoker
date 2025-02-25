@@ -669,8 +669,8 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	}
 
 	@Override
-	public Jugador getJugadorMano() throws RemoteException {
-		return this.jugadorMano;
+	public String getJugadorMano() throws RemoteException {
+		return this.jugadorMano.getNombre();
 	}
 
 	public HashMap<Jugador, LinkedList<Carta>> getCartasADescartar() {
@@ -851,6 +851,16 @@ public class Mesa extends ObservableRemoto implements IMesa {
 	@Override
 	public int getIDJugadorIntentaIncrementarFondos() throws RemoteException{
 		return this.jugadorIncrementoFondos.getID();
+	}
+	
+	@Override
+	public LinkedList<Carta> getCartasJugador(Jugador jugador) throws RemoteException{
+		return jugadoresMesa.stream().filter(j -> j.getID() == jugador.getID()).map(Jugador::getCartas).findFirst().orElse(null);
+
+	}
+
+	public Jugador obtenerJugadorMano() throws RemoteException{
+		return this.jugadorMano;
 	}
 
 }

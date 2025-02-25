@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 
 public class Dealer {
 
-	private IMesa mesa;
+	private Mesa mesa;
 	private Queue<Jugador> rondaApuestaAux;
 	private Mazo mazo;
 
-	public Dealer(IMesa mesa) {
+	public Dealer(Mesa mesa) {
 		this.mesa = mesa;
 	}
 
@@ -139,7 +139,7 @@ public class Dealer {
 			return devolverGanadorResultadosCartasIguales(ganadores);
 
 		}
-		return mesa.getJugadorMano();
+		return mesa.obtenerJugadorMano();
 	}
 
 	private boolean resultadoEsCartaMayorColorEscaleraEscaleraColor(Resultado resultadoGanador) {

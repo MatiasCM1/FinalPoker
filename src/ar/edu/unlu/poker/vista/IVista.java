@@ -1,17 +1,19 @@
 package ar.edu.unlu.poker.vista;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import ar.edu.unlu.poker.controlador.Controlador;
+import ar.edu.unlu.poker.modelo.Carta;
 import ar.edu.unlu.poker.modelo.Jugador;
 
 public interface IVista {
 
 	void setControlador(Controlador controlador);
 
-	void mostrarJugadorMano(Jugador jugador);
+	void mostrarJugadorMano(String nombreJugadorMano);
 
-	void mostrarCartasJugador(List<Jugador> jugadores);
+	void mostrarCartasJugador(LinkedList<Carta> cartas);
 
 	void informarJugadoresInsuficientes();
 
