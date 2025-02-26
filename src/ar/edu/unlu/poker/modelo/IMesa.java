@@ -18,7 +18,7 @@ public interface IMesa extends IObservableRemoto {
 
 	List<Jugador> getJugadoresMesa() throws RemoteException;
 
-	Jugador devolverGanador() throws RemoteException;
+	String devolverGanador() throws RemoteException;
 
 	String getJugadorMano() throws RemoteException;
 
@@ -56,7 +56,7 @@ public interface IMesa extends IObservableRemoto {
 
 	List<Jugador> getRondaApuestaAux() throws RemoteException;
 
-	void darFondosGanador(Jugador jugador) throws RemoteException;
+	void darFondosGanador(String jugador) throws RemoteException;
 
 	void agregarNuevosFondos(Jugador jugador, int fondoAgregar) throws RemoteException;
 
@@ -72,7 +72,7 @@ public interface IMesa extends IObservableRemoto {
 
 	int buscarApuestaMayorEnElMapa() throws RemoteException;
 
-	Jugador getJugadorPasa() throws RemoteException;
+	String getJugadorPasa() throws RemoteException;
 
 	void setComenzoPartida(boolean comenzo) throws RemoteException;
 
@@ -101,5 +101,13 @@ public interface IMesa extends IObservableRemoto {
 	LinkedList<Carta> getCartasJugador(Jugador jugadorActual) throws RemoteException;
 
 	boolean comprobarJugadorSigueEnJuego(Jugador jugadorActual) throws RemoteException;
+
+	int getApuestaJugadorTurno() throws RemoteException;
+
+	boolean soloQuedaUnJugadorEnJuego() throws RemoteException;
+
+	String obtenerNombreUnicoJugadorEnJuego() throws RemoteException;
+
+	Resultado getResultadoJugador(String jugador) throws RemoteException;
 
 }

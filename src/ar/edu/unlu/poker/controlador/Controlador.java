@@ -8,6 +8,7 @@ import ar.edu.unlu.poker.modelo.Carta;
 import ar.edu.unlu.poker.modelo.IMesa;
 import ar.edu.unlu.poker.modelo.Informe;
 import ar.edu.unlu.poker.modelo.Jugador;
+import ar.edu.unlu.poker.modelo.Resultado;
 import ar.edu.unlu.poker.serializacion.Serializador;
 import ar.edu.unlu.poker.serializacion.stats.EstadisticasJugador;
 import ar.edu.unlu.poker.vista.IVista;
@@ -85,7 +86,7 @@ public class Controlador implements IControladorRemoto {
 			break;
 		case DEVOLVER_GANADOR:
 			if (!this.estoyEnVistaLogin) {
-				Jugador ganador = ((IMesa) modelo).devolverGanador();
+				String ganador = ((IMesa) modelo).devolverGanador();
 				if (this.isJugadorTurno()) {
 					this.registrarVictoria(ganador);
 					mesa.darFondosGanador(ganador);
@@ -95,7 +96,7 @@ public class Controlador implements IControladorRemoto {
 
 				vista.mostrarCartasJugadorAntGanador(mesa.getRondaApuestaAux());
 
-				vista.mostrarGanador(ganador);
+				vista.mostrarGanador(ganador, this.obtenerResultadoGanador(ganador));
 				vista.mostrarOpcionesMenuEmpezarOtraRonda();
 			}
 			break;
@@ -126,15 +127,13 @@ public class Controlador implements IControladorRemoto {
 			break;
 		case APUESTA_REALIZADA:
 			if (!this.estoyEnVistaLogin) {
-				vista.informarApuestaRealizada(this.getJugadorTurno(), getJugadorTurnoJugadoresMesa().getApuesta());
+				vista.informarApuestaRealizada(this.getJugadorTurno(), this.getApuestaJugadorTurno());
 			}
 			break;
 		case APUESTAS_DESIGUALES:
 			if (!this.estoyEnVistaLogin) {
-				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { // Comprueba que el nombre del
-																				// jugadorActual forme parte de la cola
-																				// de jugadores con apuesta menor a la
-																				// mayor
+				// Comprueba que el nombre del jugadorActual forme parte de la cola de jugadores con apuesta menor a la mayor
+				if (this.siEsJugadorConApuestaMenor()) { 
 					vista.notificarApuestasDesiguales();
 				} else {
 					vista.notificarEsperarJugadorIgualeApuesta();
@@ -143,10 +142,8 @@ public class Controlador implements IControladorRemoto {
 			break;
 		case APUESTAS_DESIGUALES_SEGUNDA_RONDA:
 			if (!this.estoyEnVistaLogin) {
-				if (mesa.perteneceJugadorApuestaMenor(this.jugadorActual)) { // Comprueba que el nombre del
-																				// jugadorActual forme parte de la cola
-																				// de jugadores con apuesta menor a la
-																				// mayor
+				// Comprueba que el nombre del jugadorActual forme parte de la cola de jugadores con apuesta menor a la mayor
+				if (this.siEsJugadorConApuestaMenor()) { 
 					vista.notificarApuestasDesigualesSegundaRonda();
 				} else {
 					vista.notificarEsperarJugadorIgualeApuesta();
@@ -160,10 +157,10 @@ public class Controlador implements IControladorRemoto {
 			break;
 		case JUGADOR_PASA_APUESTA:
 			if (!this.estoyEnVistaLogin) {
-				if (this.jugadorActual.getNombre().equals(this.getJugadorQuePaso().getNombre())) {
+				if (this.esElJugadorQuePaso()) {
 					vista.jugadorPasaQuedaFuera();
 				}
-				vista.notificarJugadorPasaApuesta(this.getJugadorQuePaso().getNombre());
+				vista.notificarJugadorPasaApuesta(this.getJugadorQuePaso());
 			}
 			break;
 		case TURNO_DESCARTE:
@@ -179,12 +176,13 @@ public class Controlador implements IControladorRemoto {
 			break;
 		case RONDA_APUESTAS_TERMINADA:
 			if (!this.estoyEnVistaLogin) {
-				if (mesa.getRondaApuesta().size() == 1) {
-					Jugador ganador = mesa.getRondaApuesta().getFirst();
-					vista.notificarGanadorUnicoEnMesa(ganador.getNombre());
+				if (mesa.soloQuedaUnJugadorEnJuego()) {
+					String ganador = this.obtenerNombreUnicoJugadorEnJuego();
+					vista.notificarGanadorUnicoEnMesa(ganador);
 					if (this.isJugadorTurno()) {
 						this.registrarVictoria(ganador);
-						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
+						//mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
+						mesa.darFondosGanador(ganador);
 					}
 
 					mesa.setComenzoPartida(false);
@@ -202,8 +200,8 @@ public class Controlador implements IControladorRemoto {
 		case RONDA_APUESTAS_TERMINADA_SEGUNDA_RONDA:
 			if (!this.estoyEnVistaLogin) {
 				if (mesa.getRondaApuestaAux().size() == 1) {
-					Jugador ganador = mesa.getRondaApuestaAux().getFirst();
-					vista.notificarGanadorUnicoEnMesa(ganador.getNombre());
+					String ganador = this.obtenerNombreUnicoJugadorEnJuego();
+					vista.notificarGanadorUnicoEnMesa(ganador);
 					if (this.isJugadorTurno()) {
 						this.registrarVictoria(ganador);
 						mesa.darFondosGanador(ganador);
@@ -235,11 +233,11 @@ public class Controlador implements IControladorRemoto {
 		case SEGUNDA_RONDA_APUESTAS:
 			if (!this.estoyEnVistaLogin) {
 				if (mesa.getRondaApuesta().size() == 1) {
-					Jugador ganador = mesa.getRondaApuesta().getFirst();
-					vista.notificarGanadorUnicoEnMesa(ganador.getNombre());
+					String ganador = this.obtenerNombreUnicoJugadorEnJuego();
+					vista.notificarGanadorUnicoEnMesa(ganador);
 					if (this.isJugadorTurno()) {
 						this.registrarVictoria(ganador);
-						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst());
+						mesa.darFondosGanador(mesa.getRondaApuesta().getFirst().getNombre());
 					}
 
 					mesa.setComenzoPartida(false);
@@ -304,7 +302,35 @@ public class Controlador implements IControladorRemoto {
 		}
 
 	}
+
+	private boolean siEsJugadorConApuestaMenor() throws RemoteException {
+		return mesa.perteneceJugadorApuestaMenor(this.jugadorActual);
+	}
+
+	private Resultado obtenerResultadoGanador(String ganador) {
+		try {
+			return mesa.getResultadoJugador(ganador);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private boolean esElJugadorQuePaso() {
+		return this.jugadorActual.getNombre().equals(this.getJugadorQuePaso());
+	}
 	
+	private String obtenerNombreUnicoJugadorEnJuego() {
+		try {
+			return mesa.obtenerNombreUnicoJugadorEnJuego();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	private boolean jugadorConFondosInsuficientesParaComenzar() {
 		try {
 			return mesa.esJugadorConFondosInsuficientesParaComenzar(this.jugadorActual);
@@ -341,13 +367,14 @@ public class Controlador implements IControladorRemoto {
 		return mesa.comprobarJugadorSigueEnJuego(this.jugadorActual);
 	}
 
-	public Jugador getJugadorTurnoJugadoresMesa() {
-		for (Jugador j : this.getJugadoresMesa()) {
-			if (j.getNombre().equals(this.getJugadorTurno())) {
-				return j;
-			}
+	public int getApuestaJugadorTurno() {
+		try {
+			return mesa.getApuestaJugadorTurno();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return null;
+		return -1;
 	}
 
 	private boolean isJugadorTurno() throws RemoteException {
@@ -833,21 +860,21 @@ public class Controlador implements IControladorRemoto {
 		}
 	}
 
-	public Jugador getJugadorQuePaso() {
+	public String getJugadorQuePaso() {
 		try {
 			return mesa.getJugadorPasa();
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return jugadorActual;
+		return null;
 	}
 
 	public void setEstoyEnVistaLogin(boolean estoyEnVistaLogin) {
 		this.estoyEnVistaLogin = estoyEnVistaLogin;
 	}
 
-	public void registrarVictoria(Jugador jugadorGanador) {
+	public void registrarVictoria(String jugadorGanador) {
 
 		// Cargo estadisticas anteriores
 		List<EstadisticasJugador> jugadores = Serializador.cargarEstadisticas();
@@ -855,7 +882,7 @@ public class Controlador implements IControladorRemoto {
 		// Incremento o creo una estadistica para el ganador
 		boolean flag = false;
 		for (EstadisticasJugador j : jugadores) {
-			if (j.getNombreJugador().equals(jugadorGanador.getNombre())) {
+			if (j.getNombreJugador().equals(jugadorGanador)) {
 				j.incrementarCantidadPartidasGanadas();
 				flag = true;
 				break;
@@ -863,7 +890,7 @@ public class Controlador implements IControladorRemoto {
 		}
 		// Si no se encuentra al jugador, creo una nueva estadisticas para este jugador
 		if (!flag) {
-			EstadisticasJugador nuevoJugador = new EstadisticasJugador(jugadorGanador.getNombre());
+			EstadisticasJugador nuevoJugador = new EstadisticasJugador(jugadorGanador);
 			nuevoJugador.incrementarCantidadPartidasGanadas();
 			jugadores.add(nuevoJugador);
 		}

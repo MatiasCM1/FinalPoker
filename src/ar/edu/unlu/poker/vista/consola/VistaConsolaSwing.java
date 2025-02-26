@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import ar.edu.unlu.poker.controlador.Controlador;
 import ar.edu.unlu.poker.modelo.Carta;
 import ar.edu.unlu.poker.modelo.Jugador;
+import ar.edu.unlu.poker.modelo.Resultado;
 import ar.edu.unlu.poker.serializacion.stats.EstadisticasJugador;
 import ar.edu.unlu.poker.vista.IVista;
 
@@ -333,11 +334,7 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		areaSalida.append("\n");
 	}
 
-	@Override
-	public void mostrarGanador(Jugador ganador) {
-		areaSalida.append("Ganador:\n");
-		areaSalida.append(" - " + ganador.getNombre() + " con " + ganador.getResultadoValoresCartas() + "\n");
-	}
+
 
 	@Override
 	public void mostrarOpcionesMenuEmpezarOtraRonda() {
@@ -925,6 +922,12 @@ public class VistaConsolaSwing extends JFrame implements IVista {
 		areaSalida.append("Error, nombre de usuario ocupado\n");
 		areaSalida.append("Ingrese su nombre\n");
 		this.estadoFlujo = Estados.SOLICITAR_NOMBRE_JUGADOR;
+	}
+
+	@Override
+	public void mostrarGanador(String ganador, Resultado resultado) {
+		areaSalida.append("Ganador:\n");
+		areaSalida.append(" - " + ganador + " con " + resultado + "\n");
 	}
 
 }

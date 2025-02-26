@@ -6,6 +6,7 @@ import java.util.List;
 import ar.edu.unlu.poker.controlador.Controlador;
 import ar.edu.unlu.poker.modelo.Carta;
 import ar.edu.unlu.poker.modelo.Jugador;
+import ar.edu.unlu.poker.modelo.Resultado;
 import ar.edu.unlu.poker.vista.IVista;
 
 public class VistaGrafica implements IVista {
@@ -331,8 +332,7 @@ public class VistaGrafica implements IVista {
 			this.vistaJuegoCartas.setVisible(true);
 
 		}
-		this.vistaJuegoCartas.escribirNotificacion(
-				nombreJugadorAposto + " realizo una apuesta de " + String.valueOf(apuestaJugador));
+		this.vistaJuegoCartas.escribirNotificacion(nombreJugadorAposto + " realizo una apuesta de " + String.valueOf(apuestaJugador));
 	}
 
 	@Override
@@ -372,8 +372,7 @@ public class VistaGrafica implements IVista {
 	@Override
 	public void notificarApuestasDesiguales() {
 
-		this.vistaJuegoCartas.escribirNotificacion(
-				"Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima");
+		this.vistaJuegoCartas.escribirNotificacion("Hay desigualdad entre las apuestas, por favor iguales el valor de la apuesta maxima");
 
 		this.vistaJuegoCartas.setVisible(false);
 
@@ -538,16 +537,7 @@ public class VistaGrafica implements IVista {
 		this.controlador.realizarLosPasesSegundaRonda(this.jugadorActual);
 	}
 
-	@Override
-	public void mostrarGanador(Jugador ganador) {
-		this.vistaApuestas.setVisible(false);
-		if (this.vistaApuestas2 != null) {
-			this.vistaApuestas2.setVisible(false);
-		}
-		this.vistaJuegoCartas.setVisible(true);
-		this.vistaJuegoCartas.escribirNotificacion(
-				"Ganador: " + ganador.getNombre() + " con " + ganador.getResultadoValoresCartas());
-	}
+	
 
 	@Override
 	public void notificarErrorIngreseUnEnteroSegundaRonda() {
@@ -677,6 +667,17 @@ public class VistaGrafica implements IVista {
 			this.jugadorActual.setListaCartas(cartas);
 			this.vistaJuegoCartas.mostrarCartas(cartas);
 		}
+	}
+
+	@Override
+	public void mostrarGanador(String ganador, Resultado resultado) {
+		this.vistaApuestas.setVisible(false);
+		if (this.vistaApuestas2 != null) {
+			this.vistaApuestas2.setVisible(false);
+		}
+		this.vistaJuegoCartas.setVisible(true);
+		this.vistaJuegoCartas.escribirNotificacion(
+				"Ganador: " + ganador + " con " + resultado);
 	}
 
 }

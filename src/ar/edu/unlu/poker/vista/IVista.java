@@ -6,6 +6,7 @@ import java.util.List;
 import ar.edu.unlu.poker.controlador.Controlador;
 import ar.edu.unlu.poker.modelo.Carta;
 import ar.edu.unlu.poker.modelo.Jugador;
+import ar.edu.unlu.poker.modelo.Resultado;
 
 public interface IVista {
 
@@ -19,7 +20,7 @@ public interface IVista {
 
 	void informarCantJugadoresExcedidos();
 
-	void mostrarGanador(Jugador ganador);
+	void mostrarGanador(String ganador, Resultado resultado);
 
 	void iniciar();
 
